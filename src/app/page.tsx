@@ -162,8 +162,16 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-stone-800/40 py-8 text-center text-xs text-stone-600">
-        DoppelWriter
+      <footer className="border-t border-stone-800/40 py-8">
+        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+          <span className="text-xs text-stone-600">DoppelWriter</span>
+          <a
+            href="mailto:enterprise@doppelwriter.com?subject=Enterprise%20Inquiry"
+            className="text-xs text-stone-500 hover:text-amber-400 transition-colors"
+          >
+            Enterprise &rarr;
+          </a>
+        </div>
       </footer>
     </div>
   );

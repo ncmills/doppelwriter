@@ -64,6 +64,14 @@ export default function LoginPage() {
             Sign up
           </Link>
         </p>
+        <div className="mt-6 pt-6 border-t border-stone-800/40">
+          <a
+            href="mailto:enterprise@doppelwriter.com?subject=Enterprise%20Inquiry%20-%20DoppelWriter%20for%20Business&body=Hi%20DoppelWriter%20team%2C%0A%0AI%27m%20interested%20in%20building%20DoppelWriter%20for%20our%20organization%27s%20internal%20use.%0A%0ACompany%3A%20%0ATeam%20size%3A%20%0AUse%20case%3A%20%0A%0AThanks!"
+            className="block w-full py-2.5 border border-stone-700 hover:border-stone-500 rounded-lg text-center text-sm text-stone-400 hover:text-white transition-colors"
+          >
+            Business? Build DoppelWriter for your team &rarr;
+          </a>
+        </div>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ const publicPaths = [
   "/login",
   "/signup",
   "/write-like",
+  "/write",
   "/api/auth",
   "/api/stripe/webhook",
   "/api/gmail/callback",

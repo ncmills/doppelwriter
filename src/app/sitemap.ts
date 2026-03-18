@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { CURATED_WRITERS } from "@/lib/writer-builder";
+import { USE_CASES } from "@/lib/use-cases";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://doppelwriter.com";
@@ -17,5 +18,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  return [...staticPages, ...writerPages];
+  const useCasePages: MetadataRoute.Sitemap = USE_CASES.map((u) => ({
+    url: `${baseUrl}/write/${u.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.9,
+  }));
+
+  return [...staticPages, ...writerPages, ...useCasePages];
 }

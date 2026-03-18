@@ -13,18 +13,22 @@ export interface CuratedWriter {
 export const CATEGORIES = [
   { id: "authors", label: "Authors", icon: "pen" },
   { id: "business", label: "Business & Tech", icon: "briefcase" },
-  { id: "podcasters", label: "Podcasters", icon: "mic" },
-  { id: "politicians", label: "Politicians", icon: "landmark" },
-  { id: "historical", label: "Historical Figures", icon: "scroll" },
-  { id: "characters", label: "Movie & TV Characters", icon: "film" },
+  { id: "podcasters", label: "Podcasters & Creators", icon: "mic" },
+  { id: "politicians", label: "Politicians & Leaders", icon: "landmark" },
+  { id: "historical", label: "Historical Writers", icon: "scroll" },
   { id: "childrens", label: "Children's Authors", icon: "book" },
-  { id: "journalists", label: "Journalists", icon: "newspaper" },
-  { id: "comedians", label: "Comedians", icon: "laugh" },
+  { id: "journalists", label: "Journalists & Essayists", icon: "newspaper" },
+  { id: "comedians", label: "Comedy Writers", icon: "laugh" },
   { id: "philosophers", label: "Philosophers & Thinkers", icon: "brain" },
+  { id: "scientists", label: "Science Writers", icon: "microscope" },
 ] as const;
 
+// Every writer here must have EXTENSIVE published writing or transcribed speech
+// sufficient to build a near-perfect voice model. The bar: thousands of pages
+// of real, attributable text.
+
 export const CURATED_WRITERS: CuratedWriter[] = [
-  // Authors
+  // Authors — all have multiple published books + essays
   { name: "Ernest Hemingway", bio: "Sparse, powerful prose. The iceberg theory — say less, mean more.", tag: "literary", category: "authors" },
   { name: "George Orwell", bio: "Crystal-clear political writing. Never use a long word where a short one will do.", tag: "literary", category: "authors" },
   { name: "Joan Didion", bio: "Precise, atmospheric observation of American life. Sentences that cut.", tag: "literary", category: "authors" },
@@ -72,29 +76,29 @@ export const CURATED_WRITERS: CuratedWriter[] = [
   { name: "Margaret Thatcher", bio: "Iron conviction, precise diction, unyielding logic.", tag: "political", category: "politicians" },
   { name: "Bernie Sanders", bio: "Repetitive urgency, class-focused, righteous indignation.", tag: "political", category: "politicians" },
 
-  // Historical Figures
-  { name: "Marcus Aurelius", bio: "Stoic meditations. Private journal entries from a Roman emperor.", tag: "philosophy", category: "historical" },
-  { name: "Benjamin Franklin", bio: "Witty, pragmatic, aphoristic. Poor Richard's common sense.", tag: "historical", category: "historical" },
-  { name: "Cleopatra", bio: "Strategic, multilingual, diplomatic correspondence of power.", tag: "historical", category: "historical" },
-  { name: "Leonardo da Vinci", bio: "Curious, observational, cross-disciplinary notebook entries.", tag: "historical", category: "historical" },
-  { name: "Nikola Tesla", bio: "Visionary, technical precision, dramatic flair for the impossible.", tag: "historical", category: "historical" },
-  { name: "Frida Kahlo", bio: "Raw, passionate, surreal diary entries. Pain transformed into art.", tag: "historical", category: "historical" },
-  { name: "Albert Einstein", bio: "Playful clarity about profound complexity. Thought experiments in prose.", tag: "historical", category: "historical" },
-  { name: "Sun Tzu", bio: "Strategic, aphoristic, timeless military and leadership wisdom.", tag: "historical", category: "historical" },
-  { name: "Marie Curie", bio: "Methodical, passionate, scientific rigor with personal warmth.", tag: "historical", category: "historical" },
-  { name: "Frederick Douglass", bio: "Thundering moral authority. Escaped slavery to master the English language.", tag: "historical", category: "historical" },
+  // Historical Writers — all have substantial surviving written works
+  { name: "Marcus Aurelius", bio: "Stoic meditations. Private journal entries from a Roman emperor. Full text of Meditations survives.", tag: "philosophy", category: "historical" },
+  { name: "Benjamin Franklin", bio: "Witty, pragmatic, aphoristic. Autobiography + Poor Richard's Almanack + hundreds of letters.", tag: "historical", category: "historical" },
+  { name: "Frederick Douglass", bio: "Thundering moral authority. Three autobiographies + hundreds of published speeches.", tag: "historical", category: "historical" },
+  { name: "Mark Twain", bio: "America's voice. Dozens of novels, essays, speeches, and thousands of letters.", tag: "literary", category: "historical" },
+  { name: "Virginia Woolf", bio: "Stream of consciousness pioneer. Novels, essays, diaries, and thousands of letters.", tag: "literary", category: "historical" },
+  { name: "Oscar Wilde", bio: "Epigrammatic wit. Plays, novels, essays, letters, and courtroom transcripts.", tag: "literary", category: "historical" },
+  { name: "Ralph Waldo Emerson", bio: "Transcendentalist essays. Hundreds of published lectures and journal entries.", tag: "philosophy", category: "historical" },
+  { name: "Jane Austen", bio: "Ironic social observation. Six novels + extensive surviving letters.", tag: "literary", category: "historical" },
+  { name: "Charles Dickens", bio: "Vivid, serialized storytelling. 15 novels + journalism + thousands of letters.", tag: "literary", category: "historical" },
+  { name: "H.L. Mencken", bio: "Acerbic American commentary. Decades of newspaper columns + books + memoirs.", tag: "journalism", category: "historical" },
 
-  // Movie & TV Characters
-  { name: "Michael Scott", bio: "Cringey confidence, malapropisms, accidental wisdom. That's what she said.", tag: "character", category: "characters" },
-  { name: "Ron Swanson", bio: "Libertarian deadpan. Meat, woodworking, and government hatred.", tag: "character", category: "characters" },
-  { name: "Tyrion Lannister", bio: "Witty, strategic, wine-fueled political maneuvering.", tag: "character", category: "characters" },
-  { name: "Gandalf", bio: "Ancient wisdom delivered with theatrical timing. 'You shall not pass.'", tag: "character", category: "characters" },
-  { name: "Yoda", bio: "Inverted syntax, profound it is. Backwards wisdom from 900 years.", tag: "character", category: "characters" },
-  { name: "Sherlock Holmes", bio: "Deductive, precise, arrogant brilliance. 'Elementary, my dear Watson.'", tag: "character", category: "characters" },
-  { name: "Tony Stark", bio: "Quippy genius, rapid-fire wit, narcissism masking vulnerability.", tag: "character", category: "characters" },
-  { name: "Darth Vader", bio: "Menacing brevity. Imperial authority. Heavy breathing optional.", tag: "character", category: "characters" },
-  { name: "Captain Jack Sparrow", bio: "Drunken eloquence, tangential logic, somehow always right.", tag: "character", category: "characters" },
-  { name: "Wednesday Addams", bio: "Deadpan, morbid, devastatingly articulate darkness.", tag: "character", category: "characters" },
+  // Science Writers — extensive published work
+  { name: "Carl Sagan", bio: "Cosmic wonder in accessible prose. 600+ papers, 20+ books, Cosmos transcripts.", tag: "science", category: "scientists" },
+  { name: "Richard Feynman", bio: "Playful genius explaining physics. Lectures, books, letters, interviews.", tag: "science", category: "scientists" },
+  { name: "Oliver Sacks", bio: "Neurological case studies as literature. 14 books of compassionate scientific writing.", tag: "science", category: "scientists" },
+  { name: "Stephen Jay Gould", bio: "300 consecutive monthly essays in Natural History. Evolutionary storytelling.", tag: "science", category: "scientists" },
+  { name: "Rachel Carson", bio: "Silent Spring. Lyrical environmental writing that changed policy.", tag: "science", category: "scientists" },
+  { name: "Neil deGrasse Tyson", bio: "Popular science communication. Books, columns, transcribed lectures.", tag: "science", category: "scientists" },
+  { name: "Steven Pinker", bio: "Cognitive science + clear writing advocacy. 12 books on language and mind.", tag: "science", category: "scientists" },
+  { name: "Mary Roach", bio: "Irreverent deep dives into bodies, space, and the gross. 7 bestselling books.", tag: "science", category: "scientists" },
+  { name: "Atul Gawande", bio: "Surgeon-writer. New Yorker essays + 4 books on medicine and performance.", tag: "science", category: "scientists" },
+  { name: "Ed Yong", bio: "Atlantic science journalist. Pulitzer-winning coverage + bestselling books.", tag: "science", category: "scientists" },
 
   // Children's Authors
   { name: "Dr. Seuss", bio: "Rhyming, whimsical, nonsense words that make perfect sense.", tag: "childrens", category: "childrens" },
@@ -125,7 +129,7 @@ export const CURATED_WRITERS: CuratedWriter[] = [
   { name: "Tina Fey", bio: "Sharp, self-aware comedy writing. Bossypants voice.", tag: "comedy", category: "comedians" },
   { name: "Dave Chappelle", bio: "Storytelling comedy with social commentary. Punchlines that linger.", tag: "comedy", category: "comedians" },
   { name: "John Mulaney", bio: "Theatrical, precise, clean delivery. 'The one thing you can't replace.'", tag: "comedy", category: "comedians" },
-  { name: "Nora Ephron", bio: "Heartburn humor. Food, love, and divorce as comedy material.", tag: "comedy", category: "comedians" },
+  { name: "Fran Lebowitz", bio: "New York curmudgeon. Metropolitan Life essays — caustic, precise, hilarious.", tag: "comedy", category: "comedians" },
   { name: "David Sedaris", bio: "Exaggerated memoir, dry wit, family dysfunction as art.", tag: "comedy", category: "comedians" },
   { name: "Bo Burnham", bio: "Meta, anxious, millennial existentialism in comedy form.", tag: "comedy", category: "comedians" },
   { name: "Mindy Kaling", bio: "Bubbly, pop-culture-drenched, confidently awkward.", tag: "comedy", category: "comedians" },
