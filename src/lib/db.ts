@@ -96,6 +96,13 @@ export async function initSchema() {
       created_at TIMESTAMPTZ DEFAULT NOW()
     );
 
+    CREATE TABLE IF NOT EXISTS favorites (
+      user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
+      profile_id INTEGER REFERENCES style_profiles(id) ON DELETE CASCADE,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      PRIMARY KEY (user_id, profile_id)
+    );
+
     CREATE INDEX IF NOT EXISTS idx_samples_user ON writing_samples(user_id);
     CREATE INDEX IF NOT EXISTS idx_profiles_user ON style_profiles(user_id);
     CREATE INDEX IF NOT EXISTS idx_profiles_curated ON style_profiles(is_curated);
