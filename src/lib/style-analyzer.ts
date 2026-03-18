@@ -120,6 +120,10 @@ Respond with JSON only:
     await generateProfile(id);
   }
 
+  // Purge raw writing samples — only the extracted profile persists.
+  // "We read your writing, learn your voice, and forget the rest."
+  await db`DELETE FROM writing_samples WHERE user_id = ${userId}`;
+
   return { categories: result.categories, profileIds };
 }
 

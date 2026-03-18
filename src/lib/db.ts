@@ -23,6 +23,10 @@ export async function initSchema() {
       plan TEXT NOT NULL DEFAULT 'free',
       stripe_customer_id TEXT,
       stripe_subscription_id TEXT,
+      google_access_token TEXT,
+      google_refresh_token TEXT,
+      google_token_expiry TEXT,
+      last_gmail_sync TIMESTAMPTZ,
       created_at TIMESTAMPTZ DEFAULT NOW(),
       updated_at TIMESTAMPTZ DEFAULT NOW()
     );

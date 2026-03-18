@@ -1,10 +1,22 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { sql } from "./db";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      authorization: {
+        params: {
+          scope: "openid email profile https://www.googleapis.com/auth/gmail.readonly",
+          access_type: "offline",
+          prompt: "consent",
+        },
+      },
+    }),
     Credentials({
       credentials: {
         email: { label: "Email", type: "email" },
@@ -42,10 +54,45 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   session: { strategy: "jwt" },
   callbacks: {
-    jwt({ token, user }) {
+    async signIn({ user, account }) {
+      // Handle Google OAuth — create or link user, store tokens
+      if (account?.provider === "google" && user.email) {
+        const db = sql();
+        const existing = await db`SELECT id FROM users WHERE email = ${user.email}`;
+
+        if (existing.length === 0) {
+          // Create new user from Google
+          const bcryptLib = await import("bcryptjs");
+          const randomPass = await bcryptLib.hash(crypto.randomUUID(), 10);
+          await db`
+            INSERT INTO users (email, name, password_hash, google_access_token, google_refresh_token, google_token_expiry)
+            VALUES (${user.email}, ${user.name || null}, ${randomPass}, ${account.access_token || null}, ${account.refresh_token || null}, ${account.expires_at ? String(account.expires_at * 1000) : null})
+          `;
+        } else {
+          // Update tokens for existing user
+          await db`
+            UPDATE users SET
+              google_access_token = ${account.access_token || null},
+              google_refresh_token = COALESCE(${account.refresh_token || null}, google_refresh_token),
+              google_token_expiry = ${account.expires_at ? String(account.expires_at * 1000) : null}
+            WHERE email = ${user.email}
+          `;
+        }
+      }
+      return true;
+    },
+    async jwt({ token, user, account }) {
       if (user) {
-        token.id = user.id;
-        token.plan = (user as Record<string, unknown>).plan as string;
+        // Get the DB user id
+        const db = sql();
+        const [dbUser] = await db`SELECT id, plan FROM users WHERE email = ${token.email}`;
+        if (dbUser) {
+          token.id = dbUser.id;
+          token.plan = dbUser.plan;
+        }
+      }
+      if (account?.provider === "google") {
+        token.hasGmail = true;
       }
       return token;
     },
@@ -53,6 +100,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (session.user) {
         session.user.id = token.id as string;
         (session.user as unknown as Record<string, unknown>).plan = token.plan;
+        (session.user as unknown as Record<string, unknown>).hasGmail = token.hasGmail || false;
       }
       return session;
     },

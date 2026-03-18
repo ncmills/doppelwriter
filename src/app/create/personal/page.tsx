@@ -43,6 +43,9 @@ export default function CreatePersonalPage() {
   const [transcript, setTranscript] = useState("");
   const recognitionRef = useRef<unknown>(null);
   const [currentTip, setCurrentTip] = useState(0);
+  const [gmailConnected, setGmailConnected] = useState(false);
+  const [gmailSyncing, setGmailSyncing] = useState(false);
+  const [gmailResult, setGmailResult] = useState("");
 
   // Rotate tips
   useEffect(() => {
@@ -93,6 +96,41 @@ export default function CreatePersonalPage() {
     setPasteTitle("");
     setPasteContent("");
   };
+
+  const handleGmailConnect = async () => {
+    const res = await fetch("/api/gmail/connect");
+    const { url } = await res.json();
+    if (url) window.location.href = url;
+  };
+
+  const handleGmailSync = async () => {
+    setGmailSyncing(true);
+    setGmailResult("");
+    const res = await fetch("/api/gmail/sync", { method: "POST" });
+    if (res.ok) {
+      const { synced } = await res.json();
+      setGmailResult(`Synced ${synced} emails`);
+      // Refresh word count (emails are temporarily stored then will be purged after profile build)
+      const samplesRes = await fetch("/api/samples");
+      const allSamples = await samplesRes.json();
+      const emailSamples = allSamples.filter((s: { source_type: string; word_count: number; title: string }) => s.source_type === "email");
+      for (const s of emailSamples) {
+        setSamples((prev) => {
+          if (prev.some((p) => p.title === s.title)) return prev;
+          return [...prev, { title: s.title, wordCount: s.word_count, sourceType: "email" }];
+        });
+      }
+    } else {
+      setGmailResult("Sync failed — try reconnecting Gmail");
+    }
+    setGmailSyncing(false);
+  };
+
+  // Check Gmail connection on load
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("gmail") === "connected") setGmailConnected(true);
+  }, []);
 
   const startRecording = useCallback(() => {
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -250,6 +288,28 @@ export default function CreatePersonalPage() {
                     </div>
                   )}
                 </div>
+              )}
+            </div>
+
+            {/* Gmail sync */}
+            <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
+              <h3 className="font-medium mb-3">Connect Gmail</h3>
+              <p className="text-stone-500 text-xs mb-3">
+                Pull your sent emails automatically. We read them, extract your voice patterns, then delete the raw text. Your emails are never stored.
+              </p>
+              {gmailConnected ? (
+                <div>
+                  <button onClick={handleGmailSync} disabled={gmailSyncing}
+                    className="px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm transition-colors disabled:opacity-50">
+                    {gmailSyncing ? "Syncing..." : "Sync Sent Emails"}
+                  </button>
+                  {gmailResult && <p className="text-xs text-stone-400 mt-2">{gmailResult}</p>}
+                </div>
+              ) : (
+                <button onClick={handleGmailConnect}
+                  className="px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
+                  Connect Google Account
+                </button>
               )}
             </div>
 
