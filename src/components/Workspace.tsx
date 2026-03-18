@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef } from "react";
 import DiffView from "./DiffView";
 import StreamingOutput from "./StreamingOutput";
+import RichEditor from "./RichEditor";
 
 interface DiffChunk { value: string; added?: boolean; removed?: boolean; }
 
@@ -135,13 +136,33 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
     if (file.name.endsWith(".docx")) {
       const formData = new FormData();
       formData.append("file", file);
+      // Get HTML version for rich editing
       const res = await fetch("/api/parse-docx", { method: "POST", body: formData });
-      const { text } = await res.json();
-      setDraft(text);
+      const data = await res.json();
+      setDraft(data.html || data.text);
     } else {
       setDraft(await file.text());
     }
+    e.target.value = "";
   }, []);
+
+  const handleDownload = useCallback(() => {
+    const content = output || draft;
+    if (!content) return;
+    // Export as HTML file with basic styling
+    const html = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+body { font-family: Georgia, serif; max-width: 700px; margin: 2em auto; line-height: 1.6; color: #1a1a1a; padding: 0 1em; }
+h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
+</style></head><body>${content}</body></html>`;
+    const blob = new Blob([html], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "doppelwriter-draft.html";
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [draft, output]);
 
   // Smart correction tracking — detects if user edited the AI output before accepting
   const handleAccept = useCallback(async () => {
@@ -196,9 +217,14 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
             </button>
           </div>
         </div>
-        <button onClick={handleSave} className="px-4 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
-          Save Draft
-        </button>
+        <div className="flex gap-2">
+          <button onClick={handleDownload} className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs transition-colors text-stone-400 hover:text-white">
+            Download
+          </button>
+          <button onClick={handleSave} className="px-4 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
+            Save Draft
+          </button>
+        </div>
       </div>
 
       {error && (
@@ -226,8 +252,13 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
                   <input type="file" accept=".docx,.txt,.md" onChange={handleFileUpload} className="hidden" />
                 </label>
               </div>
-              <textarea value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Paste your draft here..."
-                className="flex-1 min-h-[400px] p-4 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-600 resize-none focus:outline-none focus:ring-2 focus:ring-amber-500 leading-relaxed" />
+              <div className="flex-1 min-h-[400px] bg-stone-900 border border-stone-800 rounded-lg overflow-hidden">
+              <RichEditor
+                value={draft}
+                onChange={setDraft}
+                placeholder="Paste your draft here..."
+              />
+            </div>
             </div>
             <div className="flex flex-col">
               <div className="flex items-center justify-between mb-2">

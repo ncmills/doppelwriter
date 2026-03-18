@@ -10,7 +10,15 @@ export async function POST(request: NextRequest) {
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());
-  const result = await mammoth.extractRawText({ buffer });
 
-  return NextResponse.json({ text: result.value });
+  // Get both plain text and HTML
+  const [textResult, htmlResult] = await Promise.all([
+    mammoth.extractRawText({ buffer }),
+    mammoth.convertToHtml({ buffer }),
+  ]);
+
+  return NextResponse.json({
+    text: textResult.value,
+    html: htmlResult.value,
+  });
 }

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Literata } from "next/font/google";
 import SessionProvider from "@/components/SessionProvider";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -65,6 +67,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${literata.variable} antialiased bg-[#0C0A09] text-[#FAFAF9]`}
       >
         <SessionProvider>{children}</SessionProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
