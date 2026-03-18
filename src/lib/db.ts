@@ -48,8 +48,18 @@ export async function initSchema() {
       is_curated BOOLEAN DEFAULT FALSE,
       profile_json TEXT,
       system_prompt TEXT,
+      exemplar_passages JSONB DEFAULT '[]',
       created_at TIMESTAMPTZ DEFAULT NOW(),
       updated_at TIMESTAMPTZ DEFAULT NOW()
+    );
+
+    CREATE TABLE IF NOT EXISTS voice_corrections (
+      id SERIAL PRIMARY KEY,
+      user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
+      profile_id INTEGER REFERENCES style_profiles(id) ON DELETE CASCADE,
+      original_text TEXT NOT NULL,
+      corrected_text TEXT NOT NULL,
+      created_at TIMESTAMPTZ DEFAULT NOW()
     );
 
     CREATE TABLE IF NOT EXISTS sample_profiles (

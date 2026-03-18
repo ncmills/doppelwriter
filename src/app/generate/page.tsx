@@ -73,7 +73,7 @@ export default function GeneratePage() {
       <Nav />
       <main className="max-w-6xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold">Generate</h1>
+          <h1 className="text-2xl font-bold font-[family-name:var(--font-literata)]">Generate</h1>
           <ProfileSelector value={profileId} onChange={setProfileId} />
         </div>
 
@@ -86,45 +86,45 @@ export default function GeneratePage() {
         <div className="grid grid-cols-2 gap-6">
           <div className="space-y-4">
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Brief / Topic</label>
+              <label className="block text-sm text-stone-400 mb-2">Brief / Topic</label>
               <textarea value={brief} onChange={(e) => setBrief(e.target.value)} placeholder="Describe what you want to write..."
-                className="w-full min-h-[200px] p-4 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-600 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 leading-relaxed" />
+                className="w-full min-h-[200px] p-4 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-600 resize-none focus:outline-none focus:ring-2 focus:ring-amber-500 leading-relaxed" />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Target Word Count</label>
+                <label className="block text-sm text-stone-400 mb-2">Target Word Count</label>
                 <input type="number" value={wordCount} onChange={(e) => setWordCount(e.target.value)} placeholder="e.g., 500"
-                  className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                  className="w-full px-4 py-2 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500" />
               </div>
               <div className="flex items-end">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={doResearch} onChange={(e) => setDoResearch(e.target.checked)}
-                    className="w-4 h-4 rounded border-gray-600 bg-gray-900 text-indigo-500 focus:ring-indigo-500" />
-                  <span className="text-sm text-gray-400">Research first</span>
+                    className="w-4 h-4 rounded border-stone-600 bg-stone-900 text-amber-500 focus:ring-amber-500" />
+                  <span className="text-sm text-stone-400">Research first</span>
                 </label>
               </div>
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Special Instructions</label>
+              <label className="block text-sm text-stone-400 mb-2">Special Instructions</label>
               <input type="text" value={instructions} onChange={(e) => setInstructions(e.target.value)} placeholder="Any additional guidance..."
-                className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm" />
+                className="w-full px-4 py-2 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm" />
             </div>
             <button onClick={handleGenerate} disabled={!brief || !profileId || loading}
-              className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+              className="w-full py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
               {loading ? "Generating..." : "Generate First Draft"}
             </button>
           </div>
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-2">
-              <h2 className="text-sm font-medium text-gray-400">Output</h2>
+              <h2 className="text-sm font-medium text-stone-400">Output</h2>
               {output && (
                 <div className="flex gap-3">
-                  <span className="text-xs text-gray-500">{output.split(/\s+/).length} words</span>
-                  <button onClick={handleSave} className="text-xs text-indigo-400 hover:text-indigo-300">Save Draft</button>
+                  <span className="text-xs text-stone-500">{output.split(/\s+/).length} words</span>
+                  <button onClick={handleSave} className="text-xs text-amber-400 hover:text-amber-300">Save Draft</button>
                 </div>
               )}
             </div>
-            <div className="flex-1 min-h-[400px] p-4 bg-gray-900 border border-gray-700 rounded-lg overflow-auto">
+            <div className="flex-1 min-h-[400px] p-4 bg-stone-900 border border-stone-800 rounded-lg overflow-auto">
               <StreamingOutput text={output} loading={loading} />
             </div>
           </div>

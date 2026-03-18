@@ -45,16 +45,16 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-      <div className="bg-gray-800/40 border border-gray-700/40 rounded-lg p-8 w-full max-w-sm">
-        <h1 className="text-2xl font-bold text-white mb-6 text-center">Create Account</h1>
+    <div className="min-h-screen bg-[#0C0A09] flex items-center justify-center">
+      <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-8 w-full max-w-sm">
+        <h1 className="text-2xl font-bold text-white mb-6 text-center font-[family-name:var(--font-literata)]">Create Account</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name"
-            className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-4 py-3 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
             autoFocus
           />
           <input
@@ -62,7 +62,7 @@ export default function SignupPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-4 py-3 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
           <input
             type="password"
@@ -70,20 +70,20 @@ export default function SignupPage() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password (min 8 characters)"
             minLength={8}
-            className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-4 py-3 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
           {error && <p className="text-red-400 text-sm">{error}</p>}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-medium transition-colors disabled:opacity-50"
+            className="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white rounded-lg font-medium transition-colors disabled:opacity-50"
           >
             {loading ? "Creating..." : "Create Account"}
           </button>
         </form>
-        <p className="mt-4 text-center text-sm text-gray-500">
+        <p className="mt-4 text-center text-sm text-stone-500">
           Already have an account?{" "}
-          <Link href="/login" className="text-indigo-400 hover:text-indigo-300">
+          <Link href="/login" className="text-amber-400 hover:text-amber-300">
             Log in
           </Link>
         </p>

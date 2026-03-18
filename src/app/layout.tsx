@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Literata } from "next/font/google";
 import SessionProvider from "@/components/SessionProvider";
 import "./globals.css";
 
@@ -13,10 +14,44 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const literata = Literata({
+  variable: "--font-literata",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "DoppelWriter — Your Voice, Amplified",
+  metadataBase: new URL("https://doppelwriter.com"),
+  title: {
+    default: "DoppelWriter — AI Writing That Sounds Like You",
+    template: "%s | DoppelWriter",
+  },
   description:
-    "AI-powered writing that sounds like you — or your favorite authors. Edit drafts, generate content, and master any writing style.",
+    "AI-powered writing tool that clones your voice or lets you write like Paul Graham, Hemingway, or any author. Edit drafts and generate content in any style.",
+  keywords: [
+    "AI writing tool",
+    "write in my voice",
+    "AI ghostwriter",
+    "write like Paul Graham",
+    "AI writing style",
+    "voice cloning writing",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://doppelwriter.com",
+    siteName: "DoppelWriter",
+    title: "DoppelWriter — AI Writing That Sounds Like You",
+    description: "Clone your writing voice or write like any famous author.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DoppelWriter" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DoppelWriter — AI Writing That Sounds Like You",
+    description: "Clone your writing voice or write like any famous author.",
+  },
+  robots: { index: true, follow: true },
+  alternates: { canonical: "https://doppelwriter.com" },
 };
 
 export default function RootLayout({
@@ -27,7 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} ${literata.variable} antialiased bg-[#0C0A09] text-[#FAFAF9]`}
       >
         <SessionProvider>{children}</SessionProvider>
       </body>

@@ -10,7 +10,7 @@ export default function DiffView({ chunks }: { chunks: DiffChunk[] }) {
   if (chunks.length === 0) return null;
 
   return (
-    <div className="whitespace-pre-wrap leading-relaxed text-gray-200">
+    <div className="whitespace-pre-wrap leading-relaxed text-stone-200">
       {chunks.map((chunk, i) => {
         if (chunk.added) {
           return (

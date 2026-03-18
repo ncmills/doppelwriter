@@ -9,7 +9,11 @@ async function getSystemPrompt(profileId: number): Promise<string> {
     SELECT system_prompt, name FROM style_profiles WHERE id = ${profileId}
   `;
   if (rows[0]?.system_prompt) return rows[0].system_prompt;
-  return "You are an expert writer. Write clear, engaging content.";
+  return `You are an expert writer. Write clear, engaging content.
+
+ANTI-AI-ISM RULES:
+Never use "Moreover," "Furthermore," "Additionally," "In conclusion," "It's worth noting," "Delve," "Crucial," "Landscape," "Leverage."
+Never over-explain. Prefer short sentences when they work. Use verbs, not nominalizations.`;
 }
 
 export async function* generateDraft(
@@ -23,15 +27,18 @@ export async function* generateDraft(
 ): AsyncGenerator<string> {
   const systemPrompt = await getSystemPrompt(profileId);
 
-  let userMessage = `Write a first draft based on this brief:\n\n${brief}`;
+  let userMessage = `Write a first draft based on this brief. Write ONLY the draft — no meta-commentary, no "here's your draft" preamble, no sign-off.
+
+BRIEF: ${brief}`;
+
   if (options.researchContext) {
-    userMessage += `\n\nResearch context:\n\n${options.researchContext}`;
+    userMessage += `\n\nRESEARCH CONTEXT (use as source material, do not copy):\n${options.researchContext}`;
   }
   if (options.wordCount) {
-    userMessage += `\n\nTarget word count: ~${options.wordCount} words.`;
+    userMessage += `\n\nTARGET LENGTH: ~${options.wordCount} words.`;
   }
   if (options.instructions) {
-    userMessage += `\n\nAdditional instructions: ${options.instructions}`;
+    userMessage += `\n\nADDITIONAL INSTRUCTIONS: ${options.instructions}`;
   }
 
   const stream = client.messages.stream({
@@ -55,7 +62,7 @@ export async function research(query: string): Promise<string> {
     messages: [
       {
         role: "user",
-        content: `Research the following topic and provide a comprehensive summary of key facts, data points, and context useful for writing about it.\n\nTopic: ${query}`,
+        content: `Research this topic. Provide key facts, data points, and context useful for writing about it. Be thorough and factual. No filler.\n\nTopic: ${query}`,
       },
     ],
   });
