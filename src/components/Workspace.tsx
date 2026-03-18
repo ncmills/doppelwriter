@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import DiffView from "./DiffView";
 import StreamingOutput from "./StreamingOutput";
 
@@ -18,6 +18,9 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
   const [instructions, setInstructions] = useState("");
   const [wordCount, setWordCount] = useState("");
   const [error, setError] = useState("");
+  const [learningCount, setLearningCount] = useState(0);
+  // Track the AI's raw output so we can compare against user edits
+  const aiOutputRef = useRef("");
 
   const handleStream = useCallback(async (url: string, body: Record<string, unknown>): Promise<string> => {
     setLoading(true);
@@ -57,6 +60,7 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
     if (!draft) return;
     const result = await handleStream("/api/editor", { draft, profileId, instructions: instructions || undefined });
     if (result) {
+      aiOutputRef.current = result; // Store AI's raw output for comparison
       const diffRes = await fetch("/api/diff", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -80,10 +84,25 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
   const handleRevise = useCallback(async () => {
     if (!feedback) return;
     const prevOutput = output;
+
+    // Record the revision feedback as a learning signal
+    fetch("/api/editor/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        profileId,
+        aiOutput: prevOutput,
+        userVersion: prevOutput, // Will be replaced by new output
+        correctionType: "revision_feedback",
+        revisionFeedback: feedback,
+      }),
+    }).then(() => setLearningCount((c) => c + 1));
+
     const result = await handleStream("/api/editor/revise", {
       original: draft, currentEdit: prevOutput, feedback, profileId,
     });
     if (result) {
+      aiOutputRef.current = result;
       const diffRes = await fetch("/api/diff", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -124,20 +143,32 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
     }
   }, []);
 
-  // Record correction when user accepts edits
+  // Smart correction tracking — detects if user edited the AI output before accepting
   const handleAccept = useCallback(async () => {
-    if (output && draft && output !== draft) {
+    const aiRaw = aiOutputRef.current;
+    const userFinal = output; // May have been manually edited by user in the output area
+
+    if (aiRaw && userFinal) {
+      const wasEdited = aiRaw !== userFinal;
+      // Fire and forget — don't block the UI
       fetch("/api/editor/feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ profileId, originalText: draft.slice(0, 500), correctedText: output.slice(0, 500) }),
-      });
+        body: JSON.stringify({
+          profileId,
+          aiOutput: aiRaw,
+          userVersion: userFinal,
+          correctionType: wasEdited ? "manual_edit" : "accept",
+        }),
+      }).then(() => setLearningCount((c) => c + 1));
     }
+
     setDraft(output);
     setOutput("");
     setDiffChunks([]);
     setShowDiff(false);
-  }, [output, draft, profileId]);
+    aiOutputRef.current = "";
+  }, [output, profileId]);
 
   return (
     <div>
@@ -145,6 +176,11 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
           <span className="text-sm bg-amber-600/20 text-amber-400 px-3 py-1 rounded-full">{profileName}</span>
+          {learningCount > 0 && (
+            <span className="text-xs text-stone-500">
+              {learningCount} edit{learningCount !== 1 ? "s" : ""} learned
+            </span>
+          )}
           <div className="flex bg-stone-900 rounded-lg p-0.5">
             <button
               onClick={() => setMode("edit")}
@@ -205,8 +241,20 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
                   </div>
                 )}
               </div>
-              <div className="flex-1 min-h-[400px] p-4 bg-stone-900 border border-stone-800 rounded-lg overflow-auto">
-                {showDiff && diffChunks.length > 0 ? <DiffView chunks={diffChunks} /> : <StreamingOutput text={output} loading={loading} />}
+              <div className="flex-1 min-h-[400px] bg-stone-900 border border-stone-800 rounded-lg overflow-auto">
+                {showDiff && diffChunks.length > 0 ? (
+                  <div className="p-4"><DiffView chunks={diffChunks} /></div>
+                ) : loading ? (
+                  <div className="p-4"><StreamingOutput text={output} loading={loading} /></div>
+                ) : output ? (
+                  <textarea
+                    value={output}
+                    onChange={(e) => setOutput(e.target.value)}
+                    className="w-full h-full min-h-[400px] p-4 bg-transparent text-white resize-none focus:outline-none leading-relaxed"
+                  />
+                ) : (
+                  <div className="p-4"><StreamingOutput text="" loading={false} /></div>
+                )}
               </div>
             </div>
           </div>

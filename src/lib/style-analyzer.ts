@@ -225,10 +225,10 @@ Return JSON only:
 
   // Step 3: Check for user corrections to incorporate
   const corrections = await db`
-    SELECT original_text, corrected_text FROM voice_corrections
+    SELECT original_text, corrected_text, correction_type, lesson FROM voice_corrections
     WHERE profile_id = ${profileId}
-    ORDER BY created_at DESC LIMIT 20
-  `.catch(() => []) as { original_text: string; corrected_text: string }[];
+    ORDER BY created_at DESC LIMIT 30
+  `.catch(() => []) as { original_text: string; corrected_text: string; correction_type: string; lesson: string }[];
 
   // Step 4: Build the system prompt
   const systemPrompt = buildMultiLayerPrompt(profile.name as string, profileJson, exemplars, corrections);
@@ -247,7 +247,7 @@ function buildMultiLayerPrompt(
   name: string,
   p: FullStyleProfile,
   exemplars: string[],
-  corrections: Array<{ original_text: string; corrected_text: string }>
+  corrections: Array<{ original_text: string; corrected_text: string; correction_type: string; lesson: string }>
 ): string {
   let prompt = `You are ghostwriting as a specific author in their "${name}" voice. Match their writing EXACTLY — not approximately, not "inspired by," but indistinguishable from their own hand.
 
@@ -295,12 +295,25 @@ WHO THEY ARE: ${p.overall_personality}`;
     });
   }
 
-  if (corrections.length > 0) {
-    prompt += `\n\n═══ LEARNED CORRECTIONS (The author has corrected your output before) ═══`;
-    prompt += `\nWhen you wrote something the author didn't like, they changed it. Learn from these:`;
-    for (const c of corrections.slice(0, 10)) {
-      prompt += `\n• YOU WROTE: "${c.original_text.slice(0, 200)}"`;
-      prompt += `\n  THEY CHANGED TO: "${c.corrected_text.slice(0, 200)}"`;
+  // Separate lessons from raw corrections
+  const lessons = corrections.filter((c) => c.lesson && c.correction_type !== "accept");
+  const accepts = corrections.filter((c) => c.correction_type === "accept");
+
+  if (lessons.length > 0) {
+    prompt += `\n\n═══ LEARNED PREFERENCES (from ${lessons.length} corrections + ${accepts.length} approvals) ═══`;
+    prompt += `\nThe author has been editing your output. Here is what you've learned about their preferences:`;
+
+    // Group lessons — these are the analyzed WHY behind each edit
+    const uniqueLessons = [...new Set(lessons.map((c) => c.lesson))].slice(0, 15);
+    for (const lesson of uniqueLessons) {
+      prompt += `\n• ${lesson}`;
+    }
+
+    // Show a few concrete before/after examples
+    prompt += `\n\nSpecific corrections:`;
+    for (const c of lessons.slice(0, 5)) {
+      prompt += `\n• YOU WROTE: "${c.original_text.slice(0, 150)}"`;
+      prompt += `\n  THEY CHANGED TO: "${c.corrected_text.slice(0, 150)}"`;
     }
   }
 

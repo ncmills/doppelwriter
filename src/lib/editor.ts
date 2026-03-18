@@ -94,21 +94,69 @@ export async function* reviseDraft(
   }
 }
 
-// ── Edit Feedback Loop ──────────────────────────────────────────────────────
-// When a user manually edits AI output, store the correction to improve
-// future generations for this profile.
+// ── Dynamic Voice Learning ──────────────────────────────────────────────────
+// Tracks every meaningful edit and uses Claude to understand WHY the user
+// made changes, building a richer correction history over time.
 
 export async function recordCorrection(
   userId: string,
   profileId: number,
-  originalText: string,
-  correctedText: string
+  aiOutput: string,
+  userVersion: string,
+  correctionType: "manual_edit" | "accept" | "revision_feedback",
+  revisionFeedback?: string
 ): Promise<void> {
-  if (!originalText || !correctedText || originalText === correctedText) return;
+  if (!aiOutput || !userVersion) return;
 
   const db = sql();
+
+  // For accepts with no changes, record as positive signal
+  if (correctionType === "accept" && aiOutput === userVersion) {
+    await db`
+      INSERT INTO voice_corrections (user_id, profile_id, original_text, corrected_text, correction_type, lesson)
+      VALUES (${userId}, ${profileId}, ${aiOutput.slice(0, 500)}, ${userVersion.slice(0, 500)}, 'accept', 'Output accepted as-is — voice was accurate')
+    `;
+    return;
+  }
+
+  // For manual edits or revision feedback, analyze WHY
+  let lesson = "";
+  try {
+    const analysis = await client.messages.create({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 300,
+      messages: [
+        {
+          role: "user",
+          content: `A user edited AI-generated text. Analyze what they changed and WHY in 1-2 concise sentences. Focus on style preferences — what did the AI get wrong about their voice?
+
+AI WROTE: "${aiOutput.slice(0, 800)}"
+
+USER CHANGED TO: "${userVersion.slice(0, 800)}"
+
+${revisionFeedback ? `USER'S FEEDBACK: "${revisionFeedback}"` : ""}
+
+Respond with ONLY the lesson learned (e.g., "User prefers shorter sentences and avoids formal transitions. They removed hedging language like 'perhaps' and 'it seems'."). No preamble.`,
+        },
+      ],
+    });
+    lesson = analysis.content[0].type === "text" ? analysis.content[0].text : "";
+  } catch {
+    // If analysis fails, store raw diff context
+    lesson = revisionFeedback || "Manual edit recorded";
+  }
+
   await db`
-    INSERT INTO voice_corrections (user_id, profile_id, original_text, corrected_text)
-    VALUES (${userId}, ${profileId}, ${originalText.slice(0, 2000)}, ${correctedText.slice(0, 2000)})
+    INSERT INTO voice_corrections (user_id, profile_id, original_text, corrected_text, correction_type, lesson)
+    VALUES (${userId}, ${profileId}, ${aiOutput.slice(0, 2000)}, ${userVersion.slice(0, 2000)}, ${correctionType}, ${lesson})
   `;
+}
+
+export async function getCorrectionsCount(userId: string, profileId: number): Promise<number> {
+  const db = sql();
+  const [row] = await db`
+    SELECT COUNT(*)::int as count FROM voice_corrections
+    WHERE user_id = ${userId} AND profile_id = ${profileId}
+  `;
+  return row?.count || 0;
 }

@@ -59,6 +59,8 @@ export async function initSchema() {
       profile_id INTEGER REFERENCES style_profiles(id) ON DELETE CASCADE,
       original_text TEXT NOT NULL,
       corrected_text TEXT NOT NULL,
+      correction_type TEXT DEFAULT 'manual_edit',
+      lesson TEXT,
       created_at TIMESTAMPTZ DEFAULT NOW()
     );
 
