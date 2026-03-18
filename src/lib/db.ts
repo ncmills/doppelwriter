@@ -49,6 +49,7 @@ export async function initSchema() {
       description TEXT,
       writer_name TEXT,
       writer_bio TEXT,
+      writer_category TEXT DEFAULT 'custom',
       is_curated BOOLEAN DEFAULT FALSE,
       profile_json TEXT,
       system_prompt TEXT,
