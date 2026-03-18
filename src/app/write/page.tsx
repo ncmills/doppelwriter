@@ -32,10 +32,30 @@ export default function WritePage() {
 
   if (status === "loading" || !session) return null;
 
+  const [buildingVoice, setBuildingVoice] = useState<string | null>(null);
+
   const handleSelectVoice = (id: number, name: string) => {
     setProfileId(id);
     setProfileName(name);
     setIsNewUser(false);
+    setBuildingVoice(null);
+  };
+
+  const handleQuickStart = async (name: string) => {
+    setBuildingVoice(name);
+    try {
+      const res = await fetch("/api/writers/build", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ writerName: name, isCurated: true }),
+      });
+      if (res.ok) {
+        const { profileId: id } = await res.json();
+        handleSelectVoice(id, name);
+      }
+    } catch {
+      setBuildingVoice(null);
+    }
   };
 
   return (
@@ -88,24 +108,19 @@ export default function WritePage() {
               ].map((w) => (
                 <button
                   key={w.name}
-                  onClick={() => {
-                    // Build and select
-                    fetch("/api/writers/build", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ writerName: w.name, isCurated: true }),
-                    })
-                      .then((r) => r.json())
-                      .then(({ profileId: id }) => handleSelectVoice(id, w.name));
-                  }}
-                  className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5 text-left hover:border-amber-600/40 transition-colors group"
+                  onClick={() => handleQuickStart(w.name)}
+                  disabled={buildingVoice !== null}
+                  className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5 text-left hover:border-amber-600/40 transition-colors group disabled:opacity-60"
                 >
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center gap-3">
                     <WriterAvatar name={w.name} size={40} />
-                    <div>
+                    <div className="flex-1">
                       <p className="font-semibold group-hover:text-amber-400 transition-colors">{w.name}</p>
                       <p className="text-xs text-stone-500">{w.desc}</p>
                     </div>
+                    {buildingVoice === w.name && (
+                      <span className="text-xs text-amber-400 animate-pulse">Loading...</span>
+                    )}
                   </div>
                 </button>
               ))}

@@ -56,9 +56,14 @@ export default function HomePage() {
         {/* Hero action */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="font-[family-name:var(--font-literata)] text-3xl font-bold">Home</h1>
-          <Link href="/write" className="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors">
-            Start Writing
-          </Link>
+          <div className="flex gap-3">
+            <Link href="/merge" className="px-4 py-2.5 border border-stone-700 hover:border-amber-600/40 rounded-lg text-sm transition-colors text-stone-300">
+              Merge Voices
+            </Link>
+            <Link href="/write" className="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors">
+              Start Writing
+            </Link>
+          </div>
         </div>
 
         {/* Stats */}
