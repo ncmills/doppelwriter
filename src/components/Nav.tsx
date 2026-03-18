@@ -7,10 +7,8 @@ import UsageBar from "./UsageBar";
 
 const links = [
   { href: "/dashboard", label: "Dashboard" },
-  { href: "/editor", label: "Editor" },
-  { href: "/generate", label: "Generate" },
-  { href: "/writers", label: "Writers" },
-  { href: "/samples", label: "Samples" },
+  { href: "/doppelwrite", label: "DoppelWrite" },
+  { href: "/create", label: "Create" },
 ];
 
 export default function Nav() {
@@ -30,7 +28,7 @@ export default function Nav() {
               key={link.href}
               href={link.href}
               className={`px-3 py-1.5 rounded-md text-sm transition-colors ${
-                pathname === link.href
+                pathname.startsWith(link.href)
                   ? "bg-amber-600/20 text-amber-400"
                   : "text-stone-400 hover:text-white hover:bg-stone-800/40"
               }`}

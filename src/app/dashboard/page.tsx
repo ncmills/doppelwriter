@@ -13,77 +13,90 @@ interface Draft {
   content: string;
 }
 
+interface Profile {
+  id: number;
+  name: string;
+  is_curated: boolean;
+  writer_name: string | null;
+}
+
 export default function DashboardPage() {
-  const [stats, setStats] = useState({ profiles: 0, samples: 0, drafts: 0 });
   const [drafts, setDrafts] = useState<Draft[]>([]);
+  const [profiles, setProfiles] = useState<Profile[]>([]);
   const [usage, setUsage] = useState<{ used: number; limit: number; plan: string } | null>(null);
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/profiles").then((r) => r.json()),
-      fetch("/api/samples").then((r) => r.json()),
       fetch("/api/drafts").then((r) => r.json()),
+      fetch("/api/profiles").then((r) => r.json()),
       fetch("/api/usage").then((r) => r.json()),
-    ]).then(([profiles, samples, draftsData, usageData]) => {
-      setStats({ profiles: profiles.length, samples: samples.length, drafts: draftsData.length });
-      setDrafts(draftsData.slice(0, 5));
-      setUsage(usageData);
+    ]).then(([d, p, u]) => {
+      setDrafts(d);
+      setProfiles(p);
+      setUsage(u);
     });
   }, []);
+
+  const personalProfiles = profiles.filter((p) => !p.is_curated);
+  const recentCurated = profiles.filter((p) => p.is_curated).slice(0, 4);
 
   return (
     <>
       <Nav />
       <main className="max-w-6xl mx-auto px-6 py-8">
-        <h1 className="text-3xl font-bold mb-8 font-[family-name:var(--font-literata)]">Dashboard</h1>
+        <h1 className="font-[family-name:var(--font-literata)] text-3xl font-bold mb-8">Dashboard</h1>
 
+        {/* Stats row */}
         <div className="grid grid-cols-4 gap-4 mb-8">
-          {[
-            { label: "Style Profiles", value: stats.profiles, color: "text-amber-400" },
-            { label: "Writing Samples", value: stats.samples, color: "text-green-400" },
-            { label: "Drafts", value: stats.drafts, color: "text-amber-400" },
-            {
-              label: "Usage",
-              value: usage ? (usage.limit === -1 ? "Unlimited" : `${usage.used}/${usage.limit}`) : "...",
-              color: usage?.plan === "pro" ? "text-amber-400" : "text-stone-400",
-            },
-          ].map((stat) => (
-            <div key={stat.label} className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
-              <p className="text-stone-400 text-sm">{stat.label}</p>
-              <p className={`text-2xl font-bold mt-1 ${stat.color}`}>{stat.value}</p>
+          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
+            <p className="text-stone-400 text-sm">Projects</p>
+            <p className="text-2xl font-bold mt-1 text-amber-400">{drafts.length}</p>
+          </div>
+          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
+            <p className="text-stone-400 text-sm">My DoppelWriters</p>
+            <p className="text-2xl font-bold mt-1 text-amber-400">{personalProfiles.length}</p>
+          </div>
+          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
+            <p className="text-stone-400 text-sm">Drafts</p>
+            <p className="text-2xl font-bold mt-1 text-green-400">{drafts.length}</p>
+          </div>
+          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
+            <p className="text-stone-400 text-sm">Usage</p>
+            <p className="text-2xl font-bold mt-1 text-stone-300">
+              {usage ? (usage.limit === -1 ? `${usage.used}` : `${usage.used}/${usage.limit}`) : "..."}
+            </p>
+          </div>
+        </div>
+
+        {/* DoppelWriters section */}
+        {(personalProfiles.length > 0 || recentCurated.length > 0) && (
+          <div className="mb-8">
+            <h2 className="font-[family-name:var(--font-literata)] text-xl font-semibold mb-4">Your DoppelWriters</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {personalProfiles.map((p) => (
+                <Link key={p.id} href={`/doppelwrite/personal?id=${p.id}`}
+                  className="bg-stone-900/50 border border-amber-500/30 rounded-lg p-4 hover:border-amber-500/60 transition-colors">
+                  <p className="font-medium text-sm">{p.name}</p>
+                  <p className="text-xs text-stone-500 mt-1">Personal voice</p>
+                </Link>
+              ))}
+              {recentCurated.map((p) => (
+                <Link key={p.id} href={`/doppelwrite/curated?id=${p.id}`}
+                  className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4 hover:border-amber-600/40 transition-colors">
+                  <p className="font-medium text-sm">{p.writer_name || p.name}</p>
+                  <p className="text-xs text-stone-500 mt-1">Curated</p>
+                </Link>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        )}
 
-        <div className="grid grid-cols-3 gap-4 mb-8">
-          <Link
-            href="/editor"
-            className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 hover:border-amber-600/40 transition-colors group"
-          >
-            <h3 className="text-lg font-semibold group-hover:text-amber-400 transition-colors">Edit a Draft</h3>
-            <p className="text-stone-400 text-sm mt-1">Refine your writing in any voice</p>
-          </Link>
-          <Link
-            href="/generate"
-            className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 hover:border-amber-600/40 transition-colors group"
-          >
-            <h3 className="text-lg font-semibold group-hover:text-amber-400 transition-colors">Write Something New</h3>
-            <p className="text-stone-400 text-sm mt-1">Generate a first draft from a brief</p>
-          </Link>
-          <Link
-            href="/writers"
-            className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 hover:border-amber-600/40 transition-colors group"
-          >
-            <h3 className="text-lg font-semibold group-hover:text-amber-400 transition-colors">Browse Writers</h3>
-            <p className="text-stone-400 text-sm mt-1">Explore curated voice profiles</p>
-          </Link>
-        </div>
-
+        {/* Recent Projects / Drafts */}
         {drafts.length > 0 && (
-          <div>
-            <h2 className="text-xl font-semibold mb-4 font-[family-name:var(--font-literata)]">Recent Drafts</h2>
+          <div className="mb-8">
+            <h2 className="font-[family-name:var(--font-literata)] text-xl font-semibold mb-4">Recent Projects</h2>
             <div className="space-y-2">
-              {drafts.map((draft) => (
+              {drafts.slice(0, 8).map((draft) => (
                 <div key={draft.id} className="bg-stone-900/50 border border-stone-800/40 rounded-lg px-5 py-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">{draft.title}</p>
@@ -99,6 +112,22 @@ export default function DashboardPage() {
             </div>
           </div>
         )}
+
+        {/* Quick action cards */}
+        <div className="grid grid-cols-3 gap-4">
+          <Link href="/doppelwrite" className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 hover:border-amber-600/40 transition-colors group">
+            <h3 className="text-lg font-semibold group-hover:text-amber-400 transition-colors">DoppelWrite</h3>
+            <p className="text-stone-400 text-sm mt-1">Edit or generate in any voice</p>
+          </Link>
+          <Link href="/create" className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 hover:border-amber-600/40 transition-colors group">
+            <h3 className="text-lg font-semibold group-hover:text-amber-400 transition-colors">Create DoppelWriter</h3>
+            <p className="text-stone-400 text-sm mt-1">Build a new voice profile</p>
+          </Link>
+          <Link href="/create/personal" className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 hover:border-amber-600/40 transition-colors group">
+            <h3 className="text-lg font-semibold group-hover:text-amber-400 transition-colors">Clone Your Voice</h3>
+            <p className="text-stone-400 text-sm mt-1">Upload your writing and build your profile</p>
+          </Link>
+        </div>
       </main>
     </>
   );
