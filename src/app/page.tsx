@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CURATED_WRITERS } from "@/lib/writer-builder";
+import { CURATED_WRITERS } from "@/lib/writer-data";
 import { WRITER_PHOTOS } from "@/lib/writer-photos";
 
 const features = [

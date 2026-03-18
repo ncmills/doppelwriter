@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import WriterAvatar from "@/components/WriterAvatar";
-import { CURATED_WRITERS } from "@/lib/writer-builder";
+import { CURATED_WRITERS } from "@/lib/writer-data";
 
 interface Draft {
   id: number;

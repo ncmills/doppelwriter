@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Nav from "@/components/Nav";
-import { CURATED_WRITERS } from "@/lib/writer-builder";
+import { CURATED_WRITERS } from "@/lib/writer-data";
 import Link from "next/link";
 
 export default function CreateCuratedPage() {
