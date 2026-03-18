@@ -11,11 +11,11 @@ export interface UseCase {
 }
 
 export const USE_CASE_CATEGORIES = [
-  { id: "personal", label: "Personal & Life Events" },
-  { id: "professional", label: "Professional & Career" },
-  { id: "business", label: "Business" },
-  { id: "content", label: "Content & Creative" },
-  { id: "formal", label: "Formal & Official" },
+  { id: "personal", label: "Casual & Personal" },
+  { id: "professional", label: "Professional Emails & Letters" },
+  { id: "business", label: "Business Writing" },
+  { id: "content", label: "Creative Writing" },
+  { id: "formal", label: "Formal Letters" },
 ];
 
 export const USE_CASES: UseCase[] = [
