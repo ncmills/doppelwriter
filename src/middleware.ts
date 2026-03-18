@@ -17,6 +17,16 @@ const publicPaths = [
 export default auth((req) => {
   const { pathname } = req.nextUrl;
 
+  // Redirect old dashboard to home
+  if (pathname === "/dashboard") {
+    return NextResponse.redirect(new URL("/home", req.url));
+  }
+
+  // Redirect old doppelwrite to write
+  if (pathname === "/doppelwrite" || pathname.startsWith("/doppelwrite/")) {
+    return NextResponse.redirect(new URL("/write", req.url));
+  }
+
   const isPublic = publicPaths.some(
     (p) => pathname === p || pathname.startsWith(p + "/")
   );

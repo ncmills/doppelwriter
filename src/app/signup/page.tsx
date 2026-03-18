@@ -40,7 +40,7 @@ export default function SignupPage() {
       setError("Account created but login failed. Try logging in.");
       setLoading(false);
     } else {
-      window.location.href = "/dashboard";
+      window.location.href = "/write";
     }
   }
 
