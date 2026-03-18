@@ -21,14 +21,16 @@ export default function WritePage() {
     if (status === "unauthenticated") router.push("/login");
   }, [status, router]);
 
-  if (status === "loading" || !session) return null;
-
   // Check if user has any history
   useEffect(() => {
-    fetch("/api/drafts").then((r) => r.json()).then((drafts) => {
-      if (drafts.length > 0) setIsNewUser(false);
-    });
-  }, []);
+    if (session) {
+      fetch("/api/drafts").then((r) => r.json()).then((drafts) => {
+        if (drafts.length > 0) setIsNewUser(false);
+      });
+    }
+  }, [session]);
+
+  if (status === "loading" || !session) return null;
 
   const handleSelectVoice = (id: number, name: string) => {
     setProfileId(id);
