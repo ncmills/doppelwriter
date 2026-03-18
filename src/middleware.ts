@@ -11,7 +11,6 @@ const publicPaths = [
   "/api/auth",
   "/api/stripe/webhook",
   "/api/gmail/callback",
-  "/api/init",
 ];
 
 export default auth((req) => {

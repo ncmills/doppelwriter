@@ -1,6 +1,9 @@
 "use client";
 
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useEffect } from "react";
+import DOMPurify from "dompurify";
+
+const ALLOWED_TAGS = ["b", "i", "u", "strong", "em", "a", "p", "br", "h1", "h2", "h3", "ul", "ol", "li", "span", "div"];
 
 interface RichEditorProps {
   value: string;
@@ -11,35 +14,46 @@ interface RichEditorProps {
 
 export default function RichEditor({ value, onChange, placeholder, className }: RichEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
+  const isInternalUpdate = useRef(false);
+
+  // Sync value prop to editor only when it changes externally
+  useEffect(() => {
+    if (editorRef.current && !isInternalUpdate.current) {
+      const sanitized = DOMPurify.sanitize(value, { ALLOWED_TAGS });
+      if (editorRef.current.innerHTML !== sanitized) {
+        editorRef.current.innerHTML = sanitized;
+      }
+    }
+    isInternalUpdate.current = false;
+  }, [value]);
 
   const exec = useCallback((cmd: string, val?: string) => {
     document.execCommand(cmd, false, val);
     if (editorRef.current) {
-      onChange(editorRef.current.innerHTML);
+      isInternalUpdate.current = true;
+      onChange(DOMPurify.sanitize(editorRef.current.innerHTML, { ALLOWED_TAGS }));
     }
   }, [onChange]);
 
   const handleInput = useCallback(() => {
     if (editorRef.current) {
-      onChange(editorRef.current.innerHTML);
+      isInternalUpdate.current = true;
+      onChange(DOMPurify.sanitize(editorRef.current.innerHTML, { ALLOWED_TAGS }));
     }
   }, [onChange]);
 
   const handlePaste = useCallback((e: React.ClipboardEvent) => {
-    // Allow rich text paste — browser handles formatting preservation
-    // Only strip if it's from external sources with heavy styling
     const html = e.clipboardData.getData("text/html");
     if (html) {
       e.preventDefault();
-      // Clean but preserve basic formatting (bold, italic, links, lists)
-      const cleaned = html
-        .replace(/class="[^"]*"/g, "")
-        .replace(/style="[^"]*"/g, "")
-        .replace(/id="[^"]*"/g, "");
-      document.execCommand("insertHTML", false, cleaned);
-      if (editorRef.current) onChange(editorRef.current.innerHTML);
+      // Sanitize pasted HTML — strip everything except safe tags
+      const clean = DOMPurify.sanitize(html, { ALLOWED_TAGS });
+      document.execCommand("insertHTML", false, clean);
+      if (editorRef.current) {
+        isInternalUpdate.current = true;
+        onChange(DOMPurify.sanitize(editorRef.current.innerHTML, { ALLOWED_TAGS }));
+      }
     }
-    // If no HTML, let plain text paste through normally
   }, [onChange]);
 
   return (
@@ -74,17 +88,6 @@ export default function RichEditor({ value, onChange, placeholder, className }: 
           <option value="h3">Heading 3</option>
           <option value="p">Paragraph</option>
         </select>
-        <select
-          onChange={(e) => { if (e.target.value) exec("fontSize", e.target.value); e.target.value = ""; }}
-          className="bg-stone-800 text-stone-400 text-xs rounded px-2 py-1 border-none focus:outline-none"
-          defaultValue=""
-        >
-          <option value="" disabled>Size</option>
-          <option value="1">Small</option>
-          <option value="3">Normal</option>
-          <option value="5">Large</option>
-          <option value="7">Huge</option>
-        </select>
       </div>
 
       {/* Editor area */}
@@ -94,13 +97,12 @@ export default function RichEditor({ value, onChange, placeholder, className }: 
         onInput={handleInput}
         onPaste={handlePaste}
         suppressContentEditableWarning
-        dangerouslySetInnerHTML={{ __html: value }}
         className={`flex-1 p-4 overflow-auto focus:outline-none leading-relaxed text-white ${className || ""}`}
         data-placeholder={placeholder}
+        role="textbox"
+        aria-label="Rich text editor"
         style={{ minHeight: 350 }}
       />
-
-      {/* Styles in globals.css */}
     </div>
   );
 }

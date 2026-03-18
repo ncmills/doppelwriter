@@ -68,10 +68,11 @@ export default function SignupPage() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password (min 8 characters)"
+            placeholder="Password"
             minLength={8}
             className="w-full px-4 py-3 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
+          <p className="text-xs text-stone-600 -mt-2">Min 8 characters, with uppercase, lowercase, and a number</p>
           {error && <p className="text-red-400 text-sm">{error}</p>}
           <button
             type="submit"

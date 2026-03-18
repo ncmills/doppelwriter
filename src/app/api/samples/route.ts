@@ -22,6 +22,8 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get("file") as File;
     if (!file) return NextResponse.json({ error: "No file" }, { status: 400 });
+    if (file.size > 10 * 1024 * 1024) return NextResponse.json({ error: "File too large (10MB max)" }, { status: 400 });
+    if (!file.name.match(/\.(docx|txt|md)$/i)) return NextResponse.json({ error: "Unsupported file type" }, { status: 400 });
 
     const buffer = Buffer.from(await file.arrayBuffer());
 
