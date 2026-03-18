@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CURATED_WRITERS } from "@/lib/writer-builder";
+import { WRITER_PHOTOS } from "@/lib/writer-photos";
 
 const features = [
   {
@@ -94,13 +95,22 @@ export default function LandingPage() {
           profile from their published work.
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-          {CURATED_WRITERS.map((w) => (
+          {CURATED_WRITERS.slice(0, 12).map((w) => (
             <div
               key={w.name}
               className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4 hover:border-amber-600/40 transition-colors"
             >
-              <p className="font-medium text-sm">{w.name}</p>
-              <p className="text-xs text-stone-500 mt-1 line-clamp-2">{w.bio}</p>
+              <div className="flex items-center gap-3 mb-2">
+                {WRITER_PHOTOS[w.name] ? (
+                  <img src={WRITER_PHOTOS[w.name]} alt={w.name} className="w-8 h-8 rounded-full object-cover bg-stone-800" loading="lazy" />
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-stone-800 flex items-center justify-center text-stone-400 text-xs font-medium">
+                    {w.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
+                  </div>
+                )}
+                <p className="font-medium text-sm">{w.name}</p>
+              </div>
+              <p className="text-xs text-stone-500 line-clamp-2">{w.bio}</p>
             </div>
           ))}
         </div>
