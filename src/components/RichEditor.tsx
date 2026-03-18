@@ -100,19 +100,7 @@ export default function RichEditor({ value, onChange, placeholder, className }: 
         style={{ minHeight: 350 }}
       />
 
-      <style jsx>{`
-        [contenteditable]:empty:before {
-          content: attr(data-placeholder);
-          color: #57534e;
-          pointer-events: none;
-        }
-        [contenteditable] h1 { font-size: 1.5rem; font-weight: bold; margin: 0.5em 0; }
-        [contenteditable] h2 { font-size: 1.25rem; font-weight: bold; margin: 0.5em 0; }
-        [contenteditable] h3 { font-size: 1.1rem; font-weight: 600; margin: 0.5em 0; }
-        [contenteditable] ul { list-style: disc; padding-left: 1.5em; }
-        [contenteditable] ol { list-style: decimal; padding-left: 1.5em; }
-        [contenteditable] a { color: #d97706; text-decoration: underline; }
-      `}</style>
+      {/* Styles in globals.css */}
     </div>
   );
 }
