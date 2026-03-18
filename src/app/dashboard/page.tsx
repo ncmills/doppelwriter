@@ -74,11 +74,15 @@ export default function DashboardPage() {
             <h2 className="font-[family-name:var(--font-literata)] text-xl font-semibold mb-4">Your DoppelWriters</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {personalProfiles.map((p) => (
-                <Link key={p.id} href={`/doppelwrite/personal?id=${p.id}`}
-                  className="bg-stone-900/50 border border-amber-500/30 rounded-lg p-4 hover:border-amber-500/60 transition-colors">
-                  <p className="font-medium text-sm">{p.name}</p>
-                  <p className="text-xs text-stone-500 mt-1">Personal voice</p>
-                </Link>
+                <div key={p.id} className="bg-stone-900/50 border border-amber-500/30 rounded-lg p-4 hover:border-amber-500/60 transition-colors">
+                  <Link href={`/doppelwrite/personal?id=${p.id}`}>
+                    <p className="font-medium text-sm">{p.name}</p>
+                  </Link>
+                  <div className="flex items-center justify-between mt-1">
+                    <p className="text-xs text-stone-500">Personal voice</p>
+                    <Link href={`/profile/${p.id}`} className="text-[10px] text-amber-400 hover:text-amber-300">View profile</Link>
+                  </div>
+                </div>
               ))}
               {recentCurated.map((p) => (
                 <Link key={p.id} href={`/doppelwrite/curated?id=${p.id}`}

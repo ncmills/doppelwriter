@@ -23,13 +23,13 @@ export default function CreatePage() {
               Personal DoppelWriter
             </h2>
             <p className="text-stone-400 text-sm leading-relaxed mb-3">
-              Clone your own writing voice. Upload examples, record yourself speaking, or connect your email.
+              Clone anyone&apos;s writing voice — yours, your mom&apos;s, your boss&apos;s. Upload their writing, record them speaking, or connect their email.
             </p>
             <ul className="text-xs text-stone-500 space-y-1">
               <li>Upload .docx, .txt, .md files</li>
-              <li>Paste text directly</li>
-              <li>Speech-to-text voice recording</li>
-              <li>Sync sent emails</li>
+              <li>Paste text or record speech</li>
+              <li>Sync Gmail sent emails</li>
+              <li>Connect Google Drive</li>
             </ul>
           </Link>
 

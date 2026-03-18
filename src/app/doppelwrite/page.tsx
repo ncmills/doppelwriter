@@ -23,7 +23,7 @@ export default function DoppelWritePage() {
               Personal DoppelWriter
             </h2>
             <p className="text-stone-400 text-sm leading-relaxed">
-              Write using your own voice profile. Sounds like you wrote it yourself.
+              Write in your voice, your mom&apos;s voice, your boss&apos;s voice — any personal profile you&apos;ve built.
             </p>
           </Link>
 

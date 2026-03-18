@@ -3,11 +3,11 @@ import { CURATED_WRITERS } from "@/lib/writer-builder";
 
 const features = [
   {
-    title: "Upload Your Words",
-    desc: "Paste emails, essays, memos — anything you've written. DoppelWriter reads your voice the way a musician reads sheet music: rhythm, dynamics, the spaces between notes.",
+    title: "Clone Any Voice",
+    desc: "Upload writing from anyone — yourself, your mom, your boss, a friend. DoppelWriter reads their voice the way a musician reads sheet music: rhythm, dynamics, the spaces between notes.",
   },
   {
-    title: "Write Like Anyone",
+    title: "Write Like the Greats",
     desc: "Pick from our library of iconic writers, or name anyone. We build a forensic style profile from their published work so you can draft in their voice.",
   },
   {
@@ -49,8 +49,8 @@ export default function LandingPage() {
           </span>
         </h1>
         <p className="text-xl text-stone-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-          AI that writes like you. Upload your words. Get back your voice.
-          Or write like Hemingway, Paul Graham, or anyone else.
+          AI that writes like anyone. Clone your voice, your mom&apos;s, your boss&apos;s —
+          or write like Hemingway, Paul Graham, and the greats.
         </p>
         <div className="flex gap-4 justify-center">
           <Link

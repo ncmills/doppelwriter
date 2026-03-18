@@ -195,7 +195,7 @@ export default function CreatePersonalPage() {
       <Nav />
       <main className="max-w-3xl mx-auto px-6 py-8">
         <h1 className="font-[family-name:var(--font-literata)] text-2xl font-bold mb-2">Create Personal DoppelWriter</h1>
-        <p className="text-stone-400 text-sm mb-6">Feed it your writing. The more you give it, the better it sounds.</p>
+        <p className="text-stone-400 text-sm mb-6">Clone anyone&apos;s voice — yours, your mom&apos;s, your boss&apos;s, a friend&apos;s. Upload their writing and we&apos;ll build a profile that sounds exactly like them.</p>
 
         {/* Progress bar */}
         <div className="mb-8">
