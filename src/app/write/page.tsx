@@ -29,7 +29,9 @@ export default function WritePage() {
     }
   }, [session]);
 
-  if (status === "loading" || !session) return null;
+  // Don't conditionally return null — causes React hooks mismatch during hydration.
+  // Instead, render the same tree but hide it while loading.
+  const isReady = status !== "loading" && !!session;
 
   const handleSelectVoice = (id: number, name: string) => {
     setProfileId(id);
@@ -54,6 +56,10 @@ export default function WritePage() {
       setBuildingVoice(null);
     }
   };
+
+  if (!isReady) {
+    return <div className="min-h-screen bg-[#0C0A09]" />;
+  }
 
   return (
     <>
