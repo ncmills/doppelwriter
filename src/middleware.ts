@@ -6,6 +6,7 @@ const publicPaths = [
   "/pricing",
   "/login",
   "/signup",
+  "/write-like",
   "/api/auth",
   "/api/stripe/webhook",
   "/api/init",
@@ -18,7 +19,8 @@ export default auth((req) => {
     (p) => pathname === p || pathname.startsWith(p + "/")
   );
   const isStatic =
-    pathname.startsWith("/_next") || pathname.includes("favicon");
+    pathname.startsWith("/_next") || pathname.includes("favicon") ||
+    pathname === "/robots.txt" || pathname === "/sitemap.xml";
 
   if (isStatic || isPublic) return NextResponse.next();
 
