@@ -4,6 +4,9 @@ import { sql } from "./db";
 
 const client = new Anthropic();
 
+// Optimal temperature for style-matched writing (research: 0.6-0.8 sweet spot)
+const STYLE_TEMPERATURE = 0.7;
+
 export interface DiffChunk {
   value: string;
   added?: boolean;
@@ -26,9 +29,10 @@ async function getSystemPrompt(profileId: number): Promise<string> {
   if (rows[0]?.system_prompt) return rows[0].system_prompt;
   return `You are an expert editor. Improve the writing while preserving the author's voice and intent.
 
-ANTI-AI-ISM RULES:
-Never use "Moreover," "Furthermore," "Additionally," "In conclusion," "It's worth noting," "Delve," "Crucial," "Landscape," "Leverage."
-Never over-explain. Prefer short sentences when they work. Use verbs, not nominalizations.`;
+STYLE RULES:
+Write in short, direct sentences when they serve the point. Use active voice.
+Choose concrete words over abstract ones. Let verbs do the work, not nouns.
+Vary sentence length for rhythm — short sentences for impact, longer ones for flow.`;
 }
 
 export async function* editDraft(
@@ -41,12 +45,12 @@ export async function* editDraft(
   const userMessage = instructions
     ? `Edit this draft in the author's voice. Additional instructions: ${instructions}
 
-Return ONLY the edited text. No commentary, no explanations, no "here's the edited version" preamble.
+Return ONLY the edited text. No commentary, no explanations, no preamble.
 
 ---
 
 ${draft}`
-    : `Edit this draft in the author's voice. Improve clarity, flow, and impact while maintaining their exact style. Fix errors. Tighten loose sentences. Make it sound like THEM, not like AI.
+    : `Edit this draft in the author's voice. Improve clarity, flow, and impact while maintaining their exact style. Fix errors. Tighten loose sentences. Make it sound like THEM.
 
 Return ONLY the edited text. No commentary, no explanations, no preamble.
 
@@ -57,6 +61,7 @@ ${draft}`;
   const stream = client.messages.stream({
     model: "claude-sonnet-4-20250514",
     max_tokens: 8192,
+    temperature: STYLE_TEMPERATURE,
     system: systemPrompt,
     messages: [{ role: "user", content: userMessage }],
   });
@@ -79,6 +84,7 @@ export async function* reviseDraft(
   const stream = client.messages.stream({
     model: "claude-sonnet-4-20250514",
     max_tokens: 8192,
+    temperature: STYLE_TEMPERATURE,
     system: systemPrompt,
     messages: [
       { role: "user", content: `Edit this draft in the author's voice. Return ONLY the edited text:\n\n${original}` },
@@ -94,9 +100,7 @@ export async function* reviseDraft(
   }
 }
 
-// ── Dynamic Voice Learning ──────────────────────────────────────────────────
-// Tracks every meaningful edit and uses Claude to understand WHY the user
-// made changes, building a richer correction history over time.
+// ── Edit Feedback Loop ──────────────────────────────────────────────────────
 
 export async function recordCorrection(
   userId: string,
@@ -110,7 +114,6 @@ export async function recordCorrection(
 
   const db = sql();
 
-  // For accepts with no changes, record as positive signal
   if (correctionType === "accept" && aiOutput === userVersion) {
     await db`
       INSERT INTO voice_corrections (user_id, profile_id, original_text, corrected_text, correction_type, lesson)
@@ -119,7 +122,6 @@ export async function recordCorrection(
     return;
   }
 
-  // For manual edits or revision feedback, analyze WHY
   let lesson = "";
   try {
     const analysis = await client.messages.create({
@@ -128,21 +130,20 @@ export async function recordCorrection(
       messages: [
         {
           role: "user",
-          content: `A user edited AI-generated text. Analyze what they changed and WHY in 1-2 concise sentences. Focus on style preferences — what did the AI get wrong about their voice?
+          content: `A user edited AI-generated text. Analyze what they changed and WHY in 1-2 concise sentences. Focus on style preferences — what should the AI do differently next time?
+
+Frame your lesson POSITIVELY (what TO do, not what to avoid). Example: "Use shorter, punchier sentences" instead of "Don't write long sentences."
 
 AI WROTE: "${aiOutput.slice(0, 800)}"
-
 USER CHANGED TO: "${userVersion.slice(0, 800)}"
-
 ${revisionFeedback ? `USER'S FEEDBACK: "${revisionFeedback}"` : ""}
 
-Respond with ONLY the lesson learned (e.g., "User prefers shorter sentences and avoids formal transitions. They removed hedging language like 'perhaps' and 'it seems'."). No preamble.`,
+Respond with ONLY the lesson. No preamble.`,
         },
       ],
     });
     lesson = analysis.content[0].type === "text" ? analysis.content[0].text : "";
   } catch {
-    // If analysis fails, store raw diff context
     lesson = revisionFeedback || "Manual edit recorded";
   }
 

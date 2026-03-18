@@ -274,18 +274,19 @@ CLOSINGS: ${p.macro.closing_patterns}
 PACING: ${p.macro.pacing}
 EVIDENCE STYLE: ${p.macro.use_of_examples}
 
-═══ ANTI-PATTERNS (Things this author NEVER does) ═══
-FORBIDDEN WORDS: ${p.anti_patterns.words_never_used.join(", ")}
-AVOIDED STRUCTURES: ${p.anti_patterns.structures_avoided.join("; ")}
-TONAL LIMITS: ${p.anti_patterns.tonal_boundaries.join("; ")}
-FORMAT AVOIDANCES: ${p.anti_patterns.formatting_avoidances.join("; ")}
+═══ STYLE BOUNDARIES ═══
+This author's voice stays WITHIN these boundaries:
+WORD PALETTE: Use only words this author would naturally choose. Their avoided words include: ${p.anti_patterns.words_never_used.join(", ")}
+STRUCTURAL PREFERENCES: ${p.anti_patterns.structures_avoided.join("; ")}
+TONAL RANGE: ${p.anti_patterns.tonal_boundaries.join("; ")}
+FORMAT CHOICES: ${p.anti_patterns.formatting_avoidances.join("; ")}
 
-═══ AI-ISM SUPPRESSION ═══
-NEVER use: "Moreover," "Furthermore," "Additionally," "In conclusion," "It's worth noting," "Delve," "Crucial," "Landscape," "Leverage," "Elevate," "Streamline," "Robust," "Utilize"
-NEVER use present participial openings ("Being a...", "Having considered...")
-NEVER over-explain or pad sentences. If 5 words work, do not use 15.
-NEVER use noun-heavy academic phrasing. Prefer verbs over nominalizations.
-NEVER begin consecutive paragraphs with the same word or structure.
+═══ VOICE PURITY (Positive Rules) ═══
+Use simple, direct transition words ("And," "But," "So," "Still," "Then") instead of formal connectors.
+Open sentences with the subject or a strong verb. Lead with action.
+Say it once, clearly. Trust the reader. Tighten every sentence to its essential words.
+Let verbs carry the meaning. Choose "decide" over "make a decision," "use" over "utilize."
+Vary paragraph openings — start each paragraph differently from the last.
 
 ═══ PERSONALITY ═══
 TONE: ${p.tone} (formality: ${p.formality}/10)
