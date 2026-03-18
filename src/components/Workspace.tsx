@@ -20,6 +20,7 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
   const [wordCount, setWordCount] = useState("");
   const [error, setError] = useState("");
   const [learningCount, setLearningCount] = useState(0);
+  const [showOptions, setShowOptions] = useState(false);
   // Track the AI's raw output so we can compare against user edits
   const aiOutputRef = useRef("");
 
@@ -193,36 +194,33 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
 
   return (
     <div>
-      {/* Profile badge + mode toggle */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <span className="text-sm bg-amber-600/20 text-amber-400 px-3 py-1 rounded-full">{profileName}</span>
-          {learningCount > 0 && (
-            <span className="text-xs text-stone-500">
-              {learningCount} edit{learningCount !== 1 ? "s" : ""} learned
-            </span>
-          )}
+      {/* Top bar — minimal: mode toggle + actions */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
           <div className="flex bg-stone-900 rounded-lg p-0.5">
-            <button
-              onClick={() => setMode("edit")}
-              className={`px-4 py-1.5 rounded-md text-sm transition-colors ${mode === "edit" ? "bg-stone-700 text-white" : "text-stone-400"}`}
-            >
+            <button onClick={() => setMode("edit")}
+              className={`px-4 py-1.5 rounded-md text-sm transition-colors ${mode === "edit" ? "bg-stone-700 text-white" : "text-stone-400"}`}>
               Edit
             </button>
-            <button
-              onClick={() => setMode("generate")}
-              className={`px-4 py-1.5 rounded-md text-sm transition-colors ${mode === "generate" ? "bg-stone-700 text-white" : "text-stone-400"}`}
-            >
+            <button onClick={() => setMode("generate")}
+              className={`px-4 py-1.5 rounded-md text-sm transition-colors ${mode === "generate" ? "bg-stone-700 text-white" : "text-stone-400"}`}>
               Generate
             </button>
           </div>
+          <button onClick={() => setShowOptions(!showOptions)}
+            className="text-xs text-stone-500 hover:text-stone-300 transition-colors">
+            {showOptions ? "Hide options" : "Options"}
+          </button>
+          {learningCount > 0 && (
+            <span className="text-xs text-stone-600">{learningCount} edit{learningCount !== 1 ? "s" : ""} learned</span>
+          )}
         </div>
         <div className="flex gap-2">
           <button onClick={handleDownload} className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs transition-colors text-stone-400 hover:text-white">
             Download
           </button>
           <button onClick={handleSave} className="px-4 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
-            Save Draft
+            Save
           </button>
         </div>
       </div>
@@ -233,12 +231,19 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
         </div>
       )}
 
-      {/* Instructions bar */}
-      <div className="mb-4">
-        <input type="text" value={instructions} onChange={(e) => setInstructions(e.target.value)}
-          placeholder={mode === "edit" ? "Optional instructions (e.g., 'tighten it up', 'more confident')" : "Special instructions for the draft"}
-          className="w-full px-4 py-2 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm" />
-      </div>
+      {/* Collapsible options — progressive disclosure */}
+      {showOptions && (
+        <div className="mb-4 p-3 bg-stone-900/50 border border-stone-800/40 rounded-lg space-y-3">
+          <input type="text" value={instructions} onChange={(e) => setInstructions(e.target.value)}
+            placeholder={mode === "edit" ? "Instructions (e.g., 'tighten it up', 'more confident')" : "Special instructions for the draft"}
+            className="w-full px-3 py-2 bg-stone-900 border border-stone-800 rounded text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm" />
+          {mode === "generate" && (
+            <input type="number" value={wordCount} onChange={(e) => setWordCount(e.target.value)}
+              placeholder="Target word count (e.g., 500)"
+              className="w-full px-3 py-2 bg-stone-900 border border-stone-800 rounded text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm" />
+          )}
+        </div>
+      )}
 
       {mode === "edit" ? (
         <>
