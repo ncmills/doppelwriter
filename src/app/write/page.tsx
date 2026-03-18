@@ -11,6 +11,10 @@ import WriterAvatar from "@/components/WriterAvatar";
 export default function WritePage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [profileId, setProfileId] = useState<number | null>(null);
+  const [profileName, setProfileName] = useState("");
+  const [selectorOpen, setSelectorOpen] = useState(false);
+  const [isNewUser, setIsNewUser] = useState(true);
 
   // Redirect unauthenticated users to login
   useEffect(() => {
@@ -18,10 +22,6 @@ export default function WritePage() {
   }, [status, router]);
 
   if (status === "loading" || !session) return null;
-  const [profileId, setProfileId] = useState<number | null>(null);
-  const [profileName, setProfileName] = useState("");
-  const [selectorOpen, setSelectorOpen] = useState(false);
-  const [isNewUser, setIsNewUser] = useState(true);
 
   // Check if user has any history
   useEffect(() => {
