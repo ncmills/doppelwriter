@@ -15,13 +15,12 @@ export default function WritePage() {
   const [profileName, setProfileName] = useState("");
   const [selectorOpen, setSelectorOpen] = useState(false);
   const [isNewUser, setIsNewUser] = useState(true);
+  const [buildingVoice, setBuildingVoice] = useState<string | null>(null);
 
-  // Redirect unauthenticated users to login
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
   }, [status, router]);
 
-  // Check if user has any history
   useEffect(() => {
     if (session) {
       fetch("/api/drafts").then((r) => r.json()).then((drafts) => {
@@ -31,8 +30,6 @@ export default function WritePage() {
   }, [session]);
 
   if (status === "loading" || !session) return null;
-
-  const [buildingVoice, setBuildingVoice] = useState<string | null>(null);
 
   const handleSelectVoice = (id: number, name: string) => {
     setProfileId(id);
