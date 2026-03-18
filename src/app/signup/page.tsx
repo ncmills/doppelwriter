@@ -10,6 +10,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showVerify, setShowVerify] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -29,26 +30,34 @@ export default function SignupPage() {
       return;
     }
 
-    // Auto-login after signup
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
+    // Show verification prompt, then auto-login
+    setShowVerify(true);
+    setLoading(false);
 
-    if (result?.error) {
-      setError("Account created but login failed. Try logging in.");
-      setLoading(false);
-    } else {
-      window.location.href = "/write";
-    }
+    // Auto-login after 2 seconds (they can verify later)
+    setTimeout(async () => {
+      const result = await signIn("credentials", { email, password, redirect: false });
+      if (!result?.error) window.location.href = "/write";
+    }, 2000);
   }
 
   return (
     <div className="min-h-screen bg-[#0C0A09] flex items-center justify-center">
       <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-8 w-full max-w-sm">
-        <h1 className="text-2xl font-bold text-white mb-6 text-center font-[family-name:var(--font-literata)]">Create Account</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <h1 className="text-2xl font-bold text-white mb-6 text-center font-[family-name:var(--font-literata)]">
+          {showVerify ? "Check Your Email" : "Create Account"}
+        </h1>
+
+        {showVerify ? (
+          <div className="text-center py-4">
+            <div className="text-4xl mb-4">&#9993;</div>
+            <p className="text-stone-300 mb-2">We sent a verification link to</p>
+            <p className="text-amber-400 font-medium mb-4">{email}</p>
+            <p className="text-stone-500 text-sm">Click the link to verify your account. Redirecting you now...</p>
+          </div>
+        ) : null}
+
+        <form onSubmit={handleSubmit} className={`space-y-4 ${showVerify ? "hidden" : ""}`}>
           <input
             type="text"
             value={name}

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { sql } from "@/lib/db";
+import { sendVerificationEmail } from "@/lib/email";
 
 const PASSWORD_MIN_LENGTH = 8;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
@@ -42,5 +43,12 @@ export async function POST(request: NextRequest) {
     RETURNING id, email, name, plan
   `;
 
-  return NextResponse.json({ id: user.id, email: user.email });
+  // Send verification email (non-blocking — don't fail signup if email fails)
+  try {
+    await sendVerificationEmail(user.email, user.id);
+  } catch {
+    // Email sending failed — user can still log in, will be prompted to verify later
+  }
+
+  return NextResponse.json({ id: user.id, email: user.email, needsVerification: true });
 }

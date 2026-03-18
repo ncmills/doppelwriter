@@ -33,6 +33,16 @@ export default function LoginPage() {
     <div className="min-h-screen bg-[#0C0A09] flex items-center justify-center">
       <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-8 w-full max-w-sm">
         <h1 className="text-2xl font-bold text-white mb-6 text-center font-[family-name:var(--font-literata)]">Log In</h1>
+        {typeof window !== "undefined" && new URLSearchParams(window.location.search).get("verified") === "true" && (
+          <div className="mb-4 p-3 bg-green-900/20 border border-green-700/40 rounded-lg text-green-400 text-sm text-center">
+            Email verified! You can now log in.
+          </div>
+        )}
+        {typeof window !== "undefined" && new URLSearchParams(window.location.search).get("error") === "invalid_token" && (
+          <div className="mb-4 p-3 bg-red-900/20 border border-red-700/40 rounded-lg text-red-400 text-sm text-center">
+            Verification link is invalid or expired.
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"

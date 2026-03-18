@@ -9,6 +9,7 @@ const publicPaths = [
   "/write-like",
   "/write",
   "/api/auth",
+  "/api/auth/verify",
   "/api/stripe/webhook",
   "/api/gmail/callback",
 ];
