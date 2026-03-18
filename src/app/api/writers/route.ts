@@ -1,15 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCuratedProfiles, searchCuratedProfiles, CURATED_WRITERS, CATEGORIES } from "@/lib/writer-builder";
 
+// Valid curated names — only these appear in the catalog
+const VALID_NAMES = new Set(CURATED_WRITERS.map((w) => w.name));
+
 export async function GET(request: NextRequest) {
   const category = request.nextUrl.searchParams.get("category");
   const search = request.nextUrl.searchParams.get("search");
 
   if (search) {
     const dbResults = await searchCuratedProfiles(search);
-    const builtNames = new Set(dbResults.map((b) => b.writer_name));
+    // Filter DB results to only show writers in the valid catalog
+    const validDbResults = dbResults.filter((b) => VALID_NAMES.has(b.writer_name as string));
+    const builtNames = new Set(validDbResults.map((b) => b.writer_name));
 
-    // Also search the catalog for unbuilt writers
     const catalogMatches = CURATED_WRITERS.filter(
       (w) => !builtNames.has(w.name) &&
         (w.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -18,7 +22,7 @@ export async function GET(request: NextRequest) {
     );
 
     const all = [
-      ...dbResults.map((b) => ({ ...b, built: !!b.has_profile })),
+      ...validDbResults.map((b) => ({ ...b, built: !!b.has_profile })),
       ...catalogMatches.map((w) => ({
         id: null, name: w.name, writer_name: w.name, writer_bio: w.bio,
         writer_category: w.category, description: w.bio, is_curated: true,
@@ -30,14 +34,16 @@ export async function GET(request: NextRequest) {
   }
 
   const built = await getCuratedProfiles(category || undefined);
-  const builtNames = new Set(built.map((b) => b.writer_name));
+  // Filter: only show DB entries that are in the valid catalog OR were user-added (have a profile)
+  const validBuilt = built.filter((b) => VALID_NAMES.has(b.writer_name as string) || b.has_profile);
+  const builtNames = new Set(validBuilt.map((b) => b.writer_name));
 
   const catalogWriters = category
     ? CURATED_WRITERS.filter((w) => w.category === category)
     : CURATED_WRITERS;
 
   const all = [
-    ...built.map((b) => ({ ...b, built: !!b.has_profile })),
+    ...validBuilt.map((b) => ({ ...b, built: !!b.has_profile })),
     ...catalogWriters.filter((w) => !builtNames.has(w.name)).map((w) => ({
       id: null, name: w.name, writer_name: w.name, writer_bio: w.bio,
       writer_category: w.category, description: w.bio, is_curated: true,
