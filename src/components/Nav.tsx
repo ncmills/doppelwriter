@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import UsageBar from "./UsageBar";
+import Logo from "./Logo";
 
 export default function Nav() {
   const pathname = usePathname();
@@ -12,8 +13,9 @@ export default function Nav() {
 
   return (
     <nav className="border-b border-stone-800/40 bg-[#0C0A09]/80 backdrop-blur-sm sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-6 flex items-center h-14 gap-6">
-        <Link href="/home" className="font-[family-name:var(--font-literata)] text-white font-bold text-lg shrink-0">
+      <div className="max-w-6xl mx-auto px-6 flex items-center h-14 gap-4 sm:gap-6">
+        <Link href="/home" className="font-[family-name:var(--font-literata)] text-white font-bold text-lg shrink-0 flex items-center gap-2">
+          <Logo className="w-5 h-5 text-amber-600" />
           DoppelWriter
         </Link>
         <div className="flex gap-1">
