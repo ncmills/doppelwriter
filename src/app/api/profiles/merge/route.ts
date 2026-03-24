@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import Anthropic from "@anthropic-ai/sdk";
+import { CLAUDE_MODEL } from "@/lib/models";
 
 const client = new Anthropic();
 
@@ -19,10 +20,12 @@ export async function POST(request: NextRequest) {
 
   const db = sql();
 
-  // Fetch all profiles to merge
+  // Fetch all profiles to merge — only allow profiles the user owns or curated ones
   const profiles = await db`
     SELECT id, name, writer_name, system_prompt, profile_json, is_curated
-    FROM style_profiles WHERE id = ANY(${profileIds})
+    FROM style_profiles
+    WHERE id = ANY(${profileIds})
+    AND (user_id = ${session.user.id} OR is_curated = TRUE)
   `;
 
   if (profiles.length < 2) {
@@ -36,7 +39,7 @@ export async function POST(request: NextRequest) {
   }).join("\n\n");
 
   const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: CLAUDE_MODEL,
     max_tokens: 3000,
     messages: [
       {

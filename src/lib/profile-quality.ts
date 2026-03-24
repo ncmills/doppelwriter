@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { sql } from "./db";
+import { CLAUDE_MODEL } from "./models";
 
 const client = new Anthropic();
 
@@ -48,7 +49,7 @@ export async function assessProfileQuality(profileId: number): Promise<ProfileQu
 
   // Ask Claude to evaluate the profile quality
   const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: CLAUDE_MODEL,
     max_tokens: 2048,
     messages: [
       {

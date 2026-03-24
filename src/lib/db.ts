@@ -112,10 +112,89 @@ export async function initSchema() {
       PRIMARY KEY (user_id, profile_id)
     );
 
+    ALTER TABLE style_profiles ADD COLUMN IF NOT EXISTS voice_overrides JSONB DEFAULT '{}';
+
     CREATE INDEX IF NOT EXISTS idx_samples_user ON writing_samples(user_id);
+    CREATE INDEX IF NOT EXISTS idx_samples_user_date ON writing_samples(user_id, created_at);
     CREATE INDEX IF NOT EXISTS idx_profiles_user ON style_profiles(user_id);
     CREATE INDEX IF NOT EXISTS idx_profiles_curated ON style_profiles(is_curated);
+    CREATE INDEX IF NOT EXISTS idx_profiles_user_curated ON style_profiles(user_id, is_curated);
+    CREATE INDEX IF NOT EXISTS idx_profiles_writer ON style_profiles(writer_name);
     CREATE INDEX IF NOT EXISTS idx_drafts_user ON drafts(user_id);
+    CREATE INDEX IF NOT EXISTS idx_drafts_user_date ON drafts(user_id, updated_at);
     CREATE INDEX IF NOT EXISTS idx_usage_user_date ON usage_log(user_id, created_at);
+    CREATE INDEX IF NOT EXISTS idx_verifications_token ON email_verifications(token);
+
+    CREATE TABLE IF NOT EXISTS shared_drafts (
+      id SERIAL PRIMARY KEY,
+      user_id TEXT REFERENCES users(id) ON DELETE SET NULL,
+      slug TEXT UNIQUE NOT NULL,
+      content TEXT NOT NULL,
+      voice_name TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    );
+
+    CREATE TABLE IF NOT EXISTS referrals (
+      id SERIAL PRIMARY KEY,
+      referrer_id TEXT REFERENCES users(id) ON DELETE CASCADE,
+      referred_id TEXT REFERENCES users(id) ON DELETE CASCADE,
+      bonus_applied BOOLEAN DEFAULT FALSE,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    );
+
+    CREATE TABLE IF NOT EXISTS email_sequence_sends (
+      id SERIAL PRIMARY KEY,
+      user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
+      sequence_key TEXT NOT NULL,
+      sent_at TIMESTAMPTZ DEFAULT NOW(),
+      UNIQUE(user_id, sequence_key)
+    );
+
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS referral_code TEXT UNIQUE;
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS referred_by TEXT;
+
+    CREATE INDEX IF NOT EXISTS idx_shared_drafts_slug ON shared_drafts(slug);
+    CREATE INDEX IF NOT EXISTS idx_referrals_referrer ON referrals(referrer_id);
+    CREATE INDEX IF NOT EXISTS idx_email_sends_user ON email_sequence_sends(user_id);
   `;
+
+  await db`
+    CREATE TABLE IF NOT EXISTS email_captures (
+      id SERIAL PRIMARY KEY,
+      email TEXT UNIQUE NOT NULL,
+      source TEXT,
+      source_slug TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+
+  await db`CREATE INDEX IF NOT EXISTS idx_email_captures_source ON email_captures(source)`;
+
+  await db`
+    CREATE TABLE IF NOT EXISTS analyzer_results (
+      id SERIAL PRIMARY KEY,
+      slug TEXT UNIQUE NOT NULL,
+      input_preview TEXT NOT NULL,
+      result JSONB NOT NULL,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+
+  await db`CREATE INDEX IF NOT EXISTS idx_analyzer_slug ON analyzer_results(slug)`;
+
+  await db`
+    CREATE TABLE IF NOT EXISTS analytics_events (
+      id SERIAL PRIMARY KEY,
+      event TEXT NOT NULL,
+      user_id TEXT,
+      properties JSONB DEFAULT '{}',
+      page TEXT,
+      referrer TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+
+  await db`CREATE INDEX IF NOT EXISTS idx_analytics_event ON analytics_events(event)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_analytics_created ON analytics_events(created_at)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_analytics_user ON analytics_events(user_id)`;
 }

@@ -34,6 +34,12 @@ export const CURATED_WRITERS: CuratedWriter[] = [
   { name: "Cormac McCarthy", bio: "Biblical prose, no quotation marks, violence as poetry.", tag: "literary", category: "authors" },
   { name: "Zadie Smith", bio: "Witty, multicultural, structurally inventive contemporary fiction.", tag: "literary", category: "authors" },
   { name: "Stephen King", bio: "Conversational, propulsive, deeply human horror and storytelling.", tag: "literary", category: "authors" },
+  { name: "Taylor Swift", bio: "Narrative songwriting as confessional literature. Vivid imagery, emotional precision, and a journaling voice that turns personal experience into universal anthems.", tag: "songwriter", category: "authors" },
+  { name: "James Baldwin", bio: "Searing moral clarity, lyrical rage, and prophetic essays on race, identity, and love in America.", tag: "literary", category: "authors" },
+  { name: "Colleen Hoover", bio: "Emotional intensity and conversational prose that pulls readers through at breakneck pace. Contemporary romance with gut-punch twists.", tag: "literary", category: "authors" },
+  { name: "Mary Oliver", bio: "Poet of attention. Simple, luminous language that finds the sacred in geese, grasshoppers, and morning light.", tag: "poetry", category: "authors" },
+  { name: "Haruki Murakami", bio: "Surreal, dreamlike, melancholic. Parallel worlds bleeding into lonely Tokyo nights. Novels + essays + memoir.", tag: "literary", category: "authors" },
+  { name: "Isabel Allende", bio: "Magical realism with feminist fire. Lush, sweeping family sagas rooted in Latin American history. 25+ novels + memoir.", tag: "literary", category: "authors" },
 
   // Business & Tech
   { name: "Paul Graham", bio: "Clear, direct essays on startups and thinking. Y Combinator co-founder.", tag: "business", category: "business" },
@@ -46,6 +52,12 @@ export const CURATED_WRITERS: CuratedWriter[] = [
   { name: "James Clear", bio: "Actionable, evidence-based writing on habits and self-improvement.", tag: "self-improvement", category: "business" },
   { name: "David Ogilvy", bio: "The father of advertising. Persuasive, authoritative, research-driven.", tag: "marketing", category: "business" },
   { name: "Marc Andreessen", bio: "Emphatic, list-heavy tech optimism. Software is eating the world.", tag: "tech", category: "business" },
+  { name: "Ryan Holiday", bio: "Daily Stoic clarity. Accessible ancient philosophy in clean, direct prose. Obstacle-is-the-way practical wisdom.", tag: "philosophy", category: "business" },
+  { name: "Ray Dalio", bio: "Systematic, principles-based thinking. Radical transparency in numbered lists. Bridgewater's decision-making machine.", tag: "finance", category: "business" },
+  { name: "Howard Marks", bio: "Oaktree memo writer. Contrarian market wisdom, second-level thinking, and cycle analysis with intellectual humility.", tag: "finance", category: "business" },
+  { name: "Cal Newport", bio: "Deep work evangelist. Structured, evidence-based arguments against distraction and for craftsmanship.", tag: "productivity", category: "business" },
+  { name: "Reid Hoffman", bio: "Network-thinking, strategic, Silicon Valley optimism. Blitzscaling + The Start-Up of You + Masters of Scale transcripts.", tag: "business", category: "business" },
+  { name: "Patrick Collison", bio: "Curious, intellectual, compressed insight. Stripe CEO's blog posts + interviews + reading lists.", tag: "tech", category: "business" },
 
   // Podcasters
   { name: "Joe Rogan", bio: "Casual, curious, long-form conversational style. 'That's crazy, man.'", tag: "podcast", category: "podcasters" },
@@ -58,6 +70,8 @@ export const CURATED_WRITERS: CuratedWriter[] = [
   { name: "Ezra Klein", bio: "Policy-dense, empathetic, systems-thinking journalism.", tag: "journalism", category: "podcasters" },
   { name: "Guy Raz", bio: "Warm, wonder-filled storytelling. How I Built This narrative style.", tag: "podcast", category: "podcasters" },
   { name: "Dax Shepard", bio: "Disarmingly honest, funny, emotionally intelligent conversation.", tag: "podcast", category: "podcasters" },
+  { name: "Shane Parrish", bio: "Farnam Street mental models distilled to clarity. Blog + The Knowledge Project podcast + books.", tag: "podcast", category: "podcasters" },
+  { name: "Kara Swisher", bio: "Blunt, fearless, tech-industry truth-teller. Decades of columns + podcast transcripts + Burn Book memoir.", tag: "podcast", category: "podcasters" },
 
   // Politicians
   { name: "Barack Obama", bio: "Soaring oratory, measured cadence, bridge-building rhetoric.", tag: "political", category: "politicians" },
@@ -70,6 +84,8 @@ export const CURATED_WRITERS: CuratedWriter[] = [
   { name: "Theodore Roosevelt", bio: "Vigorous, emphatic, adventurous prose. The man in the arena.", tag: "political", category: "politicians" },
   { name: "Margaret Thatcher", bio: "Iron conviction, precise diction, unyielding logic.", tag: "political", category: "politicians" },
   { name: "Bernie Sanders", bio: "Repetitive urgency, class-focused, righteous indignation.", tag: "political", category: "politicians" },
+  { name: "Nelson Mandela", bio: "Dignified, reconciliatory, moral clarity. Long Walk to Freedom autobiography + speeches + prison letters.", tag: "political", category: "politicians" },
+  { name: "Volodymyr Zelenskyy", bio: "Wartime urgency, emotional directness, democratic resolve. Nightly addresses + speeches to world parliaments.", tag: "political", category: "politicians" },
 
   // Historical Writers
   { name: "Marcus Aurelius", bio: "Stoic meditations. Private journal entries from a Roman emperor. Full text of Meditations survives.", tag: "philosophy", category: "historical" },
@@ -82,6 +98,8 @@ export const CURATED_WRITERS: CuratedWriter[] = [
   { name: "Jane Austen", bio: "Ironic social observation. Six novels + extensive surviving letters.", tag: "literary", category: "historical" },
   { name: "Charles Dickens", bio: "Vivid, serialized storytelling. 15 novels + journalism + thousands of letters.", tag: "literary", category: "historical" },
   { name: "H.L. Mencken", bio: "Acerbic American commentary. Decades of newspaper columns + books + memoirs.", tag: "journalism", category: "historical" },
+  { name: "Walt Whitman", bio: "Expansive, democratic, catalogs of American life. Leaves of Grass (revised across decades) + journalism + letters.", tag: "poetry", category: "historical" },
+  { name: "Mary Shelley", bio: "Gothic imagination, philosophical ambition. Frankenstein + journals + letters + additional novels.", tag: "literary", category: "historical" },
 
   // Science Writers
   { name: "Carl Sagan", bio: "Cosmic wonder in accessible prose. 600+ papers, 20+ books, Cosmos transcripts.", tag: "science", category: "scientists" },
@@ -94,6 +112,8 @@ export const CURATED_WRITERS: CuratedWriter[] = [
   { name: "Mary Roach", bio: "Irreverent deep dives into bodies, space, and the gross. 7 bestselling books.", tag: "science", category: "scientists" },
   { name: "Atul Gawande", bio: "Surgeon-writer. New Yorker essays + 4 books on medicine and performance.", tag: "science", category: "scientists" },
   { name: "Ed Yong", bio: "Atlantic science journalist. Pulitzer-winning coverage + bestselling books.", tag: "science", category: "scientists" },
+  { name: "Robert Sapolsky", bio: "Behavioral biology storytelling, witty, deeply human. Behave + Why Zebras Don't Get Ulcers + Stanford lecture transcripts.", tag: "science", category: "scientists" },
+  { name: "Siddhartha Mukherjee", bio: "Literary medical writing, epic scope. Pulitzer-winning Emperor of All Maladies + The Gene + New Yorker essays.", tag: "science", category: "scientists" },
 
   // Children's Authors
   { name: "Dr. Seuss", bio: "Rhyming, whimsical, nonsense words that make perfect sense.", tag: "childrens", category: "childrens" },
@@ -106,6 +126,8 @@ export const CURATED_WRITERS: CuratedWriter[] = [
   { name: "Eric Carle", bio: "Repetitive, rhythmic, sensory. 'But he was still hungry.'", tag: "childrens", category: "childrens" },
   { name: "R.L. Stine", bio: "Cliffhanger endings, spooky atmosphere, kid-friendly dread.", tag: "childrens", category: "childrens" },
   { name: "Judy Blume", bio: "Honest, taboo-breaking, emotionally true coming-of-age.", tag: "childrens", category: "childrens" },
+  { name: "Lemony Snicket", bio: "Sardonic, vocabulary-building, literary darkness. A Series of Unfortunate Events (13 books) + companion texts + essays.", tag: "childrens", category: "childrens" },
+  { name: "Philip Pullman", bio: "Epic, philosophical, anti-authoritarian. His Dark Materials trilogy + The Book of Dust + essays on storytelling.", tag: "childrens", category: "childrens" },
 
   // Journalists
   { name: "Ta-Nehisi Coates", bio: "Urgent, personal, historically grounded racial commentary.", tag: "journalism", category: "journalists" },
@@ -118,6 +140,10 @@ export const CURATED_WRITERS: CuratedWriter[] = [
   { name: "Maureen Dowd", bio: "Acerbic political wit, pop culture references, sharp one-liners.", tag: "journalism", category: "journalists" },
   { name: "Bob Woodward", bio: "Just-the-facts investigative authority. Watergate sobriety.", tag: "journalism", category: "journalists" },
   { name: "Annie Dillard", bio: "Nature writing as spiritual practice. Pilgrim at Tinker Creek intensity.", tag: "journalism", category: "journalists" },
+  { name: "Anthony Bourdain", bio: "Visceral travel writing with raw honesty and anti-pretension. Kitchen Confidential swagger meets global empathy.", tag: "journalism", category: "journalists" },
+  { name: "Chimamanda Ngozi Adichie", bio: "Precise, commanding prose spanning fiction and feminist essays. The danger of a single story, dismantled.", tag: "journalism", category: "journalists" },
+  { name: "Rebecca Solnit", bio: "Lyrical, feminist, hope as resistance. 20+ books of essays including Men Explain Things to Me + Hope in the Dark.", tag: "journalism", category: "journalists" },
+  { name: "George Packer", bio: "Detailed, morally serious, American decline chronicler. The Unwinding + New Yorker long-form + books on Iraq and democracy.", tag: "journalism", category: "journalists" },
 
   // Comedians
   { name: "Jerry Seinfeld", bio: "Observational precision. 'What's the deal with...?' Tight, clean comedy.", tag: "comedy", category: "comedians" },
@@ -130,6 +156,8 @@ export const CURATED_WRITERS: CuratedWriter[] = [
   { name: "Mindy Kaling", bio: "Bubbly, pop-culture-drenched, confidently awkward.", tag: "comedy", category: "comedians" },
   { name: "Trevor Noah", bio: "Global perspective, gentle satire, immigrant humor with warmth.", tag: "comedy", category: "comedians" },
   { name: "George Carlin", bio: "Angry, linguistic, anti-establishment. Words matter — and they're funny.", tag: "comedy", category: "comedians" },
+  { name: "Mike Birbiglia", bio: "Confessional, narrative-driven, gentle humor. Sleepwalk with Me + The New One + specials + film scripts.", tag: "comedy", category: "comedians" },
+  { name: "Jenny Slate", bio: "Bubbly, poetic, surprisingly deep. Little Weirds memoir + essays + comedy specials.", tag: "comedy", category: "comedians" },
 
   // Philosophers
   { name: "Nassim Taleb", bio: "Combative, aphoristic, anti-fragile. 'Skin in the game.'", tag: "philosophy", category: "philosophers" },
@@ -141,4 +169,6 @@ export const CURATED_WRITERS: CuratedWriter[] = [
   { name: "Hannah Arendt", bio: "The banality of evil. Political philosophy with moral weight.", tag: "philosophy", category: "philosophers" },
   { name: "Yuval Noah Harari", bio: "Big-history storytelling. Sapiens-scale sweeping narratives.", tag: "philosophy", category: "philosophers" },
   { name: "Maria Popova", bio: "The Marginalian. Luminous, deeply read, cross-disciplinary wonder.", tag: "philosophy", category: "philosophers" },
+  { name: "Alain de Botton", bio: "Accessible philosophy, emotional intelligence, beautiful clarity. 20+ books from The Art of Travel to The School of Life.", tag: "philosophy", category: "philosophers" },
+  { name: "Byung-Chul Han", bio: "Compressed, critical, burnout society analysis. The Burnout Society + Saving Beauty + translated philosophical works.", tag: "philosophy", category: "philosophers" },
 ];

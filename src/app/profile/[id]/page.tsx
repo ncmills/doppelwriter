@@ -12,6 +12,7 @@ interface Profile {
   writer_name: string | null;
   profile_json: string | null;
   system_prompt: string | null;
+  voice_overrides: Record<string, number> | null;
   updated_at: string;
 }
 
@@ -29,6 +30,14 @@ interface Quality {
   topRecommendation: string;
 }
 
+const SLIDERS = [
+  { key: "formality", label: "Formality", low: "Casual", high: "Formal", desc: "How formal or conversational the voice sounds" },
+  { key: "sentence_length", label: "Sentence Length", low: "Short & punchy", high: "Long & flowing", desc: "Average sentence complexity and length" },
+  { key: "creativity", label: "Creativity", low: "Literal & direct", high: "Metaphorical & vivid", desc: "How much imagery and creative language to use" },
+  { key: "humor", label: "Humor", low: "Serious", high: "Witty & playful", desc: "Amount of humor, irony, and levity" },
+  { key: "emotion", label: "Emotion", low: "Detached & analytical", high: "Personal & expressive", desc: "Emotional expressiveness in the writing" },
+];
+
 function ProfileDetail() {
   const params = useParams();
   const router = useRouter();
@@ -37,21 +46,73 @@ function ProfileDetail() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [quality, setQuality] = useState<Quality | null>(null);
   const [loadingQuality, setLoadingQuality] = useState(false);
+  const [editingName, setEditingName] = useState(false);
+  const [nameValue, setNameValue] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [sliders, setSliders] = useState<Record<string, number>>({});
+  const [slidersChanged, setSlidersChanged] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/profiles/${profileId}`).then((r) => r.json()).then(setProfile);
+    fetch(`/api/profiles/${profileId}`).then((r) => r.json()).then((p) => {
+      setProfile(p);
+      setNameValue(p.writer_name || p.name);
+      const overrides = p.voice_overrides || {};
+      setSliders({
+        formality: overrides.formality ?? 5,
+        sentence_length: overrides.sentence_length ?? 5,
+        creativity: overrides.creativity ?? 5,
+        humor: overrides.humor ?? 5,
+        emotion: overrides.emotion ?? 5,
+      });
+    });
   }, [profileId]);
 
-  const loadQuality = async () => {
+  useEffect(() => {
     setLoadingQuality(true);
-    const res = await fetch(`/api/profiles/${profileId}/quality`);
-    if (res.ok) setQuality(await res.json());
-    setLoadingQuality(false);
+    fetch(`/api/profiles/${profileId}/quality`)
+      .then((r) => r.ok ? r.json() : null)
+      .then((q) => { if (q) setQuality(q); })
+      .finally(() => setLoadingQuality(false));
+  }, [profileId]);
+
+  const handleSaveName = async () => {
+    if (!nameValue.trim() || nameValue === (profile?.writer_name || profile?.name)) {
+      setEditingName(false);
+      return;
+    }
+    setSaving(true);
+    await fetch(`/api/profiles/${profileId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: nameValue.trim() }),
+    });
+    setProfile((p) => p ? { ...p, name: nameValue.trim() } : p);
+    setEditingName(false);
+    setSaving(false);
   };
 
-  useEffect(() => { loadQuality(); }, [profileId]);
+  const handleSaveSliders = async () => {
+    setSaving(true);
+    await fetch(`/api/profiles/${profileId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ voice_overrides: sliders }),
+    });
+    setSlidersChanged(false);
+    setSaving(false);
+  };
 
-  if (!profile) return <div className="p-8 text-stone-500">Loading...</div>;
+  const handleSliderChange = (key: string, value: number) => {
+    setSliders((s) => ({ ...s, [key]: value }));
+    setSlidersChanged(true);
+  };
+
+  const handleResetSliders = () => {
+    setSliders({ formality: 5, sentence_length: 5, creativity: 5, humor: 5, emotion: 5 });
+    setSlidersChanged(true);
+  };
+
+  if (!profile) return <div className="min-h-screen bg-[#0C0A09]"><Nav /><div className="p-8 text-stone-500">Loading...</div></div>;
 
   const statusColor = (status: string) => {
     switch (status) {
@@ -71,6 +132,8 @@ function ProfileDetail() {
     }
   };
 
+  const isPersonal = !profile.is_curated;
+
   return (
     <>
       <Nav />
@@ -79,34 +142,56 @@ function ProfileDetail() {
           &larr; Back
         </button>
 
+        {/* Header with editable name */}
         <div className="flex items-start justify-between mb-8">
           <div>
-            <h1 className="font-[family-name:var(--font-literata)] text-2xl font-bold">
-              {profile.writer_name || profile.name}
-            </h1>
+            {editingName ? (
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={nameValue}
+                  onChange={(e) => setNameValue(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSaveName()}
+                  autoFocus
+                  className="font-[family-name:var(--font-literata)] text-2xl font-bold bg-stone-900 border border-stone-700 rounded-lg px-3 py-1 text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+                <button onClick={handleSaveName} disabled={saving}
+                  className="px-3 py-1 bg-amber-600 hover:bg-amber-500 rounded text-sm transition-colors disabled:opacity-50">
+                  {saving ? "..." : "Save"}
+                </button>
+                <button onClick={() => { setEditingName(false); setNameValue(profile.writer_name || profile.name); }}
+                  className="px-3 py-1 text-stone-500 hover:text-white text-sm">Cancel</button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <h1 className="font-[family-name:var(--font-literata)] text-2xl font-bold">
+                  {profile.writer_name || profile.name}
+                </h1>
+                {isPersonal && (
+                  <button onClick={() => setEditingName(true)}
+                    className="text-stone-600 hover:text-stone-400 transition-colors" title="Rename">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                  </button>
+                )}
+              </div>
+            )}
             <p className="text-stone-500 text-sm mt-1">
               {profile.is_curated ? "Curated profile" : "Personal voice profile"} · Updated {new Date(profile.updated_at).toLocaleDateString()}
             </p>
           </div>
-          <div className="flex gap-2">
-            <Link href={`/doppelwrite/${profile.is_curated ? "curated" : "personal"}?id=${profile.id}`}
-              className="px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
-              Use This Voice
-            </Link>
-            {!profile.is_curated && (
-              <Link href="/create/personal"
-                className="px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
-                Add More Samples
-              </Link>
-            )}
-          </div>
+          <Link href={`/write?voice=${profile.id}`}
+            className="px-5 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors shrink-0">
+            Use This Voice
+          </Link>
         </div>
 
         {/* Overall Score */}
         {quality && (
           <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 mb-6">
             <div className="flex items-center gap-6">
-              <div className="relative w-24 h-24">
+              <div className="relative w-24 h-24 shrink-0">
                 <svg viewBox="0 0 100 100" className="w-24 h-24 -rotate-90">
                   <circle cx="50" cy="50" r="42" fill="none" stroke="#292524" strokeWidth="8" />
                   <circle cx="50" cy="50" r="42" fill="none"
@@ -119,9 +204,7 @@ function ProfileDetail() {
                 </div>
               </div>
               <div className="flex-1">
-                <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold mb-1">
-                  Voice Quality Score
-                </h2>
+                <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold mb-1">Voice Quality Score</h2>
                 <p className="text-stone-400 text-sm">{quality.topRecommendation}</p>
               </div>
             </div>
@@ -134,7 +217,7 @@ function ProfileDetail() {
           </div>
         )}
 
-        {/* Dimension Breakdown */}
+        {/* Voice Dimensions */}
         {quality && (
           <div className="mb-8">
             <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold mb-4">Voice Dimensions</h2>
@@ -149,16 +232,11 @@ function ProfileDetail() {
                     </div>
                   </div>
                   <div className="w-full h-1.5 bg-stone-800 rounded-full mb-2">
-                    <div
-                      className={`h-full rounded-full transition-all ${statusColor(d.status)}`}
-                      style={{ width: `${d.score}%` }}
-                    />
+                    <div className={`h-full rounded-full transition-all ${statusColor(d.status)}`} style={{ width: `${d.score}%` }} />
                   </div>
                   <p className="text-xs text-stone-500 mb-1">{d.description}</p>
                   {d.status !== "strong" && (
-                    <p className="text-xs text-amber-400 mt-1">
-                      To improve: {d.improvement}
-                    </p>
+                    <p className="text-xs text-amber-400 mt-1">To improve: {d.improvement}</p>
                   )}
                 </div>
               ))}
@@ -166,13 +244,61 @@ function ProfileDetail() {
           </div>
         )}
 
-        {/* Quick Improvement Tips */}
-        {quality && quality.overall < 90 && (
-          <div className="bg-amber-600/10 border border-amber-500/30 rounded-lg p-6">
+        {/* Voice Tuning Sliders */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold">Voice Tuning</h2>
+              <p className="text-stone-500 text-xs mt-0.5">Adjust these sliders to fine-tune how this voice writes. Changes apply to all future edits and generations.</p>
+            </div>
+            <div className="flex gap-2">
+              {slidersChanged && (
+                <>
+                  <button onClick={handleResetSliders}
+                    className="px-3 py-1.5 text-xs text-stone-500 hover:text-white transition-colors">
+                    Reset
+                  </button>
+                  <button onClick={handleSaveSliders} disabled={saving}
+                    className="px-4 py-1.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-xs font-medium transition-colors disabled:opacity-50">
+                    {saving ? "Saving..." : "Save Changes"}
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5 space-y-5">
+            {SLIDERS.map((s) => (
+              <div key={s.key}>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-sm font-medium text-stone-300">{s.label}</label>
+                  <span className="text-xs text-stone-600">{sliders[s.key] ?? 5}/10</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-[10px] text-stone-600 w-24 text-right shrink-0">{s.low}</span>
+                  <input
+                    type="range"
+                    min={1}
+                    max={10}
+                    value={sliders[s.key] ?? 5}
+                    onChange={(e) => handleSliderChange(s.key, Number(e.target.value))}
+                    className="flex-1 h-1.5 bg-stone-800 rounded-full appearance-none cursor-pointer accent-amber-500
+                      [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-amber-500 [&::-webkit-slider-thumb]:cursor-pointer
+                      [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-amber-500 [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
+                  />
+                  <span className="text-[10px] text-stone-600 w-24 shrink-0">{s.high}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Upload More Samples */}
+        {isPersonal && quality && quality.overall < 90 && (
+          <div className="bg-amber-600/10 border border-amber-500/30 rounded-lg p-6 mb-8">
             <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold mb-3 text-amber-400">
-              Quick Wins to Improve Your Profile
+              Improve This Voice
             </h2>
-            <ul className="space-y-3">
+            <ul className="space-y-3 mb-4">
               {quality.dimensions
                 .filter((d) => d.status !== "strong")
                 .sort((a, b) => a.score - b.score)
@@ -187,8 +313,23 @@ function ProfileDetail() {
                   </li>
                 ))}
             </ul>
-            <Link href="/create/personal" className="inline-block mt-4 text-sm text-amber-400 hover:text-amber-300">
-              Upload more samples &rarr;
+            <Link href={`/create/personal?improve=${profile.id}`}
+              className="inline-block px-5 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
+              Upload More Samples
+            </Link>
+          </div>
+        )}
+
+        {/* Merge / Blend CTA */}
+        {isPersonal && (
+          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6">
+            <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold mb-2">Blend With a Famous Voice</h2>
+            <p className="text-stone-400 text-sm mb-4">
+              Want your voice to sound like you but with Hemingway&apos;s precision? Obama&apos;s cadence? Paul Graham&apos;s clarity? Merge your personal voice with any curated writer to create a hybrid.
+            </p>
+            <Link href="/merge"
+              className="inline-block px-5 py-2.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm font-medium transition-colors">
+              Merge Voices
             </Link>
           </div>
         )}

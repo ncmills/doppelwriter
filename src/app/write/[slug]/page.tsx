@@ -4,6 +4,146 @@ import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
 import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
 
+const USE_CASE_WRITERS: Record<string, { slug: string; name: string }[]> = {
+  // Personal & Life Events
+  "wedding-speech": [
+    { slug: "david-sedaris", name: "David Sedaris" },
+    { slug: "nora-ephron", name: "Nora Ephron" },
+    { slug: "kurt-vonnegut", name: "Kurt Vonnegut" },
+    { slug: "tina-fey", name: "Tina Fey" },
+  ],
+  "best-man-speech": [
+    { slug: "david-sedaris", name: "David Sedaris" },
+    { slug: "jerry-seinfeld", name: "Jerry Seinfeld" },
+    { slug: "kurt-vonnegut", name: "Kurt Vonnegut" },
+  ],
+  "maid-of-honor-speech": [
+    { slug: "nora-ephron", name: "Nora Ephron" },
+    { slug: "tina-fey", name: "Tina Fey" },
+    { slug: "mary-oliver", name: "Mary Oliver" },
+  ],
+  "wedding-vows": [
+    { slug: "mary-oliver", name: "Mary Oliver" },
+    { slug: "pablo-neruda", name: "Pablo Neruda" },
+    { slug: "ernest-hemingway", name: "Ernest Hemingway" },
+  ],
+  "wedding-toast": [
+    { slug: "david-sedaris", name: "David Sedaris" },
+    { slug: "nora-ephron", name: "Nora Ephron" },
+    { slug: "jerry-seinfeld", name: "Jerry Seinfeld" },
+  ],
+  "eulogy": [
+    { slug: "mary-oliver", name: "Mary Oliver" },
+    { slug: "joan-didion", name: "Joan Didion" },
+    { slug: "james-baldwin", name: "James Baldwin" },
+    { slug: "toni-morrison", name: "Toni Morrison" },
+  ],
+  "condolence-message": [
+    { slug: "mary-oliver", name: "Mary Oliver" },
+    { slug: "joan-didion", name: "Joan Didion" },
+  ],
+  "love-letter": [
+    { slug: "pablo-neruda", name: "Pablo Neruda" },
+    { slug: "ernest-hemingway", name: "Ernest Hemingway" },
+    { slug: "james-baldwin", name: "James Baldwin" },
+  ],
+  "graduation-speech": [
+    { slug: "david-foster-wallace", name: "David Foster Wallace" },
+    { slug: "kurt-vonnegut", name: "Kurt Vonnegut" },
+    { slug: "toni-morrison", name: "Toni Morrison" },
+    { slug: "barack-obama", name: "Barack Obama" },
+  ],
+  "retirement-speech": [
+    { slug: "warren-buffett", name: "Warren Buffett" },
+    { slug: "david-sedaris", name: "David Sedaris" },
+    { slug: "kurt-vonnegut", name: "Kurt Vonnegut" },
+  ],
+  // Professional
+  "cover-letter": [
+    { slug: "james-clear", name: "James Clear" },
+    { slug: "paul-graham", name: "Paul Graham" },
+    { slug: "cal-newport", name: "Cal Newport" },
+  ],
+  "resume": [
+    { slug: "james-clear", name: "James Clear" },
+    { slug: "paul-graham", name: "Paul Graham" },
+  ],
+  "personal-statement": [
+    { slug: "joan-didion", name: "Joan Didion" },
+    { slug: "james-baldwin", name: "James Baldwin" },
+    { slug: "george-orwell", name: "George Orwell" },
+  ],
+  "recommendation-letter": [
+    { slug: "warren-buffett", name: "Warren Buffett" },
+    { slug: "paul-graham", name: "Paul Graham" },
+    { slug: "george-orwell", name: "George Orwell" },
+  ],
+  "linkedin-post": [
+    { slug: "seth-godin", name: "Seth Godin" },
+    { slug: "james-clear", name: "James Clear" },
+    { slug: "paul-graham", name: "Paul Graham" },
+  ],
+  "cold-email": [
+    { slug: "paul-graham", name: "Paul Graham" },
+    { slug: "seth-godin", name: "Seth Godin" },
+    { slug: "naval-ravikant", name: "Naval Ravikant" },
+  ],
+  // Business
+  "newsletter": [
+    { slug: "seth-godin", name: "Seth Godin" },
+    { slug: "james-clear", name: "James Clear" },
+    { slug: "maria-popova", name: "Maria Popova" },
+    { slug: "ben-thompson", name: "Ben Thompson" },
+  ],
+  "blog-post": [
+    { slug: "paul-graham", name: "Paul Graham" },
+    { slug: "seth-godin", name: "Seth Godin" },
+    { slug: "james-clear", name: "James Clear" },
+    { slug: "maria-popova", name: "Maria Popova" },
+  ],
+  "essay": [
+    { slug: "george-orwell", name: "George Orwell" },
+    { slug: "joan-didion", name: "Joan Didion" },
+    { slug: "james-baldwin", name: "James Baldwin" },
+    { slug: "david-foster-wallace", name: "David Foster Wallace" },
+  ],
+  "substack-post": [
+    { slug: "maria-popova", name: "Maria Popova" },
+    { slug: "paul-graham", name: "Paul Graham" },
+    { slug: "seth-godin", name: "Seth Godin" },
+  ],
+  "twitter-thread": [
+    { slug: "naval-ravikant", name: "Naval Ravikant" },
+    { slug: "seth-godin", name: "Seth Godin" },
+    { slug: "paul-graham", name: "Paul Graham" },
+  ],
+  "press-release": [
+    { slug: "george-orwell", name: "George Orwell" },
+    { slug: "ernest-hemingway", name: "Ernest Hemingway" },
+  ],
+  "speech": [
+    { slug: "barack-obama", name: "Barack Obama" },
+    { slug: "winston-churchill", name: "Winston Churchill" },
+    { slug: "martin-luther-king-jr", name: "Martin Luther King Jr." },
+    { slug: "toni-morrison", name: "Toni Morrison" },
+  ],
+  "investor-update": [
+    { slug: "warren-buffett", name: "Warren Buffett" },
+    { slug: "jeff-bezos", name: "Jeff Bezos" },
+    { slug: "morgan-housel", name: "Morgan Housel" },
+  ],
+  "college-application-essay": [
+    { slug: "joan-didion", name: "Joan Didion" },
+    { slug: "james-baldwin", name: "James Baldwin" },
+    { slug: "david-foster-wallace", name: "David Foster Wallace" },
+  ],
+  "scholarship-essay": [
+    { slug: "george-orwell", name: "George Orwell" },
+    { slug: "joan-didion", name: "Joan Didion" },
+    { slug: "james-baldwin", name: "James Baldwin" },
+  ],
+};
+
 function getUseCase(slug: string) {
   return USE_CASES.find((u) => u.slug === slug);
 }
@@ -27,7 +167,12 @@ export async function generateMetadata({
   return {
     title,
     description,
-    openGraph: { title, description, url: `https://doppelwriter.com/write/${slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `https://doppelwriter.com/write/${slug}`,
+    },
+    twitter: { card: "summary_large_image", title, description },
     alternates: { canonical: `https://doppelwriter.com/write/${slug}` },
   };
 }
@@ -61,6 +206,15 @@ export default async function WritePage({
               ],
               tool: { "@type": "SoftwareApplication", name: "DoppelWriter" },
             },
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: "https://doppelwriter.com" },
+                { "@type": "ListItem", position: 2, name: "Writing Tools", item: "https://doppelwriter.com/write" },
+                { "@type": "ListItem", position: 3, name: category?.label ?? uc.category, item: `https://doppelwriter.com/write/${uc.category}` },
+                { "@type": "ListItem", position: 4, name: `Write My ${uc.title}` },
+              ],
+            },
             ...(uc.faqs.length > 0
               ? [{
                   "@type": "FAQPage",
@@ -85,6 +239,15 @@ export default async function WritePage({
       </nav>
 
       <main className="max-w-3xl mx-auto px-6 py-16">
+        <nav aria-label="Breadcrumb" className="text-sm text-stone-500 mb-6 flex items-center gap-1.5 flex-wrap">
+          <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <span>/</span>
+          <Link href="/write" className="hover:text-white transition-colors">Writing Tools</Link>
+          <span>/</span>
+          <Link href={`/write/${uc.category}`} className="hover:text-white transition-colors">{category?.label}</Link>
+          <span>/</span>
+          <span className="text-stone-300">Write My {uc.title}</span>
+        </nav>
         <p className="text-amber-400 text-sm font-medium mb-3 uppercase tracking-wider">{category?.label}</p>
         <h1 className="font-[family-name:var(--font-literata)] text-4xl sm:text-5xl font-bold mb-4">
           Write My {uc.title}
@@ -162,6 +325,27 @@ export default async function WritePage({
             Write My {uc.title} Free
           </Link>
         </section>
+
+        {/* Write This With a Famous Voice */}
+        {USE_CASE_WRITERS[slug] && USE_CASE_WRITERS[slug].length > 0 && (
+          <section className="mb-12">
+            <h2 className="font-[family-name:var(--font-literata)] text-2xl font-semibold mb-6">
+              Write This With a Famous Voice
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {USE_CASE_WRITERS[slug].map((w) => (
+                <Link
+                  key={w.slug}
+                  href={`/write-like/${w.slug}`}
+                  className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4 hover:border-amber-600/40 transition-colors group"
+                >
+                  <p className="font-medium text-sm group-hover:text-amber-400 transition-colors">{w.name}</p>
+                  <p className="text-xs text-stone-500 mt-1">Write in their voice</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Related use cases */}
         {related.length > 0 && (

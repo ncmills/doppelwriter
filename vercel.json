@@ -7,6 +7,10 @@
     {
       "path": "/api/profiles/auto-improve",
       "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/emails",
+      "schedule": "0 9 * * *"
     }
   ]
 }

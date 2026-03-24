@@ -1,14 +1,16 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import DiffView from "./DiffView";
 import StreamingOutput from "./StreamingOutput";
 import RichEditor from "./RichEditor";
+import UpgradeModal from "./UpgradeModal";
+import { trackEvent, trackFirstGeneration, trackShare, trackEdit, trackGenerate, trackAcceptEdit, trackRevisionRequested, trackCopyOutput, trackDownloadOutput, trackUpgradeModalShown } from "@/lib/analytics";
 
 interface DiffChunk { value: string; added?: boolean; removed?: boolean; }
 
-export default function Workspace({ profileId, profileName }: { profileId: number; profileName: string }) {
-  const [mode, setMode] = useState<"edit" | "generate">("edit");
+export default function Workspace({ profileId, profileName, defaultMode }: { profileId: number; profileName: string; defaultMode?: "edit" | "generate" }) {
+  const [mode, setMode] = useState<"edit" | "generate">(defaultMode || "edit");
   const [draft, setDraft] = useState("");
   const [brief, setBrief] = useState("");
   const [output, setOutput] = useState("");
@@ -21,8 +23,26 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
   const [error, setError] = useState("");
   const [learningCount, setLearningCount] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
+  const [emailVerified, setEmailVerified] = useState<boolean | null>(null);
+  const [doneMode, setDoneMode] = useState(false);
+  const [finalText, setFinalText] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [usageCount, setUsageCount] = useState(0);
+  const [usageNudge, setUsageNudge] = useState("");
+  const [shareUrl, setShareUrl] = useState("");
+  const [sharing, setSharing] = useState(false);
+  const [referralCopied, setReferralCopied] = useState(false);
   // Track the AI's raw output so we can compare against user edits
   const aiOutputRef = useRef("");
+
+  // Check email verification status
+  useEffect(() => {
+    fetch("/api/usage").then((r) => r.json()).then((data) => {
+      if (data.emailVerified !== undefined) setEmailVerified(data.emailVerified);
+    }).catch(() => {});
+  }, []);
 
   const handleStream = useCallback(async (url: string, body: Record<string, unknown>): Promise<string> => {
     setLoading(true);
@@ -38,7 +58,8 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
     });
 
     if (res.status === 429) {
-      setError("Usage limit reached. Upgrade to Pro for more.");
+      setShowUpgradeModal(true);
+      trackUpgradeModalShown();
       setLoading(false);
       return "";
     }
@@ -55,11 +76,26 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
       }
     }
     setLoading(false);
+    // Notify UsageBar to refresh and check for nudges
+    window.dispatchEvent(new Event("dw:usage-changed"));
+    fetch("/api/usage").then((r) => r.json()).then((data) => {
+      if (data.plan === "free") {
+        setUsageCount(data.used);
+        const remaining = data.limit - data.used;
+        if (remaining === 2) setUsageNudge("2 free uses left this month. Upgrade for unlimited.");
+        else if (remaining === 1) setUsageNudge("1 use left. Writers who upgrade create 10x more.");
+        else if (remaining <= 0) { setShowUpgradeModal(true); trackUpgradeModalShown(); }
+        else setUsageNudge("");
+      }
+      // Track first generation
+      if (data.used === 1) trackFirstGeneration();
+    }).catch(() => {});
     return full;
   }, []);
 
   const handleEdit = useCallback(async () => {
     if (!draft) return;
+    trackEdit(profileName);
     const result = await handleStream("/api/editor", { draft, profileId, instructions: instructions || undefined });
     if (result) {
       aiOutputRef.current = result; // Store AI's raw output for comparison
@@ -76,6 +112,7 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
 
   const handleGenerate = useCallback(async () => {
     if (!brief) return;
+    trackGenerate(profileName);
     await handleStream("/api/generate", {
       brief, profileId,
       wordCount: wordCount ? Number(wordCount) : undefined,
@@ -85,6 +122,7 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
 
   const handleRevise = useCallback(async () => {
     if (!feedback) return;
+    trackRevisionRequested();
     const prevOutput = output;
 
     // Record the revision feedback as a learning signal
@@ -128,7 +166,8 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
         profileId, mode, brief: mode === "generate" ? brief : undefined, content,
       }),
     });
-    alert("Saved to drafts!");
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
   }, [draft, output, brief, profileId, mode]);
 
   const handleFileUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -150,6 +189,7 @@ export default function Workspace({ profileId, profileName }: { profileId: numbe
   const handleDownload = useCallback(() => {
     const content = output || draft;
     if (!content) return;
+    trackDownloadOutput();
     // Export as HTML file with basic styling
     const html = `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><style>
@@ -168,11 +208,10 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
   // Smart correction tracking — detects if user edited the AI output before accepting
   const handleAccept = useCallback(async () => {
     const aiRaw = aiOutputRef.current;
-    const userFinal = output; // May have been manually edited by user in the output area
+    const userFinal = output;
 
     if (aiRaw && userFinal) {
       const wasEdited = aiRaw !== userFinal;
-      // Fire and forget — don't block the UI
       fetch("/api/editor/feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -185,6 +224,7 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
       }).then(() => setLearningCount((c) => c + 1));
     }
 
+    trackAcceptEdit();
     setDraft(output);
     setOutput("");
     setDiffChunks([]);
@@ -192,8 +232,180 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
     aiOutputRef.current = "";
   }, [output, profileId]);
 
+  const handleDone = useCallback(() => {
+    const text = output || draft;
+    if (!text) return;
+
+    // Record correction if there's an AI output being accepted
+    const aiRaw = aiOutputRef.current;
+    if (aiRaw && output) {
+      const wasEdited = aiRaw !== output;
+      fetch("/api/editor/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          profileId,
+          aiOutput: aiRaw,
+          userVersion: output,
+          correctionType: wasEdited ? "manual_edit" : "accept",
+        }),
+      }).then(() => setLearningCount((c) => c + 1));
+    }
+
+    // Convert plain text to formatted HTML paragraphs
+    const formatted = text
+      .split(/\n\n+/)
+      .map((p) => p.trim())
+      .filter(Boolean)
+      .map((p) => `<p>${p.replace(/\n/g, "<br>")}</p>`)
+      .join("");
+
+    setFinalText(formatted);
+    setDoneMode(true);
+    aiOutputRef.current = "";
+  }, [output, draft, profileId]);
+
+  const handleCopy = useCallback(async () => {
+    // Create a temp element to get clean text from HTML
+    const el = document.createElement("div");
+    el.innerHTML = finalText;
+    const plainText = el.innerText;
+    await navigator.clipboard.writeText(plainText);
+    setCopied(true);
+    trackCopyOutput();
+    setTimeout(() => setCopied(false), 2000);
+  }, [finalText]);
+
+  const handleCopyFormatted = useCallback(async () => {
+    // Copy as rich text (HTML) so it pastes with formatting in Google Docs, Word, etc.
+    const blob = new Blob([finalText], { type: "text/html" });
+    const plainBlob = new Blob([new DOMParser().parseFromString(finalText, "text/html").body.innerText], { type: "text/plain" });
+    await navigator.clipboard.write([
+      new ClipboardItem({ "text/html": blob, "text/plain": plainBlob }),
+    ]);
+    setCopied(true);
+    trackCopyOutput();
+    setTimeout(() => setCopied(false), 2000);
+  }, [finalText]);
+
+  const handleBackToEdit = useCallback(() => {
+    setDraft(new DOMParser().parseFromString(finalText, "text/html").body.innerText);
+    setOutput("");
+    setDiffChunks([]);
+    setShowDiff(false);
+    setDoneMode(false);
+    setFinalText("");
+  }, [finalText]);
+
+  const handleShare = useCallback(async () => {
+    const content = finalText || output || draft;
+    if (!content || sharing) return;
+    setSharing(true);
+    try {
+      const res = await fetch("/api/share", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content, voiceName: profileName }),
+      });
+      const { url } = await res.json();
+      setShareUrl(url);
+      await navigator.clipboard.writeText(url);
+      trackShare();
+    } catch { /* ignore */ }
+    setSharing(false);
+  }, [finalText, output, draft, profileName, sharing]);
+
+  const copyReferralLink = useCallback(async () => {
+    try {
+      const res = await fetch("/api/referral");
+      if (res.ok) {
+        const data = await res.json();
+        await navigator.clipboard.writeText(`https://doppelwriter.com?ref=${data.code}`);
+      } else {
+        // Fallback if no referral code exists
+        await navigator.clipboard.writeText("https://doppelwriter.com");
+      }
+    } catch {
+      // TODO: handle case where referral endpoint is unavailable
+      await navigator.clipboard.writeText("https://doppelwriter.com");
+    }
+    setReferralCopied(true);
+    setTimeout(() => setReferralCopied(false), 2000);
+  }, []);
+
   return (
     <div>
+      {/* Upgrade Modal */}
+      {showUpgradeModal && (
+        <UpgradeModal used={usageCount || 5} onClose={() => setShowUpgradeModal(false)} />
+      )}
+      {/* Share URL toast */}
+      {shareUrl && (
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 bg-green-600 text-white rounded-lg text-sm font-medium shadow-lg flex items-center gap-2">
+          Link copied!
+          <button onClick={() => setShareUrl("")} className="text-green-200 hover:text-white ml-2">&times;</button>
+        </div>
+      )}
+      {/* Save toast */}
+      {saved && (
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 bg-green-600 text-white rounded-lg text-sm font-medium shadow-lg">
+          Saved to drafts
+        </div>
+      )}
+      {/* Email verification banner */}
+      {emailVerified === false && (
+        <div className="mb-4 px-4 py-2.5 bg-amber-900/30 border border-amber-700/40 rounded-lg flex items-center justify-between">
+          <span className="text-amber-300 text-sm">Verify your email to keep using DoppelWriter. Check your inbox for the verification link.</span>
+          <button
+            onClick={() => fetch("/api/auth/signup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ resendVerification: true }) }).then(() => alert("Verification email sent!"))}
+            className="text-xs text-amber-400 hover:text-amber-300 underline shrink-0 ml-4"
+          >
+            Resend email
+          </button>
+        </div>
+      )}
+      {/* Done mode — clean formatted final view */}
+      {doneMode ? (
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold">Final Draft</h2>
+            <div className="flex flex-wrap gap-2">
+              <button onClick={handleBackToEdit} className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs text-stone-400 hover:text-white transition-colors">
+                Back to Edit
+              </button>
+              <button onClick={handleCopy} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
+                {copied ? "Copied!" : "Copy Text"}
+              </button>
+              <button onClick={handleCopyFormatted} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
+                {copied ? "Copied!" : "Copy Formatted"}
+              </button>
+              <button onClick={handleDownload} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
+                Download
+              </button>
+              <button onClick={handleShare} disabled={sharing} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors disabled:opacity-50">
+                {sharing ? "Sharing..." : shareUrl ? "Shared!" : "Share"}
+              </button>
+              <button onClick={handleSave} className="px-4 py-1.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
+                Save
+              </button>
+            </div>
+          </div>
+          <div
+            className="prose prose-invert prose-stone max-w-none bg-stone-900 border border-stone-800 rounded-lg p-8 min-h-[500px] leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: finalText }}
+          />
+          <div className="mt-6 p-4 bg-stone-900/50 border border-stone-800/40 rounded-lg flex items-center justify-between">
+            <div>
+              <p className="text-sm text-stone-300">Know someone who&apos;d love this?</p>
+              <p className="text-xs text-stone-500">Share DoppelWriter — they get 5 free uses</p>
+            </div>
+            <button onClick={copyReferralLink} className="px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
+              {referralCopied ? "Copied!" : "Copy Invite Link"}
+            </button>
+          </div>
+        </div>
+      ) : (
+      <>
       {/* Top bar — minimal: mode toggle + actions */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
@@ -219,6 +431,11 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
           <button onClick={handleDownload} className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs transition-colors text-stone-400 hover:text-white">
             Download
           </button>
+          {output && (
+            <button onClick={handleShare} disabled={sharing} className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs transition-colors text-stone-400 hover:text-white disabled:opacity-50">
+              {sharing ? "Sharing..." : shareUrl ? "Shared!" : "Share"}
+            </button>
+          )}
           <button onClick={handleSave} className="px-4 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
             Save
           </button>
@@ -228,6 +445,15 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
       {error && (
         <div className="mb-4 p-3 bg-red-900/20 border border-red-700/40 rounded-lg text-red-400 text-sm">
           {error} <a href="/pricing" className="underline">Upgrade</a>
+        </div>
+      )}
+
+      {usageNudge && (
+        <div className="mb-4 p-3 bg-amber-900/20 border border-amber-700/40 rounded-lg text-amber-300 text-sm flex items-center justify-between">
+          <span>{usageNudge}</span>
+          <button onClick={() => setShowUpgradeModal(true)} className="text-amber-400 hover:text-amber-300 underline text-xs ml-4 shrink-0">
+            Upgrade
+          </button>
         </div>
       )}
 
@@ -247,8 +473,27 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
 
       {mode === "edit" ? (
         <>
+          {/* Edit action bar — at the top */}
+          <div className="flex flex-wrap gap-3 mb-4">
+            <button onClick={handleEdit} disabled={!draft || loading}
+              className="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors disabled:opacity-40">
+              {loading ? "Rewriting..." : "Edit in This Voice"}
+            </button>
+            {output && !loading && (
+              <div className="flex items-center gap-2 flex-1">
+                <input type="text" value={feedback} onChange={(e) => setFeedback(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleRevise()} placeholder="Tell it how to revise..."
+                  className="flex-1 px-4 py-2.5 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+                <button onClick={handleRevise} disabled={!feedback}
+                  className="px-4 py-2.5 bg-stone-700 hover:bg-stone-600 rounded-lg transition-colors disabled:opacity-40">Revise</button>
+                <button onClick={handleDone}
+                  className="px-5 py-2.5 bg-green-600 hover:bg-green-500 rounded-lg font-medium transition-colors">Done</button>
+              </div>
+            )}
+          </div>
+
           {/* Edit mode: two columns */}
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col">
               <div className="flex items-center justify-between mb-2">
                 <h2 className="text-sm font-medium text-stone-400">Your Draft</h2>
@@ -273,7 +518,7 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
                     <button onClick={() => setShowDiff(!showDiff)} className="text-xs text-stone-400 hover:text-white">
                       {showDiff ? "Clean" : "Diff"}
                     </button>
-                    <button onClick={handleAccept} className="text-xs text-green-400 hover:text-green-300">Accept</button>
+                    <button onClick={handleAccept} className="text-xs text-amber-400 hover:text-amber-300">Accept & Keep Editing</button>
                   </div>
                 )}
               </div>
@@ -294,26 +539,11 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
               </div>
             </div>
           </div>
-          <div className="flex gap-3">
-            <button onClick={handleEdit} disabled={!draft || loading}
-              className="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors disabled:opacity-40">
-              {loading ? "Writing..." : "Edit in This Voice"}
-            </button>
-            {output && !loading && (
-              <div className="flex items-center gap-2 flex-1">
-                <input type="text" value={feedback} onChange={(e) => setFeedback(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleRevise()} placeholder="What would you like to change?"
-                  className="flex-1 px-4 py-2.5 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500" />
-                <button onClick={handleRevise} disabled={!feedback}
-                  className="px-4 py-2.5 bg-stone-700 hover:bg-stone-600 rounded-lg transition-colors disabled:opacity-40">Revise</button>
-              </div>
-            )}
-          </div>
         </>
       ) : (
         <>
           {/* Generate mode: brief left, output right */}
-          <div className="grid grid-cols-2 gap-6 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
             <div className="space-y-4">
               <textarea value={brief} onChange={(e) => setBrief(e.target.value)} placeholder="Describe what you want to write..."
                 className="w-full min-h-[300px] p-4 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-600 resize-none focus:outline-none focus:ring-2 focus:ring-amber-500 leading-relaxed" />
@@ -330,7 +560,13 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
             <div className="flex flex-col">
               <div className="flex items-center justify-between mb-2">
                 <h2 className="text-sm font-medium text-stone-400">Output</h2>
-                {output && <span className="text-xs text-stone-500">{output.split(/\s+/).length} words</span>}
+                <div className="flex items-center gap-3">
+                  {output && <span className="text-xs text-stone-500">{output.split(/\s+/).length} words</span>}
+                  {output && !loading && (
+                    <button onClick={handleDone}
+                      className="px-4 py-1 bg-green-600 hover:bg-green-500 rounded text-xs font-medium transition-colors">Done</button>
+                  )}
+                </div>
               </div>
               <div className="flex-1 min-h-[400px] p-4 bg-stone-900 border border-stone-800 rounded-lg overflow-auto">
                 <StreamingOutput text={output} loading={loading} />
@@ -338,6 +574,8 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
             </div>
           </div>
         </>
+      )}
+      </>
       )}
     </div>
   );

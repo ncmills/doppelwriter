@@ -48,12 +48,12 @@ export async function getSamples(userId: string) {
   const db = sql();
   return db`
     SELECT ws.id, ws.title, ws.source_type, ws.word_count, ws.created_at,
-      (SELECT string_agg(sp.name, ', ')
-       FROM sample_profiles spp
-       JOIN style_profiles sp ON sp.id = spp.profile_id
-       WHERE spp.sample_id = ws.id) as categories
+      string_agg(sp.name, ', ') as categories
     FROM writing_samples ws
+    LEFT JOIN sample_profiles spp ON spp.sample_id = ws.id
+    LEFT JOIN style_profiles sp ON sp.id = spp.profile_id
     WHERE ws.user_id = ${userId}
+    GROUP BY ws.id, ws.title, ws.source_type, ws.word_count, ws.created_at
     ORDER BY ws.created_at DESC
   `;
 }

@@ -18,9 +18,10 @@ export async function POST(request: NextRequest) {
 
 // Vercel cron calls this — syncs all users with connected Gmail
 export async function GET(request: NextRequest) {
-  // Verify cron secret
+  // Verify cron secret — reject if CRON_SECRET is not configured
+  const cronSecret = process.env.CRON_SECRET;
   const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -36,8 +37,8 @@ export async function GET(request: NextRequest) {
     try {
       const result = await syncGmail(user.id);
       total += result.synced;
-    } catch {
-      // Individual user failures shouldn't stop the batch
+    } catch (err) {
+      console.error(`Gmail sync failed for user ${user.id}:`, err);
     }
   }
 

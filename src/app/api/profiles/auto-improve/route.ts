@@ -8,9 +8,10 @@ import { generateProfile } from "@/lib/style-analyzer";
 export const maxDuration = 120;
 
 export async function GET(request: NextRequest) {
-  // Verify cron secret or admin auth
+  // Verify cron secret or admin auth — reject if CRON_SECRET is not configured
+  const cronSecret = process.env.CRON_SECRET;
   const authHeader = request.headers.get("authorization");
-  const isCron = authHeader === `Bearer ${process.env.CRON_SECRET}`;
+  const isCron = !!cronSecret && authHeader === `Bearer ${cronSecret}`;
 
   if (!isCron) {
     const { auth } = await import("@/lib/auth");
@@ -38,8 +39,8 @@ export async function GET(request: NextRequest) {
     try {
       await generateProfile(profile.id);
       refreshed++;
-    } catch {
-      // Individual failures shouldn't stop the batch
+    } catch (err) {
+      console.error(`Auto-improve failed for profile ${profile.id} (${profile.name}):`, err);
     }
   }
 

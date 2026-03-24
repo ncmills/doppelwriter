@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Nav from "@/components/Nav";
+import { trackProfileBuildStarted, trackSampleUploaded } from "@/lib/analytics";
 
 interface Sample {
   title: string;
@@ -10,8 +11,10 @@ interface Sample {
   sourceType: string;
 }
 
-const WORD_TARGET = 5000; // Target word count for a strong profile
-const WORD_MINIMUM = 500; // Absolute minimum to attempt building
+const WORD_PERFECT = 5000; // Green zone — enough for a great profile
+const WORD_MINIMUM = 1500; // Yellow zone — can build but quality won't be great
+const WORD_PLENTY = 15000; // Past this, more content won't improve the profile much
+// Below WORD_MINIMUM = Red zone — not enough to build
 
 const TIPS = [
   "The speech feature is the easiest way to generate a lot of content fast — just talk for a few minutes.",
@@ -46,6 +49,54 @@ export default function CreatePersonalPage() {
   const [gmailConnected, setGmailConnected] = useState(false);
   const [gmailSyncing, setGmailSyncing] = useState(false);
   const [gmailResult, setGmailResult] = useState("");
+  const [hasExistingProfile, setHasExistingProfile] = useState(false);
+  const [improveProfileId, setImproveProfileId] = useState<string | null>(null);
+  const [weakDimensions, setWeakDimensions] = useState<{ name: string; improvement: string }[]>([]);
+  const [targetName, setTargetName] = useState<string | null>(null);
+
+  // Load existing samples, check for existing profile, and load quality tips if improving
+  useEffect(() => {
+    fetch("/api/samples").then((r) => r.json()).then((data) => {
+      if (Array.isArray(data) && data.length > 0) {
+        setSamples(data.map((s: { title: string; word_count: number; source_type: string }) => ({
+          title: s.title,
+          wordCount: s.word_count,
+          sourceType: s.source_type,
+        })));
+      }
+    }).catch(() => {});
+
+    const params = new URLSearchParams(window.location.search);
+
+    // Check for ?name= param (coming from voice selector fallback)
+    const nameParam = params.get("name");
+    if (nameParam) setTargetName(nameParam);
+
+    // Check for ?improve=ID param
+    const improveId = params.get("improve");
+    if (improveId) {
+      setImproveProfileId(improveId);
+      setHasExistingProfile(true);
+      // Load quality dimensions to show what needs improvement
+      fetch(`/api/profiles/${improveId}/quality`).then((r) => r.ok ? r.json() : null).then((quality) => {
+        if (quality?.dimensions) {
+          const weak = quality.dimensions
+            .filter((d: { status: string }) => d.status !== "strong")
+            .sort((a: { score: number }, b: { score: number }) => a.score - b.score)
+            .slice(0, 3)
+            .map((d: { name: string; improvement: string }) => ({ name: d.name, improvement: d.improvement }));
+          setWeakDimensions(weak);
+        }
+      }).catch(() => {});
+    } else {
+      // Check if user already has a personal profile
+      fetch("/api/profiles").then((r) => r.json()).then((profiles) => {
+        if (Array.isArray(profiles) && profiles.some((p: { is_curated: boolean }) => !p.is_curated)) {
+          setHasExistingProfile(true);
+        }
+      }).catch(() => {});
+    }
+  }, []);
 
   // Rotate tips
   useEffect(() => {
@@ -56,9 +107,10 @@ export default function CreatePersonalPage() {
   }, []);
 
   const totalWords = samples.reduce((sum, s) => sum + s.wordCount, 0);
-  const progressPct = Math.min((totalWords / WORD_TARGET) * 100, 100);
+  const progressPct = Math.min((totalWords / WORD_PERFECT) * 100, 100);
   const hasEnough = totalWords >= WORD_MINIMUM;
-  const isStrong = totalWords >= WORD_TARGET;
+  const isStrong = totalWords >= WORD_PERFECT;
+  const hasPlenty = totalWords >= WORD_PLENTY;
 
   const addSample = async (title: string, content: string, sourceType: string) => {
     const res = await fetch("/api/samples", {
@@ -69,6 +121,7 @@ export default function CreatePersonalPage() {
     if (res.ok) {
       const wc = content.split(/\s+/).filter(Boolean).length;
       setSamples((prev) => [...prev, { title, wordCount: wc, sourceType }]);
+      trackSampleUploaded(sourceType, wc);
     }
   };
 
@@ -84,6 +137,7 @@ export default function CreatePersonalPage() {
         // Estimate word count from file size (~5 chars per word)
         const estimatedWords = Math.round(file.size / 5);
         setSamples((prev) => [...prev, { title: file.name, wordCount: estimatedWords, sourceType: "upload" }]);
+        trackSampleUploaded("upload", estimatedWords);
       }
     }
     setUploading(false);
@@ -177,15 +231,29 @@ export default function CreatePersonalPage() {
   const handleAnalyze = async () => {
     setAnalyzing(true);
     setAnalyzeError("");
-    const res = await fetch("/api/profiles", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "analyze" }),
-    });
-    if (res.ok) {
-      router.push("/doppelwrite/personal");
-    } else {
-      setAnalyzeError("Not enough content to build a reliable voice profile. Go back and add more samples — aim for the green zone.");
+    trackProfileBuildStarted();
+    try {
+      const res = await fetch("/api/profiles", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "analyze", improveProfileId: improveProfileId || undefined }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const profileId = improveProfileId || data.profileIds?.[0];
+        // Send to profile page so they see quality scores + improvement tips
+        router.push(profileId ? `/profile/${profileId}` : "/write");
+      } else {
+        const data = await res.json().catch(() => ({}));
+        if (data.error === "insufficient_content") {
+          setAnalyzeError(`Not enough content to build a voice profile. You have ${totalWords.toLocaleString()} words — add more samples to reach at least ${WORD_MINIMUM.toLocaleString()}.`);
+        } else {
+          setAnalyzeError(data.error || "Something went wrong building your profile. Please try again.");
+        }
+        setAnalyzing(false);
+      }
+    } catch {
+      setAnalyzeError("Connection error — please try again.");
       setAnalyzing(false);
     }
   };
@@ -194,8 +262,34 @@ export default function CreatePersonalPage() {
     <>
       <Nav />
       <main className="max-w-3xl mx-auto px-6 py-8">
-        <h1 className="font-[family-name:var(--font-literata)] text-2xl font-bold mb-2">Create Personal DoppelWriter</h1>
-        <p className="text-stone-400 text-sm mb-6">Clone anyone&apos;s voice — yours, your mom&apos;s, your boss&apos;s, a friend&apos;s. Upload their writing and we&apos;ll build a profile that sounds exactly like them.</p>
+        <h1 className="font-[family-name:var(--font-literata)] text-2xl font-bold mb-2">
+          {hasExistingProfile
+            ? "Improve Your DoppelWriter"
+            : targetName
+              ? `Build ${targetName}\u2019s Voice`
+              : "Create Personal DoppelWriter"}
+        </h1>
+        <p className="text-stone-400 text-sm mb-6">
+          {hasExistingProfile
+            ? "Add more writing samples to make your voice profile more accurate. New samples will be analyzed and merged with your existing profile."
+            : targetName
+              ? `We couldn\u2019t find enough published writing online for ${targetName}. Upload their writing \u2014 emails, essays, blog posts, anything they\u2019ve written \u2014 and we\u2019ll build a voice profile from it.`
+              : "Clone anyone\u2019s voice \u2014 yours, your mom\u2019s, your boss\u2019s, a friend\u2019s. Upload their writing and we\u2019ll build a profile that sounds exactly like them."}
+        </p>
+
+        {/* Improvement tips from quality analysis */}
+        {weakDimensions.length > 0 && (
+          <div className="mb-6 bg-amber-900/20 border border-amber-700/30 rounded-lg p-4">
+            <h3 className="text-amber-400 text-sm font-medium mb-2">What your profile needs most:</h3>
+            <ul className="space-y-1.5">
+              {weakDimensions.map((d) => (
+                <li key={d.name} className="text-sm text-stone-400">
+                  <span className="text-stone-300 font-medium">{d.name}</span> — {d.improvement}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {/* Progress bar */}
         <div className="mb-8">
@@ -203,22 +297,32 @@ export default function CreatePersonalPage() {
             <span className="text-sm text-stone-400">
               {totalWords.toLocaleString()} words uploaded
             </span>
-            <span className={`text-xs font-medium ${isStrong ? "text-green-400" : hasEnough ? "text-amber-400" : "text-stone-500"}`}>
-              {isStrong ? "Strong profile" : hasEnough ? "Minimum met — add more for better results" : `Need ${(WORD_MINIMUM - totalWords).toLocaleString()} more words`}
+            <span className={`text-xs font-medium ${isStrong ? "text-green-400" : hasEnough ? "text-amber-400" : "text-red-400"}`}>
+              {hasPlenty
+                ? "More than enough — ready to build a great profile"
+                : isStrong
+                  ? "Perfect — ready for a great profile"
+                  : hasEnough
+                    ? "Good enough to build — more samples will improve quality"
+                    : `Need ${Math.max(0, WORD_MINIMUM - totalWords).toLocaleString()} more words to build`}
             </span>
           </div>
-          <div className="w-full h-3 bg-stone-800 rounded-full overflow-hidden">
+          <div className="w-full h-3 bg-stone-800 rounded-full overflow-hidden relative">
+            {/* Threshold markers */}
+            <div className="absolute h-full w-px bg-stone-600/50 z-10" style={{ left: `${(WORD_MINIMUM / WORD_PERFECT) * 100}%` }} />
             <div
               className={`h-full rounded-full transition-all duration-500 ${
-                isStrong ? "bg-green-500" : hasEnough ? "bg-amber-500" : "bg-stone-600"
+                isStrong ? "bg-green-500" : hasEnough ? "bg-amber-500" : "bg-red-500"
               }`}
               style={{ width: `${Math.max(progressPct, 2)}%` }}
             />
           </div>
           <div className="flex justify-between mt-1">
             <span className="text-[10px] text-stone-600">0</span>
-            <span className="text-[10px] text-stone-600">|</span>
-            <span className="text-[10px] text-stone-600">{WORD_TARGET.toLocaleString()} words</span>
+            <span className="text-[10px] text-stone-600" style={{ position: "relative", left: `${(WORD_MINIMUM / WORD_PERFECT) * 100 - 50}%` }}>
+              {WORD_MINIMUM.toLocaleString()} min
+            </span>
+            <span className="text-[10px] text-stone-600">{WORD_PERFECT.toLocaleString()}</span>
           </div>
         </div>
 
@@ -337,8 +441,8 @@ export default function CreatePersonalPage() {
               className="w-full py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors disabled:opacity-40"
             >
               {hasEnough
-                ? `Continue — Build Profile (${samples.length} sample${samples.length !== 1 ? "s" : ""})`
-                : `Add more writing (${(WORD_MINIMUM - totalWords).toLocaleString()} words to go)`}
+                ? `Continue — Build Profile (${totalWords.toLocaleString()} words)`
+                : `Add more writing (${Math.max(0, WORD_MINIMUM - totalWords).toLocaleString()} words to go)`}
             </button>
 
             {/* Scrolling tips */}
@@ -356,11 +460,14 @@ export default function CreatePersonalPage() {
         {step === 2 && (
           <div className="text-center py-12">
             <h2 className="font-[family-name:var(--font-literata)] text-xl font-semibold mb-3">
-              {isStrong ? "Ready to build your DoppelWriter" : "You can build now, but more samples = better results"}
+              {improveProfileId
+                ? "Ready to improve your voice profile"
+                : isStrong ? "Ready to build your DoppelWriter" : "You can build now, but more samples = better results"}
             </h2>
             <p className="text-stone-400 mb-4 max-w-md mx-auto">
-              We&apos;ll analyze your {samples.length} writing sample{samples.length !== 1 ? "s" : ""} ({totalWords.toLocaleString()} words)
-              at the sentence and paragraph level, identify your distinctive patterns, and build a voice profile.
+              {improveProfileId
+                ? `We'll analyze your ${samples.length} new sample${samples.length !== 1 ? "s" : ""} and merge them with your existing profile to improve accuracy.`
+                : `We'll analyze your ${samples.length} writing sample${samples.length !== 1 ? "s" : ""} (${totalWords.toLocaleString()} words) at the sentence and paragraph level, identify your distinctive patterns, and build a voice profile.`}
             </p>
 
             {!isStrong && (
@@ -394,7 +501,7 @@ export default function CreatePersonalPage() {
                 disabled={analyzing}
                 className="px-8 py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium text-lg transition-colors disabled:opacity-50"
               >
-                {analyzing ? "Analyzing your voice..." : "Build My DoppelWriter"}
+                {analyzing ? "Analyzing your voice..." : improveProfileId ? "Improve My DoppelWriter" : "Build My DoppelWriter"}
               </button>
             </div>
 

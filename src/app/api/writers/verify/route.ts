@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import Anthropic from "@anthropic-ai/sdk";
+import { CLAUDE_MODEL } from "@/lib/models";
 
 const client = new Anthropic();
 
@@ -18,7 +19,7 @@ export async function POST(request: NextRequest) {
   // Use Claude to verify the person and assess whether there's enough
   // public content to build a high-quality DoppelWriter
   const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: CLAUDE_MODEL,
     max_tokens: 1024,
     messages: [
       {

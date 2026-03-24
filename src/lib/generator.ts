@@ -1,23 +1,58 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { sql } from "./db";
+import { CLAUDE_MODEL } from "./models";
 
 const client = new Anthropic();
 
 // Optimal temperature for style-matched writing
 const STYLE_TEMPERATURE = 0.7;
 
+const VOICE_GENERATION_PREAMBLE = `You are ghostwriting as a specific author. Every sentence you write must be indistinguishable from their own work. Do NOT write like a generic AI. Do NOT use words like "delve", "tapestry", "multifaceted", "landscape", "moreover", "furthermore", "in conclusion", or any corporate/academic filler. Write like a HUMAN — specifically, the human described below.
+
+Match their exact patterns: sentence rhythm, word choices, punctuation habits, paragraph structure, tone, personality. If they use em dashes, you use em dashes. If they write short punchy sentences, you write short punchy sentences. If they're funny, be funny. If they're formal, be formal.
+
+Here is the author's voice profile:
+
+`;
+
+function applyVoiceOverrides(prompt: string, overrides: Record<string, number>): string {
+  if (!overrides || Object.keys(overrides).length === 0) return prompt;
+  const mods: string[] = [];
+  if (overrides.formality !== undefined && overrides.formality !== 5)
+    mods.push(overrides.formality > 5
+      ? `Write MORE formally. Formality: ${overrides.formality}/10.`
+      : `Write MORE casually. Formality: ${overrides.formality}/10.`);
+  if (overrides.sentence_length !== undefined && overrides.sentence_length !== 5)
+    mods.push(overrides.sentence_length > 5
+      ? `Use LONGER, more complex sentences.`
+      : `Use SHORTER, punchier sentences.`);
+  if (overrides.creativity !== undefined && overrides.creativity !== 5)
+    mods.push(overrides.creativity > 5
+      ? `Be MORE creative and metaphorical.`
+      : `Be MORE literal and restrained.`);
+  if (overrides.humor !== undefined && overrides.humor !== 5)
+    mods.push(overrides.humor > 5 ? `Inject MORE humor and wit.` : `Be MORE serious. Less humor.`);
+  if (overrides.emotion !== undefined && overrides.emotion !== 5)
+    mods.push(overrides.emotion > 5 ? `Be MORE emotionally expressive.` : `Be MORE detached and analytical.`);
+  return mods.length > 0 ? prompt + "\n\n═══ USER VOICE ADJUSTMENTS ═══\n" + mods.join("\n") : prompt;
+}
+
 async function getSystemPrompt(profileId: number): Promise<string> {
   const db = sql();
   const rows = await db`
-    SELECT system_prompt, name FROM style_profiles WHERE id = ${profileId}
+    SELECT system_prompt, name, voice_overrides FROM style_profiles WHERE id = ${profileId}
   `;
-  if (rows[0]?.system_prompt) return rows[0].system_prompt;
-  return `You are an expert writer. Write clear, engaging content.
+  const overrides = rows[0]?.voice_overrides || {};
+  const basePrompt = rows[0]?.system_prompt
+    ? VOICE_GENERATION_PREAMBLE + rows[0].system_prompt
+    : VOICE_GENERATION_PREAMBLE + `Author: ${rows[0]?.name || "Unknown"}
 
 STYLE RULES:
 Write in short, direct sentences when they serve the point. Use active voice.
 Choose concrete words over abstract ones. Let verbs do the work, not nouns.
 Vary sentence length for rhythm — short sentences for impact, longer ones for flow.`;
+
+  return applyVoiceOverrides(basePrompt, overrides);
 }
 
 export async function* generateDraft(
@@ -53,7 +88,7 @@ BRIEF: ${brief}`;
   }
 
   const stream = client.messages.stream({
-    model: "claude-sonnet-4-20250514",
+    model: CLAUDE_MODEL,
     max_tokens: 8192,
     temperature: STYLE_TEMPERATURE,
     system: systemPrompt,
@@ -78,7 +113,7 @@ async function* generateLongForm(
 
   // Step 1: Generate an outline
   const outlineResponse = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: CLAUDE_MODEL,
     max_tokens: 1024,
     temperature: 0.5,
     system: systemPrompt,
@@ -129,7 +164,7 @@ This next section covers: ${sections[i]}
 Write ~${wordsPerSection} words. Maintain the voice and flow. Write ONLY the continuation — do not repeat what came before.`;
 
     const stream = client.messages.stream({
-      model: "claude-sonnet-4-20250514",
+      model: CLAUDE_MODEL,
       max_tokens: 2048,
       temperature: STYLE_TEMPERATURE,
       system: systemPrompt, // Fresh style context for each chunk
@@ -144,7 +179,9 @@ Write ~${wordsPerSection} words. Maintain the voice and flow. Write ONLY the con
       }
     }
 
-    previousText += sectionText;
+    // Only keep the tail — we use slice(-500) in prompts anyway, so no need
+    // to accumulate the full text in memory for long pieces
+    previousText = (previousText + sectionText).slice(-1500);
 
     // Add paragraph break between sections (unless the model already did)
     if (!sectionText.endsWith("\n\n") && !isLast) {
@@ -156,7 +193,7 @@ Write ~${wordsPerSection} words. Maintain the voice and flow. Write ONLY the con
 
 export async function research(query: string): Promise<string> {
   const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: CLAUDE_MODEL,
     max_tokens: 4096,
     messages: [
       {

@@ -3,6 +3,7 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import { sql } from "./db";
+import { CLAUDE_MODEL } from "./models";
 import { CURATED_WRITERS } from "./writer-data";
 
 // Re-export for server-side consumers that imported from here before
@@ -22,15 +23,10 @@ export async function buildWriterProfile(
   `;
   if (existing.length > 0) return existing[0].id;
 
-  let contentSamples: string;
-  if (process.env.TAVILY_API_KEY) {
-    contentSamples = await fetchRealContent(writerName);
-  } else {
-    contentSamples = await synthesizeFromKnowledge(writerName);
-  }
+  const { content: contentSamples } = await fetchRealContent(writerName);
 
   const profileResponse = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: CLAUDE_MODEL,
     max_tokens: 4096,
     messages: [
       {
@@ -71,7 +67,7 @@ Respond with JSON only:
   const profileJson = JSON.parse(jsonMatch[0]);
 
   const promptResponse = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: CLAUDE_MODEL,
     max_tokens: 2048,
     messages: [
       {
@@ -98,7 +94,11 @@ The prompt should instruct the AI to write exactly as ${writerName} would. Be sp
   return row.id;
 }
 
-async function fetchRealContent(writerName: string): Promise<string> {
+async function fetchRealContent(writerName: string): Promise<{ content: string; fromWeb: boolean }> {
+  if (!process.env.TAVILY_API_KEY) {
+    return { content: await synthesizeFromKnowledge(writerName), fromWeb: false };
+  }
+
   const response = await fetch("https://api.tavily.com/search", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -118,12 +118,16 @@ async function fetchRealContent(writerName: string): Promise<string> {
     }
   }
 
-  return texts.length > 0 ? texts.join("\n\n") : synthesizeFromKnowledge(writerName);
+  if (texts.length > 0) {
+    return { content: texts.join("\n\n"), fromWeb: true };
+  }
+
+  return { content: await synthesizeFromKnowledge(writerName), fromWeb: false };
 }
 
 async function synthesizeFromKnowledge(writerName: string): Promise<string> {
   const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: CLAUDE_MODEL,
     max_tokens: 4096,
     messages: [
       {

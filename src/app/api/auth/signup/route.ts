@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { sql } from "@/lib/db";
 import { sendVerificationEmail } from "@/lib/email";
+import { trackServerEvent } from "@/lib/track";
+import crypto from "crypto";
 
 const PASSWORD_MIN_LENGTH = 8;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
 export async function POST(request: NextRequest) {
-  const { email, password, name } = await request.json();
+  const { email, password, name, ref } = await request.json();
 
   if (!email || !password) {
     return NextResponse.json({ error: "Email and password required" }, { status: 400 });
@@ -37,11 +39,24 @@ export async function POST(request: NextRequest) {
   }
 
   const hash = await bcrypt.hash(password, 12);
+  const referralCode = crypto.randomBytes(3).toString("hex"); // 6-char alphanumeric
+
   const [user] = await db`
-    INSERT INTO users (email, name, password_hash)
-    VALUES (${email}, ${name || null}, ${hash})
+    INSERT INTO users (email, name, password_hash, referral_code, referred_by)
+    VALUES (${email}, ${name || null}, ${hash}, ${referralCode}, ${ref || null})
     RETURNING id, email, name, plan
   `;
+
+  // Process referral: grant bonuses to both sides
+  if (ref) {
+    const [referrer] = await db`SELECT id FROM users WHERE referral_code = ${ref}`;
+    if (referrer) {
+      await db`
+        INSERT INTO referrals (referrer_id, referred_id, bonus_applied)
+        VALUES (${referrer.id}, ${user.id}, TRUE)
+      `;
+    }
+  }
 
   // Send verification email (non-blocking — don't fail signup if email fails)
   try {
@@ -49,6 +64,8 @@ export async function POST(request: NextRequest) {
   } catch {
     // Email sending failed — user can still log in, will be prompted to verify later
   }
+
+  await trackServerEvent("signup", { method: "email", ref: ref || null }, user.id);
 
   return NextResponse.json({ id: user.id, email: user.email, needsVerification: true });
 }

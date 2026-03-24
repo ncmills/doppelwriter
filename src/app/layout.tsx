@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Literata } from "next/font/google";
 import SessionProvider from "@/components/SessionProvider";
+import PostHogProvider from "@/components/PostHogProvider";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -9,11 +10,13 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const literata = Literata({
@@ -53,7 +56,12 @@ export const metadata: Metadata = {
     description: "Clone your writing voice or write like any famous author.",
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: "https://doppelwriter.com" },
+  alternates: {
+    canonical: "https://doppelwriter.com",
+    types: {
+      "application/rss+xml": "https://doppelwriter.com/blog/rss.xml",
+    },
+  },
 };
 
 export default function RootLayout({
@@ -66,7 +74,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${literata.variable} antialiased bg-[#0C0A09] text-[#FAFAF9]`}
       >
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <PostHogProvider>{children}</PostHogProvider>
+        </SessionProvider>
         <Analytics />
         <SpeedInsights />
       </body>

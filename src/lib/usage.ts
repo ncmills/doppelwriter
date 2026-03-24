@@ -14,7 +14,21 @@ export async function checkUsage(userId: string): Promise<UsageInfo> {
 
   const [user] = await db`SELECT plan FROM users WHERE id = ${userId}`;
   const plan = (user?.plan || "free") as PlanKey;
-  const limit = PLANS[plan].monthlyLimit;
+  const baseLimit = PLANS[plan].monthlyLimit;
+
+  // Count referral bonuses (5 per referral) — table may not exist yet
+  let referralBonus = 0;
+  try {
+    const [bonusRow] = await db`
+      SELECT COUNT(*)::int as count FROM referrals
+      WHERE (referrer_id = ${userId} OR referred_id = ${userId})
+      AND bonus_applied = TRUE
+    `;
+    referralBonus = (bonusRow?.count || 0) * 5;
+  } catch {
+    // referrals table doesn't exist yet — no bonus
+  }
+  const limit = baseLimit + referralBonus;
 
   const [row] = await db`
     SELECT COUNT(*)::int as count FROM usage_log

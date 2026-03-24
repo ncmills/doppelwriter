@@ -16,10 +16,34 @@ export default function WritePage() {
   const [selectorOpen, setSelectorOpen] = useState(false);
   const [isNewUser, setIsNewUser] = useState(true);
   const [buildingVoice, setBuildingVoice] = useState<string | null>(null);
+  const [initialMode, setInitialMode] = useState<"edit" | "generate" | undefined>(undefined);
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
   }, [status, router]);
+
+  // Auto-select voice from ?voice= query param
+  useEffect(() => {
+    if (!session || profileId) return;
+    const params = new URLSearchParams(window.location.search);
+    const voiceParam = params.get("voice");
+    const modeParam = params.get("mode");
+    if (modeParam === "generate" || modeParam === "edit") setInitialMode(modeParam);
+    if (voiceParam) {
+      const voiceId = Number(voiceParam);
+      if (Number.isFinite(voiceId)) {
+        fetch(`/api/profiles/${voiceId}`)
+          .then((r) => r.ok ? r.json() : null)
+          .then((profile) => {
+            if (profile) {
+              setProfileId(profile.id);
+              setProfileName(profile.name);
+              setIsNewUser(false);
+            }
+          });
+      }
+    }
+  }, [session, profileId]);
 
   useEffect(() => {
     if (session) {
@@ -87,7 +111,7 @@ export default function WritePage() {
                 <span className="text-xs text-stone-500 ml-1">Change voice</span>
               </button>
             </div>
-            <Workspace profileId={profileId} profileName={profileName} />
+            <Workspace profileId={profileId} profileName={profileName} defaultMode={initialMode} />
           </>
         ) : (
           /* First-time / no voice selected — the "magic first minute" */
@@ -121,9 +145,17 @@ export default function WritePage() {
                       <p className="font-semibold group-hover:text-amber-400 transition-colors">{w.name}</p>
                       <p className="text-xs text-stone-500">{w.desc}</p>
                     </div>
-                    {buildingVoice === w.name && (
-                      <span className="text-xs text-amber-400 animate-pulse">Loading...</span>
-                    )}
+                    {buildingVoice === w.name ? (
+                      <div className="flex items-center gap-2 ml-auto">
+                        <svg className="animate-spin h-4 w-4 text-amber-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        <span className="text-xs text-amber-400">Building voice...</span>
+                      </div>
+                    ) : buildingVoice ? (
+                      <span className="text-xs text-stone-600 ml-auto">Waiting...</span>
+                    ) : null}
                   </div>
                 </button>
               ))}

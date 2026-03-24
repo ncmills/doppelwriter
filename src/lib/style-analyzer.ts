@@ -1,7 +1,31 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { sql } from "./db";
+import { CLAUDE_MODEL } from "./models";
 
 const client = new Anthropic();
+
+// Retry wrapper for Anthropic API calls with rate limit backoff
+async function callWithRetry(
+  fn: () => Promise<Anthropic.Message>,
+  maxRetries = 3
+): Promise<Anthropic.Message> {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (err: unknown) {
+      const status = (err as { status?: number })?.status;
+      if (status === 429 && attempt < maxRetries) {
+        // Rate limited — wait with exponential backoff (15s, 30s, 60s)
+        const delay = 15000 * Math.pow(2, attempt);
+        console.log(`Rate limited, retrying in ${delay / 1000}s (attempt ${attempt + 1}/${maxRetries})`);
+        await new Promise((r) => setTimeout(r, delay));
+        continue;
+      }
+      throw err;
+    }
+  }
+  throw new Error("Max retries exceeded");
+}
 
 // ── Multi-Layer Voice Architecture ──────────────────────────────────────────
 // Decomposes voice into micro (sentence-level) and macro (structure-level)
@@ -61,37 +85,50 @@ export async function analyzeAndCategorize(userId: string): Promise<{
 
   if (samples.length === 0) return { categories: [], profileIds: [] };
 
-  const excerpts = samples.map((s) => ({
-    id: s.id,
-    title: s.title,
-    source_type: s.source_type,
-    excerpt: (s.content as string).slice(0, 2000),
-  }));
+  let result: { categories: string[]; assignments: Record<string, string> };
 
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 4096,
-    messages: [
-      {
-        role: "user",
-        content: `Analyze these writing samples from a single author. Group them into natural style categories based on voice, tone, and purpose.
+  if (samples.length <= 10) {
+    // Single-category fast path: skip the categorization API call entirely.
+    // Personal profiles are typically one voice — no need to categorize.
+    const categoryName = "Personal Voice";
+    result = {
+      categories: [categoryName],
+      assignments: Object.fromEntries(samples.map((s) => [String(s.id), categoryName])),
+    };
+  } else {
+    // Only categorize when there are many samples that might have distinct voices
+    // Use modest excerpts for categorization — we just need enough to group them
+    const excerpts = samples.map((s) => ({
+      id: s.id,
+      title: s.title,
+      source_type: s.source_type,
+      excerpt: (s.content as string).slice(0, 1500),
+    }));
+
+    const response = await callWithRetry(() => client.messages.create({
+      model: CLAUDE_MODEL,
+      max_tokens: 4096,
+      messages: [
+        {
+          role: "user",
+          content: `Analyze these writing samples from a single author. Group them into natural style categories based on voice, tone, and purpose.
 
 ${excerpts.map((e) => `--- Sample ${e.id}: "${e.title}" (${e.source_type}) ---\n${e.excerpt}\n`).join("\n")}
 
 Respond with JSON only:
 { "categories": ["name", ...], "assignments": { "sample_id": "category_name", ... } }`,
-      },
-    ],
-  });
+        },
+      ],
+    }));
 
-  const text = response.content[0].type === "text" ? response.content[0].text : "";
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) throw new Error("Failed to parse categorization");
+    const text = response.content[0].type === "text" ? response.content[0].text : "";
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error("Failed to parse categorization");
+    result = JSON.parse(jsonMatch[0]);
+  }
 
-  const result = JSON.parse(jsonMatch[0]);
-
-  await db`DELETE FROM style_profiles WHERE user_id = ${userId} AND is_curated = FALSE`;
-
+  // Create new profiles first, generate them, then clean up old ones.
+  // This way, if generation fails mid-way, the user still has their old profiles.
   const profileIds: number[] = [];
   const profileIdMap: Record<string, number> = {};
 
@@ -106,21 +143,27 @@ Respond with JSON only:
   }
 
   for (const [sampleId, category] of Object.entries(result.assignments)) {
+    const numericId = Number(sampleId);
+    if (!Number.isFinite(numericId)) continue;
     const profileId = profileIdMap[category as string];
     if (profileId) {
       await db`
         INSERT INTO sample_profiles (sample_id, profile_id)
-        VALUES (${Number(sampleId)}, ${profileId})
+        VALUES (${numericId}, ${profileId})
         ON CONFLICT DO NOTHING
       `;
     }
   }
 
+  // Generate profiles sequentially to avoid rate limits
   for (const id of profileIds) {
     await generateProfile(id);
   }
 
-  // Purge raw writing samples — only the extracted profile persists.
+  // Only clean up after all profiles are successfully generated:
+  // 1. Remove old user profiles (the new ones are ready)
+  await db`DELETE FROM style_profiles WHERE user_id = ${userId} AND is_curated = FALSE AND id != ALL(${profileIds})`;
+  // 2. Purge raw writing samples — only the extracted profile persists.
   // "We read your writing, learn your voice, and forget the rest."
   await db`DELETE FROM writing_samples WHERE user_id = ${userId}`;
 
@@ -143,13 +186,35 @@ export async function generateProfile(profileId: number): Promise<void> {
 
   if (samples.length === 0) return;
 
-  const sampleText = samples
-    .map((s) => `--- "${s.title}" ---\n${(s.content as string).slice(0, 4000)}`)
+  // Smart content selection: ~25k chars (~5k words) is the sweet spot.
+  // Beyond that, voice analysis has diminishing returns — we're just
+  // burning tokens. Select a diverse subset that covers the voice well.
+  const MAX_ANALYSIS_CHARS = 25000;
+
+  // Sort samples by word count descending — longer pieces carry more signal
+  const sorted = [...samples].sort(
+    (a, b) => (b.content as string).length - (a.content as string).length
+  );
+
+  // Greedily pick samples until we hit the cap, ensuring variety
+  const selected: typeof samples = [];
+  let totalChars = 0;
+  for (const s of sorted) {
+    const content = s.content as string;
+    const take = Math.min(content.length, MAX_ANALYSIS_CHARS - totalChars);
+    if (take < 500) break; // don't include tiny scraps
+    selected.push({ ...s, content: content.slice(0, take) });
+    totalChars += take;
+    if (totalChars >= MAX_ANALYSIS_CHARS) break;
+  }
+
+  const sampleText = selected
+    .map((s) => `--- "${s.title}" ---\n${s.content as string}`)
     .join("\n\n");
 
   // Step 1: Extract multi-layer profile
-  const profileResponse = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+  const profileResponse = await callWithRetry(() => client.messages.create({
+    model: CLAUDE_MODEL,
     max_tokens: 4096,
     messages: [
       {
@@ -194,16 +259,19 @@ Respond with JSON only:
 }`,
       },
     ],
-  });
+  }));
 
   const profileText = profileResponse.content[0].type === "text" ? profileResponse.content[0].text : "";
   const profileJsonMatch = profileText.match(/\{[\s\S]*\}/);
   if (!profileJsonMatch) throw new Error("Failed to parse profile");
   const profileJson = JSON.parse(profileJsonMatch[0]) as FullStyleProfile;
 
+  // Wait between calls to avoid rate limiting (30k tokens/min)
+  await new Promise((r) => setTimeout(r, 5000));
+
   // Step 2: Select best exemplar passages
-  const exemplarResponse = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+  const exemplarResponse = await callWithRetry(() => client.messages.create({
+    model: CLAUDE_MODEL,
     max_tokens: 2048,
     messages: [
       {
@@ -216,7 +284,7 @@ Return JSON only:
 { "exemplars": ["passage 1 text...", "passage 2 text..."] }`,
       },
     ],
-  });
+  }));
 
   const exemplarText = exemplarResponse.content[0].type === "text" ? exemplarResponse.content[0].text : "";
   const exemplarMatch = exemplarText.match(/\{[\s\S]*\}/);
@@ -228,11 +296,16 @@ Return JSON only:
   }
 
   // Step 3: Check for user corrections to incorporate
-  const corrections = await db`
-    SELECT original_text, corrected_text, correction_type, lesson FROM voice_corrections
-    WHERE profile_id = ${profileId}
-    ORDER BY created_at DESC LIMIT 30
-  `.catch(() => []) as { original_text: string; corrected_text: string; correction_type: string; lesson: string }[];
+  let corrections: { original_text: string; corrected_text: string; correction_type: string; lesson: string }[] = [];
+  try {
+    corrections = await db`
+      SELECT original_text, corrected_text, correction_type, lesson FROM voice_corrections
+      WHERE profile_id = ${profileId}
+      ORDER BY created_at DESC LIMIT 30
+    ` as typeof corrections;
+  } catch (err) {
+    console.error(`Failed to fetch corrections for profile ${profileId}:`, err);
+  }
 
   // Step 4: Build the system prompt
   const systemPrompt = buildMultiLayerPrompt(profile.name as string, profileJson, exemplars, corrections);
@@ -348,7 +421,7 @@ export async function getProfile(id: number) {
 
 export async function updateProfile(
   id: number,
-  updates: { name?: string; system_prompt?: string }
+  updates: { name?: string; system_prompt?: string; profile_json?: string; voice_overrides?: Record<string, number> }
 ) {
   const db = sql();
   if (updates.name) {
@@ -356,5 +429,12 @@ export async function updateProfile(
   }
   if (updates.system_prompt) {
     await db`UPDATE style_profiles SET system_prompt = ${updates.system_prompt}, updated_at = NOW() WHERE id = ${id}`;
+  }
+  if (updates.profile_json) {
+    await db`UPDATE style_profiles SET profile_json = ${updates.profile_json}, updated_at = NOW() WHERE id = ${id}`;
+  }
+  if (updates.voice_overrides) {
+    // Store overrides as JSON — these modify the system prompt at generation time
+    await db`UPDATE style_profiles SET voice_overrides = ${JSON.stringify(updates.voice_overrides)}, updated_at = NOW() WHERE id = ${id}`;
   }
 }

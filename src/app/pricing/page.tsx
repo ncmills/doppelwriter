@@ -1,15 +1,27 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 export default function PricingPage() {
   const { data: session } = useSession();
 
+  const [upgradeError, setUpgradeError] = useState("");
+
   const handleUpgrade = async () => {
-    const res = await fetch("/api/stripe/checkout", { method: "POST" });
-    const { url } = await res.json();
-    if (url) window.location.href = url;
+    setUpgradeError("");
+    try {
+      const res = await fetch("/api/stripe/checkout", { method: "POST" });
+      if (!res.ok) {
+        setUpgradeError("Something went wrong. Please try again or contact support.");
+        return;
+      }
+      const { url } = await res.json();
+      if (url) window.location.href = url;
+    } catch {
+      setUpgradeError("Connection error. Please try again.");
+    }
   };
 
   return (
@@ -19,7 +31,7 @@ export default function PricingPage() {
           <Link href="/" className="font-bold text-lg">DoppelWriter</Link>
           <div className="flex gap-4 items-center">
             {session ? (
-              <Link href="/dashboard" className="text-sm text-stone-400 hover:text-white">Dashboard</Link>
+              <Link href="/home" className="text-sm text-stone-400 hover:text-white">Home</Link>
             ) : (
               <Link href="/login" className="text-sm text-stone-400 hover:text-white">Log in</Link>
             )}
@@ -61,18 +73,23 @@ export default function PricingPage() {
             <ul className="space-y-3 text-sm text-stone-300 mb-8">
               <li className="flex gap-2"><span className="text-amber-400">&#10003;</span> 200 edits & generations per month</li>
               <li className="flex gap-2"><span className="text-amber-400">&#10003;</span> Unlimited personal profiles</li>
-              <li className="flex gap-2"><span className="text-amber-400">&#10003;</span> All 12+ curated writers</li>
+              <li className="flex gap-2"><span className="text-amber-400">&#10003;</span> All 100+ curated writers</li>
               <li className="flex gap-2"><span className="text-amber-400">&#10003;</span> Request any custom writer</li>
               <li className="flex gap-2"><span className="text-amber-400">&#10003;</span> Email ingestion</li>
               <li className="flex gap-2"><span className="text-amber-400">&#10003;</span> Never blocked — just slows past 200</li>
             </ul>
             {session ? (
-              <button
-                onClick={handleUpgrade}
-                className="w-full py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors"
-              >
-                Upgrade to Pro
-              </button>
+              <>
+                <button
+                  onClick={handleUpgrade}
+                  className="w-full py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors"
+                >
+                  Upgrade to Pro
+                </button>
+                {upgradeError && (
+                  <p className="text-red-400 text-xs mt-2 text-center">{upgradeError}</p>
+                )}
+              </>
             ) : (
               <Link
                 href="/signup"
@@ -88,6 +105,20 @@ export default function PricingPage() {
           Pro users are never cut off — heavy usage past 200/month is gently throttled, never blocked.
         </p>
       </main>
+
+      <footer className="border-t border-stone-800/40 py-8 mt-16">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span className="text-xs text-stone-600">&copy; {new Date().getFullYear()} DoppelWriter</span>
+          <div className="flex gap-6">
+            <Link href="/pricing" className="text-xs text-stone-500 hover:text-white transition-colors">Pricing</Link>
+            <Link href="/privacy" className="text-xs text-stone-500 hover:text-white transition-colors">Privacy</Link>
+            <Link href="/terms" className="text-xs text-stone-500 hover:text-white transition-colors">Terms</Link>
+          </div>
+          <a href="mailto:enterprise@doppelwriter.com?subject=Enterprise%20Inquiry" className="text-xs text-stone-500 hover:text-amber-400 transition-colors">
+            Enterprise &rarr;
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -20,7 +20,6 @@ export async function POST(request: NextRequest) {
   }
 
   const { original, currentEdit, feedback, profileId } = await request.json();
-  await logUsage(session.user.id, "revise");
 
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
@@ -29,12 +28,20 @@ export async function POST(request: NextRequest) {
         if (usage.throttled) {
           await new Promise((r) => setTimeout(r, 2000));
         }
+        let hasOutput = false;
         for await (const chunk of reviseDraft(original, currentEdit, feedback, profileId)) {
+          hasOutput = true;
           controller.enqueue(encoder.encode(chunk));
+        }
+        // Only log usage after successful generation
+        if (hasOutput) {
+          await logUsage(session.user!.id, "revise");
         }
         controller.close();
       } catch (err) {
-        controller.error(err);
+        const msg = err instanceof Error ? err.message : "Revision failed";
+        controller.enqueue(encoder.encode(`\n\n[ERROR: ${msg}]`));
+        controller.close();
       }
     },
   });

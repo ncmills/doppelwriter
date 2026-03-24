@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import WriterAvatar from "@/components/WriterAvatar";
 import { CURATED_WRITERS } from "@/lib/writer-data";
+import { identifyUser } from "@/lib/analytics";
 
 interface Draft {
   id: number;
@@ -27,19 +29,36 @@ interface Profile {
 const SUGGESTED = ["Ernest Hemingway", "Paul Graham", "Barack Obama", "Tina Fey", "Carl Sagan", "Seth Godin"];
 
 export default function HomePage() {
+  const { data: session } = useSession();
   const [drafts, setDrafts] = useState<Draft[]>([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [usage, setUsage] = useState<{ used: number; limit: number; plan: string } | null>(null);
+  const [referral, setReferral] = useState<{ code: string; count: number; bonus: number } | null>(null);
+  const [refCopied, setRefCopied] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (session?.user?.id) {
+      identifyUser(session.user.id, {
+        email: session.user.email,
+        name: session.user.name,
+        plan: (session.user as Record<string, unknown>).plan,
+      });
+    }
+  }, [session]);
 
   useEffect(() => {
     Promise.all([
       fetch("/api/drafts").then((r) => r.json()),
       fetch("/api/profiles").then((r) => r.json()),
       fetch("/api/usage").then((r) => r.json()),
-    ]).then(([d, p, u]) => {
+      fetch("/api/referral").then((r) => r.json()).catch(() => null),
+    ]).then(([d, p, u, r]) => {
       setDrafts(d);
       setProfiles(p);
       setUsage(u);
+      if (r && !r.error) setReferral(r);
+      setLoaded(true);
     });
   }, []);
 
@@ -62,6 +81,19 @@ export default function HomePage() {
           </Link>
         </div>
 
+        {/* Loading state */}
+        {!loaded && (
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 animate-pulse">
+                <div className="h-4 bg-stone-800 rounded w-1/3 mb-3" />
+                <div className="h-3 bg-stone-800/60 rounded w-2/3" />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {loaded && <>
         {/* Stats — only show if user has activity */}
         {(drafts.length > 0 || personalProfiles.length > 0) && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -74,8 +106,10 @@ export default function HomePage() {
               <p className="text-xl font-bold mt-1 text-amber-400">{personalProfiles.length}</p>
             </div>
             <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4">
-              <p className="text-stone-500 text-xs">Drafts</p>
-              <p className="text-xl font-bold mt-1 text-green-400">{drafts.length}</p>
+              <p className="text-stone-500 text-xs">Words Written</p>
+              <p className="text-xl font-bold mt-1 text-green-400">
+                {drafts.reduce((sum, d) => sum + (d.content?.split(/\s+/).length || 0), 0).toLocaleString()}
+              </p>
             </div>
             <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4">
               <p className="text-stone-500 text-xs">Usage</p>
@@ -127,16 +161,26 @@ export default function HomePage() {
               <p className="text-amber-400 text-xs mt-1">Create your first voice &rarr;</p>
             </Link>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {personalProfiles.map((p) => (
-                <Link key={p.id} href={`/write?voice=${p.id}`}
-                  className="bg-stone-900/50 border border-amber-500/30 rounded-lg p-4 hover:border-amber-500/60 transition-colors">
-                  <p className="font-medium text-sm">{p.name}</p>
-                  <div className="flex items-center justify-between mt-2">
-                    <p className="text-xs text-stone-600">Personal</p>
-                    <Link href={`/profile/${p.id}`} className="text-xs text-amber-400 hover:text-amber-300">profile</Link>
+                <div key={p.id}
+                  className="bg-stone-900/50 border border-amber-500/20 rounded-lg p-4">
+                  <p className="font-medium text-sm mb-3">{p.name}</p>
+                  <div className="flex gap-2">
+                    <Link href={`/write?voice=${p.id}&mode=generate`}
+                      className="flex-1 text-center py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-xs font-medium transition-colors">
+                      Generate
+                    </Link>
+                    <Link href={`/write?voice=${p.id}&mode=edit`}
+                      className="flex-1 text-center py-2 bg-amber-600/80 hover:bg-amber-500 rounded-lg text-xs font-medium transition-colors">
+                      Edit
+                    </Link>
+                    <Link href={`/profile/${p.id}`}
+                      className="flex-1 text-center py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs font-medium text-stone-300 transition-colors">
+                      Customize
+                    </Link>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           )}
@@ -213,6 +257,34 @@ export default function HomePage() {
           </div>
         </div>
 
+        {/* Referral Card */}
+        {referral && (
+          <div className="mb-8 bg-stone-900/50 border border-amber-500/20 rounded-lg p-5">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold">Invite Friends, Get Free Uses</h2>
+              <span className="text-xs text-stone-500">{referral.count} invited &middot; +{referral.bonus} bonus uses</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                readOnly
+                value={`doppelwriter.com/?ref=${referral.code}`}
+                className="flex-1 px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-sm text-stone-300 focus:outline-none"
+              />
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(`https://doppelwriter.com/?ref=${referral.code}`);
+                  setRefCopied(true);
+                  setTimeout(() => setRefCopied(false), 2000);
+                }}
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors shrink-0"
+              >
+                {refCopied ? "Copied!" : "Copy Link"}
+              </button>
+            </div>
+            <p className="text-xs text-stone-500 mt-2">You and your friend both get +5 free uses when they sign up.</p>
+          </div>
+        )}
+
         {/* Recent Projects */}
         {drafts.length > 0 && (
           <div>
@@ -234,6 +306,7 @@ export default function HomePage() {
             </div>
           </div>
         )}
+        </>}
       </main>
     </>
   );
