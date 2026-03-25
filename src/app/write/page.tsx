@@ -88,7 +88,7 @@ export default function WritePage() {
   return (
     <>
       <Nav />
-      <main className="max-w-6xl mx-auto px-6 py-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Voice selector modal */}
         <VoiceSelector
           selectedId={profileId}
@@ -115,8 +115,8 @@ export default function WritePage() {
           </>
         ) : (
           /* First-time / no voice selected — the "magic first minute" */
-          <div className="max-w-2xl mx-auto py-8">
-            <h1 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-3">
+          <div className="max-w-2xl mx-auto py-4 sm:py-8">
+            <h1 className="font-[family-name:var(--font-literata)] text-2xl sm:text-3xl font-bold text-center mb-3">
               {isNewUser ? "See DoppelWriter in action" : "Pick a voice to start writing"}
             </h1>
             <p className="text-stone-400 text-center mb-10">
@@ -126,7 +126,7 @@ export default function WritePage() {
             </p>
 
             {/* Quick-start voices */}
-            <div className="grid grid-cols-2 gap-3 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
               {[
                 { name: "Ernest Hemingway", desc: "Sparse, powerful prose" },
                 { name: "Paul Graham", desc: "Clear, direct essays" },

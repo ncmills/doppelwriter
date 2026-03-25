@@ -96,8 +96,8 @@ export default function AnalyzePage() {
       <LandingNav />
 
       {/* Hero */}
-      <section className="max-w-4xl mx-auto px-6 pt-24 pb-12 text-center">
-        <h1 className="font-[family-name:var(--font-literata)] text-4xl sm:text-5xl font-bold tracking-tight leading-tight mb-4">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-10 sm:pb-12 text-center">
+        <h1 className="font-[family-name:var(--font-literata)] text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-4">
           Analyze Your{" "}
           <span className="bg-gradient-to-r from-amber-400 to-orange-300 bg-clip-text text-transparent">
             Writing Voice
@@ -109,7 +109,7 @@ export default function AnalyzePage() {
       </section>
 
       {/* Input */}
-      <section className="max-w-3xl mx-auto px-6 pb-8">
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 pb-8">
         <div className="relative">
           <textarea
             value={text}
@@ -145,7 +145,7 @@ export default function AnalyzePage() {
 
       {/* Loading skeleton */}
       {loading && (
-        <section className="max-w-4xl mx-auto px-6 pb-16">
+        <section className="max-w-4xl mx-auto px-4 sm:px-6 pb-16">
           <div className="space-y-4">
             <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 animate-pulse">
               <div className="h-4 bg-stone-800 rounded w-1/3 mb-3" />
@@ -170,7 +170,7 @@ export default function AnalyzePage() {
 
       {/* Results */}
       {analysis && !loading && (
-        <section className="max-w-4xl mx-auto px-6 pb-16 space-y-6">
+        <section className="max-w-4xl mx-auto px-4 sm:px-6 pb-16 space-y-6">
           {/* Voice Summary */}
           <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6">
             <h2 className="font-[family-name:var(--font-literata)] text-xl font-semibold mb-3 text-amber-400">
@@ -368,7 +368,7 @@ export default function AnalyzePage() {
               <div className="bg-[#0C0A09] border border-stone-800/60 rounded-lg p-5 mb-6 max-w-lg mx-auto">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-bold text-amber-600">DoppelWriter</span>
-                  <span className="text-[10px] text-stone-600 uppercase tracking-widest">Voice Analysis</span>
+                  <span className="text-xs text-stone-600 uppercase tracking-widest">Voice Analysis</span>
                 </div>
                 <div className="mb-3">
                   <p className="text-2xl font-extrabold capitalize tracking-tight">{analysis.tone.primary}</p>
@@ -376,16 +376,16 @@ export default function AnalyzePage() {
                 </div>
                 {analysis.similarTo[0] && (
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="text-[10px] text-stone-600 uppercase tracking-wider">Writes like</span>
+                    <span className="text-xs text-stone-600 uppercase tracking-wider">Writes like</span>
                     <span className="text-sm font-bold text-amber-500">
                       {analysis.similarTo[0].split(" — ")[0]?.split(" – ")[0]?.trim()}
                     </span>
                   </div>
                 )}
                 <div className="flex gap-2 flex-wrap">
-                  <span className="text-[10px] px-2 py-0.5 bg-stone-800 rounded text-stone-400 capitalize">{analysis.vocabulary.level} vocabulary</span>
-                  <span className="text-[10px] px-2 py-0.5 bg-stone-800 rounded text-stone-400">{analysis.tone.formality}/10 formality</span>
-                  <span className="text-[10px] px-2 py-0.5 bg-stone-800 rounded text-stone-400">{analysis.sentenceLength.average} avg words/sentence</span>
+                  <span className="text-xs px-2 py-0.5 bg-stone-800 rounded text-stone-400 capitalize">{analysis.vocabulary.level} vocabulary</span>
+                  <span className="text-xs px-2 py-0.5 bg-stone-800 rounded text-stone-400">{analysis.tone.formality}/10 formality</span>
+                  <span className="text-xs px-2 py-0.5 bg-stone-800 rounded text-stone-400">{analysis.sentenceLength.average} avg words/sentence</span>
                 </div>
               </div>
 
@@ -440,7 +440,7 @@ export default function AnalyzePage() {
           )}
 
           {/* CTA Banner */}
-          <div className="bg-gradient-to-r from-amber-600/10 to-orange-600/10 border border-amber-600/20 rounded-lg p-8 text-center">
+          <div className="bg-gradient-to-r from-amber-600/10 to-orange-600/10 border border-amber-600/20 rounded-lg p-5 sm:p-8 text-center">
             <h3 className="font-[family-name:var(--font-literata)] text-xl font-semibold mb-2">
               Want to generate text in this voice?
             </h3>

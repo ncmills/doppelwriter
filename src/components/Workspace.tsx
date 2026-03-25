@@ -367,31 +367,31 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
       {/* Done mode — clean formatted final view */}
       {doneMode ? (
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
             <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold">Final Draft</h2>
             <div className="flex flex-wrap gap-2">
-              <button onClick={handleBackToEdit} className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs text-stone-400 hover:text-white transition-colors">
+              <button onClick={handleBackToEdit} className="px-3 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs text-stone-400 hover:text-white transition-colors">
                 Back to Edit
               </button>
-              <button onClick={handleCopy} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
+              <button onClick={handleCopy} className="px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
                 {copied ? "Copied!" : "Copy Text"}
               </button>
-              <button onClick={handleCopyFormatted} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
+              <button onClick={handleCopyFormatted} className="hidden sm:inline-block px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
                 {copied ? "Copied!" : "Copy Formatted"}
               </button>
-              <button onClick={handleDownload} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
+              <button onClick={handleDownload} className="hidden sm:inline-block px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
                 Download
               </button>
-              <button onClick={handleShare} disabled={sharing} className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors disabled:opacity-50">
+              <button onClick={handleShare} disabled={sharing} className="px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors disabled:opacity-50">
                 {sharing ? "Sharing..." : shareUrl ? "Shared!" : "Share"}
               </button>
-              <button onClick={handleSave} className="px-4 py-1.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
+              <button onClick={handleSave} className="px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
                 Save
               </button>
             </div>
           </div>
           <div
-            className="prose prose-invert prose-stone max-w-none bg-stone-900 border border-stone-800 rounded-lg p-8 min-h-[500px] leading-relaxed"
+            className="prose prose-invert prose-stone max-w-none bg-stone-900 border border-stone-800 rounded-lg p-4 sm:p-8 min-h-[300px] sm:min-h-[500px] leading-relaxed"
             dangerouslySetInnerHTML={{ __html: finalText }}
           />
           <div className="mt-6 p-4 bg-stone-900/50 border border-stone-800/40 rounded-lg flex items-center justify-between">
@@ -407,15 +407,15 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
       ) : (
       <>
       {/* Top bar — minimal: mode toggle + actions */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
         <div className="flex items-center gap-3">
           <div className="flex bg-stone-900 rounded-lg p-0.5">
             <button onClick={() => setMode("edit")}
-              className={`px-4 py-1.5 rounded-md text-sm transition-colors ${mode === "edit" ? "bg-stone-700 text-white" : "text-stone-400"}`}>
+              className={`px-4 py-2 rounded-md text-sm transition-colors ${mode === "edit" ? "bg-stone-700 text-white" : "text-stone-400"}`}>
               Edit
             </button>
             <button onClick={() => setMode("generate")}
-              className={`px-4 py-1.5 rounded-md text-sm transition-colors ${mode === "generate" ? "bg-stone-700 text-white" : "text-stone-400"}`}>
+              className={`px-4 py-2 rounded-md text-sm transition-colors ${mode === "generate" ? "bg-stone-700 text-white" : "text-stone-400"}`}>
               Generate
             </button>
           </div>
@@ -424,19 +424,19 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
             {showOptions ? "Hide options" : "Options"}
           </button>
           {learningCount > 0 && (
-            <span className="text-xs text-stone-600">{learningCount} edit{learningCount !== 1 ? "s" : ""} learned</span>
+            <span className="text-xs text-stone-600 hidden sm:inline">{learningCount} edit{learningCount !== 1 ? "s" : ""} learned</span>
           )}
         </div>
         <div className="flex gap-2">
-          <button onClick={handleDownload} className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs transition-colors text-stone-400 hover:text-white">
+          <button onClick={handleDownload} className="hidden sm:block px-3 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs transition-colors text-stone-400 hover:text-white">
             Download
           </button>
           {output && (
-            <button onClick={handleShare} disabled={sharing} className="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs transition-colors text-stone-400 hover:text-white disabled:opacity-50">
+            <button onClick={handleShare} disabled={sharing} className="px-3 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs transition-colors text-stone-400 hover:text-white disabled:opacity-50">
               {sharing ? "Sharing..." : shareUrl ? "Shared!" : "Share"}
             </button>
           )}
-          <button onClick={handleSave} className="px-4 py-1.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
+          <button onClick={handleSave} className="px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
             Save
           </button>
         </div>
@@ -474,20 +474,22 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
       {mode === "edit" ? (
         <>
           {/* Edit action bar — at the top */}
-          <div className="flex flex-wrap gap-3 mb-4">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-4">
             <button onClick={handleEdit} disabled={!draft || loading}
-              className="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors disabled:opacity-40">
+              className="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors disabled:opacity-40 w-full sm:w-auto">
               {loading ? "Rewriting..." : "Edit in This Voice"}
             </button>
             {output && !loading && (
-              <div className="flex items-center gap-2 flex-1">
+              <div className="flex flex-col sm:flex-row gap-2 flex-1">
                 <input type="text" value={feedback} onChange={(e) => setFeedback(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleRevise()} placeholder="Tell it how to revise..."
                   className="flex-1 px-4 py-2.5 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500" />
-                <button onClick={handleRevise} disabled={!feedback}
-                  className="px-4 py-2.5 bg-stone-700 hover:bg-stone-600 rounded-lg transition-colors disabled:opacity-40">Revise</button>
-                <button onClick={handleDone}
-                  className="px-5 py-2.5 bg-green-600 hover:bg-green-500 rounded-lg font-medium transition-colors">Done</button>
+                <div className="flex gap-2">
+                  <button onClick={handleRevise} disabled={!feedback}
+                    className="flex-1 sm:flex-initial px-4 py-2.5 bg-stone-700 hover:bg-stone-600 rounded-lg transition-colors disabled:opacity-40">Revise</button>
+                  <button onClick={handleDone}
+                    className="flex-1 sm:flex-initial px-5 py-2.5 bg-green-600 hover:bg-green-500 rounded-lg font-medium transition-colors">Done</button>
+                </div>
               </div>
             )}
           </div>
@@ -502,7 +504,7 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
                   <input type="file" accept=".docx,.txt,.md" onChange={handleFileUpload} className="hidden" />
                 </label>
               </div>
-              <div className="flex-1 min-h-[400px] bg-stone-900 border border-stone-800 rounded-lg overflow-hidden">
+              <div className="flex-1 min-h-[250px] sm:min-h-[400px] bg-stone-900 border border-stone-800 rounded-lg overflow-hidden">
               <RichEditor
                 value={draft}
                 onChange={setDraft}
@@ -522,7 +524,7 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
                   </div>
                 )}
               </div>
-              <div className="flex-1 min-h-[400px] bg-stone-900 border border-stone-800 rounded-lg overflow-auto">
+              <div className="flex-1 min-h-[250px] sm:min-h-[400px] bg-stone-900 border border-stone-800 rounded-lg overflow-auto">
                 {showDiff && diffChunks.length > 0 ? (
                   <div className="p-4"><DiffView chunks={diffChunks} /></div>
                 ) : loading ? (
@@ -531,7 +533,7 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
                   <textarea
                     value={output}
                     onChange={(e) => setOutput(e.target.value)}
-                    className="w-full h-full min-h-[400px] p-4 bg-transparent text-white resize-none focus:outline-none leading-relaxed"
+                    className="w-full h-full min-h-[250px] sm:min-h-[400px] p-4 bg-transparent text-white resize-none focus:outline-none leading-relaxed"
                   />
                 ) : (
                   <div className="p-4"><StreamingOutput text="" loading={false} /></div>
@@ -543,10 +545,10 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
       ) : (
         <>
           {/* Generate mode: brief left, output right */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4">
             <div className="space-y-4">
               <textarea value={brief} onChange={(e) => setBrief(e.target.value)} placeholder="Describe what you want to write..."
-                className="w-full min-h-[300px] p-4 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-600 resize-none focus:outline-none focus:ring-2 focus:ring-amber-500 leading-relaxed" />
+                className="w-full min-h-[200px] sm:min-h-[300px] p-4 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-600 resize-none focus:outline-none focus:ring-2 focus:ring-amber-500 leading-relaxed" />
               <div>
                 <label className="block text-sm text-stone-400 mb-2">Target word count</label>
                 <input type="number" value={wordCount} onChange={(e) => setWordCount(e.target.value)} placeholder="e.g., 500"
@@ -568,7 +570,7 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
                   )}
                 </div>
               </div>
-              <div className="flex-1 min-h-[400px] p-4 bg-stone-900 border border-stone-800 rounded-lg overflow-auto">
+              <div className="flex-1 min-h-[250px] sm:min-h-[400px] p-4 bg-stone-900 border border-stone-800 rounded-lg overflow-auto">
                 <StreamingOutput text={output} loading={loading} />
               </div>
             </div>

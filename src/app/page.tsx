@@ -71,27 +71,28 @@ export default function LandingPage() {
       <LandingNav />
 
       {/* Hero */}
-      <section className="max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
-        <h1 className="font-[family-name:var(--font-literata)] text-5xl sm:text-6xl font-bold tracking-tight leading-tight mb-6">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-12 sm:pb-16 text-center">
+        <h1 className="font-[family-name:var(--font-literata)] text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight mb-6">
           Your writing has a{" "}
           <span className="bg-gradient-to-r from-amber-400 to-orange-300 bg-clip-text text-transparent">
             fingerprint.
           </span>
         </h1>
-        <p className="text-xl text-stone-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="text-lg sm:text-xl text-stone-400 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
           AI that writes like anyone. Clone your voice, your mom&apos;s, your boss&apos;s —
           or write like Hemingway, Paul Graham, and the greats.
         </p>
-        <div className="flex flex-wrap gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
           <Link
             href="/signup"
-            className="px-8 py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium text-lg transition-colors"
+            className="px-6 sm:px-8 py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium text-base sm:text-lg transition-colors"
           >
-            Start Writing Free — 5 uses, no credit card
+            <span className="sm:hidden">Start Writing Free</span>
+            <span className="hidden sm:inline">Start Writing Free — 5 uses, no credit card</span>
           </Link>
           <Link
             href="#writers"
-            className="px-8 py-3 border border-stone-700 hover:border-stone-500 rounded-lg text-lg transition-colors text-stone-300"
+            className="px-6 sm:px-8 py-3 border border-stone-700 hover:border-stone-500 rounded-lg text-base sm:text-lg transition-colors text-stone-300"
           >
             Browse Writers
           </Link>
@@ -102,7 +103,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features */}
-      <section className="max-w-5xl mx-auto px-6 py-16">
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <div className="grid md:grid-cols-3 gap-6">
           {features.map((f, i) => (
             <div
@@ -120,7 +121,7 @@ export default function LandingPage() {
       </section>
 
       {/* Live Demo */}
-      <section className="max-w-4xl mx-auto px-6 py-16">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-3">See it in action</h2>
         <p className="text-stone-400 text-center mb-8 max-w-xl mx-auto">
           Watch Hemingway write about ideas — live, right here. No signup needed.
@@ -129,7 +130,7 @@ export default function LandingPage() {
       </section>
 
       {/* Social Proof */}
-      <section className="max-w-4xl mx-auto px-6 py-12">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
         <p className="text-center text-stone-500 text-sm mb-8 uppercase tracking-wider">Trusted by 50+ writers</p>
         <div className="grid md:grid-cols-3 gap-6">
           <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
@@ -154,7 +155,7 @@ export default function LandingPage() {
       </section>
 
       {/* Writer Showcase — By Category */}
-      <section id="writers" className="max-w-5xl mx-auto px-6 py-16">
+      <section id="writers" className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-3">Write Like the Greats</h2>
         <p className="text-stone-400 text-center mb-12 max-w-xl mx-auto">
           Pre-built voice profiles for 140+ iconic writers. Or name anyone — we&apos;ll build a custom
@@ -197,7 +198,7 @@ export default function LandingPage() {
       </section>
 
       {/* Use Cases — By Category */}
-      <section className="max-w-5xl mx-auto px-6 py-16">
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-3">What will you write?</h2>
         <p className="text-stone-400 text-center mb-12 max-w-xl mx-auto">
           DoppelWriter handles any writing task — in any voice.
@@ -212,7 +213,7 @@ export default function LandingPage() {
                   See all &rarr;
                 </Link>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                 {cases.map((uc) => (
                   <Link
                     key={uc.slug}
@@ -230,7 +231,7 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing Preview */}
-      <section className="max-w-3xl mx-auto px-6 py-16">
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <div className="grid md:grid-cols-2 gap-6">
           <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6">
             <h3 className="font-[family-name:var(--font-literata)] font-semibold text-lg mb-1">Free</h3>
@@ -268,7 +269,7 @@ export default function LandingPage() {
       </section>
 
       {/* FAQ */}
-      <section className="max-w-3xl mx-auto px-6 py-16">
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-8">Questions</h2>
         <div className="space-y-4">
           {faqs.map((faq) => (
@@ -286,12 +287,12 @@ export default function LandingPage() {
       </section>
 
       {/* Free Tools & Resources */}
-      <section className="max-w-4xl mx-auto px-6 py-16">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-3">Free Tools & Resources</h2>
         <p className="text-stone-400 text-center mb-8 max-w-xl mx-auto">
           Explore DoppelWriter beyond the editor — free tools, guides, and niche solutions.
         </p>
-        <div className="grid sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <Link
             href="/analyze"
             className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5 hover:border-amber-600/40 transition-colors block"
@@ -317,7 +318,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA */}
-      <section className="max-w-4xl mx-auto px-6 py-16 text-center">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
         <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold mb-4">Ready to find your voice?</h2>
         <p className="text-stone-400 mb-8">Free plan. No credit card. No guilt.</p>
         <Link
@@ -331,7 +332,7 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="border-t border-stone-800/40 py-8">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="text-xs text-stone-600">&copy; {new Date().getFullYear()} DoppelWriter</span>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <Link href="/analyze" className="text-xs text-stone-500 hover:text-white transition-colors">Voice Analyzer</Link>

@@ -162,19 +162,19 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
         <div className="min-w-0 flex-1">
           <p className={`font-medium ${size === "md" ? "text-sm" : "text-xs"} truncate group-hover:text-amber-400 transition-colors`}>{w.name}</p>
           {w.bio && size === "md" && (
-            <p className="text-[11px] text-stone-500 truncate">{w.bio}</p>
+            <p className="text-xs text-stone-500 truncate">{w.bio}</p>
           )}
         </div>
-        {isReady && <span className="text-[9px] text-green-500/70 shrink-0">Ready</span>}
+        {isReady && <span className="text-xs text-green-500/70 shrink-0">Ready</span>}
       </button>
     );
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-16" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-end sm:items-start justify-center sm:pt-16" onClick={onClose}>
       <div className="absolute inset-0 bg-black/60" />
       <div
-        className="relative bg-[#0C0A09] border border-stone-800 rounded-xl w-full max-w-2xl max-h-[75vh] overflow-hidden shadow-2xl flex flex-col"
+        className="relative bg-[#0C0A09] border border-stone-800 rounded-t-xl sm:rounded-xl w-full max-w-2xl max-h-[85vh] sm:max-h-[75vh] mx-0 sm:mx-4 overflow-hidden shadow-2xl flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Building overlay */}
@@ -226,7 +226,7 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
                       <WriterAvatar name={p.writer_name || p.name} size={32} />
                       <div className="min-w-0">
                         <p className="font-medium text-sm truncate group-hover:text-amber-400 transition-colors">{p.writer_name || p.name}</p>
-                        <p className="text-[11px] text-stone-500">{p.is_curated ? (p.writer_bio || "Curated").toString().slice(0, 50) : "Personal voice"}</p>
+                        <p className="text-xs text-stone-500">{p.is_curated ? (p.writer_bio || "Curated").toString().slice(0, 50) : "Personal voice"}</p>
                       </div>
                     </button>
                   ))}
@@ -256,7 +256,7 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
                         className="px-5 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
                         Add &quot;{search}&quot; as a voice
                       </button>
-                      <p className="text-stone-600 text-[11px] mt-1.5">We&apos;ll scan for their published writing and build a voice profile</p>
+                      <p className="text-stone-600 text-xs mt-1.5">We&apos;ll scan for their published writing and build a voice profile</p>
                     </div>
                   )}
                 </div>
@@ -274,7 +274,7 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="text-xs font-medium text-stone-400 uppercase tracking-wider">Your Voices</h3>
                     <Link href="/create/personal" onClick={onClose}
-                      className="text-[11px] text-amber-400 hover:text-amber-300">+ New</Link>
+                      className="text-xs text-amber-400 hover:text-amber-300">+ New</Link>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     {personal.map((p) => (
@@ -332,7 +332,7 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
 
                 {/* Show count when browsing popular */}
                 {!categoryFilter && (
-                  <p className="text-center text-stone-600 text-[11px] mt-3">
+                  <p className="text-center text-stone-600 text-xs mt-3">
                     Showing 6 popular voices. Use the filters above to browse all {CURATED_WRITERS.length}.
                   </p>
                 )}

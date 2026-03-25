@@ -73,10 +73,10 @@ export default function HomePage() {
   return (
     <>
       <Nav />
-      <main className="max-w-6xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="font-[family-name:var(--font-literata)] text-3xl font-bold">Home</h1>
-          <Link href="/write" className="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="flex items-center justify-between mb-6 sm:mb-8">
+          <h1 className="font-[family-name:var(--font-literata)] text-2xl sm:text-3xl font-bold">Home</h1>
+          <Link href="/write" className="px-4 sm:px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors text-sm sm:text-base">
             Start Writing
           </Link>
         </div>
@@ -122,7 +122,7 @@ export default function HomePage() {
 
         {/* Empty state for new users — action-oriented, not stat-oriented */}
         {drafts.length === 0 && personalProfiles.length === 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
             <Link href="/write"
               className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 hover:border-amber-600/40 transition-colors group">
               <div className="flex gap-3 mb-3">
@@ -259,16 +259,16 @@ export default function HomePage() {
 
         {/* Referral Card */}
         {referral && (
-          <div className="mb-8 bg-stone-900/50 border border-amber-500/20 rounded-lg p-5">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold">Invite Friends, Get Free Uses</h2>
+          <div className="mb-8 bg-stone-900/50 border border-amber-500/20 rounded-lg p-4 sm:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-1">
+              <h2 className="font-[family-name:var(--font-literata)] text-base sm:text-lg font-semibold">Invite Friends, Get Free Uses</h2>
               <span className="text-xs text-stone-500">{referral.count} invited &middot; +{referral.bonus} bonus uses</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
                 readOnly
                 value={`doppelwriter.com/?ref=${referral.code}`}
-                className="flex-1 px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-sm text-stone-300 focus:outline-none"
+                className="flex-1 px-3 py-2.5 bg-stone-800 border border-stone-700 rounded-lg text-sm text-stone-300 focus:outline-none"
               />
               <button
                 onClick={() => {
@@ -276,7 +276,7 @@ export default function HomePage() {
                   setRefCopied(true);
                   setTimeout(() => setRefCopied(false), 2000);
                 }}
-                className="px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors shrink-0"
+                className="px-4 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors shrink-0"
               >
                 {refCopied ? "Copied!" : "Copy Link"}
               </button>

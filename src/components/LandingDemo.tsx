@@ -61,7 +61,7 @@ export default function LandingDemo() {
       </div>
 
       {/* Content area */}
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         <p className="text-xs text-stone-500 mb-2">Brief</p>
         <p className="text-sm text-stone-400 mb-4">
           &ldquo;Write a paragraph about why the best ideas come when you&apos;re not trying&rdquo;

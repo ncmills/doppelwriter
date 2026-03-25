@@ -26,6 +26,11 @@ const publicPaths = [
   "/analyze",
   "/api/analyze",
   "/for",
+  "/how-it-works",
+  "/alternatives",
+  "/tools",
+  "/sitemap-html",
+  "/embed",
 ];
 
 export default auth((req) => {
@@ -46,7 +51,10 @@ export default auth((req) => {
   );
   const isStatic =
     pathname.startsWith("/_next") || pathname.includes("favicon") ||
-    pathname === "/robots.txt" || pathname === "/sitemap.xml";
+    pathname === "/robots.txt" || pathname === "/sitemap.xml" ||
+    pathname.endsWith(".png") || pathname.endsWith(".jpg") || pathname.endsWith(".svg") ||
+    pathname.endsWith(".ico") || pathname.endsWith(".webp") ||
+    pathname.includes("opengraph-image") || pathname.includes("twitter-image");
 
   if (isStatic || isPublic) return NextResponse.next();
 
