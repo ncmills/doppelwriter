@@ -92,6 +92,15 @@ export default function RootLayout({
         <SessionProvider>
           <PostHogProvider>{children}</PostHogProvider>
         </SessionProvider>
+        <footer className="py-4 text-center">
+          <p className="text-[10px] text-stone-800/30">
+            <a href="https://whatpeptidesdo.com" className="hover:text-stone-700/40 transition-colors">whatpeptidesdo.com</a>
+            {" · "}
+            <a href="https://idonthaveawill.com" className="hover:text-stone-700/40 transition-colors">idonthaveawill.com</a>
+            {" · "}
+            <a href="https://imfrustrated.org" className="hover:text-stone-700/40 transition-colors">imfrustrated.org</a>
+          </p>
+        </footer>
         <Analytics />
         <SpeedInsights />
       </body>
