@@ -74,6 +74,21 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${literata.variable} antialiased bg-[#0C0A09] text-[#FAFAF9]`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "DoppelWriter",
+            "url": "https://doppelwriter.com",
+            "sameAs": [
+              "https://idonthaveawill.com",
+              "https://whatpeptidesdo.com",
+              "https://tourdefore.com",
+              "https://imfrustrated.org"
+            ]
+          }) }}
+        />
         <SessionProvider>
           <PostHogProvider>{children}</PostHogProvider>
         </SessionProvider>
