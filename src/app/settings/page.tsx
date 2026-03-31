@@ -5,7 +5,7 @@ import Nav from "@/components/Nav";
 import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
-  const { data: session } = useSession();
+  const { data: session, update: updateSession } = useSession();
   const [usage, setUsage] = useState<{
     used: number;
     limit: number;
@@ -15,6 +15,7 @@ export default function SettingsPage() {
   const [stripeError, setStripeError] = useState("");
   const [referral, setReferral] = useState<{ code: string; count: number; bonus: number } | null>(null);
   const [refCopied, setRefCopied] = useState(false);
+  const [upgraded, setUpgraded] = useState(false);
 
   useEffect(() => {
     fetch("/api/usage").then((r) => r.json()).then(setUsage);
@@ -22,6 +23,15 @@ export default function SettingsPage() {
       if (r && !r.error) setReferral(r);
     }).catch(() => {});
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("upgraded") === "true") {
+      setUpgraded(true);
+      updateSession();
+      window.history.replaceState({}, "", "/settings");
+    }
+  }, [updateSession]);
 
   const plan = (session?.user as Record<string, unknown>)?.plan as string;
 
@@ -60,6 +70,13 @@ export default function SettingsPage() {
       <Nav />
       <main className="max-w-3xl mx-auto px-6 py-8">
         <h1 className="text-2xl font-bold mb-8 font-[family-name:var(--font-literata)]">Settings</h1>
+
+        {upgraded && (
+          <div className="mb-6 p-4 bg-green-900/20 border border-green-700/40 rounded-lg flex items-center justify-between">
+            <span className="text-green-400 text-sm font-medium">You&apos;re on Pro! Your account has been upgraded.</span>
+            <button onClick={() => setUpgraded(false)} className="text-green-600 hover:text-green-400 text-xs ml-4">Dismiss</button>
+          </div>
+        )}
 
         <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 mb-6">
           <h2 className="text-lg font-semibold mb-4 font-[family-name:var(--font-literata)]">Account</h2>

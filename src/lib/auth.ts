@@ -79,13 +79,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return true;
     },
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account, trigger }) {
       if (user) {
-        // Get the DB user id
+        // Get the DB user id on initial sign-in
         const db = sql();
         const [dbUser] = await db`SELECT id, plan FROM users WHERE email = ${token.email}`;
         if (dbUser) {
           token.id = dbUser.id;
+          token.plan = dbUser.plan;
+        }
+      } else if (trigger === "update") {
+        // Session update requested (e.g. after Stripe upgrade) — refresh plan from DB
+        const db = sql();
+        const [dbUser] = await db`SELECT plan FROM users WHERE id = ${token.id}`;
+        if (dbUser) {
           token.plan = dbUser.plan;
         }
       }

@@ -31,6 +31,16 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    if (event.type === "customer.subscription.updated") {
+      const sub = event.data.object as Stripe.Subscription;
+      if (sub.customer) {
+        const isPaying = sub.status === "active" || sub.status === "trialing";
+        const newPlan = isPaying ? "pro" : "free";
+        const result = await db`UPDATE users SET plan = ${newPlan} WHERE stripe_customer_id = ${sub.customer as string} RETURNING id`;
+        console.log(`Stripe: subscription ${sub.status}, set user ${result[0]?.id || "unknown"} to ${newPlan}`);
+      }
+    }
+
     if (event.type === "customer.subscription.deleted") {
       const sub = event.data.object as Stripe.Subscription;
       if (sub.customer) {
