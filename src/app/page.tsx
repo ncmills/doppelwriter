@@ -4,6 +4,7 @@ import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
 import { WRITER_PHOTOS } from "@/lib/writer-photos";
 import LandingDemo from "@/components/LandingDemo";
 import LandingNav from "@/components/LandingNav";
+import WriterCarousel from "@/components/WriterCarousel";
 
 const features = [
   {
@@ -153,47 +154,19 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Writer Showcase — By Category */}
+      {/* Writer Showcase — Rotating Gallery */}
       <section id="writers" className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-3">Write Like the Greats</h2>
-        <p className="text-stone-400 text-center mb-12 max-w-xl mx-auto">
+        <p className="text-stone-400 text-center mb-8 max-w-xl mx-auto">
           Pre-built voice profiles for 140+ iconic writers. Or name anyone — we&apos;ll build a custom
           profile from their published work.
         </p>
-        {CATEGORIES.map((cat) => {
-          const writers = CURATED_WRITERS.filter((w) => w.category === cat.id).slice(0, 5);
-          return (
-            <div key={cat.id} className="mb-10">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-[family-name:var(--font-literata)] text-xl font-semibold">{cat.label}</h3>
-                <Link href={`/write-like/${cat.id}`} className="text-sm text-amber-400 hover:text-amber-300 transition-colors">
-                  See all &rarr;
-                </Link>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                {writers.map((w) => (
-                  <Link
-                    key={w.name}
-                    href={`/write-like/${w.name.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4 hover:border-amber-600/40 transition-colors block"
-                  >
-                    <div className="flex items-center gap-2 mb-1.5">
-                      {WRITER_PHOTOS[w.name] ? (
-                        <img src={WRITER_PHOTOS[w.name]} alt={w.name} className="w-9 h-9 rounded-full object-cover bg-stone-800" loading="lazy" />
-                      ) : (
-                        <div className="w-9 h-9 rounded-full bg-stone-800 flex items-center justify-center text-stone-400 text-xs font-medium">
-                          {w.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
-                        </div>
-                      )}
-                      <p className="font-medium text-sm truncate">{w.name}</p>
-                    </div>
-                    <p className="text-xs text-stone-500 line-clamp-2">{w.bio}</p>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          );
-        })}
+        <WriterCarousel />
+        <div className="text-center mt-8">
+          <Link href="/write-like/authors" className="inline-block bg-amber-600 hover:bg-amber-500 text-white font-semibold px-8 py-3 rounded-lg transition-colors">
+            Browse All 140+ Writers
+          </Link>
+        </div>
       </section>
 
       {/* Use Cases — By Category */}
@@ -301,6 +274,7 @@ export default function LandingPage() {
             <Link href="/for" className="text-xs text-stone-500 hover:text-white transition-colors">Use Cases</Link>
             <Link href="/privacy" className="text-xs text-stone-500 hover:text-white transition-colors">Privacy</Link>
             <Link href="/terms" className="text-xs text-stone-500 hover:text-white transition-colors">Terms</Link>
+            <a href="mailto:info@doppelwriter.com" className="text-xs text-stone-500 hover:text-white transition-colors">Contact Us</a>
           </div>
           <a
             href="mailto:enterprise@doppelwriter.com?subject=Enterprise%20Inquiry"
