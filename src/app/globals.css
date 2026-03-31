@@ -8,6 +8,10 @@
   --font-display: var(--font-literata);
 }
 
+html {
+  font-size: 130%;
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);

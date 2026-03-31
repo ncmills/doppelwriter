@@ -35,7 +35,7 @@ const faqs = [
   },
   {
     q: "What happens after the free trial?",
-    a: "The free plan gives you 5 uses per month, forever. No credit card required. If you want more, Pro is $19/month for 200 uses, unlimited voices, and custom writer builds.",
+    a: "DoppelWriter is free to use — no credit card required. You get monthly uses to edit and generate drafts. If you need more, there's an option to upgrade for additional capacity.",
   },
 ];
 
@@ -58,8 +58,7 @@ const jsonLd = {
   url: "https://doppelwriter.com",
   description: "AI-powered writing tool that clones your voice or lets you write like any famous author.",
   offers: [
-    { "@type": "Offer", price: "0", priceCurrency: "USD", name: "Free", description: "5 edits & generations per month" },
-    { "@type": "Offer", price: "19", priceCurrency: "USD", name: "Pro", description: "200 edits & generations per month" },
+    { "@type": "Offer", price: "0", priceCurrency: "USD", name: "Free", description: "AI-powered writing tool that clones any voice" },
   ],
 };
 
@@ -180,9 +179,9 @@ export default function LandingPage() {
                   >
                     <div className="flex items-center gap-2 mb-1.5">
                       {WRITER_PHOTOS[w.name] ? (
-                        <img src={WRITER_PHOTOS[w.name]} alt={w.name} className="w-7 h-7 rounded-full object-cover bg-stone-800" loading="lazy" />
+                        <img src={WRITER_PHOTOS[w.name]} alt={w.name} className="w-9 h-9 rounded-full object-cover bg-stone-800" loading="lazy" />
                       ) : (
-                        <div className="w-7 h-7 rounded-full bg-stone-800 flex items-center justify-center text-stone-400 text-xs font-medium">
+                        <div className="w-9 h-9 rounded-full bg-stone-800 flex items-center justify-center text-stone-400 text-xs font-medium">
                           {w.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
                         </div>
                       )}
@@ -228,44 +227,6 @@ export default function LandingPage() {
             </div>
           );
         })}
-      </section>
-
-      {/* Pricing Preview */}
-      <section className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6">
-            <h3 className="font-[family-name:var(--font-literata)] font-semibold text-lg mb-1">Free</h3>
-            <p className="text-3xl font-bold mb-4">
-              $0<span className="text-sm font-normal text-stone-500">/mo</span>
-            </p>
-            <ul className="space-y-2 text-sm text-stone-400">
-              <li>5 edits & generations per month</li>
-              <li>1 personal voice profile</li>
-              <li>3 curated writer profiles</li>
-              <li>Upload docs, paste text</li>
-            </ul>
-            <Link href="/signup" className="block mt-5 text-center py-2 border border-stone-700 hover:border-stone-500 rounded-lg text-sm transition-colors">
-              Start Free
-            </Link>
-            <p className="text-center text-stone-600 text-xs mt-2">No credit card required</p>
-          </div>
-          <div className="bg-amber-600/10 border border-amber-500/40 rounded-lg p-6">
-            <h3 className="font-[family-name:var(--font-literata)] font-semibold text-lg text-amber-400 mb-1">Pro</h3>
-            <p className="text-3xl font-bold mb-4">
-              $19<span className="text-sm font-normal text-stone-500">/mo</span>
-            </p>
-            <ul className="space-y-2 text-sm text-stone-300">
-              <li>200 edits & generations per month</li>
-              <li>Unlimited personal profiles</li>
-              <li>All curated writers + custom builds</li>
-              <li>Never blocked — heavy use just slows down</li>
-            </ul>
-            <Link href="/signup" className="block mt-5 text-center py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
-              Start Free, Upgrade Later
-            </Link>
-            <p className="text-center text-stone-600 text-xs mt-2">No credit card required</p>
-          </div>
-        </div>
       </section>
 
       {/* FAQ */}
@@ -320,7 +281,7 @@ export default function LandingPage() {
       {/* CTA */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
         <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold mb-4">Ready to find your voice?</h2>
-        <p className="text-stone-400 mb-8">Free plan. No credit card. No guilt.</p>
+        <p className="text-stone-400 mb-8">Free to use. No credit card needed.</p>
         <Link
           href="/signup"
           className="inline-block px-8 py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium text-lg transition-colors"
@@ -338,7 +299,6 @@ export default function LandingPage() {
             <Link href="/analyze" className="text-xs text-stone-500 hover:text-white transition-colors">Voice Analyzer</Link>
             <Link href="/blog" className="text-xs text-stone-500 hover:text-white transition-colors">Blog</Link>
             <Link href="/for" className="text-xs text-stone-500 hover:text-white transition-colors">Use Cases</Link>
-            <Link href="/pricing" className="text-xs text-stone-500 hover:text-white transition-colors">Pricing</Link>
             <Link href="/privacy" className="text-xs text-stone-500 hover:text-white transition-colors">Privacy</Link>
             <Link href="/terms" className="text-xs text-stone-500 hover:text-white transition-colors">Terms</Link>
           </div>

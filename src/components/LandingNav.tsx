@@ -16,9 +16,6 @@ export default function LandingNav() {
             <span className="sm:hidden">DW</span>
           </span>
         <div className="flex gap-3 sm:gap-4 items-center">
-          <Link href="/pricing" className="text-sm text-stone-400 hover:text-white transition-colors">
-            Pricing
-          </Link>
           {session?.user ? (
             <Link
               href="/write"

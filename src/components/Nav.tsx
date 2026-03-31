@@ -45,11 +45,6 @@ export default function Nav() {
                 <Link href="/settings" className="text-xs py-2 text-stone-500 hover:text-stone-300">
                   Settings
                 </Link>
-                {plan === "pro" ? (
-                  <span className="text-xs text-amber-400">Pro</span>
-                ) : (
-                  <Link href="/pricing" className="text-xs py-2 text-amber-400 hover:text-amber-300">Upgrade</Link>
-                )}
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
                   className="text-xs py-2 text-stone-600 hover:text-stone-400"
@@ -85,11 +80,6 @@ export default function Nav() {
           <Link href="/settings" onClick={() => setMenuOpen(false)} className="block py-2.5 text-sm text-stone-400">
             Settings
           </Link>
-          {plan === "pro" ? (
-            <span className="block py-2.5 text-sm text-amber-400">Pro Plan</span>
-          ) : (
-            <Link href="/pricing" onClick={() => setMenuOpen(false)} className="block py-2.5 text-sm text-amber-400">Upgrade</Link>
-          )}
           <button
             onClick={() => { setMenuOpen(false); signOut({ callbackUrl: "/" }); }}
             className="block py-2.5 text-sm text-stone-600"

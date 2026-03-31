@@ -76,14 +76,8 @@ export default function SettingsPage() {
         </div>
 
         <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 mb-6">
-          <h2 className="text-lg font-semibold mb-4 font-[family-name:var(--font-literata)]">Plan & Usage</h2>
+          <h2 className="text-lg font-semibold mb-4 font-[family-name:var(--font-literata)]">Usage</h2>
           <div className="space-y-3 text-sm">
-            <div className="flex justify-between items-center">
-              <span className="text-stone-400">Plan</span>
-              <span className={plan === "pro" ? "text-amber-400 font-medium" : ""}>
-                {plan === "pro" ? "Pro — $19/mo" : "Free"}
-              </span>
-            </div>
             {usage && (
               <>
                 <div className="flex justify-between items-center">
@@ -106,20 +100,16 @@ export default function SettingsPage() {
               </>
             )}
           </div>
-          <div className="mt-5">
-            {plan === "pro" ? (
+          {plan === "pro" && (
+            <div className="mt-5">
               <button onClick={handleManage} className="px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
                 Manage Subscription
               </button>
-            ) : (
-              <button onClick={handleUpgrade} className="px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
-                Upgrade to Pro — $19/mo
-              </button>
-            )}
-            {stripeError && (
-              <p className="text-red-400 text-xs mt-2">{stripeError}</p>
-            )}
-          </div>
+              {stripeError && (
+                <p className="text-red-400 text-xs mt-2">{stripeError}</p>
+              )}
+            </div>
+          )}
         </div>
         {/* Referral */}
         {referral && (

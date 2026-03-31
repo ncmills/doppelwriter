@@ -82,9 +82,7 @@ export default function Workspace({ profileId, profileName, defaultMode }: { pro
       if (data.plan === "free") {
         setUsageCount(data.used);
         const remaining = data.limit - data.used;
-        if (remaining === 2) setUsageNudge("2 free uses left this month. Upgrade for unlimited.");
-        else if (remaining === 1) setUsageNudge("1 use left. Writers who upgrade create 10x more.");
-        else if (remaining <= 0) { setShowUpgradeModal(true); trackUpgradeModalShown(); }
+        if (remaining <= 0) { setShowUpgradeModal(true); trackUpgradeModalShown(); }
         else setUsageNudge("");
       }
       // Track first generation
@@ -444,18 +442,10 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
 
       {error && (
         <div className="mb-4 p-3 bg-red-900/20 border border-red-700/40 rounded-lg text-red-400 text-sm">
-          {error} <a href="/pricing" className="underline">Upgrade</a>
+          {error}
         </div>
       )}
 
-      {usageNudge && (
-        <div className="mb-4 p-3 bg-amber-900/20 border border-amber-700/40 rounded-lg text-amber-300 text-sm flex items-center justify-between">
-          <span>{usageNudge}</span>
-          <button onClick={() => setShowUpgradeModal(true)} className="text-amber-400 hover:text-amber-300 underline text-xs ml-4 shrink-0">
-            Upgrade
-          </button>
-        </div>
-      )}
 
       {/* Collapsible options — progressive disclosure */}
       {showOptions && (
