@@ -33,7 +33,7 @@ export default function WriterAvatar({
   return (
     <img
       src={url}
-      alt={name}
+      alt={`Portrait of ${name}`}
       className="rounded-full object-cover shrink-0 bg-stone-800"
       style={{ width: size, height: size }}
       loading="lazy"

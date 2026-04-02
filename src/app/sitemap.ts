@@ -5,7 +5,8 @@ import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
 import { BLOG_POSTS } from "@/lib/blog-posts";
 import { NICHES } from "@/lib/niches";
 
-const LAST_CONTENT_UPDATE = new Date("2026-03-20");
+// Use build time as the last modified date so sitemaps stay current across deploys
+const LAST_CONTENT_UPDATE = new Date();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://doppelwriter.com";

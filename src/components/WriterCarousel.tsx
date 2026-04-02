@@ -46,7 +46,7 @@ export default function WriterCarousel() {
           >
             <div className="flex items-center gap-2.5 mb-2">
               {WRITER_PHOTOS[w.name] ? (
-                <img src={WRITER_PHOTOS[w.name]} alt={w.name} className="w-11 h-11 rounded-full object-cover bg-stone-800" loading="lazy" />
+                <img src={WRITER_PHOTOS[w.name]} alt={`Portrait of ${w.name}`} className="w-11 h-11 rounded-full object-cover bg-stone-800" loading="lazy" />
               ) : (
                 <div className="w-11 h-11 rounded-full bg-stone-800 flex items-center justify-center text-stone-400 text-sm font-medium">
                   {w.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
