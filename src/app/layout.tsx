@@ -103,6 +103,8 @@ export default function RootLayout({
             <a href="https://idonthaveawill.com" className="hover:text-stone-700/40 transition-colors">idonthaveawill.com</a>
             {" · "}
             <a href="https://imfrustrated.org" className="hover:text-stone-700/40 transition-colors">imfrustrated.org</a>
+            {" · "}
+            <a href="https://tourdefore.com" className="hover:text-stone-700/40 transition-colors">tourdefore.com</a>
           </p>
         </footer>
         <Analytics />
