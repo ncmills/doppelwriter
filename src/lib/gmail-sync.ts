@@ -1,8 +1,8 @@
-import { google } from "googleapis";
+import { gmail, auth } from "googleapis/build/src/apis/gmail";
 import { sql } from "./db";
 import { ingestText } from "./ingest";
 
-const oauth2Client = new google.auth.OAuth2(
+const oauth2Client = new auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
   process.env.NEXTAUTH_URL + "/api/auth/callback/google"
@@ -39,7 +39,7 @@ export async function syncGmail(userId: string): Promise<{ synced: number; skipp
     WHERE id = ${userId}
   `;
 
-  const gmail = google.gmail({ version: "v1", auth: oauth2Client });
+  const gmailClient = gmail({ version: "v1", auth: oauth2Client });
 
   // Get last sync timestamp
   const [syncRecord] = await db`
@@ -60,7 +60,7 @@ export async function syncGmail(userId: string): Promise<{ synced: number; skipp
   let pageToken: string | undefined;
 
   do {
-    const listRes = await gmail.users.messages.list({
+    const listRes = await gmailClient.users.messages.list({
       userId: "me",
       q: query,
       maxResults: 50,
@@ -83,7 +83,7 @@ export async function syncGmail(userId: string): Promise<{ synced: number; skipp
       }
 
       try {
-        const fullMsg = await gmail.users.messages.get({
+        const fullMsg = await gmailClient.users.messages.get({
           userId: "me",
           id: msg.id,
           format: "full",

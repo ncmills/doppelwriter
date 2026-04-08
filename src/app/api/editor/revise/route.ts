@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { auth } from "@/lib/auth";
 import { reviseDraft } from "@/lib/editor";
-import { checkUsage, logUsage } from "@/lib/usage";
+import { checkUsage, logUsage, verifyProfileAccess } from "@/lib/usage";
 
 export const maxDuration = 60;
 
@@ -20,6 +20,10 @@ export async function POST(request: NextRequest) {
   }
 
   const { original, currentEdit, feedback, profileId } = await request.json();
+
+  if (profileId && !(await verifyProfileAccess(session.user.id, profileId))) {
+    return new Response(JSON.stringify({ error: "Profile not found" }), { status: 403 });
+  }
 
   const encoder = new TextEncoder();
   const stream = new ReadableStream({

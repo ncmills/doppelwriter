@@ -12,7 +12,8 @@ export async function POST(request: NextRequest) {
     const result = await syncGmail(session.user.id);
     return NextResponse.json(result);
   } catch (err) {
-    return NextResponse.json({ error: String(err) }, { status: 500 });
+    console.error("Gmail sync error:", err);
+    return NextResponse.json({ error: "Gmail sync failed" }, { status: 500 });
   }
 }
 

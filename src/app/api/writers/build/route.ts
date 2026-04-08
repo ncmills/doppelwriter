@@ -56,7 +56,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ profileId });
   } catch (err) {
     console.error("Writer build failed:", err);
-    const message = err instanceof Error ? err.message : String(err);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: "Writer build failed" }, { status: 500 });
   }
 }

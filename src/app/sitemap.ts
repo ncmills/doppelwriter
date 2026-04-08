@@ -4,9 +4,10 @@ import { CATEGORIES } from "@/lib/writer-data";
 import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
 import { BLOG_POSTS } from "@/lib/blog-posts";
 import { NICHES } from "@/lib/niches";
+import { ALTERNATIVES } from "@/lib/alternatives";
 
-// Use build time as the last modified date so sitemaps stay current across deploys
-const LAST_CONTENT_UPDATE = new Date();
+// Fixed date to avoid lastModified changing on every deploy
+const LAST_CONTENT_UPDATE = new Date("2026-04-07");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://doppelwriter.com";
@@ -23,6 +24,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/analyze`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.9 },
     { url: `${baseUrl}/how-it-works`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.8 },
     { url: `${baseUrl}/blog`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${baseUrl}/tools/email-tone-checker`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${baseUrl}/privacy`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${baseUrl}/terms`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${baseUrl}/sitemap-html`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.3 },
+    { url: `${baseUrl}/embed`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${baseUrl}/write-like`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${baseUrl}/alternatives`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.85 },
   ];
 
   const writerCategoryPages: MetadataRoute.Sitemap = CATEGORIES.map((c) => ({
@@ -76,5 +84,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  return [...staticPages, ...writerCategoryPages, ...writerPages, ...useCaseCategoryPages, ...useCasePages, ...blogPages, ...nicheIndexPage, ...nichePages];
+  const alternativePages: MetadataRoute.Sitemap = ALTERNATIVES.map((a) => ({
+    url: `${baseUrl}/alternatives/${a.slug}`,
+    lastModified: LAST_CONTENT_UPDATE,
+    changeFrequency: "monthly" as const,
+    priority: 0.85,
+  }));
+
+  return [...staticPages, ...writerCategoryPages, ...writerPages, ...useCaseCategoryPages, ...useCasePages, ...blogPages, ...nicheIndexPage, ...nichePages, ...alternativePages];
 }

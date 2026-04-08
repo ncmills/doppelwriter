@@ -197,4 +197,11 @@ export async function initSchema() {
   await db`CREATE INDEX IF NOT EXISTS idx_analytics_event ON analytics_events(event)`;
   await db`CREATE INDEX IF NOT EXISTS idx_analytics_created ON analytics_events(created_at)`;
   await db`CREATE INDEX IF NOT EXISTS idx_analytics_user ON analytics_events(user_id)`;
+
+  await db`
+    CREATE TABLE IF NOT EXISTS stripe_events (
+      event_id TEXT PRIMARY KEY,
+      processed_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
 }

@@ -16,7 +16,7 @@ const publicPaths = [
   "/api/auth/verify",
   "/api/stripe/webhook",
   "/api/gmail/callback",
-  "/api/init",
+  "/api/init", // protected by CRON_SECRET or session check internally
   "/api/demo",
   "/s",
   "/vs",

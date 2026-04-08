@@ -4,7 +4,10 @@ import { sql } from "@/lib/db";
 import { Resend } from "resend";
 
 function getResend() {
-  return new Resend(process.env.RESEND_API_KEY || "re_placeholder");
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error("RESEND_API_KEY is not configured");
+  }
+  return new Resend(process.env.RESEND_API_KEY);
 }
 
 export async function POST(req: Request) {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { WRITER_PHOTOS } from "@/lib/writer-photos";
 
@@ -46,7 +47,7 @@ export default function WriterCarousel() {
           >
             <div className="flex items-center gap-2.5 mb-2">
               {WRITER_PHOTOS[w.name] ? (
-                <img src={WRITER_PHOTOS[w.name]} alt={`Portrait of ${w.name}`} className="w-11 h-11 rounded-full object-cover bg-stone-800" loading="lazy" />
+                <Image src={WRITER_PHOTOS[w.name]} alt={`Portrait of ${w.name}`} width={44} height={44} className="rounded-full object-cover bg-stone-800" loading="lazy" />
               ) : (
                 <div className="w-11 h-11 rounded-full bg-stone-800 flex items-center justify-center text-stone-400 text-sm font-medium">
                   {w.name.split(" ").map(n => n[0]).join("").slice(0, 2)}

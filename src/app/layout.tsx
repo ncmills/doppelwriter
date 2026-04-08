@@ -78,6 +78,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${literata.variable} antialiased bg-[#0C0A09] text-[#FAFAF9]`}
       >
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-amber-600 focus:text-white focus:rounded-lg">
+          Skip to content
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -85,12 +88,7 @@ export default function RootLayout({
             "@type": "WebSite",
             "name": "DoppelWriter",
             "url": "https://doppelwriter.com",
-            "sameAs": [
-              "https://idonthaveawill.com",
-              "https://whatpeptidesdo.com",
-              "https://tourdefore.com",
-              "https://imfrustrated.org"
-            ]
+            "description": "AI-powered writing tool that clones your voice or lets you write like any famous author."
           }) }}
         />
         <SessionProvider>

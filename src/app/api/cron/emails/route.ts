@@ -1,10 +1,16 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@/lib/db";
 import { SEQUENCES, sendSequenceEmail } from "@/lib/email-sequences";
 
 export const maxDuration = 60;
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  // Verify cron secret
+  const cronSecret = process.env.CRON_SECRET;
+  const authHeader = request.headers.get("authorization");
+  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   const db = sql();
   const now = new Date();
 

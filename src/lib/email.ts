@@ -3,7 +3,10 @@ import crypto from "crypto";
 import { sql } from "./db";
 
 function getResend() {
-  return new Resend(process.env.RESEND_API_KEY || "re_placeholder");
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error("RESEND_API_KEY is not configured");
+  }
+  return new Resend(process.env.RESEND_API_KEY);
 }
 
 export async function sendVerificationEmail(email: string, userId: string): Promise<void> {

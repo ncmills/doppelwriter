@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 
-const INDEXNOW_KEY = "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6";
+const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6";
 const INDEXNOW_HOST = "https://api.indexnow.org";
 
 export async function POST(req: Request) {

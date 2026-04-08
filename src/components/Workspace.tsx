@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
-import DiffView from "./DiffView";
+import dynamic from "next/dynamic";
 import StreamingOutput from "./StreamingOutput";
-import RichEditor from "./RichEditor";
-import UpgradeModal from "./UpgradeModal";
+
+const DiffView = dynamic(() => import("./DiffView"), { ssr: false });
+const RichEditor = dynamic(() => import("./RichEditor"), { ssr: false });
+const UpgradeModal = dynamic(() => import("./UpgradeModal"), { ssr: false });
 import { trackEvent, trackFirstGeneration, trackShare, trackEdit, trackGenerate, trackAcceptEdit, trackRevisionRequested, trackCopyOutput, trackDownloadOutput, trackUpgradeModalShown } from "@/lib/analytics";
 
 interface DiffChunk { value: string; added?: boolean; removed?: boolean; }
@@ -374,10 +376,10 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
               <button onClick={handleCopy} className="px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
                 {copied ? "Copied!" : "Copy Text"}
               </button>
-              <button onClick={handleCopyFormatted} className="hidden sm:inline-block px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
+              <button onClick={handleCopyFormatted} className="px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
                 {copied ? "Copied!" : "Copy Formatted"}
               </button>
-              <button onClick={handleDownload} className="hidden sm:inline-block px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
+              <button onClick={handleDownload} className="px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
                 Download
               </button>
               <button onClick={handleShare} disabled={sharing} className="px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors disabled:opacity-50">
@@ -426,7 +428,7 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
           )}
         </div>
         <div className="flex gap-2">
-          <button onClick={handleDownload} className="hidden sm:block px-3 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs transition-colors text-stone-400 hover:text-white">
+          <button onClick={handleDownload} className="px-3 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs transition-colors text-stone-400 hover:text-white">
             Download
           </button>
           {output && (

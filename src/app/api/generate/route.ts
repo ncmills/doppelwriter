@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { auth } from "@/lib/auth";
 import { generateDraft } from "@/lib/generator";
-import { checkUsage, logUsage } from "@/lib/usage";
+import { checkUsage, logUsage, verifyProfileAccess } from "@/lib/usage";
 import { trackServerEvent } from "@/lib/track";
 
 export const maxDuration = 60;
@@ -23,6 +23,10 @@ export async function POST(request: NextRequest) {
   const { brief, profileId, wordCount, instructions, researchContext } = await request.json();
   if (!brief || !profileId) {
     return new Response(JSON.stringify({ error: "Missing brief or profileId" }), { status: 400 });
+  }
+
+  if (!(await verifyProfileAccess(session.user.id, profileId))) {
+    return new Response(JSON.stringify({ error: "Profile not found" }), { status: 403 });
   }
 
   const encoder = new TextEncoder();

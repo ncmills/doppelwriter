@@ -12,37 +12,25 @@ export interface UsageInfo {
 export async function checkUsage(userId: string): Promise<UsageInfo> {
   const db = sql();
 
-  const [user] = await db`SELECT plan FROM users WHERE id = ${userId}`;
-  const plan = (user?.plan || "free") as PlanKey;
-  const baseLimit = PLANS[plan].monthlyLimit;
-
-  // Count referral bonuses (5 per referral) — table may not exist yet
-  let referralBonus = 0;
-  try {
-    const [bonusRow] = await db`
-      SELECT COUNT(*)::int as count FROM referrals
-      WHERE (referrer_id = ${userId} OR referred_id = ${userId})
-      AND bonus_applied = TRUE
-    `;
-    referralBonus = (bonusRow?.count || 0) * 5;
-  } catch {
-    // referrals table doesn't exist yet — no bonus
-  }
-  const limit = baseLimit + referralBonus;
-
-  const [row] = await db`
-    SELECT COUNT(*)::int as count FROM usage_log
-    WHERE user_id = ${userId}
-    AND created_at > date_trunc('month', NOW())
+  const [result] = await db`
+    SELECT
+      u.plan,
+      (SELECT COUNT(*)::int FROM usage_log WHERE user_id = ${userId} AND created_at > date_trunc('month', NOW())) as used,
+      COALESCE((SELECT COUNT(*)::int FROM referrals WHERE (referrer_id = ${userId} OR referred_id = ${userId}) AND bonus_applied = TRUE), 0) as referral_count
+    FROM users u
+    WHERE u.id = ${userId}
   `;
-  const used = row?.count || 0;
+
+  const plan = (result?.plan || "free") as PlanKey;
+  const baseLimit = PLANS[plan].monthlyLimit;
+  const referralBonus = (result?.referral_count || 0) * 5;
+  const limit = baseLimit + referralBonus;
+  const used = result?.used || 0;
 
   if (plan === "free") {
-    // Hard cap for free users
     return { allowed: used < limit, throttled: false, used, limit, plan };
   }
 
-  // Pro users: soft cap — always allowed, but throttled past limit
   return {
     allowed: true,
     throttled: used >= limit,
@@ -50,6 +38,16 @@ export async function checkUsage(userId: string): Promise<UsageInfo> {
     limit,
     plan,
   };
+}
+
+export async function verifyProfileAccess(userId: string, profileId: number): Promise<boolean> {
+  const db = sql();
+  const [profile] = await db`
+    SELECT id FROM style_profiles
+    WHERE id = ${profileId}
+    AND (user_id = ${userId} OR is_curated = TRUE)
+  `;
+  return !!profile;
 }
 
 export async function logUsage(userId: string, action: string): Promise<void> {

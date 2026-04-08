@@ -37,6 +37,7 @@ export async function POST() {
       line_items: [
         { price: process.env.STRIPE_PRO_PRICE_ID, quantity: 1 },
       ],
+      metadata: { site: "dw" },
       success_url: `${baseUrl}/settings?upgraded=true`,
       cancel_url: `${baseUrl}/pricing`,
     });

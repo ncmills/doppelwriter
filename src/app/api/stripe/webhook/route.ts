@@ -21,6 +21,13 @@ export async function POST(request: NextRequest) {
 
   const db = sql();
 
+  // Idempotency: skip already-processed events
+  const [existing] = await db`SELECT 1 FROM stripe_events WHERE event_id = ${event.id}`;
+  if (existing) {
+    return NextResponse.json({ received: true });
+  }
+  await db`INSERT INTO stripe_events (event_id) VALUES (${event.id}) ON CONFLICT DO NOTHING`;
+
   try {
     if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session;

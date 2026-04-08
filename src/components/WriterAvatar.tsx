@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { WRITER_PHOTOS } from "@/lib/writer-photos";
 
 export default function WriterAvatar({
@@ -31,11 +32,12 @@ export default function WriterAvatar({
   }
 
   return (
-    <img
+    <Image
       src={url}
       alt={`Portrait of ${name}`}
+      width={size}
+      height={size}
       className="rounded-full object-cover shrink-0 bg-stone-800"
-      style={{ width: size, height: size }}
       loading="lazy"
     />
   );
