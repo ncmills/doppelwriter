@@ -28,15 +28,22 @@ export async function GET(request: NextRequest) {
 
   let sent = 0;
 
+  // Batch-fetch all sent sequences to avoid N+1 queries
+  const userIds = users.map((u) => u.id);
+  const allSent = userIds.length > 0
+    ? await db`SELECT user_id, sequence_key FROM email_sequence_sends WHERE user_id = ANY(${userIds})`
+    : [];
+  const sentMap = new Map<string, Set<string>>();
+  for (const row of allSent) {
+    if (!sentMap.has(row.user_id)) sentMap.set(row.user_id, new Set());
+    sentMap.get(row.user_id)!.add(row.sequence_key);
+  }
+
   for (const user of users) {
     const signupDate = new Date(user.created_at);
     const daysSinceSignup = Math.floor((now.getTime() - signupDate.getTime()) / (1000 * 60 * 60 * 24));
 
-    // Already sent emails for this user
-    const sentEmails = await db`
-      SELECT sequence_key FROM email_sequence_sends WHERE user_id = ${user.id}
-    `;
-    const sentKeys = new Set(sentEmails.map((r: Record<string, string>) => r.sequence_key));
+    const sentKeys = sentMap.get(user.id) ?? new Set<string>();
 
     for (const seq of SEQUENCES) {
       // Skip if already sent or not yet time

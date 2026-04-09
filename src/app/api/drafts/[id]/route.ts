@@ -60,3 +60,22 @@ export async function PUT(
   const [updated] = await db`SELECT * FROM drafts WHERE id = ${Number(id)}`;
   return NextResponse.json(updated);
 }
+
+export async function DELETE(
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const session = await auth();
+  if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { id } = await params;
+  const db = sql();
+
+  const result = await db`
+    DELETE FROM drafts WHERE id = ${Number(id)} AND user_id = ${session.user.id}
+    RETURNING id
+  `;
+
+  if (result.length === 0) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  return NextResponse.json({ ok: true });
+}

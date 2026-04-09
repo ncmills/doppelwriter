@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { buildWriterProfile, buildCustomWriter } from "@/lib/writer-builder";
-import { checkUsage } from "@/lib/usage";
+import { checkUsage, checkRateLimit } from "@/lib/usage";
 import { sql } from "@/lib/db";
 
 export const maxDuration = 120;
@@ -9,6 +9,11 @@ export const maxDuration = 120;
 export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const rateLimit = await checkRateLimit(session.user.id);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "Too many requests. Please wait a moment." }, { status: 429 });
+  }
 
   let writerName: string, bio: string | undefined, isCurated: boolean | undefined;
   try {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { sql } from "@/lib/db";
+import { checkRateLimit } from "@/lib/usage";
 import Anthropic from "@anthropic-ai/sdk";
 import { CLAUDE_MODEL } from "@/lib/models";
 
@@ -11,6 +12,11 @@ export const maxDuration = 60;
 export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const rateLimit = await checkRateLimit(session.user.id);
+  if (!rateLimit.allowed) {
+    return NextResponse.json({ error: "Too many requests. Please wait a moment." }, { status: 429 });
+  }
 
   let profileIds: number[], name: string | undefined, weights: number[] | undefined;
   try {
@@ -24,6 +30,9 @@ export async function POST(request: NextRequest) {
 
   if (!profileIds || profileIds.length < 2) {
     return NextResponse.json({ error: "Select at least 2 voices to merge" }, { status: 400 });
+  }
+  if (profileIds.length > 10) {
+    return NextResponse.json({ error: "Too many profiles" }, { status: 400 });
   }
 
   const db = sql();

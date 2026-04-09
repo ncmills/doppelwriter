@@ -69,14 +69,18 @@ export async function syncGmail(userId: string): Promise<{ synced: number; skipp
     const messages = listRes.data.messages || [];
     pageToken = listRes.data.nextPageToken || undefined;
 
+    // Batch-fetch existing source_paths to avoid N+1 queries
+    const messageIds = messages.filter((m) => m.id).map((m) => "gmail:" + m.id);
+    const existing = messageIds.length > 0
+      ? await db`SELECT source_path FROM writing_samples WHERE user_id = ${userId} AND source_path = ANY(${messageIds})`
+      : [];
+    const existingPaths = new Set(existing.map((r) => r.source_path));
+
     for (const msg of messages) {
       if (!msg.id) continue;
 
       // Check if already ingested
-      const existing = await db`
-        SELECT id FROM writing_samples WHERE user_id = ${userId} AND source_path = ${"gmail:" + msg.id}
-      `;
-      if (existing.length > 0) {
+      if (existingPaths.has("gmail:" + msg.id)) {
         skipped++;
         continue;
       }

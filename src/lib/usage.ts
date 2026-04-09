@@ -50,6 +50,22 @@ export async function verifyProfileAccess(userId: string, profileId: number): Pr
   return !!profile;
 }
 
+export interface RateLimitInfo {
+  allowed: boolean;
+  remaining: number;
+}
+
+export async function checkRateLimit(userId: string): Promise<RateLimitInfo> {
+  const db = sql();
+  const [result] = await db`
+    SELECT COUNT(*)::int as cnt FROM usage_log
+    WHERE user_id = ${userId} AND created_at > NOW() - INTERVAL '1 minute'
+  `;
+  const count = result?.cnt || 0;
+  const limit = 20;
+  return { allowed: count < limit, remaining: Math.max(0, limit - count) };
+}
+
 export async function logUsage(userId: string, action: string): Promise<void> {
   const db = sql();
   await db`

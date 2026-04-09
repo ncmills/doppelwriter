@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { auth } from "@/lib/auth";
 import { editDraft } from "@/lib/editor";
-import { checkUsage, logUsage, verifyProfileAccess } from "@/lib/usage";
+import { checkUsage, checkRateLimit, logUsage, verifyProfileAccess } from "@/lib/usage";
 import { trackServerEvent } from "@/lib/track";
 
 export const maxDuration = 60;
@@ -10,6 +10,14 @@ export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+  }
+
+  const rateLimit = await checkRateLimit(session.user.id);
+  if (!rateLimit.allowed) {
+    return new Response(
+      JSON.stringify({ error: "Too many requests. Please wait a moment." }),
+      { status: 429 }
+    );
   }
 
   const usage = await checkUsage(session.user.id);
@@ -31,6 +39,9 @@ export async function POST(request: NextRequest) {
   }
   if (!draft || !profileId) {
     return new Response(JSON.stringify({ error: "Missing draft or profileId" }), { status: 400 });
+  }
+  if (draft.length > 50000) {
+    return new Response(JSON.stringify({ error: "Input too long" }), { status: 400 });
   }
 
   if (!(await verifyProfileAccess(session.user.id, profileId))) {
