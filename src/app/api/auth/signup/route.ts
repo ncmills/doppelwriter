@@ -9,7 +9,16 @@ const PASSWORD_MIN_LENGTH = 8;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
 export async function POST(request: NextRequest) {
-  const { email, password, name, ref } = await request.json();
+  let email: string, password: string, name: string | undefined, ref: string | undefined;
+  try {
+    const body = await request.json();
+    email = body.email;
+    password = body.password;
+    name = body.name;
+    ref = body.ref;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
 
   if (!email || !password) {
     return NextResponse.json({ error: "Email and password required" }, { status: 400 });

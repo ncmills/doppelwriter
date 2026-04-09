@@ -19,7 +19,16 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { original, currentEdit, feedback, profileId } = await request.json();
+  let original: string, currentEdit: string, feedback: string, profileId: number;
+  try {
+    const body = await request.json();
+    original = body.original;
+    currentEdit = body.currentEdit;
+    feedback = body.feedback;
+    profileId = body.profileId;
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid request body" }), { status: 400 });
+  }
 
   if (profileId && !(await verifyProfileAccess(session.user.id, profileId))) {
     return new Response(JSON.stringify({ error: "Profile not found" }), { status: 403 });
@@ -43,8 +52,8 @@ export async function POST(request: NextRequest) {
         }
         controller.close();
       } catch (err) {
-        const msg = err instanceof Error ? err.message : "Revision failed";
-        controller.enqueue(encoder.encode(`\n\n[ERROR: ${msg}]`));
+        console.error("Revision stream error:", err);
+        controller.enqueue(encoder.encode(`\n\n[ERROR: An error occurred. Please try again.]`));
         controller.close();
       }
     },

@@ -20,7 +20,15 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { draft, profileId, instructions } = await request.json();
+  let draft: string, profileId: number, instructions: string | undefined;
+  try {
+    const body = await request.json();
+    draft = body.draft;
+    profileId = body.profileId;
+    instructions = body.instructions;
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid request body" }), { status: 400 });
+  }
   if (!draft || !profileId) {
     return new Response(JSON.stringify({ error: "Missing draft or profileId" }), { status: 400 });
   }
@@ -48,8 +56,8 @@ export async function POST(request: NextRequest) {
         }
         controller.close();
       } catch (err) {
-        const msg = err instanceof Error ? err.message : "Generation failed";
-        controller.enqueue(encoder.encode(`\n\n[ERROR: ${msg}]`));
+        console.error("Editor stream error:", err);
+        controller.enqueue(encoder.encode(`\n\n[ERROR: An error occurred. Please try again.]`));
         controller.close();
       }
     },

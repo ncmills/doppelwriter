@@ -21,7 +21,14 @@ export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { action, improveProfileId } = await request.json();
+  let action: string, improveProfileId: number | undefined;
+  try {
+    const body = await request.json();
+    action = body.action;
+    improveProfileId = body.improveProfileId;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
 
   if (action === "analyze") {
     const wordCount = await getTotalWordCount(session.user.id);

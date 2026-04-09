@@ -11,7 +11,13 @@ export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { writerName } = await request.json();
+  let writerName: string;
+  try {
+    const body = await request.json();
+    writerName = body.writerName;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   if (!writerName) {
     return NextResponse.json({ error: "Name required" }, { status: 400 });
   }

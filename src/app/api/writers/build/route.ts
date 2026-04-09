@@ -10,7 +10,15 @@ export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { writerName, bio, isCurated } = await request.json();
+  let writerName: string, bio: string | undefined, isCurated: boolean | undefined;
+  try {
+    const body = await request.json();
+    writerName = body.writerName;
+    bio = body.bio;
+    isCurated = body.isCurated;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   if (!writerName) {
     return NextResponse.json({ error: "Writer name required" }, { status: 400 });
   }
@@ -28,15 +36,6 @@ export async function POST(request: NextRequest) {
 
   // Log the request for analytics
   const db = sql();
-  await db`
-    CREATE TABLE IF NOT EXISTS writer_requests (
-      id SERIAL PRIMARY KEY,
-      user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
-      writer_name TEXT NOT NULL,
-      created_at TIMESTAMPTZ DEFAULT NOW(),
-      status TEXT DEFAULT 'pending'
-    )
-  `.catch(() => {});
   await db`
     INSERT INTO writer_requests (user_id, writer_name, status)
     VALUES (${session.user.id}, ${writerName.trim()}, 'building')

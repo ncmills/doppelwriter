@@ -6,23 +6,18 @@ export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { name } = await request.json();
+  let name: string;
+  try {
+    const body = await request.json();
+    name = body.name;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   if (!name || typeof name !== "string" || name.trim().length < 2) {
     return NextResponse.json({ error: "Invalid name" }, { status: 400 });
   }
 
   const db = sql();
-
-  // Store the request (create table if not exists)
-  await db`
-    CREATE TABLE IF NOT EXISTS writer_requests (
-      id SERIAL PRIMARY KEY,
-      user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
-      writer_name TEXT NOT NULL,
-      created_at TIMESTAMPTZ DEFAULT NOW(),
-      status TEXT DEFAULT 'pending'
-    )
-  `;
 
   // Deduplicate: don't insert if this user already requested this writer
   const existing = await db`

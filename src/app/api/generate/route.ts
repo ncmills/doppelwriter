@@ -20,7 +20,17 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { brief, profileId, wordCount, instructions, researchContext } = await request.json();
+  let brief: string, profileId: number, wordCount: number | undefined, instructions: string | undefined, researchContext: string | undefined;
+  try {
+    const body = await request.json();
+    brief = body.brief;
+    profileId = body.profileId;
+    wordCount = body.wordCount;
+    instructions = body.instructions;
+    researchContext = body.researchContext;
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid request body" }), { status: 400 });
+  }
   if (!brief || !profileId) {
     return new Response(JSON.stringify({ error: "Missing brief or profileId" }), { status: 400 });
   }
@@ -50,8 +60,8 @@ export async function POST(request: NextRequest) {
         }
         controller.close();
       } catch (err) {
-        const msg = err instanceof Error ? err.message : "Generation failed";
-        controller.enqueue(encoder.encode(`\n\n[ERROR: ${msg}]`));
+        console.error("Generation stream error:", err);
+        controller.enqueue(encoder.encode(`\n\n[ERROR: An error occurred. Please try again.]`));
         controller.close();
       }
     },

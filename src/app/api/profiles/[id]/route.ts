@@ -40,7 +40,12 @@ export async function PUT(
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  const body = await request.json();
+  let body: Record<string, unknown>;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   await updateProfile(Number(id), body);
 
   if (body.regenerate) {

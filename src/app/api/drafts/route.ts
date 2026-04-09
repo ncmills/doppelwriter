@@ -21,7 +21,17 @@ export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { title, profileId, mode, brief, content } = await request.json();
+  let title: string, profileId: number | undefined, mode: string | undefined, brief: string | undefined, content: string;
+  try {
+    const body = await request.json();
+    title = body.title;
+    profileId = body.profileId;
+    mode = body.mode;
+    brief = body.brief;
+    content = body.content;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   const db = sql();
 
   const [row] = await db`

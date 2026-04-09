@@ -3,7 +3,14 @@ import bcrypt from "bcryptjs";
 import { sql } from "@/lib/db";
 
 export async function POST(req: Request) {
-  const { token, password } = await req.json();
+  let token: string, password: string;
+  try {
+    const body = await req.json();
+    token = body.token;
+    password = body.password;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   if (!token || !password) {
     return NextResponse.json({ error: "Token and password required" }, { status: 400 });
   }

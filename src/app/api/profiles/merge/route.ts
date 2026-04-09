@@ -12,7 +12,15 @@ export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { profileIds, name, weights } = await request.json();
+  let profileIds: number[], name: string | undefined, weights: number[] | undefined;
+  try {
+    const body = await request.json();
+    profileIds = body.profileIds;
+    name = body.name;
+    weights = body.weights;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
 
   if (!profileIds || profileIds.length < 2) {
     return NextResponse.json({ error: "Select at least 2 voices to merge" }, { status: 400 });

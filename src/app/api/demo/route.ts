@@ -72,8 +72,8 @@ export async function POST(request: NextRequest) {
         }
         controller.close();
       } catch (err) {
-        const msg = err instanceof Error ? err.message : "Demo failed";
-        controller.enqueue(encoder.encode(`\n\n[ERROR: ${msg}]`));
+        console.error("Demo stream error:", err);
+        controller.enqueue(encoder.encode(`\n\n[ERROR: An error occurred. Please try again.]`));
         controller.close();
       }
     },

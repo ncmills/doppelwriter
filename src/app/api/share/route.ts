@@ -10,7 +10,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { content, voiceName } = await request.json();
+  let content: string, voiceName: string | undefined;
+  try {
+    const body = await request.json();
+    content = body.content;
+    voiceName = body.voiceName;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   if (!content) {
     return NextResponse.json({ error: "Content is required" }, { status: 400 });
   }

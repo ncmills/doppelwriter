@@ -2,13 +2,12 @@ import { gmail, auth } from "googleapis/build/src/apis/gmail";
 import { sql } from "./db";
 import { ingestText } from "./ingest";
 
-const oauth2Client = new auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  process.env.NEXTAUTH_URL + "/api/auth/callback/google"
-);
+const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const REDIRECT_URI = process.env.NEXTAUTH_URL + "/api/auth/callback/google";
 
 export async function syncGmail(userId: string): Promise<{ synced: number; skipped: number }> {
+  const oauth2Client = new auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
   const db = sql();
 
   // Get user's Google tokens

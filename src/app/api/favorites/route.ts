@@ -22,7 +22,13 @@ export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { profileId } = await request.json();
+  let profileId: number;
+  try {
+    const body = await request.json();
+    profileId = body.profileId;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   const db = sql();
 
   await db`
@@ -37,7 +43,13 @@ export async function DELETE(request: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { profileId } = await request.json();
+  let profileId: number;
+  try {
+    const body = await request.json();
+    profileId = body.profileId;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   const db = sql();
 
   await db`DELETE FROM favorites WHERE user_id = ${session.user.id} AND profile_id = ${profileId}`;

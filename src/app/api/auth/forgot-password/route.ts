@@ -1,17 +1,16 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { sql } from "@/lib/db";
-import { Resend } from "resend";
-
-function getResend() {
-  if (!process.env.RESEND_API_KEY) {
-    throw new Error("RESEND_API_KEY is not configured");
-  }
-  return new Resend(process.env.RESEND_API_KEY);
-}
+import { getResend } from "@/lib/email";
 
 export async function POST(req: Request) {
-  const { email } = await req.json();
+  let email: string;
+  try {
+    const body = await req.json();
+    email = body.email;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   if (!email) return NextResponse.json({ error: "Email required" }, { status: 400 });
 
   const db = sql();
@@ -19,16 +18,6 @@ export async function POST(req: Request) {
   // Always return success to prevent email enumeration
   const [user] = await db`SELECT id, email FROM users WHERE email = ${email}`;
   if (!user) return NextResponse.json({ ok: true });
-
-  // Create password_resets table if needed
-  await db`
-    CREATE TABLE IF NOT EXISTS password_resets (
-      email TEXT NOT NULL,
-      token TEXT UNIQUE NOT NULL,
-      expires_at TIMESTAMPTZ NOT NULL,
-      created_at TIMESTAMPTZ DEFAULT NOW()
-    )
-  `;
 
   // Delete any existing tokens for this email
   await db`DELETE FROM password_resets WHERE email = ${email}`;

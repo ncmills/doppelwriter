@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 
-const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6";
 const INDEXNOW_HOST = "https://api.indexnow.org";
 
 export async function POST(req: Request) {
@@ -10,7 +9,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { urls } = await req.json();
+  const INDEXNOW_KEY = process.env.INDEXNOW_KEY;
+  if (!INDEXNOW_KEY) {
+    return NextResponse.json({ error: "INDEXNOW_KEY not configured" }, { status: 500 });
+  }
+
+  let urls: string[];
+  try {
+    const body = await req.json();
+    urls = body.urls;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   if (!urls || !Array.isArray(urls)) {
     return NextResponse.json({ error: "urls array required" }, { status: 400 });
   }

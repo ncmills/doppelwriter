@@ -204,4 +204,23 @@ export async function initSchema() {
       processed_at TIMESTAMPTZ DEFAULT NOW()
     )
   `;
+
+  await db`
+    CREATE TABLE IF NOT EXISTS writer_requests (
+      id SERIAL PRIMARY KEY,
+      user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
+      writer_name TEXT NOT NULL,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      status TEXT DEFAULT 'pending'
+    )
+  `;
+
+  await db`
+    CREATE TABLE IF NOT EXISTS password_resets (
+      email TEXT NOT NULL,
+      token TEXT UNIQUE NOT NULL,
+      expires_at TIMESTAMPTZ NOT NULL,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
 }
