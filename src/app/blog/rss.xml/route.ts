@@ -15,7 +15,7 @@ export async function GET() {
       <guid isPermaLink="true">https://doppelwriter.com/blog/${post.slug}</guid>
       <description><![CDATA[${post.description}]]></description>
       <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
-      <author>team@doppelwriter.com (DoppelWriter)</author>
+      <author>info@doppelwriter.com (DoppelWriter)</author>
     </item>`
     )
     .join("");
