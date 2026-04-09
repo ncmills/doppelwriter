@@ -2,6 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { diffWords } from "diff";
 import { sql } from "./db";
 import { CLAUDE_MODEL } from "./models";
+import { getVoiceSystemPrompt } from "./voice-prompt";
 
 const client = new Anthropic();
 
@@ -22,78 +23,12 @@ export function computeDiff(original: string, edited: string): DiffChunk[] {
   }));
 }
 
-const VOICE_TRANSFORM_PREAMBLE = `CRITICAL INSTRUCTION: You are a voice transformation engine. When given text to edit, you must AGGRESSIVELY rewrite it so the output reads as if the author described below wrote it from scratch. This is NOT light editing. You must:
-
-1. REPLACE generic/bland word choices with words this author would actually use
-2. RESTRUCTURE sentences to match this author's rhythm — their sentence lengths, cadence, and flow
-3. CHANGE paragraph structure to match their style — how they open, build, and close paragraphs
-4. ADD the author's characteristic phrases, constructions, and quirks where they naturally fit
-5. REMOVE anything this author would never write — corporate language, clichés, AI-isms
-6. TRANSFORM the tone to match the author's personality — formal/casual, serious/playful, etc.
-
-The IDEAS and FACTS should stay the same. The VOICE must completely change. Every sentence should sound like this specific author wrote it. If the input reads like generic corporate writing and the author writes punchy conversational prose, the output should be punchy conversational prose.
-
-Here is the author's voice profile:
-
-`;
-
-function applyVoiceOverrides(prompt: string, overrides: Record<string, number>): string {
-  if (!overrides || Object.keys(overrides).length === 0) return prompt;
-
-  const mods: string[] = [];
-  if (overrides.formality !== undefined && overrides.formality !== 5) {
-    mods.push(overrides.formality > 5
-      ? `OVERRIDE: Write MORE formally than the base profile. Formality level: ${overrides.formality}/10.`
-      : `OVERRIDE: Write MORE casually than the base profile. Formality level: ${overrides.formality}/10.`);
-  }
-  if (overrides.sentence_length !== undefined && overrides.sentence_length !== 5) {
-    mods.push(overrides.sentence_length > 5
-      ? `OVERRIDE: Use LONGER sentences than the base profile suggests. Favor flowing, complex constructions.`
-      : `OVERRIDE: Use SHORTER sentences than the base profile suggests. Be more punchy and direct.`);
-  }
-  if (overrides.creativity !== undefined && overrides.creativity !== 5) {
-    mods.push(overrides.creativity > 5
-      ? `OVERRIDE: Be MORE creative and metaphorical than the base profile. Use more vivid imagery and unexpected word choices.`
-      : `OVERRIDE: Be MORE restrained and literal than the base profile. Fewer metaphors, more direct expression.`);
-  }
-  if (overrides.humor !== undefined && overrides.humor !== 5) {
-    mods.push(overrides.humor > 5
-      ? `OVERRIDE: Inject MORE humor, wit, and levity than the base profile suggests.`
-      : `OVERRIDE: Be MORE serious and measured than the base profile. Minimize humor.`);
-  }
-  if (overrides.emotion !== undefined && overrides.emotion !== 5) {
-    mods.push(overrides.emotion > 5
-      ? `OVERRIDE: Be MORE emotionally expressive and personal than the base profile.`
-      : `OVERRIDE: Be MORE detached and analytical than the base profile. Less emotional expression.`);
-  }
-
-  return mods.length > 0 ? prompt + "\n\n═══ USER VOICE ADJUSTMENTS ═══\n" + mods.join("\n") : prompt;
-}
-
-async function getSystemPrompt(profileId: number): Promise<string> {
-  const db = sql();
-  const rows = await db`
-    SELECT system_prompt, name, voice_overrides FROM style_profiles WHERE id = ${profileId}
-  `;
-  const overrides = rows[0]?.voice_overrides || {};
-  const basePrompt = rows[0]?.system_prompt
-    ? VOICE_TRANSFORM_PREAMBLE + rows[0].system_prompt
-    : VOICE_TRANSFORM_PREAMBLE + `Author: ${rows[0]?.name || "Unknown"}
-
-STYLE RULES:
-Write in short, direct sentences when they serve the point. Use active voice.
-Choose concrete words over abstract ones. Let verbs do the work, not nouns.
-Vary sentence length for rhythm — short sentences for impact, longer ones for flow.`;
-
-  return applyVoiceOverrides(basePrompt, overrides);
-}
-
 export async function* editDraft(
   draft: string,
   profileId: number,
   instructions?: string
 ): AsyncGenerator<string> {
-  const systemPrompt = await getSystemPrompt(profileId);
+  const systemPrompt = await getVoiceSystemPrompt(profileId, "transform");
 
   // Strip HTML tags if present (from .docx uploads) so the AI works with clean text
   const cleanDraft = draft.replace(/<[^>]+>/g, (tag) => {
@@ -135,7 +70,7 @@ export async function* reviseDraft(
   feedback: string,
   profileId: number
 ): AsyncGenerator<string> {
-  const systemPrompt = await getSystemPrompt(profileId);
+  const systemPrompt = await getVoiceSystemPrompt(profileId, "transform");
 
   const stream = client.messages.stream({
     model: CLAUDE_MODEL,

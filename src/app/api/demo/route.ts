@@ -3,6 +3,8 @@ import { sql } from "@/lib/db";
 import Anthropic from "@anthropic-ai/sdk";
 import { CLAUDE_MODEL } from "@/lib/models";
 
+const client = new Anthropic();
+
 // In-memory rate limit: 3 requests per IP per hour
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
@@ -51,7 +53,6 @@ export async function POST(request: NextRequest) {
     systemPrompt = hemingway.system_prompt;
   }
 
-  const client = new Anthropic();
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     async start(controller) {

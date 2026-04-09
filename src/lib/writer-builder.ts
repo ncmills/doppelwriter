@@ -5,6 +5,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { sql } from "./db";
 import { CLAUDE_MODEL } from "./models";
 import { CURATED_WRITERS } from "./writer-data";
+import { buildMultiLayerPrompt } from "./style-analyzer";
 
 // Re-export for server-side consumers that imported from here before
 export { CURATED_WRITERS, CATEGORIES } from "./writer-data";
@@ -25,37 +26,50 @@ export async function buildWriterProfile(
 
   const { content: contentSamples } = await fetchRealContent(writerName);
 
+  // Step 1: Extract structured multi-layer profile (same format as personal voices)
   const profileResponse = await client.messages.create({
     model: CLAUDE_MODEL,
     max_tokens: 4096,
     messages: [
       {
         role: "user",
-        content: `Analyze the writing/speaking style of ${writerName}. Create a detailed style profile.
+        content: `You are a forensic writing analyst. Analyze the writing/speaking style of ${writerName} with extreme precision. Decompose their voice into micro (sentence-level) and macro (structure-level) patterns, and identify what they NEVER do.
 
 ${contentSamples}
 
 Respond with JSON only:
 {
   "micro": {
-    "sentence_length_range": "...", "sentence_length_variance": "...",
-    "rhythm_and_cadence": "...", "word_choice_patterns": "...",
-    "vocabulary_level": "...", "punctuation_habits": "...",
-    "function_word_patterns": "...", "characteristic_phrases": ["..."],
-    "contractions_usage": "..."
+    "sentence_length_range": "e.g., 5-35 words, averaging 18",
+    "sentence_length_variance": "e.g., high — alternates punchy fragments with long flowing sentences",
+    "rhythm_and_cadence": "describe the musicality and flow patterns",
+    "word_choice_patterns": "concrete vs abstract, simple vs elevated, specific preferences",
+    "vocabulary_level": "describe range and any distinctive word preferences",
+    "punctuation_habits": "em dashes, semicolons, parentheticals, ellipses — be specific",
+    "function_word_patterns": "pronoun preferences (I vs we vs you), article usage, preposition habits",
+    "characteristic_phrases": ["exact phrases or constructions they reuse"],
+    "contractions_usage": "always, never, selectively — describe pattern"
   },
   "macro": {
-    "paragraph_structure": "...", "paragraph_length_tendency": "...",
-    "transition_style": "...", "argument_structure": "...",
-    "opening_patterns": "...", "closing_patterns": "...",
-    "pacing": "...", "use_of_examples": "..."
+    "paragraph_structure": "how paragraphs are built internally",
+    "paragraph_length_tendency": "short/medium/long, with typical word counts",
+    "transition_style": "how they move between ideas — explicit connectors or implicit?",
+    "argument_structure": "how they build a case or narrative",
+    "opening_patterns": "how they begin pieces",
+    "closing_patterns": "how they end pieces",
+    "pacing": "fast/slow/variable, where they accelerate or decelerate",
+    "use_of_examples": "anecdotes, data, metaphors — what evidence style?"
   },
   "anti_patterns": {
-    "words_never_used": ["..."], "structures_avoided": ["..."],
-    "tonal_boundaries": ["..."], "formatting_avoidances": ["..."]
+    "words_never_used": ["words this author clearly avoids"],
+    "structures_avoided": ["e.g., never uses bullet points, never opens with a question"],
+    "tonal_boundaries": ["e.g., never sarcastic, never uses exclamation marks"],
+    "formatting_avoidances": ["e.g., never uses headers, never writes single-sentence paragraphs"]
   },
-  "tone": "...", "formality": 7, "distinctive_quirks": ["..."],
-  "overall_personality": "..."
+  "tone": "overall tonal description",
+  "formality": 7,
+  "distinctive_quirks": ["specific, concrete quirks"],
+  "overall_personality": "the human behind the writing in 2-3 sentences"
 }`,
       },
     ],
@@ -66,22 +80,9 @@ Respond with JSON only:
   if (!jsonMatch) throw new Error("Failed to parse writer profile");
   const profileJson = JSON.parse(jsonMatch[0]);
 
-  const promptResponse = await client.messages.create({
-    model: CLAUDE_MODEL,
-    max_tokens: 2048,
-    messages: [
-      {
-        role: "user",
-        content: `Create a system prompt for an AI ghostwriter mimicking ${writerName}'s style. Use this profile:
+  // Step 2: Build system prompt programmatically (same structure as personal voices)
+  const systemPrompt = buildMultiLayerPrompt(writerName, profileJson, [], []);
 
-${JSON.stringify(profileJson, null, 2)}
-
-The prompt should instruct the AI to write exactly as ${writerName} would. Be specific. Include anti-AI-ism rules (never use "Moreover", "Furthermore", etc.). Return ONLY the prompt text.`,
-      },
-    ],
-  });
-
-  const systemPrompt = promptResponse.content[0].type === "text" ? promptResponse.content[0].text : "";
   const writerBio = bio || CURATED_WRITERS.find((w) => w.name === writerName)?.bio || "";
   const writerCategory = CURATED_WRITERS.find((w) => w.name === writerName)?.category || "custom";
 

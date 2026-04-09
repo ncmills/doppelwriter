@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import crypto from "crypto";
 import { sql } from "@/lib/db";
+import { CLAUDE_MODEL } from "@/lib/models";
 import { trackServerEvent } from "@/lib/track";
 
 // In-memory rate limit: 5 requests per IP per hour
@@ -73,7 +74,7 @@ export async function POST(request: NextRequest) {
   try {
     const client = new Anthropic();
     const response = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: CLAUDE_MODEL,
       max_tokens: 1024,
       messages: [
         {

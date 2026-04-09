@@ -1,59 +1,11 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { sql } from "./db";
 import { CLAUDE_MODEL } from "./models";
+import { getVoiceSystemPrompt } from "./voice-prompt";
 
 const client = new Anthropic();
 
 // Optimal temperature for style-matched writing
 const STYLE_TEMPERATURE = 0.7;
-
-const VOICE_GENERATION_PREAMBLE = `You are ghostwriting as a specific author. Every sentence you write must be indistinguishable from their own work. Do NOT write like a generic AI. Do NOT use words like "delve", "tapestry", "multifaceted", "landscape", "moreover", "furthermore", "in conclusion", or any corporate/academic filler. Write like a HUMAN — specifically, the human described below.
-
-Match their exact patterns: sentence rhythm, word choices, punctuation habits, paragraph structure, tone, personality. If they use em dashes, you use em dashes. If they write short punchy sentences, you write short punchy sentences. If they're funny, be funny. If they're formal, be formal.
-
-Here is the author's voice profile:
-
-`;
-
-function applyVoiceOverrides(prompt: string, overrides: Record<string, number>): string {
-  if (!overrides || Object.keys(overrides).length === 0) return prompt;
-  const mods: string[] = [];
-  if (overrides.formality !== undefined && overrides.formality !== 5)
-    mods.push(overrides.formality > 5
-      ? `Write MORE formally. Formality: ${overrides.formality}/10.`
-      : `Write MORE casually. Formality: ${overrides.formality}/10.`);
-  if (overrides.sentence_length !== undefined && overrides.sentence_length !== 5)
-    mods.push(overrides.sentence_length > 5
-      ? `Use LONGER, more complex sentences.`
-      : `Use SHORTER, punchier sentences.`);
-  if (overrides.creativity !== undefined && overrides.creativity !== 5)
-    mods.push(overrides.creativity > 5
-      ? `Be MORE creative and metaphorical.`
-      : `Be MORE literal and restrained.`);
-  if (overrides.humor !== undefined && overrides.humor !== 5)
-    mods.push(overrides.humor > 5 ? `Inject MORE humor and wit.` : `Be MORE serious. Less humor.`);
-  if (overrides.emotion !== undefined && overrides.emotion !== 5)
-    mods.push(overrides.emotion > 5 ? `Be MORE emotionally expressive.` : `Be MORE detached and analytical.`);
-  return mods.length > 0 ? prompt + "\n\n═══ USER VOICE ADJUSTMENTS ═══\n" + mods.join("\n") : prompt;
-}
-
-async function getSystemPrompt(profileId: number): Promise<string> {
-  const db = sql();
-  const rows = await db`
-    SELECT system_prompt, name, voice_overrides FROM style_profiles WHERE id = ${profileId}
-  `;
-  const overrides = rows[0]?.voice_overrides || {};
-  const basePrompt = rows[0]?.system_prompt
-    ? VOICE_GENERATION_PREAMBLE + rows[0].system_prompt
-    : VOICE_GENERATION_PREAMBLE + `Author: ${rows[0]?.name || "Unknown"}
-
-STYLE RULES:
-Write in short, direct sentences when they serve the point. Use active voice.
-Choose concrete words over abstract ones. Let verbs do the work, not nouns.
-Vary sentence length for rhythm — short sentences for impact, longer ones for flow.`;
-
-  return applyVoiceOverrides(basePrompt, overrides);
-}
 
 export async function* generateDraft(
   brief: string,
@@ -64,7 +16,7 @@ export async function* generateDraft(
     researchContext?: string;
   } = {}
 ): AsyncGenerator<string> {
-  const systemPrompt = await getSystemPrompt(profileId);
+  const systemPrompt = await getVoiceSystemPrompt(profileId, "generate");
   const targetWords = options.wordCount || 500;
 
   // For longer pieces (>800 words), use chunked generation with style reinforcement
@@ -111,12 +63,11 @@ async function* generateLongForm(
 ): AsyncGenerator<string> {
   const targetWords = options.wordCount || 1500;
 
-  // Step 1: Generate an outline
+  // Step 1: Generate an outline (neutral prompt — outlining is structural, not voice work)
   const outlineResponse = await client.messages.create({
     model: CLAUDE_MODEL,
     max_tokens: 1024,
     temperature: 0.5,
-    system: systemPrompt,
     messages: [
       {
         role: "user",
@@ -150,14 +101,14 @@ Write ONLY this section. Open strong in the author's voice. No titles or headers
       : isLast
         ? `Continue and conclude this piece. You've written so far:
 
-"${previousText.slice(-500)}"
+"${previousText.slice(-1200)}"
 
 This final section covers: ${sections[i]}
 
 Write ~${wordsPerSection} words. Close in the author's voice. Write ONLY the continuation — do not repeat what came before.`
         : `Continue this piece. You've written so far:
 
-"${previousText.slice(-500)}"
+"${previousText.slice(-1200)}"
 
 This next section covers: ${sections[i]}
 

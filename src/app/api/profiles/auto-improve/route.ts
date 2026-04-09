@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     JOIN voice_corrections vc ON vc.profile_id = sp.id
     WHERE vc.created_at > sp.updated_at
     GROUP BY sp.id, sp.name, sp.updated_at
-    HAVING COUNT(vc.id) >= 5
+    HAVING COUNT(vc.id) >= 3
     ORDER BY COUNT(vc.id) DESC
     LIMIT 10
   `;

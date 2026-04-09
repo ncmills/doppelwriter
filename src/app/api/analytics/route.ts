@@ -33,12 +33,15 @@ export async function GET(req: Request) {
     db`SELECT COUNT(*) as count FROM analytics_events WHERE event = 'tone_check' AND created_at > NOW() - ${days + ' days'}::interval`.catch(() => [{ count: 0 }]),
     // Analyzer uses
     db`SELECT COUNT(*) as count FROM analyzer_results WHERE created_at > NOW() - ${days + ' days'}::interval`,
-    // Top writer profiles used (by generation count)
-    db`SELECT sp.writer_name, COUNT(*) as uses
-       FROM usage_log ul
-       JOIN style_profiles sp ON sp.id = CAST(ul.action AS INTEGER)
-       WHERE ul.created_at > NOW() - ${days + ' days'}::interval AND sp.writer_name IS NOT NULL
-       GROUP BY sp.writer_name ORDER BY uses DESC LIMIT 10`.catch(() => []),
+    // Top writer profiles used (by generation/edit activity tracked in analytics_events)
+    db`SELECT properties->>'profileId' as profile_id, sp.writer_name, sp.name, COUNT(*) as uses
+       FROM analytics_events ae
+       LEFT JOIN style_profiles sp ON sp.id = CAST(ae.properties->>'profileId' AS INTEGER)
+       WHERE ae.event IN ('generate', 'edit')
+       AND ae.created_at > NOW() - ${days + ' days'}::interval
+       AND ae.properties->>'profileId' IS NOT NULL
+       GROUP BY properties->>'profileId', sp.writer_name, sp.name
+       ORDER BY uses DESC LIMIT 10`.catch(() => []),
     // Top pages from analytics events
     db`SELECT page, COUNT(*) as views
        FROM analytics_events

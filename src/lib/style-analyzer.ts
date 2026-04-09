@@ -320,7 +320,7 @@ Return JSON only:
   `;
 }
 
-function buildMultiLayerPrompt(
+export function buildMultiLayerPrompt(
   name: string,
   p: FullStyleProfile,
   exemplars: string[],
