@@ -105,7 +105,7 @@ export async function sendSequenceEmail(
   name?: string
 ): Promise<void> {
   await getResend().emails.send({
-    from: "DoppelWriter <noreply@doppelwriter.com>",
+    from: "DoppelWriter <info@doppelwriter.com>",
     to: email,
     subject: sequence.subject,
     html: sequence.html(name, email),

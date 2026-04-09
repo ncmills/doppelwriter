@@ -27,7 +27,7 @@ export async function sendVerificationEmail(email: string, userId: string): Prom
   const verifyUrl = `${process.env.NEXTAUTH_URL}/api/auth/verify?token=${token}`;
 
   await getResend().emails.send({
-    from: "DoppelWriter <noreply@doppelwriter.com>",
+    from: "DoppelWriter <info@doppelwriter.com>",
     to: email,
     subject: "Verify your DoppelWriter account",
     html: `

@@ -34,7 +34,7 @@ export async function POST(req: Request) {
   const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password?token=${token}`;
 
   await getResend().emails.send({
-    from: "DoppelWriter <noreply@doppelwriter.com>",
+    from: "DoppelWriter <info@doppelwriter.com>",
     to: email,
     subject: "Reset your DoppelWriter password",
     html: `
