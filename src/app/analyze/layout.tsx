@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Writing Voice Analyzer — Analyze Your Writing Style | DoppelWriter",
+  title: "Free Writing Voice Analyzer — Analyze Your Writing Style",
   description:
     "Paste any text and instantly analyze your writing voice. See sentence patterns, vocabulary level, tone, and which famous writers you sound like. Free, no signup required.",
   openGraph: {

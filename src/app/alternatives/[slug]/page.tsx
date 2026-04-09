@@ -18,7 +18,7 @@ export async function generateMetadata({
   const alt = getAlternative(slug);
   if (!alt) return {};
 
-  const title = `Best ${alt.competitor} Alternative for Personal Voice — DoppelWriter`;
+  const title = `Best ${alt.competitor} Alternative for Personal Voice`;
   const description = `Looking for a ${alt.competitor} alternative? DoppelWriter matches your personal writing voice — not generic AI output. ${alt.tagline}`;
 
   return {

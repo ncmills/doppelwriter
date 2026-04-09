@@ -17,7 +17,7 @@ export const NICHES: Niche[] = [
   {
     slug: "newsletter-writers",
     title: "DoppelWriter for Newsletter Writers",
-    metaTitle: "AI Writing Tool for Newsletter Writers — Keep Your Voice Consistent | DoppelWriter",
+    metaTitle: "AI Writing Tool for Newsletter Writers — Keep Your Voice Consistent",
     metaDescription: "Your subscribers know when the voice shifts. DoppelWriter keeps every edition on-brand — beat writer's block without losing what makes your newsletter yours.",
     heroSubtitle: "Your subscribers signed up for your voice. Every edition should sound like you wrote it — even when you're staring at a blank page on deadline day.",
     painPoints: [
@@ -67,7 +67,7 @@ export const NICHES: Niche[] = [
   {
     slug: "ghostwriters",
     title: "DoppelWriter for Ghostwriters",
-    metaTitle: "AI Ghostwriting Tool — Match Any Client's Voice Perfectly | DoppelWriter",
+    metaTitle: "AI Ghostwriting Tool — Match Any Client's Voice Perfectly",
     metaDescription: "Stop hearing \"this doesn't sound like me.\" DoppelWriter builds voice profiles for each client so you can switch between 5+ voices daily without losing accuracy.",
     heroSubtitle: "Your job is disappearing into someone else's voice. DoppelWriter makes that effortless — switch between clients in seconds, not hours.",
     painPoints: [
@@ -117,7 +117,7 @@ export const NICHES: Niche[] = [
   {
     slug: "fiction-writers",
     title: "DoppelWriter for Fiction Writers",
-    metaTitle: "AI Fiction Writing Tool — Keep Character Voices Distinct | DoppelWriter",
+    metaTitle: "AI Fiction Writing Tool — Keep Character Voices Distinct",
     metaDescription: "Maintain distinct character voices across 80K words. Write in the style of authors you admire. DoppelWriter is the AI writing tool built for fiction.",
     heroSubtitle: "Your villain shouldn't sound like your narrator. DoppelWriter keeps every character's voice distinct — across chapters, drafts, and 80,000 words.",
     painPoints: [
@@ -167,7 +167,7 @@ export const NICHES: Niche[] = [
   {
     slug: "content-marketers",
     title: "DoppelWriter for Content Marketers",
-    metaTitle: "AI Brand Voice Tool for Content Marketing Teams | DoppelWriter",
+    metaTitle: "AI Brand Voice Tool for Content Marketing Teams",
     metaDescription: "Every writer on your team sounds different. DoppelWriter locks in your brand voice so you can scale content without voice drift. One voice, every channel.",
     heroSubtitle: "Your brand has one voice. But when five writers produce content, it sounds like five different companies. DoppelWriter fixes that.",
     painPoints: [
@@ -217,7 +217,7 @@ export const NICHES: Niche[] = [
   {
     slug: "students",
     title: "DoppelWriter for Students",
-    metaTitle: "AI Writing Tool for Students — Find and Strengthen Your Voice | DoppelWriter",
+    metaTitle: "AI Writing Tool for Students — Find and Strengthen Your Voice",
     metaDescription: "Your essays sound generic because you haven't found your voice yet. DoppelWriter helps students develop a distinctive writing style that professors actually want to read.",
     heroSubtitle: "Every student's worst fear: your essay sounds like everyone else's. DoppelWriter helps you find your voice and make it stronger — so your writing stands out for the right reasons.",
     painPoints: [
@@ -267,7 +267,7 @@ export const NICHES: Niche[] = [
   {
     slug: "wedding-speeches",
     title: "AI Wedding Speech Writer",
-    metaTitle: "AI Wedding Speech Writer — Write a Speech That Sounds Like You | DoppelWriter",
+    metaTitle: "AI Wedding Speech Writer — Write a Speech That Sounds Like You",
     metaDescription: "Terrified of your wedding speech? DoppelWriter helps you write a best man, maid of honor, or toast that's funny, heartfelt, and sounds like you — not a template.",
     heroSubtitle: "You want to nail this speech. Not read something off a template that could be about literally anyone. DoppelWriter helps you write something that sounds like you — funny, heartfelt, and real.",
     painPoints: [
@@ -317,7 +317,7 @@ export const NICHES: Niche[] = [
   {
     slug: "eulogies",
     title: "Write a Eulogy with AI",
-    metaTitle: "AI Eulogy Writer — Honor Someone's Memory in Your Own Words | DoppelWriter",
+    metaTitle: "AI Eulogy Writer — Honor Someone's Memory in Your Own Words",
     metaDescription: "Writing a eulogy while grieving is impossibly hard. DoppelWriter helps you find the right words to honor someone you love — in your voice, with your memories.",
     heroSubtitle: "This is the hardest thing you'll ever have to write. You're grieving, you can't think straight, and you need to find words that honor someone who meant everything. We're here to help you through it.",
     painPoints: [
@@ -367,7 +367,7 @@ export const NICHES: Niche[] = [
   {
     slug: "cover-letters",
     title: "AI Cover Letter Writer That Sounds Like You",
-    metaTitle: "AI Cover Letter Writer That Actually Sounds Like You | DoppelWriter",
+    metaTitle: "AI Cover Letter Writer That Actually Sounds Like You",
     metaDescription: "Hiring managers can spot an AI cover letter instantly. DoppelWriter writes cover letters in your real voice — personalized, genuine, and impossible to ignore.",
     heroSubtitle: "Every cover letter sounds the same because every AI tool writes the same way. DoppelWriter writes in your voice — so your application sounds like a real person, not a prompt.",
     painPoints: [

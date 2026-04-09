@@ -23,7 +23,7 @@ async function getSharedDraft(slug: string) {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const draft = await getSharedDraft(id);
-  if (!draft) return { title: "Not Found — DoppelWriter" };
+  if (!draft) return { title: "Not Found" };
 
   const plainText = draft.content.replace(/<[^>]+>/g, "").slice(0, 160);
   const title = draft.voice_name

@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — DoppelWriter",
+  title: "Terms of Service",
   description: "Terms of service for DoppelWriter. Plain English, no legalese.",
 };
 

@@ -96,13 +96,13 @@ export default function RootLayout({
         </SessionProvider>
         <footer className="py-4 text-center">
           <p className="text-[10px] text-stone-800/30">
-            <a href="https://whatpeptidesdo.com" className="hover:text-stone-700/40 transition-colors">whatpeptidesdo.com</a>
+            <a href="https://whatpeptidesdo.com" rel="nofollow" className="hover:text-stone-700/40 transition-colors">whatpeptidesdo.com</a>
             {" · "}
-            <a href="https://idonthaveawill.com" className="hover:text-stone-700/40 transition-colors">idonthaveawill.com</a>
+            <a href="https://idonthaveawill.com" rel="nofollow" className="hover:text-stone-700/40 transition-colors">idonthaveawill.com</a>
             {" · "}
-            <a href="https://imfrustrated.org" className="hover:text-stone-700/40 transition-colors">imfrustrated.org</a>
+            <a href="https://imfrustrated.org" rel="nofollow" className="hover:text-stone-700/40 transition-colors">imfrustrated.org</a>
             {" · "}
-            <a href="https://tourdefore.com" className="hover:text-stone-700/40 transition-colors">tourdefore.com</a>
+            <a href="https://tourdefore.com" rel="nofollow" className="hover:text-stone-700/40 transition-colors">tourdefore.com</a>
           </p>
         </footer>
         <Analytics />

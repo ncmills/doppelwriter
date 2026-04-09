@@ -11,10 +11,10 @@ const useCases = USE_CASES.filter((u) => u.category === CATEGORY_ID);
 const otherCategories = USE_CASE_CATEGORIES.filter((c) => c.id !== CATEGORY_ID);
 
 export const metadata: Metadata = {
-  title: `${CATEGORY_LABEL} Writing Tools — AI Writer | DoppelWriter`,
+  title: `${CATEGORY_LABEL} Writing Tools — AI Writer`,
   description: `AI-powered ${CATEGORY_LABEL.toLowerCase()} writing tools that sound like you, not ChatGPT. DoppelWriter learns your voice and helps you write ${CATEGORY_LABEL.toLowerCase()} content in your natural style.`,
   openGraph: {
-    title: `${CATEGORY_LABEL} Writing Tools — AI Writer | DoppelWriter`,
+    title: `${CATEGORY_LABEL} Writing Tools — AI Writer`,
     description: `AI-powered ${CATEGORY_LABEL.toLowerCase()} writing tools that sound like you, not ChatGPT.`,
     url: `https://doppelwriter.com/write/${CATEGORY_ID}`,
   },

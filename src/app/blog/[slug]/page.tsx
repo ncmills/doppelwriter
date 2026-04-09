@@ -176,7 +176,7 @@ export async function generateMetadata({
   if (!post) return {};
 
   return {
-    title: `${post.title} | DoppelWriter`,
+    title: post.title,
     description: post.description,
     openGraph: {
       title: post.title,

@@ -42,7 +42,7 @@ export default function WriterCarousel() {
         {visible.map((w) => (
           <Link
             key={w.name}
-            href={`/write-like/${w.name.toLowerCase().replace(/\s+/g, "-")}`}
+            href={`/write-like/${w.name.toLowerCase().replace(/['']/g, "").replace(/\s+/g, "-")}`}
             className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4 hover:border-amber-600/40 transition-all block"
           >
             <div className="flex items-center gap-2.5 mb-2">

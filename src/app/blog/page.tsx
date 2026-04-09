@@ -4,7 +4,7 @@ import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog | DoppelWriter",
+  title: "Blog",
   description:
     "Tips, guides, and insights on AI writing, voice matching, and making AI-generated text sound like you.",
   openGraph: {

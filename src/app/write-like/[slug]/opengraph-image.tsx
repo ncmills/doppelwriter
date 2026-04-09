@@ -5,7 +5,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 function writerSlug(name: string) {
-  return name.toLowerCase().replace(/\s+/g, "-");
+  return name.toLowerCase().replace(/['']/g, "").replace(/\s+/g, "-");
 }
 
 const CATEGORY_IDS = new Set<string>(CATEGORIES.map((c) => c.id));

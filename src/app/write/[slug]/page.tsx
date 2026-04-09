@@ -161,7 +161,7 @@ export async function generateMetadata({
   const uc = getUseCase(slug);
   if (!uc) return {};
 
-  const title = `Write My ${uc.title} — AI ${uc.title} Writer | DoppelWriter`;
+  const title = `Write My ${uc.title} — AI ${uc.title} Writer`;
   const description = `Write a ${uc.title.toLowerCase()} that sounds like you, not ChatGPT. DoppelWriter learns your voice from samples, then drafts a ${uc.title.toLowerCase()} in your natural style. Free to try.`;
 
   return {

@@ -285,6 +285,56 @@ export default function LandingPage() {
         </div>
       </footer>
 
+      {/* SEO internal links — visually hidden, accessible to crawlers */}
+      <nav
+        aria-label="Site pages"
+        className="absolute w-px h-px overflow-hidden"
+        style={{ clip: "rect(0,0,0,0)", whiteSpace: "nowrap", border: 0 }}
+      >
+        {/* Comparison pages */}
+        <Link href="/vs/chatgpt">DoppelWriter vs ChatGPT</Link>
+        <Link href="/vs/jasper">DoppelWriter vs Jasper</Link>
+        <Link href="/vs/grammarly">DoppelWriter vs Grammarly</Link>
+        <Link href="/vs/copyai">DoppelWriter vs Copy.ai</Link>
+        <Link href="/vs/writesonic">DoppelWriter vs Writesonic</Link>
+
+        {/* Alternatives */}
+        <Link href="/alternatives">AI Writing Tool Alternatives</Link>
+        <Link href="/alternatives/chatgpt">ChatGPT Alternative</Link>
+        <Link href="/alternatives/jasper">Jasper Alternative</Link>
+        <Link href="/alternatives/grammarly">Grammarly Alternative</Link>
+        <Link href="/alternatives/copy-ai">Copy.ai Alternative</Link>
+        <Link href="/alternatives/writesonic">Writesonic Alternative</Link>
+        <Link href="/alternatives/quillbot">QuillBot Alternative</Link>
+        <Link href="/alternatives/wordtune">Wordtune Alternative</Link>
+        <Link href="/alternatives/rytr">Rytr Alternative</Link>
+
+        {/* Write templates */}
+        <Link href="/write/wedding-speech">Write My Wedding Speech</Link>
+        <Link href="/write/best-man-speech">Write My Best Man Speech</Link>
+        <Link href="/write/eulogy">Write My Eulogy</Link>
+        <Link href="/write/cover-letter">Write My Cover Letter</Link>
+        <Link href="/write/cold-email">Write My Cold Email</Link>
+        <Link href="/write/linkedin-post">Write My LinkedIn Post</Link>
+        <Link href="/write/blog-post">Write My Blog Post</Link>
+        <Link href="/write/newsletter">Write My Newsletter</Link>
+        <Link href="/write/resume">Write My Resume</Link>
+        <Link href="/write/personal-statement">Write My Personal Statement</Link>
+        <Link href="/write/business-proposal">Write My Business Proposal</Link>
+        <Link href="/write/love-letter">Write My Love Letter</Link>
+
+        {/* Audience pages */}
+        <Link href="/for">DoppelWriter For...</Link>
+        <Link href="/for/newsletter-writers">AI Writing for Newsletter Writers</Link>
+        <Link href="/for/ghostwriters">AI Writing for Ghostwriters</Link>
+        <Link href="/for/fiction-writers">AI Writing for Fiction Writers</Link>
+        <Link href="/for/content-marketers">AI Writing for Content Marketers</Link>
+        <Link href="/for/students">AI Writing for Students</Link>
+        <Link href="/for/wedding-speeches">AI Wedding Speech Writer</Link>
+        <Link href="/for/eulogies">AI Eulogy Writer</Link>
+        <Link href="/for/cover-letters">AI Cover Letter Writer</Link>
+      </nav>
+
       {/* Referral param handler */}
       <ReferralHandler />
     </div>

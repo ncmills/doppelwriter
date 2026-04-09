@@ -7,7 +7,7 @@ import EmailCapture from "@/components/EmailCapture";
 import type { Metadata } from "next";
 
 function writerSlug(name: string) {
-  return name.toLowerCase().replace(/\s+/g, "-");
+  return name.toLowerCase().replace(/['']/g, "").replace(/\s+/g, "-");
 }
 
 function getWriter(slug: string) {
@@ -35,10 +35,23 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
 
+  // All authors page — shows every writer across all categories
+  if (slug === "authors") {
+    const title = `All ${CURATED_WRITERS.length}+ Writer Voice Profiles — Browse Every AI Writing Voice`;
+    const description = `Browse all ${CURATED_WRITERS.length}+ AI writer voice profiles on DoppelWriter. From Hemingway to Paul Graham, Obama to Dr. Seuss — find the perfect voice for your writing.`;
+    return {
+      title,
+      description,
+      openGraph: { title, description, url: "https://doppelwriter.com/write-like/authors" },
+      twitter: { card: "summary_large_image", title, description },
+      alternates: { canonical: "https://doppelwriter.com/write-like/authors" },
+    };
+  }
+
   // Category hub metadata
   if (CATEGORY_IDS.has(slug)) {
     const category = getCategory(slug)!;
-    const title = `Write Like ${category.label} — AI Writing Voices | DoppelWriter`;
+    const title = `Write Like ${category.label} — AI Writing Voices`;
     const description = `Write in the style of famous ${category.label.toLowerCase()}. DoppelWriter's AI captures each writer's unique voice — sentence rhythm, word choice, and personality. Choose a voice and start writing.`;
     return {
       title,
@@ -354,6 +367,150 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
   );
 }
 
+// ─── All Authors Page (shows every writer across all categories) ───
+
+function AllAuthorsPage() {
+  const writersByCategory = CATEGORIES.map((cat) => ({
+    ...cat,
+    writers: CURATED_WRITERS.filter((w) => w.category === cat.id),
+  }));
+
+  const CATEGORY_ICONS: Record<string, string> = {
+    pen: "\u270F\uFE0F",
+    briefcase: "\uD83D\uDCBC",
+    mic: "\uD83C\uDF99\uFE0F",
+    landmark: "\uD83C\uDFDB\uFE0F",
+    scroll: "\uD83D\uDCDC",
+    book: "\uD83D\uDCDA",
+    newspaper: "\uD83D\uDCF0",
+    laugh: "\uD83D\uDE02",
+    brain: "\uD83E\uDDE0",
+    microscope: "\uD83D\uDD2C",
+  };
+
+  return (
+    <div className="min-h-screen">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "CollectionPage",
+              name: "All Writer Voice Profiles",
+              description: `Browse all ${CURATED_WRITERS.length}+ AI writer voice profiles organized by category.`,
+              url: "https://doppelwriter.com/write-like/authors",
+              isPartOf: { "@type": "WebApplication", name: "DoppelWriter" },
+              numberOfItems: CURATED_WRITERS.length,
+            },
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: "https://doppelwriter.com" },
+                { "@type": "ListItem", position: 2, name: "Write Like", item: "https://doppelwriter.com/write-like" },
+                { "@type": "ListItem", position: 3, name: "All Authors" },
+              ],
+            },
+          ],
+        }}
+      />
+
+      <nav className="border-b border-stone-800/40 sticky top-0 bg-[#0C0A09]/80 backdrop-blur-sm z-50">
+        <div className="max-w-6xl mx-auto px-6 flex items-center h-14 justify-between">
+          <Link href="/" className="font-[family-name:var(--font-literata)] font-bold text-lg">DoppelWriter</Link>
+          <Link href="/signup" className="text-sm px-4 py-1.5 bg-amber-600 hover:bg-amber-500 rounded-lg transition-colors">
+            Try Free
+          </Link>
+        </div>
+      </nav>
+
+      <main className="max-w-6xl mx-auto px-6 py-16">
+        <nav aria-label="Breadcrumb" className="text-sm text-stone-500 mb-6 flex items-center gap-1.5 flex-wrap">
+          <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <span>/</span>
+          <Link href="/write-like" className="hover:text-white transition-colors">Write Like</Link>
+          <span>/</span>
+          <span className="text-stone-300">All Authors</span>
+        </nav>
+
+        <h1 className="font-[family-name:var(--font-literata)] text-4xl sm:text-5xl font-bold mb-4">
+          All {CURATED_WRITERS.length}+ Writer Voice Profiles
+        </h1>
+        <p className="text-xl text-stone-400 mb-12 leading-relaxed max-w-3xl">
+          Every voice in DoppelWriter&apos;s library. Pick any writer below and start generating content in their distinctive style.
+        </p>
+
+        {/* Quick category nav */}
+        <div className="flex flex-wrap gap-2 mb-12">
+          {CATEGORIES.map((cat) => (
+            <a
+              key={cat.id}
+              href={`#cat-${cat.id}`}
+              className="text-xs px-3 py-1.5 bg-stone-900/50 border border-stone-800/40 rounded-full hover:border-amber-600/40 transition-colors"
+            >
+              {cat.label}
+            </a>
+          ))}
+        </div>
+
+        {writersByCategory.map((cat) => (
+          <section key={cat.id} id={`cat-${cat.id}`} className="pb-16">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-2xl">{CATEGORY_ICONS[cat.icon] ?? ""}</span>
+              <h2 className="font-[family-name:var(--font-literata)] text-2xl md:text-3xl font-bold">
+                <Link
+                  href={`/write-like/${cat.id}`}
+                  className="hover:text-amber-400 transition-colors"
+                >
+                  {cat.label}
+                </Link>
+              </h2>
+              <span className="text-stone-600 text-sm">({cat.writers.length})</span>
+            </div>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {cat.writers.map((writer) => (
+                <Link
+                  key={writer.name}
+                  href={`/write-like/${writerSlug(writer.name)}`}
+                  className="bg-stone-900/40 border border-stone-800/40 rounded-xl p-5 hover:border-amber-600/40 transition-colors group"
+                >
+                  <p className="font-medium group-hover:text-amber-400 transition-colors mb-1">
+                    {writer.name}
+                  </p>
+                  <p className="text-stone-500 text-sm leading-relaxed line-clamp-2">
+                    {writer.bio}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ))}
+
+        {/* CTA */}
+        <section className="py-16 text-center border-t border-stone-800/40">
+          <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold mb-4">
+            Write like anyone. Sound like yourself.
+          </h2>
+          <p className="text-stone-400 mb-8 max-w-xl mx-auto">
+            Pick a famous voice to learn from, or upload your own writing and let
+            DoppelWriter clone your personal style. 5 free uses per month.
+          </p>
+          <Link
+            href="/signup"
+            className="inline-block px-8 py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium text-lg transition-colors"
+          >
+            Start Writing Free
+          </Link>
+          <p className="text-stone-600 text-xs mt-3">No credit card required</p>
+        </section>
+      </main>
+
+      <footer className="border-t border-stone-800/40 py-8 text-center text-xs text-stone-600">
+        DoppelWriter
+      </footer>
+    </div>
+  );
+}
+
 // ─── Route Handler ───
 
 export default async function WriteLikePage({
@@ -362,6 +519,11 @@ export default async function WriteLikePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+
+  // /write-like/authors shows ALL writers across every category
+  if (slug === "authors") {
+    return <AllAuthorsPage />;
+  }
 
   // Check if this is a category hub page
   if (CATEGORY_IDS.has(slug)) {

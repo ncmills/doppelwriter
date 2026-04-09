@@ -46,6 +46,11 @@ export default auth((req) => {
     return NextResponse.redirect(new URL("/write", req.url));
   }
 
+  // Redirect old apostrophe-containing slug to cleaned version
+  if (pathname === "/write-like/conan-o'brien") {
+    return NextResponse.redirect(new URL("/write-like/conan-obrien", req.url), 301);
+  }
+
   const isPublic = publicPaths.some(
     (p) => pathname === p || pathname.startsWith(p + "/")
   );

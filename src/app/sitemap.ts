@@ -41,7 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const writerPages: MetadataRoute.Sitemap = CURATED_WRITERS.map((w) => ({
-    url: `${baseUrl}/write-like/${w.name.toLowerCase().replace(/\s+/g, "-")}`,
+    url: `${baseUrl}/write-like/${w.name.toLowerCase().replace(/['']/g, "").replace(/\s+/g, "-")}`,
     lastModified: LAST_CONTENT_UPDATE,
     changeFrequency: "monthly" as const,
     priority: 0.9,

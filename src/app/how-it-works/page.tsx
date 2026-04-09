@@ -3,7 +3,7 @@ import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "How AI Voice Cloning Writing Works — DoppelWriter",
+  title: "How AI Voice Cloning Writing Works",
   description: "Learn how DoppelWriter's AI analyzes your writing style and creates content that sounds like you. No templates, no generic AI voice — just your words, your way.",
   openGraph: {
     title: "How AI Voice Cloning Writing Works",

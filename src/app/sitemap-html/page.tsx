@@ -7,7 +7,7 @@ import { BLOG_POSTS } from "@/lib/blog-posts";
 import { ALTERNATIVES } from "@/lib/alternatives";
 
 export const metadata: Metadata = {
-  title: "Sitemap — DoppelWriter",
+  title: "Sitemap",
   description:
     "Browse every page on DoppelWriter — writer voices, use cases, blog posts, free tools, competitor comparisons, and more.",
   alternates: { canonical: "https://doppelwriter.com/sitemap-html" },

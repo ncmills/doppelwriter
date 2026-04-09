@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import Logo from "@/components/Logo";
 
 export const metadata: Metadata = {
-  title: "Write Like Famous Authors — 140+ AI Voice Profiles | DoppelWriter",
+  title: "Write Like Famous Authors — 140+ AI Voice Profiles",
   description:
     "Browse 140+ famous writer voice profiles. Write like Hemingway, Paul Graham, Obama, Toni Morrison, and more. DoppelWriter clones their style so you can generate content in any iconic voice.",
   keywords: [
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 };
 
 function writerSlug(name: string) {
-  return name.toLowerCase().replace(/\s+/g, "-");
+  return name.toLowerCase().replace(/['']/g, "").replace(/\s+/g, "-");
 }
 
 const CATEGORY_ICONS: Record<string, string> = {

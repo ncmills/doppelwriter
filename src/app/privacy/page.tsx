@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — DoppelWriter",
+  title: "Privacy Policy",
   description: "How DoppelWriter handles your data. Plain English, no legalese.",
 };
 

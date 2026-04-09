@@ -59,7 +59,7 @@ type PageProps = {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const data = await getResult(slug);
-  if (!data) return { title: "Not Found | DoppelWriter" };
+  if (!data) return { title: "Not Found" };
 
   const { result } = data;
   const descSnippet = result.personality.description.slice(0, 60);
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = `This writer's style resembles ${similarWriter}. Tone: ${result.tone.primary}. Vocabulary: ${result.vocabulary.level}. Analyze your own writing voice for free.`;
 
   return {
-    title: `Writing Voice Analysis — ${descSnippet} | DoppelWriter`,
+    title: `Writing Voice Analysis — ${descSnippet}`,
     description,
     openGraph: {
       title: `${result.tone.primary} voice similar to ${similarWriter} — Writing Voice Analysis`,
