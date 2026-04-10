@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { BLOG_POSTS } from "@/lib/blog-posts";
 import { JsonLd } from "@/components/JsonLd";
+import { NetworkFooter } from "@/components/NetworkFooter";
 import type { Metadata } from "next";
 
 const BLOG_RELATED_RESOURCES: Record<string, { useCases: { slug: string; label: string }[]; writers: { slug: string; label: string }[] }> = {
@@ -399,6 +400,8 @@ export default async function BlogPostPage({
             </div>
           </section>
         )}
+
+        <NetworkFooter currentDomain="doppelwriter.com" />
       </main>
 
       <footer className="border-t border-stone-800/40 py-8 text-center text-xs text-stone-600">

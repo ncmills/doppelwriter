@@ -1542,4 +1542,164 @@ export const BLOG_POSTS: BlogPost[] = [
 <p><strong><a href="/write/wedding-speech">Write your wedding speech</a></strong> — upload your voice memo or writing samples and get a draft in your real voice. Free, no credit card, and it takes less time than you spent worrying about it.</p>
 `,
   },
+  {
+    slug: "linkedin-post-that-doesnt-sound-like-linkedin",
+    title: "How to Write a LinkedIn Post That Doesn't Sound Like LinkedIn",
+    description: "Why every LinkedIn post now sounds the same, why that kills your reach, and how to write posts that feel like a real person wrote them.",
+    publishedAt: "2026-04-10T10:00:00Z",
+    author: "DoppelWriter",
+    tags: ["linkedin", "content writing", "personal brand", "AI writing"],
+    readingTime: "6 min read",
+    content: `
+<h2>Open LinkedIn Right Now. Every Post Is the Same Post.</h2>
+
+<p>One-line hook. Blank line. Three sentences of setup. Blank line. Bulleted list with emoji dots. Blank line. "Here's what I learned:" Blank line. Three more bullets. Blank line. "Thoughts?"</p>
+
+<p>It doesn't matter if the author is a CEO, a career coach, or someone announcing a new job — the structure is identical. The cadence is identical. The word choice is identical. You can scroll for fifteen minutes and see the same post written by fifty different people.</p>
+
+<p>This is not a coincidence. Everyone is using the same three AI tools, trained on the same viral LinkedIn content, producing the same "high-performing" format. The result is a platform where human voice has been systematically compressed into a template, and the template is now so recognizable that readers tune it out on sight.</p>
+
+<h2>Why Template Posts Used to Work and Why They Don't Anymore</h2>
+
+<p>The "hook plus bullets plus soft question" template became popular for a real reason. It performed well in 2022 and 2023 because the LinkedIn algorithm rewarded dwell time, and posts that were easy to scan and end with a prompt generated comments. People copied what worked. Then AI got good at reproducing that format on demand. Then <em>everyone</em> started producing it.</p>
+
+<p>What used to be a signal of "this person knows how to write for the platform" is now a signal of "this person is running a prompt." The algorithm hasn't caught up to the fact that engagement on template posts is increasingly driven by bots and reciprocal-comment networks rather than real interest. But human readers have caught up. They scroll past.</p>
+
+<p>If you want your LinkedIn posts to actually reach humans in 2026, you have to break the template.</p>
+
+<h2>The Three Tells That Mark a Post as AI-Generated</h2>
+
+<h3>1. The Opening Line That's Trying Too Hard</h3>
+
+<p>"I got fired twice before I turned 25." "This email changed my career." "A CEO asked me a question I couldn't answer." Every one of these is a hook designed to provoke curiosity, and every one of them sounds exactly like the last fifty you scrolled past. If your first line could be the first line of a thousand other posts, it's not a hook — it's a template slot.</p>
+
+<p>Real humans don't lead with a curiosity gap. They lead with a thought, a reaction, a half-finished sentence, or an opinion. That's how people actually start conversations.</p>
+
+<h3>2. The Bulleted List With Exactly Three or Five Items</h3>
+
+<p>AI defaults to parallel structure. Three bullets, five bullets, rarely four or seven. Each bullet is roughly the same length. Each starts with a verb or a noun in the same grammatical form. It's clean, scannable, and completely synthetic. Humans don't naturally produce information in tidy parallel lists. They jump between thoughts, run long on the idea that excites them, and cut short the one that doesn't.</p>
+
+<h3>3. The "What Did I Miss?" Soft Close</h3>
+
+<p>"Thoughts?" "What would you add?" "Agree or disagree?" These are prompts designed to game the comment section. They work for templates because templates don't take a real position. If your post had an actual argument, you wouldn't need to ask for thoughts — people would have them automatically.</p>
+
+<h2>What a Human-Voice LinkedIn Post Actually Looks Like</h2>
+
+<p>Here's the counterintuitive thing: posts that break the template outperform template posts on most metrics that matter (qualified profile views, DMs from real prospects, job leads) even when they get fewer likes. Likes are cheap. A single DM from a hiring manager is worth a hundred likes from strangers reciprocal-engaging on your template post.</p>
+
+<p>A human-voice post has a few consistent features:</p>
+
+<p><strong>It has a point of view.</strong> Not "here are five things I learned about leadership" — something like "most companies call themselves data-driven and they're lying to themselves, and here's the specific behavior that proves it." Specific, opinionated, willing to be wrong.</p>
+
+<p><strong>It reads like you talk.</strong> If you'd never say "leverage cross-functional synergies" in a conversation, don't put it in your post. Most professional-sounding writing is actually just corporate writing, and corporate writing is the enemy of reach.</p>
+
+<p><strong>It doesn't resolve into a neat lesson.</strong> The most memorable LinkedIn posts I've seen in the last year end on an unresolved observation rather than a tidy moral. They trust the reader to draw the conclusion. Template posts over-explain because the AI generating them doesn't trust the reader at all.</p>
+
+<p><strong>It mentions something specific.</strong> A specific company, a specific product, a specific number, a specific person's name. Specificity is the easiest way to signal that a real human wrote this, because generic AI will sand down specifics to avoid sounding wrong.</p>
+
+<h2>Why Starting From a Template Is the Wrong Move</h2>
+
+<p>Most advice on "how to write LinkedIn posts" starts with templates. Swipe files. Copy-and-fill-in frameworks. This was the exact path that got LinkedIn into its current state. Copying someone else's structure guarantees you'll sound like them, which guarantees you'll sound like everyone else who copied the same structure.</p>
+
+<p>The alternative is to start from your own voice — the way you actually talk, the specific things you notice, the opinions you hold that your peers don't — and build a post around that, using AI only for organization and polish. Not for the voice.</p>
+
+<p>This is exactly what <a href="/analyze">voice analysis</a> is designed for. Instead of opening a prompt and asking for "a LinkedIn post about X," you upload samples of how you actually write — emails, Slack messages, old blog drafts, whatever sounds like you — and the system learns your patterns. Your sentence rhythm. The words you use and the ones you'd never touch. The way you frame an argument.</p>
+
+<p>Then when you generate a LinkedIn post, the output sounds like <em>you</em> had a strong opinion about something and wrote it down, not like an AI produced "content for the platform." It still uses the structure that works — a hook, a middle, a closing thought — but the hook is something only you would say, and the middle has your actual thinking in it.</p>
+
+<h2>The Test</h2>
+
+<p>Before you post anything on LinkedIn for the next thirty days, try this: read your draft out loud. If it sounds like a real thing you would say to a colleague at lunch, post it. If it sounds like you're delivering a TED talk, reading from a teleprompter, or pitching a product, rewrite it or don't post it at all.</p>
+
+<p>That single filter will outperform any template, framework, or viral-post checklist. Because the thing LinkedIn is actually starving for in 2026 isn't better formatting — it's someone who sounds like a person.</p>
+
+<p><a href="/write/linkedin-post">Draft your next LinkedIn post with voice matching</a> — upload a few writing samples and get a draft that sounds like you, not like the other thousand people who posted today.</p>
+`,
+  },
+  {
+    slug: "ghostwriters-vs-ai-what-youre-paying-for",
+    title: "Ghostwriters vs AI: What You're Actually Paying For",
+    description: "A real breakdown of what ghostwriters deliver for $2-10k/month, what generic AI delivers for $20, and where the gap actually is.",
+    publishedAt: "2026-04-10T10:30:00Z",
+    author: "DoppelWriter",
+    tags: ["ghostwriting", "AI writing", "content marketing", "voice cloning"],
+    readingTime: "7 min read",
+    content: `
+<h2>The Gap Between $20 and $10,000</h2>
+
+<p>You can hire a ghostwriter for $10,000 a month. You can subscribe to ChatGPT for $20 a month. Both will produce words. The gap between what those words are worth is the most misunderstood question in the content world right now, and most of the advice you'll read on it is wrong in different directions.</p>
+
+<p>The ghostwriter crowd says AI is garbage, will never replicate a real voice, and you get what you pay for. The AI crowd says ghostwriters are expensive legacy labor and any reasonable person with a prompt library can produce the same output. Both are wrong, because both are comparing the wrong things.</p>
+
+<p>Here's what's actually happening — and more importantly, where the real gap is.</p>
+
+<h2>What a Good Ghostwriter Actually Delivers</h2>
+
+<p>A good ghostwriter is not a typist. The writing itself is maybe 30% of the value. The other 70% is the stuff people underestimate until they've tried to produce content without it.</p>
+
+<h3>Judgment About What to Say</h3>
+
+<p>A ghostwriter who has worked with you for a few months can tell you, in a ten-minute call, which of your ten content ideas is actually worth writing and which four are repackaged versions of things you already said. They've read your previous posts. They've seen what your audience responded to. They have a model of your positioning that lives in their head, and it shapes every decision they make about what to publish.</p>
+
+<p>This is real work. It's the difference between an editor and a writer, and it's almost impossible to replicate without a human who's been paying attention for months.</p>
+
+<h3>Voice Preservation Over Time</h3>
+
+<p>Your voice drifts. What you believed two years ago isn't what you believe now. A ghostwriter who has been with you through that shift knows how to update the voice without making it feel like you've become a different person. They carry the continuity so your audience doesn't notice any discontinuity.</p>
+
+<h3>Relationship and Reliability</h3>
+
+<p>A ghostwriter shows up on a schedule. They remind you to do interviews. They nudge you for the example you mentioned in a meeting three weeks ago. They make content happen even when you don't feel like making it happen. That operational reliability is a huge part of why people pay ghostwriters.</p>
+
+<h3>The Part That Is Actual Writing</h3>
+
+<p>And then, yes, they write. They turn your half-formed thought into a paragraph that actually flows. They know how to open a piece, where to cut, how to close. They've done it enough times that it's instinct.</p>
+
+<h2>What Generic AI Actually Delivers</h2>
+
+<p>Generic AI — ChatGPT, Claude, Gemini with a basic prompt — delivers one thing: fluent, syntactically correct text on almost any topic, instantly. That's it. It's genuinely impressive, and for a lot of use cases it's enough. But it has three blind spots that no amount of prompting reliably fixes.</p>
+
+<h3>It Doesn't Know You</h3>
+
+<p>Every prompt starts from scratch. You can paste in samples, you can explain your audience, you can describe your tone — and within a thousand tokens it will drift back toward its training-average voice, which is fluent, professional, and completely generic. This isn't a failure of AI; it's a feature of how the models were trained. They're optimized for average.</p>
+
+<h3>It Has No Opinions</h3>
+
+<p>Ask AI to take a strong position on anything interesting and it will hedge. "Some argue this, others argue that, and the truth is nuanced." That's a content style that produces zero engagement because it says nothing. A good ghostwriter — and a good personal brand — has the opposite instinct. They take the risk. Generic AI literally can't.</p>
+
+<h3>It Has No Memory</h3>
+
+<p>Every piece exists in isolation. There's no "this is the twelfth post in a year-long arc about a specific argument you're building." There's no "we already covered this angle in March, let's extend it instead of repeating it." There's just this prompt, this output, forever alone.</p>
+
+<h2>So Why Are People Actually Firing Their Ghostwriters?</h2>
+
+<p>They're not, mostly. But the ones who are fall into a few specific buckets, and understanding the buckets matters more than the headline.</p>
+
+<p><strong>The $10k/month ghostwriter who was mailing it in.</strong> A lot of senior ghostwriters built pricing around their reputation, then started delivering work that was 80% as good as their peak and shipping it on a delay. Those contracts are getting cut because AI plus an editor can now match that level at a fraction of the cost.</p>
+
+<p><strong>The founder who was never going to scale content via ghostwriting anyway.</strong> For someone who wants ten posts a month, a ghostwriter is overkill. They just didn't have another option until now.</p>
+
+<p><strong>The person who paid for ghostwriting because they hated writing, not because they needed a strategist.</strong> If the value you were extracting was "someone else produces words I can publish," AI is a closer substitute than you'd think. If the value was strategy, editing, and relationship, it's not close.</p>
+
+<h2>The Actual Gap: Voice Capture</h2>
+
+<p>Here's the part most people miss. The real limitation of generic AI isn't intelligence or fluency — both are already beyond what most ghostwriters can match in raw output. The limitation is <em>voice capture</em>. The model doesn't know what you sound like, so it defaults to average.</p>
+
+<p>That gap is smaller than it used to be, and it's closing fast. The emerging category — voice-matched AI — is exactly this: AI that starts from samples of your real writing, builds a model of your specific voice, and generates in that voice rather than the training average. It's the piece of ghostwriting that was actually hard to replicate, and it's now the part that's getting replicated.</p>
+
+<p>This is what <a href="/analyze">DoppelWriter</a> exists to do. You upload samples of how you actually write — old emails, blog drafts, Slack messages, whatever sounds like you on a good day. The system builds a voice profile. Then when you generate something, the output sounds like your best writing day, not like a generic competent professional. It still won't replace the strategic-editorial judgment of a great human partner, but for the "produce the words in my voice" part — which is what most ghostwriters are mostly doing — it's genuinely close.</p>
+
+<h2>Where Each Option Actually Wins</h2>
+
+<p><strong>Hire a ghostwriter if:</strong> you need someone to run your content as a function, you value the strategic back-and-forth, you're building an executive brand where a single off-voice post is a real problem, and you have the budget to pay for judgment and reliability as well as writing.</p>
+
+<p><strong>Use generic AI if:</strong> you're producing high-volume content where voice doesn't matter much, you already know exactly what you want to say, and you just need a fluent first draft to edit.</p>
+
+<p><strong>Use voice-matched AI if:</strong> you want your published content to sound like you, you don't need a full-time strategist, and you're willing to do 20% of the work (providing samples, reviewing drafts, having opinions) to get 80% of what a ghostwriter delivers for 5% of the price.</p>
+
+<p>The actual answer, for most people, is not one of these three. It's some combination. A voice-matched AI for day-to-day LinkedIn and blog drafts, a human editor or part-time ghostwriter for the handful of pieces that really matter, and generic AI for internal documents and low-stakes copy. That's the structure that makes sense once you stop treating it as a binary.</p>
+
+<p><a href="/signup">Try voice-matched writing free</a> — upload a few samples and see what the gap actually feels like for your own voice. It's a better way to decide than reading an article about it.</p>
+`,
+  },
 ];
