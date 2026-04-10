@@ -59,6 +59,7 @@ export default auth((req) => {
     pathname === "/robots.txt" || pathname === "/sitemap.xml" ||
     pathname.endsWith(".png") || pathname.endsWith(".jpg") || pathname.endsWith(".svg") ||
     pathname.endsWith(".ico") || pathname.endsWith(".webp") ||
+    pathname.endsWith(".txt") || // llms.txt + indexnow key files in /public/
     pathname.includes("opengraph-image") || pathname.includes("twitter-image");
 
   if (isStatic || isPublic) return NextResponse.next();

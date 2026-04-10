@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import posthog from "posthog-js";
 
 interface EmailCaptureProps {
   source: string;
@@ -28,6 +29,9 @@ export default function EmailCapture({
         body: JSON.stringify({ email, source, sourceSlug }),
       });
       if (!res.ok) throw new Error("Subscribe failed");
+      try {
+        posthog.capture("email_captured", { source, sourceSlug });
+      } catch {}
       setStatus("success");
     } catch {
       setStatus("error");

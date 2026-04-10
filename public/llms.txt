@@ -1,0 +1,15 @@
+# DoppelWriter
+
+> AI writing assistant that learns your voice from 3 samples and generates content that sounds exactly like you.
+
+DoppelWriter is a voice-cloning writing SaaS. Upload three samples of your writing, and the engine generates new content (articles, emails, posts, copy) in your distinct voice and style. The product includes a free tier, a paid tier with unlimited generation, and 139+ famous-writer voice profiles you can borrow.
+
+## Key pages
+- [How It Works](https://doppelwriter.com/how-it-works): 3-step explainer of the voice-cloning engine
+- [Pricing](https://doppelwriter.com/pricing): Free tier + paid tiers
+- [Write Like](https://doppelwriter.com/write-like): 139+ famous writer voice profiles (Hemingway, King, Didion, etc.)
+- [Use Cases](https://doppelwriter.com/write): Specific writing tasks (essays, speeches, copy, etc.)
+- [Alternatives](https://doppelwriter.com/alternatives): Side-by-side comparisons with other AI writing tools
+
+## Optional
+- [Sitemap (XML)](https://doppelwriter.com/sitemap.xml)
