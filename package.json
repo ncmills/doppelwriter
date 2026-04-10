@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "indexnow": "npx tsx scripts/submit-indexnow.ts",
+    "deploy": "npx vercel --prod --yes && npx tsx scripts/submit-indexnow.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.79.0",

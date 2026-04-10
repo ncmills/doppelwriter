@@ -29,6 +29,12 @@ const nextConfig: NextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(self), geolocation=()" },
           { key: "X-DNS-Prefetch-Control", value: "on" },
+          // HSTS — preload-eligible (max-age >= 31536000, includeSubDomains, preload).
+          // After this ships, submit doppelwriter.com at https://hstspreload.org
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
           { key: "Content-Security-Policy", value: csp },
         ],
       },
