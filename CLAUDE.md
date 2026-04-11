@@ -22,12 +22,12 @@ Look for impressions, clicks, indexed pages, errors. Use Playwright if browser a
 
 ### 4. Build, Deploy, Report
 - Build and verify: `npx next build`
-- Deploy: `npx vercel --prod`
+- Deploy: `git push origin main` — Vercel auto-deploys to production via GitHub integration (linked 2026-04-10). Do NOT run `vercel --prod` manually.
 - Brief report to Nick: numbers, what shipped, what's next
 
 ## Key Commands
 - **Build:** `npx next build` (from project root)
-- **Deploy:** `npx vercel --prod`
+- **Deploy:** `git push origin main` (auto-deploys via Vercel GitHub integration)
 - **Dev server:** `npx next dev`
 - **Analytics:** `GET /api/analytics?days=7` (admin-only, requires nick@doppelwriter.com session)
 
