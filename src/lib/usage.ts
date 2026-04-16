@@ -56,6 +56,29 @@ export async function verifyProfileAccess(userId: string, profileId: number): Pr
   return !!profile;
 }
 
+export interface ProfileLimitInfo {
+  allowed: boolean;
+  current: number;
+  limit: number;
+  plan: PlanKey;
+}
+
+export async function checkProfileLimit(userId: string): Promise<ProfileLimitInfo> {
+  const db = sql();
+  const [row] = await db`
+    SELECT
+      u.plan,
+      (SELECT COUNT(*)::int FROM style_profiles WHERE user_id = ${userId} AND (is_curated IS FALSE OR is_curated IS NULL)) as current
+    FROM users u
+    WHERE u.id = ${userId}
+  `;
+  const plan = (row?.plan || "free") as PlanKey;
+  const limitRaw = PLANS[plan].personalProfiles;
+  const limit = Number.isFinite(limitRaw) ? (limitRaw as number) : Number.MAX_SAFE_INTEGER;
+  const current = row?.current || 0;
+  return { allowed: current < limit, current, limit, plan };
+}
+
 export interface RateLimitInfo {
   allowed: boolean;
   remaining: number;

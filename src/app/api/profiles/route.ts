@@ -4,6 +4,7 @@ import { getProfiles, analyzeAndCategorize, generateProfile } from "@/lib/style-
 import { getTotalWordCount } from "@/lib/ingest";
 import { sql } from "@/lib/db";
 import { trackServerEvent } from "@/lib/track";
+import { checkProfileLimit } from "@/lib/usage";
 
 export const maxDuration = 300;
 
@@ -31,6 +32,28 @@ export async function POST(request: NextRequest) {
   }
 
   if (action === "analyze") {
+    // Gate: Free tier is capped at 1 personal profile. Improving an existing profile is allowed.
+    if (!improveProfileId) {
+      const limit = await checkProfileLimit(session.user.id);
+      if (!limit.allowed) {
+        trackServerEvent(
+          "second_profile_attempted",
+          { plan: limit.plan, current: limit.current, limit: limit.limit },
+          session.user.id,
+        );
+        return NextResponse.json(
+          {
+            error: "profile_limit_reached",
+            upgrade: true,
+            current: limit.current,
+            limit: limit.limit,
+            plan: limit.plan,
+          },
+          { status: 402 },
+        );
+      }
+    }
+
     const wordCount = await getTotalWordCount(session.user.id);
     if (wordCount < WORD_MINIMUM) {
       return NextResponse.json(

@@ -42,7 +42,7 @@ export default function SignupPage() {
     // Auto-login after 2 seconds (they can verify later)
     setTimeout(async () => {
       const result = await signIn("credentials", { email, password, redirect: false });
-      if (!result?.error) window.location.href = "/write";
+      if (!result?.error) window.location.href = "/onboarding";
     }, 2000);
   }
 
@@ -63,7 +63,7 @@ export default function SignupPage() {
         ) : (
           <>
             <button
-              onClick={() => { trackSignup("google"); signIn("google", { callbackUrl: "/write" }); }}
+              onClick={() => { trackSignup("google"); signIn("google", { callbackUrl: "/onboarding" }); }}
               className="w-full py-3 border border-stone-700 hover:border-stone-500 rounded-lg text-sm text-stone-300 hover:text-white transition-colors flex items-center justify-center gap-3 mb-5"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">

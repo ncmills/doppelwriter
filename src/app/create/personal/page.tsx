@@ -68,6 +68,33 @@ export default function CreatePersonalPage() {
 
     const params = new URLSearchParams(window.location.search);
 
+    // Pick up pending sample stashed by /analyze → "Save This Voice" CTA
+    if (params.get("fromAnalyzer") === "1") {
+      try {
+        const raw = sessionStorage.getItem("dw_pending_sample");
+        if (raw) {
+          const pending = JSON.parse(raw) as { text?: string; tone?: string };
+          if (pending?.text && pending.text.length >= 100) {
+            const title = pending.tone ? `Voice Analyzer sample (${pending.tone})` : "Voice Analyzer sample";
+            fetch("/api/samples", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ title, content: pending.text, sourceType: "paste" }),
+            })
+              .then((r) => (r.ok ? r.json() : null))
+              .then(() => {
+                const wc = pending.text!.split(/\s+/).filter(Boolean).length;
+                setSamples((prev) => [...prev, { title, wordCount: wc, sourceType: "paste" }]);
+                sessionStorage.removeItem("dw_pending_sample");
+              })
+              .catch(() => {});
+          }
+        }
+      } catch {
+        // ignore sessionStorage errors
+      }
+    }
+
     // Check for ?name= param (coming from voice selector fallback)
     const nameParam = params.get("name");
     if (nameParam) setTargetName(nameParam);
@@ -245,6 +272,10 @@ export default function CreatePersonalPage() {
         router.push(profileId ? `/profile/${profileId}` : "/write");
       } else {
         const data = await res.json().catch(() => ({}));
+        if (res.status === 402 && data.upgrade) {
+          router.push("/pricing?upgrade=profile_limit");
+          return;
+        }
         if (data.error === "insufficient_content") {
           setAnalyzeError(`Not enough content to build a voice profile. You have ${totalWords.toLocaleString()} words — add more samples to reach at least ${WORD_MINIMUM.toLocaleString()}.`);
         } else {

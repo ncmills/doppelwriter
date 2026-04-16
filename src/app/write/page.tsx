@@ -22,6 +22,19 @@ export default function WritePage() {
     if (status === "unauthenticated") router.push("/login");
   }, [status, router]);
 
+  // Post-signup bridge: if user came from /analyze Save CTA, send them to profile builder
+  useEffect(() => {
+    if (status !== "authenticated") return;
+    try {
+      const pending = sessionStorage.getItem("dw_pending_sample");
+      if (pending) {
+        router.push("/create/personal?fromAnalyzer=1");
+      }
+    } catch {
+      // ignore
+    }
+  }, [status, router]);
+
   // Auto-select voice from ?voice= query param
   useEffect(() => {
     if (!session || profileId) return;

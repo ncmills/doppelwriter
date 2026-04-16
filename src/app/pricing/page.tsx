@@ -4,15 +4,21 @@ import { useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
+type Cycle = "monthly" | "annual";
+
 export default function PricingPage() {
   const { data: session } = useSession();
-
+  const [cycle, setCycle] = useState<Cycle>("annual");
   const [upgradeError, setUpgradeError] = useState("");
 
   const handleUpgrade = async () => {
     setUpgradeError("");
     try {
-      const res = await fetch("/api/stripe/checkout", { method: "POST" });
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cycle }),
+      });
       if (!res.ok) {
         setUpgradeError("Something went wrong. Please try again or contact support.");
         return;
@@ -23,6 +29,9 @@ export default function PricingPage() {
       setUpgradeError("Connection error. Please try again.");
     }
   };
+
+  const proPriceDisplay = cycle === "annual" ? "$15" : "$19";
+  const proPriceSuffix = cycle === "annual" ? "/mo, billed annually" : "/mo";
 
   return (
     <div className="min-h-screen">
@@ -41,7 +50,24 @@ export default function PricingPage() {
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
         <h1 className="text-3xl sm:text-4xl font-bold text-center mb-3 font-[family-name:var(--font-literata)]">Simple Pricing</h1>
-        <p className="text-stone-400 text-center mb-12">Try it free. Upgrade when you&apos;re hooked.</p>
+        <p className="text-stone-400 text-center mb-8">Try it free. Upgrade when you&apos;re hooked.</p>
+
+        <div className="flex justify-center mb-10">
+          <div className="inline-flex items-center bg-stone-900/60 border border-stone-800/60 rounded-full p-1 text-sm">
+            <button
+              onClick={() => setCycle("monthly")}
+              className={`px-4 py-1.5 rounded-full transition-colors ${cycle === "monthly" ? "bg-stone-800 text-white" : "text-stone-400 hover:text-white"}`}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={() => setCycle("annual")}
+              className={`px-4 py-1.5 rounded-full transition-colors ${cycle === "annual" ? "bg-amber-600 text-white" : "text-stone-400 hover:text-white"}`}
+            >
+              Annual <span className="text-xs opacity-80">— save $48</span>
+            </button>
+          </div>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
           {/* Free */}
@@ -69,7 +95,13 @@ export default function PricingPage() {
               Most Popular
             </div>
             <h2 className="text-xl font-semibold text-amber-400 mb-2 font-[family-name:var(--font-literata)]">Pro</h2>
-            <p className="text-4xl font-bold mb-6">$19<span className="text-base font-normal text-stone-500">/mo</span></p>
+            <p className="text-4xl font-bold mb-1">
+              {proPriceDisplay}
+              <span className="text-base font-normal text-stone-500">{proPriceSuffix}</span>
+            </p>
+            <p className="text-xs text-stone-500 mb-6 h-4">
+              {cycle === "annual" ? "$180/yr — save $48" : "$19/mo"}
+            </p>
             <ul className="space-y-3 text-sm text-stone-300 mb-8">
               <li className="flex gap-2"><span className="text-amber-400">&#10003;</span> 200 edits & generations per month</li>
               <li className="flex gap-2"><span className="text-amber-400">&#10003;</span> Unlimited personal profiles</li>
@@ -84,7 +116,7 @@ export default function PricingPage() {
                   onClick={handleUpgrade}
                   className="w-full py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors"
                 >
-                  Upgrade to Pro
+                  {cycle === "annual" ? "Upgrade — $180/yr" : "Upgrade — $19/mo"}
                 </button>
                 {upgradeError && (
                   <p className="text-red-400 text-xs mt-2 text-center">{upgradeError}</p>
@@ -92,7 +124,7 @@ export default function PricingPage() {
               </>
             ) : (
               <Link
-                href="/signup"
+                href={`/signup?cycle=${cycle}`}
                 className="block text-center py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors"
               >
                 Start Free, Upgrade Later

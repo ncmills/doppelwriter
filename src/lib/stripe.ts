@@ -31,7 +31,9 @@ export const PLANS = {
     allWriters: true,
     customWriterBuilds: true,
     price: 19,
+    annualPrice: 180, // $15/mo effective — save $48/yr
   },
 } as const;
 
 export type PlanKey = keyof typeof PLANS;
+export type BillingCycle = "monthly" | "annual";

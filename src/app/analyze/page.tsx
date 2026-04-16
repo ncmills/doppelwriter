@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import LandingNav from "@/components/LandingNav";
-import { trackVoiceAnalyzerUsed } from "@/lib/analytics";
+import { trackCtaClicked, trackVoiceAnalyzerUsed } from "@/lib/analytics";
 
 interface Analysis {
   sentenceLength: {
@@ -38,12 +39,37 @@ interface Analysis {
 }
 
 export default function AnalyzePage() {
+  const { data: session } = useSession();
+  const router = useRouter();
   const [text, setText] = useState("");
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [shareUrl, setShareUrl] = useState("");
   const [copied, setCopied] = useState(false);
+
+  function handleSaveVoice() {
+    if (!analysis || !text) return;
+    trackCtaClicked("save_voice_from_analyzer", "/analyze");
+    try {
+      sessionStorage.setItem(
+        "dw_pending_sample",
+        JSON.stringify({
+          text,
+          tone: analysis.tone?.primary || "",
+          shareUrl,
+          savedAt: Date.now(),
+        }),
+      );
+    } catch {
+      // sessionStorage quota or SSR — ignore, signup will still work
+    }
+    if (session?.user) {
+      router.push("/create/personal?fromAnalyzer=1");
+    } else {
+      router.push("/signup?fromAnalyzer=1");
+    }
+  }
 
   async function handleAnalyze() {
     setError("");
@@ -439,20 +465,20 @@ export default function AnalyzePage() {
             </div>
           )}
 
-          {/* CTA Banner */}
-          <div className="bg-gradient-to-r from-amber-600/10 to-orange-600/10 border border-amber-600/20 rounded-lg p-5 sm:p-8 text-center">
-            <h3 className="font-[family-name:var(--font-literata)] text-xl font-semibold mb-2">
-              Want to generate text in this voice?
+          {/* CTA Banner — graduation to full voice profile */}
+          <div className="bg-gradient-to-r from-amber-600/15 to-orange-600/15 border border-amber-600/30 rounded-lg p-5 sm:p-8 text-center">
+            <h3 className="font-[family-name:var(--font-literata)] text-xl sm:text-2xl font-semibold mb-2">
+              Keep this voice — build your full profile
             </h3>
-            <p className="text-stone-400 mb-5 max-w-lg mx-auto">
-              DoppelWriter can clone your writing style and generate new content that sounds like you wrote it.
+            <p className="text-stone-300 mb-5 max-w-lg mx-auto">
+              We&apos;ll use this sample as your starting point. Add a few more and DoppelWriter writes new content in your voice.
             </p>
-            <Link
-              href="/signup"
-              className="inline-block px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors"
+            <button
+              onClick={handleSaveVoice}
+              className="inline-block px-6 py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-semibold transition-colors"
             >
-              Create Your Voice Profile — Free
-            </Link>
+              {session?.user ? "Save This Voice →" : "Save This Voice — Sign Up Free"}
+            </button>
           </div>
         </section>
       )}

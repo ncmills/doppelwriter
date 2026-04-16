@@ -152,6 +152,7 @@ export async function initSchema() {
 
     ALTER TABLE users ADD COLUMN IF NOT EXISTS referral_code TEXT UNIQUE;
     ALTER TABLE users ADD COLUMN IF NOT EXISTS referred_by TEXT;
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS primary_task TEXT;
 
     CREATE INDEX IF NOT EXISTS idx_shared_drafts_slug ON shared_drafts(slug);
     CREATE INDEX IF NOT EXISTS idx_referrals_referrer ON referrals(referrer_id);
