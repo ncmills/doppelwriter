@@ -21,6 +21,12 @@ export async function POST(request: NextRequest) {
   }
 
   const usage = await checkUsage(session.user.id);
+  if (!usage.allowed && usage.reason === "unverified") {
+    return new Response(
+      JSON.stringify({ error: "Please verify your email to continue.", verify: true }),
+      { status: 403, headers: { "Content-Type": "application/json" } }
+    );
+  }
   if (!usage.allowed) {
     return new Response(
       JSON.stringify({ error: "You've hit your monthly limit. Upgrade to Pro for 200 uses/month.", upgrade: true }),

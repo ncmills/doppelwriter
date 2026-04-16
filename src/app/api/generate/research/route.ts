@@ -15,6 +15,9 @@ export async function POST(request: NextRequest) {
   }
 
   const usage = await checkUsage(session.user.id);
+  if (!usage.allowed && usage.reason === "unverified") {
+    return NextResponse.json({ error: "Please verify your email to start generating.", verify: true }, { status: 403 });
+  }
   if (!usage.allowed) {
     return NextResponse.json({ error: "Monthly limit reached. Upgrade to Pro.", upgrade: true }, { status: 403 });
   }

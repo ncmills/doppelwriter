@@ -3,12 +3,19 @@ import bcrypt from "bcryptjs";
 import { sql } from "@/lib/db";
 import { sendVerificationEmail } from "@/lib/email";
 import { trackServerEvent } from "@/lib/track";
+import { isSuspiciousEmail, checkSignupRateLimit, clientIp } from "@/lib/signup-protection";
 import crypto from "crypto";
 
 const PASSWORD_MIN_LENGTH = 8;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
 export async function POST(request: NextRequest) {
+  const ip = clientIp(request);
+  const rl = checkSignupRateLimit(ip);
+  if (!rl.allowed) {
+    return NextResponse.json({ error: "Too many signup attempts. Try again later." }, { status: 429 });
+  }
+
   let email: string, password: string, name: string | undefined, ref: string | undefined;
   try {
     const body = await request.json();
@@ -27,6 +34,10 @@ export async function POST(request: NextRequest) {
   // Server-side email validation
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
+  }
+
+  if (isSuspiciousEmail(email)) {
+    return NextResponse.json({ error: "Unable to create account with this email" }, { status: 400 });
   }
 
   // Server-side password strength

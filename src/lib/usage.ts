@@ -7,6 +7,7 @@ export interface UsageInfo {
   used: number;
   limit: number;
   plan: PlanKey;
+  reason?: "unverified" | "limit";
 }
 
 export async function checkUsage(userId: string): Promise<UsageInfo> {
@@ -15,6 +16,7 @@ export async function checkUsage(userId: string): Promise<UsageInfo> {
   const [result] = await db`
     SELECT
       u.plan,
+      u.email_verified,
       (SELECT COUNT(*)::int FROM usage_log WHERE user_id = ${userId} AND created_at > date_trunc('month', NOW())) as used,
       COALESCE((SELECT COUNT(*)::int FROM referrals WHERE (referrer_id = ${userId} OR referred_id = ${userId}) AND bonus_applied = TRUE), 0) as referral_count
     FROM users u
@@ -27,8 +29,12 @@ export async function checkUsage(userId: string): Promise<UsageInfo> {
   const limit = baseLimit + referralBonus;
   const used = result?.used || 0;
 
+  if (!result?.email_verified && plan === "free") {
+    return { allowed: false, throttled: false, used, limit, plan, reason: "unverified" };
+  }
+
   if (plan === "free") {
-    return { allowed: used < limit, throttled: false, used, limit, plan };
+    return { allowed: used < limit, throttled: false, used, limit, plan, reason: used < limit ? undefined : "limit" };
   }
 
   return {
