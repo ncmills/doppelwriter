@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@/lib/db";
-import { Resend } from "resend";
+import { sendOrThrow } from "@/lib/email";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -30,8 +30,7 @@ export async function POST(req: NextRequest) {
     // Notify on every NEW capture so leads aren't orphaned in the DB
     if (isNew && process.env.RESEND_API_KEY) {
       try {
-        const resend = new Resend(process.env.RESEND_API_KEY.trim());
-        await resend.emails.send({
+        await sendOrThrow({
           from: "DoppelWriter <info@doppelwriter.com>",
           to: "info@doppelwriter.com",
           subject: `New DoppelWriter signup: ${cleanEmail}`,
@@ -43,7 +42,7 @@ export async function POST(req: NextRequest) {
               <tr><td style="padding:4px 12px;font-weight:bold;">Source slug</td><td style="padding:4px 12px;">${sourceSlug || "—"}</td></tr>
             </table>
           `,
-        });
+        }, `subscribe:${cleanEmail}`);
       } catch (err) {
         console.error("[subscribe] Resend notification failed:", err);
       }

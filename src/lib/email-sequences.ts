@@ -1,4 +1,4 @@
-import { getResend } from "./email";
+import { sendOrThrow } from "./email";
 
 const BASE_URL = process.env.NEXTAUTH_URL || "https://doppelwriter.com";
 
@@ -104,10 +104,10 @@ export async function sendSequenceEmail(
   sequence: SequenceEmail,
   name?: string
 ): Promise<void> {
-  await getResend().emails.send({
+  await sendOrThrow({
     from: "DoppelWriter <info@doppelwriter.com>",
     to: email,
     subject: sequence.subject,
     html: sequence.html(name, email),
-  });
+  }, `sequence:${sequence.key}`);
 }

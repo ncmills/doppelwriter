@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { sql } from "@/lib/db";
-import { getResend } from "@/lib/email";
+import { sendOrThrow } from "@/lib/email";
 
 export async function POST(req: Request) {
   let email: string;
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
   const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password?token=${token}`;
 
-  await getResend().emails.send({
+  await sendOrThrow({
     from: "DoppelWriter <info@doppelwriter.com>",
     to: email,
     subject: "Reset your DoppelWriter password",
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
         </p>
       </div>
     `,
-  });
+  }, `password-reset:${user.id}`);
 
   return NextResponse.json({ ok: true });
 }

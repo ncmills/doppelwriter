@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import type { CreateEmailOptions } from "resend";
 import crypto from "crypto";
 import { sql } from "./db";
 
@@ -7,6 +8,22 @@ export function getResend() {
     throw new Error("RESEND_API_KEY is not configured");
   }
   return new Resend(process.env.RESEND_API_KEY);
+}
+
+/**
+ * Resend's SDK returns { data, error } and does NOT throw on API errors
+ * (unverified from-address, bad API key, quota exceeded). Every call site
+ * must inspect `error` or the failure is silently swallowed. This helper
+ * centralizes that check.
+ */
+export async function sendOrThrow(payload: CreateEmailOptions, context: string): Promise<string> {
+  const { data, error } = await getResend().emails.send(payload);
+  if (error) {
+    const code = (error as { name?: string }).name || "unknown";
+    throw new Error(`Resend send failed (${context}): ${code} — ${error.message || String(error)}`);
+  }
+  if (!data?.id) throw new Error(`Resend send returned no id (${context})`);
+  return data.id;
 }
 
 export async function sendVerificationEmail(email: string, userId: string): Promise<void> {
@@ -26,7 +43,7 @@ export async function sendVerificationEmail(email: string, userId: string): Prom
 
   const verifyUrl = `${process.env.NEXTAUTH_URL}/api/auth/verify?token=${token}`;
 
-  await getResend().emails.send({
+  await sendOrThrow({
     from: "DoppelWriter <info@doppelwriter.com>",
     to: email,
     subject: "Verify your DoppelWriter account",
@@ -44,7 +61,7 @@ export async function sendVerificationEmail(email: string, userId: string): Prom
         </p>
       </div>
     `,
-  });
+  }, `verify:${userId}`);
 }
 
 export async function verifyEmail(token: string): Promise<{ success: boolean; userId?: string }> {
