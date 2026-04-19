@@ -1,9 +1,8 @@
 import { getNetworkSites } from "@/lib/network-sites";
 
 /**
- * Small, low-contrast cross-site footer.
- * Visible to users and crawlers. Intentionally understated so it does not
- * distract from post content but provides crawlable internal-network links.
+ * Small editorial cross-site footer. Visible to users and crawlers.
+ * Understated typographic list — reads like a publisher colophon.
  */
 export function NetworkFooter({ currentDomain }: { currentDomain: string }) {
   const sites = getNetworkSites(currentDomain);
@@ -13,24 +12,31 @@ export function NetworkFooter({ currentDomain }: { currentDomain: string }) {
       aria-label="Sister sites"
       style={{
         marginTop: "4rem",
-        paddingTop: "1rem",
-        borderTop: "1px solid rgba(250,250,249,0.06)",
-        fontSize: "10px",
-        lineHeight: 1.6,
-        color: "rgba(250,250,249,0.3)",
+        paddingTop: "1.5rem",
+        borderTop: "1px solid var(--color-rule)",
+        fontSize: "11px",
+        lineHeight: 1.7,
+        color: "var(--color-ink-mute)",
         textAlign: "center",
-        letterSpacing: "0.02em",
+        letterSpacing: "0.18em",
+        textTransform: "uppercase",
       }}
     >
-      <span style={{ marginRight: "0.4em" }}>From our network:</span>
+      <span style={{ marginRight: "0.6em" }}>From the same desk —</span>
       {sites.map((s, i) => (
         <span key={s.domain}>
-          {i > 0 && <span style={{ opacity: 0.4 }}> · </span>}
+          {i > 0 && <span style={{ color: "var(--color-rule)" }}> · </span>}
           <a
             href={`https://${s.domain}`}
             title={s.tagline}
             rel="noopener"
-            style={{ color: "rgba(250,250,249,0.35)", textDecoration: "none" }}
+            style={{
+              color: "var(--color-ink-soft)",
+              textDecoration: "none",
+              borderBottom: "1px solid transparent",
+              paddingBottom: "1px",
+              transition: "color 200ms, border-color 200ms",
+            }}
           >
             {s.label}
           </a>

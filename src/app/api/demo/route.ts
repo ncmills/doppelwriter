@@ -8,9 +8,18 @@ const client = new Anthropic();
 // In-memory rate limit: 3 requests per IP per hour
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
-const DEMO_BRIEF = "Write a paragraph about why the best ideas come when you're not trying";
+const DEFAULT_BRIEF =
+  "Write a paragraph about why the best ideas come when you're not trying";
+const MAX_BRIEF_CHARS = 500;
 
 export const maxDuration = 60;
+
+function sanitizeBrief(raw: unknown): string {
+  if (typeof raw !== "string") return DEFAULT_BRIEF;
+  const trimmed = raw.replace(/[\u0000-\u001f\u007f]/g, " ").trim();
+  if (!trimmed) return DEFAULT_BRIEF;
+  return trimmed.slice(0, MAX_BRIEF_CHARS);
+}
 
 export async function POST(request: NextRequest) {
   // Rate limit by IP
@@ -39,6 +48,18 @@ export async function POST(request: NextRequest) {
     }
   }
 
+  // Parse optional brief from body
+  let brief = DEFAULT_BRIEF;
+  try {
+    const contentType = request.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      const body = await request.json();
+      brief = sanitizeBrief(body?.brief);
+    }
+  } catch {
+    // Ignore body parse errors — fall back to default
+  }
+
   // Get Hemingway's profile
   const db = sql();
   const [hemingway] = await db`
@@ -62,7 +83,7 @@ export async function POST(request: NextRequest) {
           max_tokens: 300,
           temperature: 0.7,
           system: systemPrompt,
-          messages: [{ role: "user", content: DEMO_BRIEF }],
+          messages: [{ role: "user", content: brief }],
         });
 
         for await (const event of response) {

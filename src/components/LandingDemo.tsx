@@ -3,10 +3,12 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 
-const DEMO_BRIEF =
+const DEFAULT_BRIEF =
   "Write a paragraph about why the best ideas come when you're not trying.";
+const MAX_BRIEF_CHARS = 500;
 
 export default function LandingDemo() {
+  const [brief, setBrief] = useState(DEFAULT_BRIEF);
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
@@ -14,13 +16,22 @@ export default function LandingDemo() {
 
   const handleGenerate = useCallback(async () => {
     if (loading) return;
+    const trimmed = brief.trim();
+    if (!trimmed) {
+      setError("Type a brief first.");
+      return;
+    }
     setLoading(true);
     setOutput("");
     setDone(false);
     setError("");
 
     try {
-      const res = await fetch("/api/demo", { method: "POST" });
+      const res = await fetch("/api/demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ brief: trimmed }),
+      });
       if (res.status === 429) {
         setError("Demo limit reached — create an account to keep writing.");
         setLoading(false);
@@ -43,7 +54,16 @@ export default function LandingDemo() {
       setError("Something went wrong. Try again.");
     }
     setLoading(false);
-  }, [loading]);
+  }, [loading, brief]);
+
+  const reset = useCallback(() => {
+    setOutput("");
+    setDone(false);
+    setError("");
+  }, []);
+
+  const showingResult = output || loading;
+  const charsLeft = MAX_BRIEF_CHARS - brief.length;
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -61,31 +81,52 @@ export default function LandingDemo() {
           </div>
         </div>
 
-        {/* Brief — typewriter prompt */}
-        <div className="px-5 sm:px-8 pt-6 pb-4">
+        {/* Brief — editable typewriter prompt */}
+        <div className="px-5 sm:px-8 pt-6 pb-2">
           <div className="flex items-baseline gap-3 mb-3">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[var(--color-ink-mute)]">
+            <label
+              htmlFor="demo-brief"
+              className="text-[10px] uppercase tracking-[0.25em] text-[var(--color-ink-mute)]"
+            >
               Brief
-            </span>
+            </label>
             <span className="h-[1px] flex-1 bg-[var(--color-rule)]" />
+            <span
+              className={`text-[10px] uppercase tracking-[0.25em] ${
+                charsLeft < 50 ? "text-[var(--color-accent)]" : "text-[var(--color-ink-mute)]"
+              }`}
+            >
+              {charsLeft}
+            </span>
           </div>
-          <p className="font-mono text-[15px] leading-relaxed text-[var(--color-ink)]">
-            <span className="text-[var(--color-ink-mute)] select-none mr-2">
+          <div className="flex gap-2 items-start">
+            <span
+              className="text-[var(--color-ink-mute)] select-none font-mono text-[15px] leading-[1.6] pt-[2px]"
+              aria-hidden="true"
+            >
               ›
             </span>
-            {DEMO_BRIEF}
-            {!loading && !output && !error && (
-              <span className="type-cursor" aria-hidden="true" />
-            )}
-          </p>
+            <textarea
+              id="demo-brief"
+              value={brief}
+              onChange={(e) => setBrief(e.target.value.slice(0, MAX_BRIEF_CHARS))}
+              disabled={loading}
+              rows={2}
+              maxLength={MAX_BRIEF_CHARS}
+              placeholder="Write a paragraph about…"
+              className="flex-1 bg-transparent font-mono text-[15px] leading-[1.6] text-[var(--color-ink)] resize-none border-none outline-none placeholder:text-[var(--color-ink-mute)]"
+              spellCheck={false}
+            />
+          </div>
         </div>
 
         {/* Action */}
-        {!output && !loading && !error && (
-          <div className="px-5 sm:px-8 pb-6">
+        {!showingResult && !error && (
+          <div className="px-5 sm:px-8 pb-6 pt-4">
             <button
               onClick={handleGenerate}
-              className="w-full py-3 bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium tracking-wide uppercase hover:bg-[var(--color-accent)] transition-colors"
+              disabled={loading || !brief.trim()}
+              className="w-full py-3 bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium tracking-wide uppercase hover:bg-[var(--color-accent)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               style={{ borderRadius: "2px" }}
             >
               Compose — Watch Hemingway Write
@@ -93,24 +134,33 @@ export default function LandingDemo() {
           </div>
         )}
 
-        {error && (
+        {error && !showingResult && (
           <div className="px-5 sm:px-8 pb-8 text-center">
             <p className="text-[var(--color-accent)] text-sm mb-4 font-[family-name:var(--font-display)] italic">
               {error}
             </p>
-            <Link
-              href="/signup"
-              className="inline-block px-6 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium tracking-wide uppercase hover:bg-[var(--color-accent)] transition-colors"
-              style={{ borderRadius: "2px" }}
-            >
-              Create an account
-            </Link>
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={reset}
+                className="inline-block px-5 py-2.5 border border-[var(--color-ink)] text-[var(--color-ink)] text-sm font-medium tracking-wide uppercase hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)] transition-colors"
+                style={{ borderRadius: "2px" }}
+              >
+                Try again
+              </button>
+              <Link
+                href="/signup"
+                className="inline-block px-5 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium tracking-wide uppercase hover:bg-[var(--color-accent)] transition-colors"
+                style={{ borderRadius: "2px" }}
+              >
+                Create an account
+              </Link>
+            </div>
           </div>
         )}
 
-        {(output || loading) && (
+        {showingResult && (
           <div className="px-5 sm:px-8 pb-8">
-            <div className="flex items-baseline gap-3 mb-4">
+            <div className="flex items-baseline gap-3 mb-4 mt-2">
               <span className="text-[10px] uppercase tracking-[0.25em] text-[var(--color-ink-mute)]">
                 In Hemingway&apos;s voice
               </span>
@@ -123,9 +173,14 @@ export default function LandingDemo() {
 
             {done && (
               <div className="mt-8 pt-6 border-t border-[var(--color-rule)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <p className="text-sm text-[var(--color-ink-soft)] italic">
-                  That was Hemingway. What would yours sound like?
-                </p>
+                <div className="flex items-baseline gap-4">
+                  <button
+                    onClick={reset}
+                    className="ed-link text-sm text-[var(--color-ink-soft)]"
+                  >
+                    ← Try a different brief
+                  </button>
+                </div>
                 <Link
                   href="/signup"
                   className="inline-block px-5 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium tracking-wide uppercase hover:bg-[var(--color-accent)] transition-colors whitespace-nowrap"
@@ -141,7 +196,7 @@ export default function LandingDemo() {
 
       {/* Colophon line */}
       <p className="mt-3 text-center text-[11px] uppercase tracking-[0.2em] text-[var(--color-ink-mute)]">
-        No account required · No credit card
+        No account required · No credit card · 3 demos / hour
       </p>
     </div>
   );

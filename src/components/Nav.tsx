@@ -10,7 +10,6 @@ import Logo from "./Logo";
 export default function Nav() {
   const pathname = usePathname();
   const { data: session } = useSession();
-  const plan = (session?.user as Record<string, unknown>)?.plan;
   const [menuOpen, setMenuOpen] = useState(false);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
@@ -24,41 +23,69 @@ export default function Nav() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [menuOpen, closeMenu]);
 
+  const isActive = (href: string) =>
+    pathname.startsWith(href) && !pathname.startsWith("/write-like");
+
   return (
-    <nav aria-label="App navigation" className="border-b border-stone-800/40 bg-[#0C0A09]/80 backdrop-blur-sm sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center h-14 gap-3 sm:gap-6">
-        <Link href="/home" className="font-[family-name:var(--font-literata)] text-white font-bold text-lg shrink-0 flex items-center gap-0">
-          <Logo className="h-[0.86em] w-auto mr-0.5 text-amber-600" />
-          <span className="hidden sm:inline">DoppelWriter</span>
-          <span className="sm:hidden">DW</span>
+    <nav
+      aria-label="App navigation"
+      className="border-b border-[var(--color-rule)] bg-[var(--color-paper)]/95 backdrop-blur-sm sticky top-0 z-50"
+    >
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center h-16 gap-4 sm:gap-8">
+        <Link
+          href="/home"
+          aria-label="DoppelWriter — home"
+          className="flex items-center gap-3 shrink-0 text-[var(--color-ink)]"
+        >
+          <Logo className="h-6 w-6 text-[var(--color-ink)]" />
+          <span className="hidden sm:inline font-[family-name:var(--font-display)] font-bold text-xl tracking-[-0.02em]">
+            DoppelWriter
+          </span>
+          <span className="sm:hidden font-[family-name:var(--font-display)] font-bold text-xl tracking-[-0.02em]">
+            DW
+          </span>
         </Link>
-        <div className="flex gap-1">
+        <div className="flex items-baseline">
           <Link
             href="/write"
-            className={`px-3 sm:px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-              pathname.startsWith("/write") && !pathname.startsWith("/write-like")
-                ? "bg-amber-600/20 text-amber-400"
-                : "text-stone-400 hover:text-white hover:bg-stone-800/40"
+            className={`text-sm tracking-wide uppercase font-medium px-1 py-2 transition-colors ${
+              isActive("/write")
+                ? "text-[var(--color-ink)] border-b-2 border-[var(--color-accent)]"
+                : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
             }`}
           >
             Write
           </Link>
         </div>
-        <div className="ml-auto flex items-center gap-2 sm:gap-4">
+        <div className="ml-auto flex items-center gap-3 sm:gap-6">
           <div className="hidden sm:block"><UsageBar /></div>
           {session?.user && (
             <>
               {/* Desktop nav links */}
-              <div className="hidden sm:flex items-center gap-3">
-                <Link href="/home" className={`text-xs py-2 transition-colors ${pathname === "/home" ? "text-amber-400" : "text-stone-500 hover:text-stone-300"}`}>
+              <div className="hidden sm:flex items-center gap-5">
+                <Link
+                  href="/home"
+                  className={`ed-link text-xs uppercase tracking-[0.15em] py-2 ${
+                    pathname === "/home"
+                      ? "text-[var(--color-ink)]"
+                      : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+                  }`}
+                >
                   Home
                 </Link>
-                <Link href="/settings" className={`text-xs py-2 transition-colors ${pathname === "/settings" ? "text-amber-400" : "text-stone-500 hover:text-stone-300"}`}>
+                <Link
+                  href="/settings"
+                  className={`ed-link text-xs uppercase tracking-[0.15em] py-2 ${
+                    pathname === "/settings"
+                      ? "text-[var(--color-ink)]"
+                      : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+                  }`}
+                >
                   Settings
                 </Link>
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="text-xs py-2 text-stone-600 hover:text-stone-400"
+                  className="ed-link text-xs uppercase tracking-[0.15em] py-2 text-[var(--color-ink-mute)] hover:text-[var(--color-ink)]"
                 >
                   Sign out
                 </button>
@@ -66,7 +93,7 @@ export default function Nav() {
               {/* Mobile hamburger */}
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="sm:hidden p-2 text-stone-400 hover:text-white transition-colors"
+                className="sm:hidden p-2 text-[var(--color-ink)] transition-colors"
                 aria-label="Menu"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,17 +110,27 @@ export default function Nav() {
       </div>
       {/* Mobile dropdown menu */}
       {menuOpen && session?.user && (
-        <div className="sm:hidden border-t border-stone-800/40 bg-[#0C0A09] px-4 py-3 space-y-1">
+        <div className="sm:hidden border-t border-[var(--color-rule)] bg-[var(--color-paper)] px-5 py-4 space-y-1">
           <UsageBar />
-          <Link href="/home" onClick={() => setMenuOpen(false)} className={`block py-2.5 text-sm ${pathname === "/home" ? "text-amber-400" : "text-stone-400"}`}>
+          <Link
+            href="/home"
+            onClick={() => setMenuOpen(false)}
+            className={`block py-2.5 text-sm uppercase tracking-wide ${
+              pathname === "/home" ? "text-[var(--color-ink)]" : "text-[var(--color-ink-soft)]"
+            }`}
+          >
             Home
           </Link>
-          <Link href="/settings" onClick={() => setMenuOpen(false)} className="block py-2.5 text-sm text-stone-400">
+          <Link
+            href="/settings"
+            onClick={() => setMenuOpen(false)}
+            className="block py-2.5 text-sm uppercase tracking-wide text-[var(--color-ink-soft)]"
+          >
             Settings
           </Link>
           <button
             onClick={() => { setMenuOpen(false); signOut({ callbackUrl: "/" }); }}
-            className="block py-2.5 text-sm text-stone-600"
+            className="block py-2.5 text-sm uppercase tracking-wide text-[var(--color-ink-mute)]"
           >
             Sign out
           </button>
