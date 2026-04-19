@@ -87,10 +87,10 @@ export default function OnboardingPage() {
     <div className="min-h-screen flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-2xl">
         <div className="text-center mb-8">
-          <h1 className="font-[family-name:var(--font-literata)] text-3xl sm:text-4xl font-semibold tracking-tight mb-3">
+          <h1 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-semibold tracking-tight mb-3">
             What do you write every week?
           </h1>
-          <p className="text-stone-400 text-sm sm:text-base">
+          <p className="text-[var(--color-ink-soft)] text-sm sm:text-base">
             Pick the closest match. We&apos;ll tailor your first draft to it.
           </p>
         </div>
@@ -104,22 +104,22 @@ export default function OnboardingPage() {
                 type="button"
                 disabled={saving}
                 onClick={() => handleSelect(t.key)}
-                className={`text-left px-5 py-4 rounded-xl border transition-colors ${
+                className={`text-left px-5 py-4 rounded-[2px] border transition-colors ${
                   active
-                    ? "bg-amber-600/15 border-amber-500/60"
-                    : "bg-stone-900/40 border-stone-800/60 hover:border-stone-600"
+                    ? "bg-[var(--color-paper-deep)] border-[var(--color-ink)]"
+                    : "bg-[var(--color-paper-deep)] border-[var(--color-rule)] hover:border-[var(--color-ink)]"
                 } ${saving && !active ? "opacity-50" : ""}`}
               >
-                <div className="font-semibold text-[#FAFAF9]">{t.label}</div>
-                <div className="text-xs text-stone-500 mt-1" dangerouslySetInnerHTML={{ __html: t.blurb }} />
+                <div className="font-semibold text-[var(--color-ink)]">{t.label}</div>
+                <div className="text-xs text-[var(--color-ink-mute)] mt-1" dangerouslySetInnerHTML={{ __html: t.blurb }} />
               </button>
             );
           })}
         </div>
 
-        {error && <p className="text-red-400 text-sm text-center mt-4">{error}</p>}
+        {error && <p className="text-red-700 text-sm text-center mt-4">{error}</p>}
 
-        <p className="text-center text-xs text-stone-600 mt-8">
+        <p className="text-center text-xs text-[var(--color-ink-mute)] mt-8">
           You can change this later in Settings.
         </p>
       </div>

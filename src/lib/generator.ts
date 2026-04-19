@@ -43,7 +43,9 @@ BRIEF: ${brief}`;
     model: CLAUDE_MODEL,
     max_tokens: 8192,
     temperature: STYLE_TEMPERATURE,
-    system: systemPrompt,
+    system: [
+      { type: "text", text: systemPrompt, cache_control: { type: "ephemeral" } },
+    ],
     messages: [{ role: "user", content: userMessage }],
   });
 
@@ -118,7 +120,9 @@ Write ~${wordsPerSection} words. Maintain the voice and flow. Write ONLY the con
       model: CLAUDE_MODEL,
       max_tokens: 2048,
       temperature: STYLE_TEMPERATURE,
-      system: systemPrompt, // Fresh style context for each chunk
+      system: [
+        { type: "text", text: systemPrompt, cache_control: { type: "ephemeral" } },
+      ],
       messages: [{ role: "user", content: sectionPrompt }],
     });
 
@@ -146,6 +150,8 @@ export async function research(query: string): Promise<string> {
   const response = await client.messages.create({
     model: CLAUDE_MODEL,
     max_tokens: 4096,
+    // Low temperature for research — minimize hallucinations of facts/figures
+    temperature: 0.3,
     messages: [
       {
         role: "user",

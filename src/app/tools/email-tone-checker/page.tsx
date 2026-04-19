@@ -25,23 +25,23 @@ const SCORE_LABELS: { key: keyof ToneAnalysis["scores"]; label: string; lowLabel
 ];
 
 function scoreColor(score: number): string {
-  if (score <= 3) return "from-red-500 to-red-400";
-  if (score <= 5) return "from-amber-500 to-amber-400";
-  if (score <= 7) return "from-yellow-400 to-green-400";
-  return "from-green-500 to-emerald-400";
+  if (score <= 3) return "from-red-700 to-red-500";
+  if (score <= 5) return "from-[var(--color-ink-mute)] to-[var(--color-ink-soft)]";
+  if (score <= 7) return "from-[var(--color-ink-soft)] to-[var(--color-ink)]";
+  return "from-[var(--color-accent)] to-[var(--color-ink)]";
 }
 
 function overallToneColor(overall: string): string {
   const lower = overall.toLowerCase();
   if (lower.includes("passive-aggressive") || lower.includes("hostile") || lower.includes("cold"))
-    return "text-red-400";
+    return "text-red-700";
   if (lower.includes("warm") || lower.includes("friendly") || lower.includes("enthusiastic"))
-    return "text-emerald-400";
+    return "text-[var(--color-accent)]";
   if (lower.includes("professional") || lower.includes("confident") || lower.includes("direct"))
-    return "text-amber-400";
+    return "text-[var(--color-ink)]";
   if (lower.includes("apologetic") || lower.includes("hesitant") || lower.includes("uncertain"))
-    return "text-yellow-400";
-  return "text-amber-400";
+    return "text-[var(--color-ink-soft)]";
+  return "text-[var(--color-accent)]";
 }
 
 export default function EmailToneCheckerPage() {
@@ -99,13 +99,13 @@ export default function EmailToneCheckerPage() {
 
       {/* Hero */}
       <section className="max-w-4xl mx-auto px-6 pt-24 pb-12 text-center">
-        <h1 className="font-[family-name:var(--font-literata)] text-4xl sm:text-5xl font-bold tracking-tight leading-tight mb-4">
+        <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold tracking-tight leading-tight mb-4">
           Email{" "}
-          <span className="bg-gradient-to-r from-amber-400 to-orange-300 bg-clip-text text-transparent">
+          <span className="italic text-[var(--color-accent)]">
             Tone Checker
           </span>
         </h1>
-        <p className="text-lg text-stone-400 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-lg text-[var(--color-ink-soft)] max-w-2xl mx-auto leading-relaxed">
           Paste your email and see how it really sounds &mdash; before you hit send.
         </p>
       </section>
@@ -117,13 +117,13 @@ export default function EmailToneCheckerPage() {
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Paste your email here..."
-            className="w-full min-h-[200px] bg-stone-900/50 border border-stone-800/60 rounded-lg p-4 text-[#FAFAF9] placeholder:text-stone-600 resize-y focus:outline-none focus:border-amber-600/50 focus:ring-1 focus:ring-amber-600/30 transition-colors font-[family-name:var(--font-geist-sans)] text-sm leading-relaxed"
+            className="w-full min-h-[200px] bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 text-[var(--color-ink)] placeholder:text-[var(--color-ink-mute)] resize-y focus:outline-none focus:border-[var(--color-ink)] transition-colors text-sm leading-relaxed"
           />
           <div className="flex items-center justify-between mt-3">
-            <span className="text-xs text-stone-500">
+            <span className="text-xs text-[var(--color-ink-soft)]">
               {text.length.toLocaleString()} / 5,000 characters
               {text.length > 0 && text.length < 10 && (
-                <span className="text-amber-500 ml-2">
+                <span className="text-[var(--color-accent)] ml-2">
                   {10 - text.length} more needed
                 </span>
               )}
@@ -131,7 +131,7 @@ export default function EmailToneCheckerPage() {
             <button
               onClick={handleAnalyze}
               disabled={loading || text.length < 10}
-              className="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 disabled:bg-stone-700 disabled:text-stone-500 rounded-lg font-medium transition-colors text-sm"
+              className="px-6 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] disabled:bg-[var(--color-paper-deep)] disabled:text-[var(--color-ink-mute)] rounded-[2px] font-medium transition-colors text-sm"
             >
               {loading ? "Analyzing..." : "Analyze Tone"}
             </button>
@@ -139,7 +139,7 @@ export default function EmailToneCheckerPage() {
         </div>
 
         {error && (
-          <div className="mt-4 p-3 bg-red-900/20 border border-red-800/40 rounded-lg text-red-400 text-sm">
+          <div className="mt-4 p-3 bg-[var(--color-paper-deep)] border border-red-700/40 rounded-[2px] text-red-700 text-sm">
             {error}
           </div>
         )}
@@ -149,23 +149,23 @@ export default function EmailToneCheckerPage() {
       {loading && (
         <section className="max-w-4xl mx-auto px-6 pb-16">
           <div className="space-y-4">
-            <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 animate-pulse">
-              <div className="h-6 bg-stone-800 rounded w-1/3 mb-4" />
-              <div className="h-4 bg-stone-800/60 rounded w-1/4" />
+            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 animate-pulse">
+              <div className="h-6 bg-[var(--color-rule)] rounded w-1/3 mb-4" />
+              <div className="h-4 bg-[var(--color-rule)]/60 rounded w-1/4" />
             </div>
-            <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 animate-pulse">
-              <div className="h-4 bg-stone-800 rounded w-1/4 mb-4" />
+            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 animate-pulse">
+              <div className="h-4 bg-[var(--color-rule)] rounded w-1/4 mb-4" />
               <div className="space-y-3">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="h-3 bg-stone-800/60 rounded w-full" />
+                  <div key={i} className="h-3 bg-[var(--color-rule)]/60 rounded w-full" />
                 ))}
               </div>
             </div>
-            <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 animate-pulse">
-              <div className="h-4 bg-stone-800 rounded w-1/3 mb-3" />
-              <div className="h-3 bg-stone-800/60 rounded w-full mb-2" />
-              <div className="h-3 bg-stone-800/60 rounded w-4/5 mb-2" />
-              <div className="h-3 bg-stone-800/60 rounded w-3/4" />
+            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 animate-pulse">
+              <div className="h-4 bg-[var(--color-rule)] rounded w-1/3 mb-3" />
+              <div className="h-3 bg-[var(--color-rule)]/60 rounded w-full mb-2" />
+              <div className="h-3 bg-[var(--color-rule)]/60 rounded w-4/5 mb-2" />
+              <div className="h-3 bg-[var(--color-rule)]/60 rounded w-3/4" />
             </div>
           </div>
         </section>
@@ -175,12 +175,12 @@ export default function EmailToneCheckerPage() {
       {analysis && !loading && (
         <section className="max-w-4xl mx-auto px-6 pb-16 space-y-6">
           {/* Overall Tone */}
-          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 text-center">
-            <h2 className="text-xs font-medium text-stone-500 uppercase tracking-wider mb-3">
+          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 text-center">
+            <h2 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-wider mb-3">
               Overall Tone
             </h2>
             <p
-              className={`font-[family-name:var(--font-literata)] text-3xl sm:text-4xl font-bold ${overallToneColor(
+              className={`font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold ${overallToneColor(
                 analysis.overall
               )}`}
             >
@@ -189,8 +189,8 @@ export default function EmailToneCheckerPage() {
           </div>
 
           {/* Score Bars */}
-          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6">
-            <h2 className="text-xs font-medium text-stone-500 uppercase tracking-wider mb-5">
+          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6">
+            <h2 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-wider mb-5">
               Tone Scores
             </h2>
             <div className="space-y-4">
@@ -199,18 +199,18 @@ export default function EmailToneCheckerPage() {
                 return (
                   <div key={key}>
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-sm font-medium text-stone-300">{label}</span>
-                      <span className="text-sm font-bold text-[#FAFAF9]">{score}/10</span>
+                      <span className="text-sm font-medium text-[var(--color-ink)]">{label}</span>
+                      <span className="text-sm font-bold text-[var(--color-ink)]">{score}/10</span>
                     </div>
-                    <div className="h-2.5 bg-stone-800 rounded-full overflow-hidden">
+                    <div className="h-2.5 bg-[var(--color-rule)] rounded-[2px] overflow-hidden">
                       <div
-                        className={`h-full bg-gradient-to-r ${scoreColor(score)} rounded-full transition-all duration-500`}
+                        className={`h-full bg-gradient-to-r ${scoreColor(score)} rounded-[2px] transition-all duration-500`}
                         style={{ width: `${score * 10}%` }}
                       />
                     </div>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-[10px] text-stone-600">{lowLabel}</span>
-                      <span className="text-[10px] text-stone-600">{highLabel}</span>
+                      <span className="text-[10px] text-[var(--color-ink-mute)]">{lowLabel}</span>
+                      <span className="text-[10px] text-[var(--color-ink-mute)]">{highLabel}</span>
                     </div>
                   </div>
                 );
@@ -219,14 +219,14 @@ export default function EmailToneCheckerPage() {
           </div>
 
           {/* Observations */}
-          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6">
-            <h2 className="text-xs font-medium text-stone-500 uppercase tracking-wider mb-4">
+          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6">
+            <h2 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-wider mb-4">
               Observations
             </h2>
             <ul className="space-y-3">
               {analysis.observations.map((obs, i) => (
-                <li key={i} className="flex items-start gap-3 text-sm text-stone-300 leading-relaxed">
-                  <span className="text-amber-500 mt-0.5 shrink-0 font-bold">{i + 1}.</span>
+                <li key={i} className="flex items-start gap-3 text-sm text-[var(--color-ink)] leading-relaxed">
+                  <span className="text-[var(--color-accent)] mt-0.5 shrink-0 font-bold">{i + 1}.</span>
                   {obs}
                 </li>
               ))}
@@ -234,26 +234,26 @@ export default function EmailToneCheckerPage() {
           </div>
 
           {/* Suggestion */}
-          <div className="bg-amber-600/5 border border-amber-600/20 rounded-lg p-6">
-            <h2 className="text-xs font-medium text-amber-500/80 uppercase tracking-wider mb-3">
+          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6">
+            <h2 className="text-xs font-medium text-[var(--color-accent)] uppercase tracking-wider mb-3">
               Suggestion
             </h2>
-            <p className="text-stone-300 text-sm leading-relaxed">
+            <p className="text-[var(--color-ink)] text-sm leading-relaxed">
               {analysis.suggestion}
             </p>
           </div>
 
           {/* CTA Banner */}
-          <div className="bg-gradient-to-r from-amber-600/10 to-orange-600/10 border border-amber-600/20 rounded-lg p-8 text-center">
-            <h3 className="font-[family-name:var(--font-literata)] text-xl font-semibold mb-2">
+          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-8 text-center">
+            <h3 className="font-[family-name:var(--font-display)] text-xl font-semibold mb-2">
               Sound more like yourself?
             </h3>
-            <p className="text-stone-400 mb-5 max-w-lg mx-auto">
+            <p className="text-[var(--color-ink-soft)] mb-5 max-w-lg mx-auto">
               DoppelWriter learns your writing voice and helps you write emails, docs, and content that sound authentically you.
             </p>
             <Link
               href="/signup"
-              className="inline-block px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors"
+              className="inline-block px-6 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors"
             >
               Create Your Voice Profile — Free
             </Link>

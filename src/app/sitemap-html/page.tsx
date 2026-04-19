@@ -48,10 +48,10 @@ export default function SitemapHtmlPage() {
 
       <main className="max-w-4xl mx-auto px-6">
         <section className="py-16 md:py-20">
-          <h1 className="font-[family-name:var(--font-literata)] text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl font-bold mb-4">
             Sitemap
           </h1>
-          <p className="text-stone-400 text-lg">
+          <p className="text-[var(--color-ink-soft)] text-lg">
             Every page on DoppelWriter, organized for easy browsing.
           </p>
         </section>
@@ -59,7 +59,7 @@ export default function SitemapHtmlPage() {
         <div className="grid md:grid-cols-2 gap-12 pb-16">
           {/* Main Pages */}
           <section>
-            <h2 className="font-[family-name:var(--font-literata)] text-xl font-bold mb-4 text-amber-400">
+            <h2 className="font-[family-name:var(--font-display)] text-xl font-bold mb-4 text-[var(--color-accent)]">
               Main Pages
             </h2>
             <ul className="space-y-2">
@@ -67,7 +67,7 @@ export default function SitemapHtmlPage() {
                 <li key={page.href}>
                   <Link
                     href={page.href}
-                    className="text-stone-300 hover:text-white transition-colors text-sm"
+                    className="text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors text-sm"
                   >
                     {page.label}
                   </Link>
@@ -78,7 +78,7 @@ export default function SitemapHtmlPage() {
 
           {/* Writer Categories */}
           <section>
-            <h2 className="font-[family-name:var(--font-literata)] text-xl font-bold mb-4 text-amber-400">
+            <h2 className="font-[family-name:var(--font-display)] text-xl font-bold mb-4 text-[var(--color-accent)]">
               Writer Categories
             </h2>
             <ul className="space-y-2">
@@ -86,7 +86,7 @@ export default function SitemapHtmlPage() {
                 <li key={cat.id}>
                   <Link
                     href={`/write-like/${cat.id}`}
-                    className="text-stone-300 hover:text-white transition-colors text-sm"
+                    className="text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors text-sm"
                   >
                     {cat.label}
                   </Link>
@@ -97,7 +97,7 @@ export default function SitemapHtmlPage() {
 
           {/* Use Case Categories */}
           <section>
-            <h2 className="font-[family-name:var(--font-literata)] text-xl font-bold mb-4 text-amber-400">
+            <h2 className="font-[family-name:var(--font-display)] text-xl font-bold mb-4 text-[var(--color-accent)]">
               Use Case Categories
             </h2>
             <ul className="space-y-2">
@@ -105,7 +105,7 @@ export default function SitemapHtmlPage() {
                 <li key={cat.id}>
                   <Link
                     href={`/write/${cat.id}`}
-                    className="text-stone-300 hover:text-white transition-colors text-sm"
+                    className="text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors text-sm"
                   >
                     {cat.label}
                   </Link>
@@ -114,7 +114,7 @@ export default function SitemapHtmlPage() {
               <li>
                 <Link
                   href="/for"
-                  className="text-stone-500 hover:text-amber-400 transition-colors text-xs"
+                  className="text-[var(--color-ink-mute)] hover:text-[var(--color-accent)] transition-colors text-xs"
                 >
                   See all niches &rarr;
                 </Link>
@@ -124,7 +124,7 @@ export default function SitemapHtmlPage() {
 
           {/* Blog */}
           <section>
-            <h2 className="font-[family-name:var(--font-literata)] text-xl font-bold mb-4 text-amber-400">
+            <h2 className="font-[family-name:var(--font-display)] text-xl font-bold mb-4 text-[var(--color-accent)]">
               Blog
             </h2>
             <ul className="space-y-2">
@@ -132,7 +132,7 @@ export default function SitemapHtmlPage() {
                 <li key={post.slug}>
                   <Link
                     href={`/blog/${post.slug}`}
-                    className="text-stone-300 hover:text-white transition-colors text-sm"
+                    className="text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors text-sm"
                   >
                     {post.title}
                   </Link>
@@ -142,7 +142,7 @@ export default function SitemapHtmlPage() {
                 <li>
                   <Link
                     href="/blog"
-                    className="text-stone-500 hover:text-amber-400 transition-colors text-xs"
+                    className="text-[var(--color-ink-mute)] hover:text-[var(--color-accent)] transition-colors text-xs"
                   >
                     See all {BLOG_POSTS.length} posts &rarr;
                   </Link>
@@ -153,7 +153,7 @@ export default function SitemapHtmlPage() {
 
           {/* VS Pages */}
           <section>
-            <h2 className="font-[family-name:var(--font-literata)] text-xl font-bold mb-4 text-amber-400">
+            <h2 className="font-[family-name:var(--font-display)] text-xl font-bold mb-4 text-[var(--color-accent)]">
               Comparisons
             </h2>
             <ul className="space-y-2">
@@ -161,7 +161,7 @@ export default function SitemapHtmlPage() {
                 <li key={page.href}>
                   <Link
                     href={page.href}
-                    className="text-stone-300 hover:text-white transition-colors text-sm"
+                    className="text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors text-sm"
                   >
                     {page.label}
                   </Link>
@@ -172,7 +172,7 @@ export default function SitemapHtmlPage() {
 
           {/* Alternatives Pages */}
           <section>
-            <h2 className="font-[family-name:var(--font-literata)] text-xl font-bold mb-4 text-amber-400">
+            <h2 className="font-[family-name:var(--font-display)] text-xl font-bold mb-4 text-[var(--color-accent)]">
               Alternatives
             </h2>
             <ul className="space-y-2">
@@ -180,7 +180,7 @@ export default function SitemapHtmlPage() {
                 <li key={alt.slug}>
                   <Link
                     href={`/alternatives/${alt.slug}`}
-                    className="text-stone-300 hover:text-white transition-colors text-sm"
+                    className="text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors text-sm"
                   >
                     Best {alt.competitor} Alternative
                   </Link>
@@ -191,7 +191,7 @@ export default function SitemapHtmlPage() {
 
           {/* Free Tools */}
           <section>
-            <h2 className="font-[family-name:var(--font-literata)] text-xl font-bold mb-4 text-amber-400">
+            <h2 className="font-[family-name:var(--font-display)] text-xl font-bold mb-4 text-[var(--color-accent)]">
               Free Tools
             </h2>
             <ul className="space-y-2">
@@ -199,7 +199,7 @@ export default function SitemapHtmlPage() {
                 <li key={tool.href}>
                   <Link
                     href={tool.href}
-                    className="text-stone-300 hover:text-white transition-colors text-sm"
+                    className="text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors text-sm"
                   >
                     {tool.label}
                   </Link>
@@ -211,17 +211,17 @@ export default function SitemapHtmlPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-stone-800/40 py-8">
+      <footer className="border-t border-[var(--color-rule)] py-8">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-stone-600">&copy; {new Date().getFullYear()} DoppelWriter</span>
+          <span className="text-xs text-[var(--color-ink-mute)]">&copy; {new Date().getFullYear()} DoppelWriter</span>
           <div className="flex gap-6">
-            <Link href="/pricing" className="text-xs text-stone-500 hover:text-white transition-colors">Pricing</Link>
-            <Link href="/privacy" className="text-xs text-stone-500 hover:text-white transition-colors">Privacy</Link>
-            <Link href="/terms" className="text-xs text-stone-500 hover:text-white transition-colors">Terms</Link>
+            <Link href="/pricing" className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">Pricing</Link>
+            <Link href="/privacy" className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">Privacy</Link>
+            <Link href="/terms" className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">Terms</Link>
           </div>
           <a
             href="mailto:enterprise@doppelwriter.com?subject=Enterprise%20Inquiry"
-            className="text-xs text-stone-500 hover:text-amber-400 transition-colors"
+            className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-accent)] transition-colors"
           >
             Enterprise &rarr;
           </a>

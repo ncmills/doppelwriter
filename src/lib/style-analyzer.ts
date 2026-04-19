@@ -367,10 +367,19 @@ QUIRKS: ${p.distinctive_quirks.join("; ")}
 WHO THEY ARE: ${p.overall_personality}`;
 
   if (exemplars.length > 0) {
+    // Cap exemplar block to ~2KB total to prevent prompt bloat
+    const MAX_EXEMPLAR_TOTAL = 2000;
+    const MAX_PER_EXEMPLAR = 800;
     prompt += `\n\n═══ EXEMPLAR PASSAGES (This is what their writing actually sounds like) ═══`;
-    exemplars.forEach((ex, i) => {
+    let used = 0;
+    for (let i = 0; i < exemplars.length; i++) {
+      const remaining = MAX_EXEMPLAR_TOTAL - used;
+      if (remaining < 200) break;
+      const cap = Math.min(MAX_PER_EXEMPLAR, remaining);
+      const ex = exemplars[i].length > cap ? exemplars[i].slice(0, cap) + "…" : exemplars[i];
       prompt += `\n\n--- Example ${i + 1} ---\n${ex}`;
-    });
+      used += ex.length;
+    }
   }
 
   // Separate lessons from raw corrections

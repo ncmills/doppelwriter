@@ -47,24 +47,24 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0C0A09] flex items-center justify-center px-4">
-      <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-8 w-full max-w-sm">
-        <h1 className="text-2xl font-bold text-white mb-6 text-center font-[family-name:var(--font-literata)]">
+    <div className="min-h-screen bg-[var(--color-paper)] flex items-center justify-center px-4">
+      <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-8 w-full max-w-sm">
+        <h1 className="text-2xl font-bold text-[var(--color-ink)] mb-6 text-center font-[family-name:var(--font-display)]">
           {showVerify ? "Check Your Email" : "Create Account"}
         </h1>
 
         {showVerify ? (
           <div className="text-center py-4">
             <div className="text-4xl mb-4">&#9993;</div>
-            <p className="text-stone-300 mb-2">We sent a verification link to</p>
-            <p className="text-amber-400 font-medium mb-4">{email}</p>
-            <p className="text-stone-500 text-sm">Click the link to verify your account. Redirecting you now...</p>
+            <p className="text-[var(--color-ink-soft)] mb-2">We sent a verification link to</p>
+            <p className="text-[var(--color-accent)] font-medium mb-4">{email}</p>
+            <p className="text-[var(--color-ink-mute)] text-sm">Click the link to verify your account. Redirecting you now...</p>
           </div>
         ) : (
           <>
             <button
               onClick={() => { trackSignup("google"); signIn("google", { callbackUrl: "/onboarding" }); }}
-              className="w-full py-3 border border-stone-700 hover:border-stone-500 rounded-lg text-sm text-stone-300 hover:text-white transition-colors flex items-center justify-center gap-3 mb-5"
+              className="w-full py-3 border border-[var(--color-rule)] hover:border-[var(--color-ink)] rounded-[2px] text-sm text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors flex items-center justify-center gap-3 mb-5"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/>
@@ -76,9 +76,9 @@ export default function SignupPage() {
             </button>
 
             <div className="flex items-center gap-3 mb-5">
-              <div className="flex-1 h-px bg-stone-800" />
-              <span className="text-xs text-stone-600">or sign up with email</span>
-              <div className="flex-1 h-px bg-stone-800" />
+              <div className="flex-1 h-px bg-[var(--color-rule)]" />
+              <span className="text-xs text-[var(--color-ink-mute)]">or sign up with email</span>
+              <div className="flex-1 h-px bg-[var(--color-rule)]" />
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -91,7 +91,7 @@ export default function SignupPage() {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Name"
                   autoComplete="name"
-                  className="w-full px-4 py-3 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
                   autoFocus
                 />
               </div>
@@ -105,7 +105,7 @@ export default function SignupPage() {
                   placeholder="Email"
                   autoComplete="email"
                   inputMode="email"
-                  className="w-full px-4 py-3 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
                 />
               </div>
               <div>
@@ -118,24 +118,24 @@ export default function SignupPage() {
                   placeholder="Password"
                   autoComplete="new-password"
                   minLength={8}
-                  className="w-full px-4 py-3 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-3 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
                 />
               </div>
-              <p className="text-xs text-stone-600 -mt-2">Min 8 characters, with uppercase, lowercase, and a number</p>
-              {error && <p className="text-red-400 text-sm">{error}</p>}
+              <p className="text-xs text-[var(--color-ink-mute)] -mt-2">Min 8 characters, with uppercase, lowercase, and a number</p>
+              {error && <p className="text-red-700 text-sm">{error}</p>}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white rounded-lg font-medium transition-colors disabled:opacity-50"
+                className="w-full py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors disabled:opacity-50"
               >
                 {loading ? "Creating..." : "Create Account"}
               </button>
             </form>
           </>
         )}
-        <p className="mt-4 text-center text-sm text-stone-500">
+        <p className="mt-4 text-center text-sm text-[var(--color-ink-mute)]">
           Already have an account?{" "}
-          <Link href="/login" className="text-amber-400 hover:text-amber-300">
+          <Link href="/login" className="text-[var(--color-accent)] hover:text-[var(--color-ink)]">
             Log in
           </Link>
         </p>

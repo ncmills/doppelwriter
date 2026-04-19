@@ -7,6 +7,14 @@ const DEFAULT_BRIEF =
   "Write a paragraph about why the best ideas come when you're not trying.";
 const MAX_BRIEF_CHARS = 500;
 
+const SAMPLE_BRIEFS = [
+  "Write a paragraph about why the best ideas come when you're not trying.",
+  "Write a wedding toast for a friend who fell in love at the office printer.",
+  "Write a cover letter for a senior product role at a small startup.",
+  "Write a goodbye letter to your hometown.",
+  "Write a paragraph about the first time you held a fishing rod.",
+];
+
 export default function LandingDemo() {
   const [brief, setBrief] = useState(DEFAULT_BRIEF);
   const [output, setOutput] = useState("");
@@ -99,7 +107,7 @@ export default function LandingDemo() {
               {charsLeft}
             </span>
           </div>
-          <div className="flex gap-2 items-start">
+          <div className="flex gap-2 items-start border-b border-[var(--color-rule)] focus-within:border-[var(--color-ink)] transition-colors pb-1">
             <span
               className="text-[var(--color-ink-mute)] select-none font-mono text-[15px] leading-[1.6] pt-[2px]"
               aria-hidden="true"
@@ -114,11 +122,36 @@ export default function LandingDemo() {
               rows={2}
               maxLength={MAX_BRIEF_CHARS}
               placeholder="Write a paragraph about…"
-              className="flex-1 bg-transparent font-mono text-[15px] leading-[1.6] text-[var(--color-ink)] resize-none border-none outline-none placeholder:text-[var(--color-ink-mute)]"
+              className="flex-1 bg-transparent font-mono text-[15px] leading-[1.6] text-[var(--color-ink)] resize-none border-none outline-none placeholder:text-[var(--color-ink-mute)] disabled:opacity-50"
               spellCheck={false}
             />
           </div>
         </div>
+
+        {/* Sample briefs — quick picks */}
+        {!showingResult && !error && (
+          <div className="px-5 sm:px-8 pb-3 pt-2">
+            <div className="flex items-baseline gap-3 mb-2">
+              <span className="text-[10px] uppercase tracking-[0.25em] text-[var(--color-ink-mute)]">
+                Or pick one
+              </span>
+              <span className="h-[1px] flex-1 bg-[var(--color-rule)]" />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {SAMPLE_BRIEFS.slice(1).map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setBrief(s)}
+                  className="text-[12px] italic font-[family-name:var(--font-display)] text-[var(--color-ink-soft)] border border-[var(--color-rule)] px-3 py-1.5 hover:border-[var(--color-ink)] hover:text-[var(--color-ink)] transition-colors text-left"
+                  style={{ borderRadius: "2px" }}
+                >
+                  &ldquo;{s.replace(/^Write (a |an |the )?/, "").replace(/\.$/, "")}&rdquo;
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Action */}
         {!showingResult && !error && (
@@ -166,7 +199,11 @@ export default function LandingDemo() {
               </span>
               <span className="h-[1px] flex-1 bg-[var(--color-rule)]" />
             </div>
-            <p className="font-[family-name:var(--font-display)] text-lg sm:text-xl leading-[1.55] text-[var(--color-ink)]">
+            <p
+              className="font-[family-name:var(--font-display)] text-lg sm:text-xl leading-[1.55] text-[var(--color-ink)]"
+              aria-live="polite"
+              aria-busy={loading}
+            >
               {output}
               {loading && <span className="type-cursor" aria-hidden="true" />}
             </p>

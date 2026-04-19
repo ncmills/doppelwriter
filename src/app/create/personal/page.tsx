@@ -293,14 +293,14 @@ export default function CreatePersonalPage() {
     <>
       <Nav />
       <main className="max-w-3xl mx-auto px-6 py-8">
-        <h1 className="font-[family-name:var(--font-literata)] text-2xl font-bold mb-2">
+        <h1 className="font-[family-name:var(--font-display)] text-2xl font-bold mb-2">
           {hasExistingProfile
             ? "Improve Your DoppelWriter"
             : targetName
               ? `Build ${targetName}\u2019s Voice`
               : "Create Personal DoppelWriter"}
         </h1>
-        <p className="text-stone-400 text-sm mb-6">
+        <p className="text-[var(--color-ink-soft)] text-sm mb-6">
           {hasExistingProfile
             ? "Add more writing samples to make your voice profile more accurate. New samples will be analyzed and merged with your existing profile."
             : targetName
@@ -310,12 +310,12 @@ export default function CreatePersonalPage() {
 
         {/* Improvement tips from quality analysis */}
         {weakDimensions.length > 0 && (
-          <div className="mb-6 bg-amber-900/20 border border-amber-700/30 rounded-lg p-4">
-            <h3 className="text-amber-400 text-sm font-medium mb-2">What your profile needs most:</h3>
+          <div className="mb-6 bg-[var(--color-paper-deep)] border border-[var(--color-accent)] rounded-[2px] p-4">
+            <h3 className="text-[var(--color-accent)] text-sm font-medium mb-2">What your profile needs most:</h3>
             <ul className="space-y-1.5">
               {weakDimensions.map((d) => (
-                <li key={d.name} className="text-sm text-stone-400">
-                  <span className="text-stone-300 font-medium">{d.name}</span> — {d.improvement}
+                <li key={d.name} className="text-sm text-[var(--color-ink-soft)]">
+                  <span className="text-[var(--color-ink)] font-medium">{d.name}</span> — {d.improvement}
                 </li>
               ))}
             </ul>
@@ -325,10 +325,10 @@ export default function CreatePersonalPage() {
         {/* Progress bar */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-stone-400">
+            <span className="text-sm text-[var(--color-ink-soft)]">
               {totalWords.toLocaleString()} words uploaded
             </span>
-            <span className={`text-xs font-medium ${isStrong ? "text-green-400" : hasEnough ? "text-amber-400" : "text-red-400"}`}>
+            <span className={`text-xs font-medium ${isStrong ? "text-green-700" : hasEnough ? "text-[var(--color-accent)]" : "text-red-700"}`}>
               {hasPlenty
                 ? "More than enough — ready to build a great profile"
                 : isStrong
@@ -338,22 +338,22 @@ export default function CreatePersonalPage() {
                     : `Need ${Math.max(0, WORD_MINIMUM - totalWords).toLocaleString()} more words to build`}
             </span>
           </div>
-          <div className="w-full h-3 bg-stone-800 rounded-full overflow-hidden relative">
+          <div className="w-full h-3 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] overflow-hidden relative">
             {/* Threshold markers */}
-            <div className="absolute h-full w-px bg-stone-600/50 z-10" style={{ left: `${(WORD_MINIMUM / WORD_PERFECT) * 100}%` }} />
+            <div className="absolute h-full w-px bg-[var(--color-ink-mute)] z-10" style={{ left: `${(WORD_MINIMUM / WORD_PERFECT) * 100}%` }} />
             <div
-              className={`h-full rounded-full transition-all duration-500 ${
-                isStrong ? "bg-green-500" : hasEnough ? "bg-amber-500" : "bg-red-500"
+              className={`h-full rounded-[2px] transition-all duration-500 ${
+                isStrong ? "bg-green-500" : hasEnough ? "bg-[var(--color-accent)]" : "bg-red-500"
               }`}
               style={{ width: `${Math.max(progressPct, 2)}%` }}
             />
           </div>
           <div className="flex justify-between mt-1">
-            <span className="text-[10px] text-stone-600">0</span>
-            <span className="text-[10px] text-stone-600" style={{ position: "relative", left: `${(WORD_MINIMUM / WORD_PERFECT) * 100 - 50}%` }}>
+            <span className="text-[10px] text-[var(--color-ink-mute)]">0</span>
+            <span className="text-[10px] text-[var(--color-ink-mute)]" style={{ position: "relative", left: `${(WORD_MINIMUM / WORD_PERFECT) * 100 - 50}%` }}>
               {WORD_MINIMUM.toLocaleString()} min
             </span>
-            <span className="text-[10px] text-stone-600">{WORD_PERFECT.toLocaleString()}</span>
+            <span className="text-[10px] text-[var(--color-ink-mute)]">{WORD_PERFECT.toLocaleString()}</span>
           </div>
         </div>
 
@@ -363,14 +363,14 @@ export default function CreatePersonalPage() {
             <div key={s} className="flex items-center gap-2">
               <button
                 onClick={() => setStep(s)}
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
-                  step >= s ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-500"
+                className={`w-8 h-8 rounded-[2px] flex items-center justify-center text-sm font-bold transition-colors ${
+                  step >= s ? "bg-[var(--color-ink)] text-[var(--color-paper)]" : "bg-[var(--color-paper-deep)] text-[var(--color-ink-mute)]"
                 }`}
               >{s}</button>
-              <span className={`text-sm ${step >= s ? "text-white" : "text-stone-500"}`}>
+              <span className={`text-sm ${step >= s ? "text-[var(--color-ink)]" : "text-[var(--color-ink-mute)]"}`}>
                 {s === 1 ? "Add samples" : "Build profile"}
               </span>
-              {s < 2 && <div className="w-12 h-px bg-stone-700" />}
+              {s < 2 && <div className="w-12 h-px bg-[var(--color-rule)]" />}
             </div>
           ))}
         </div>
@@ -378,47 +378,47 @@ export default function CreatePersonalPage() {
         {step === 1 && (
           <div className="space-y-6">
             {/* Upload files */}
-            <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
+            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5">
               <h3 className="font-medium mb-3">Upload Files</h3>
-              <label className="block w-full py-8 border-2 border-dashed border-stone-800 rounded-lg text-center cursor-pointer hover:border-amber-600/40 transition-colors">
-                <p className="text-stone-400 text-sm">{uploading ? "Uploading..." : "Drop .docx, .txt, or .md files"}</p>
-                <p className="text-stone-600 text-xs mt-1">Select multiple files at once</p>
+              <label className="block w-full py-8 border-2 border-dashed border-[var(--color-rule)] rounded-[2px] text-center cursor-pointer transition-colors hover:border-[var(--color-ink)]">
+                <p className="text-[var(--color-ink-soft)] text-sm">{uploading ? "Uploading..." : "Drop .docx, .txt, or .md files"}</p>
+                <p className="text-[var(--color-ink-mute)] text-xs mt-1">Select multiple files at once</p>
                 <input type="file" accept=".docx,.txt,.md" multiple onChange={handleFileUpload} className="hidden" />
               </label>
             </div>
 
             {/* Paste text */}
-            <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
+            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5">
               <h3 className="font-medium mb-3">Paste Text</h3>
               <input type="text" value={pasteTitle} onChange={(e) => setPasteTitle(e.target.value)} placeholder="Title (optional)"
-                className="w-full px-3 py-2 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 text-sm mb-2 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+                className="w-full px-3 py-2 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] text-sm mb-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]" />
               <textarea value={pasteContent} onChange={(e) => setPasteContent(e.target.value)} placeholder="Paste an email, essay, memo, or any writing sample..."
-                className="w-full h-32 px-3 py-2 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-600 text-sm resize-none mb-2 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+                className="w-full h-32 px-3 py-2 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] text-sm resize-none mb-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]" />
               <button onClick={handlePaste} disabled={!pasteContent}
-                className="px-4 py-1.5 bg-amber-600 hover:bg-amber-500 rounded text-sm transition-colors disabled:opacity-40">
+                className="px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] text-sm transition-colors disabled:opacity-40">
                 Add Sample
               </button>
             </div>
 
             {/* Speech to text */}
-            <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
+            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5">
               <h3 className="font-medium mb-3">Record Your Voice</h3>
-              <p className="text-stone-500 text-xs mb-3">Speak naturally — talk about your day, explain an idea, tell a story. We&apos;ll transcribe it and use it as a writing sample.</p>
+              <p className="text-[var(--color-ink-mute)] text-xs mb-3">Speak naturally — talk about your day, explain an idea, tell a story. We&apos;ll transcribe it and use it as a writing sample.</p>
               {!recording ? (
-                <button onClick={startRecording} className="px-4 py-2 bg-red-600 hover:bg-red-500 rounded-lg text-sm transition-colors">
+                <button onClick={startRecording} className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-[2px] text-sm transition-colors">
                   Start Recording
                 </button>
               ) : (
                 <div>
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-                    <span className="text-sm text-red-400">Recording...</span>
-                    <button onClick={stopRecording} className="px-3 py-1 bg-stone-700 hover:bg-stone-600 rounded text-sm">
+                    <span className="w-3 h-3 bg-red-500 rounded-[2px] animate-pulse" />
+                    <span className="text-sm text-red-700">Recording...</span>
+                    <button onClick={stopRecording} className="px-3 py-1 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] hover:border-[var(--color-ink)] rounded-[2px] text-sm">
                       Stop & Save
                     </button>
                   </div>
                   {transcript && (
-                    <div className="p-3 bg-stone-900 rounded-lg text-sm text-stone-300 max-h-32 overflow-auto">
+                    <div className="p-3 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-sm text-[var(--color-ink-soft)] max-h-32 overflow-auto">
                       {transcript}
                     </div>
                   )}
@@ -427,22 +427,22 @@ export default function CreatePersonalPage() {
             </div>
 
             {/* Gmail sync */}
-            <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
+            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5">
               <h3 className="font-medium mb-3">Connect Gmail</h3>
-              <p className="text-stone-500 text-xs mb-3">
+              <p className="text-[var(--color-ink-mute)] text-xs mb-3">
                 Pull your sent emails automatically. We read them, extract your voice patterns, then delete the raw text. Your emails are never stored.
               </p>
               {gmailConnected ? (
                 <div>
                   <button onClick={handleGmailSync} disabled={gmailSyncing}
-                    className="px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm transition-colors disabled:opacity-50">
+                    className="px-4 py-2 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] text-sm transition-colors disabled:opacity-50">
                     {gmailSyncing ? "Syncing..." : "Sync Sent Emails"}
                   </button>
-                  {gmailResult && <p className="text-xs text-stone-400 mt-2">{gmailResult}</p>}
+                  {gmailResult && <p className="text-xs text-[var(--color-ink-soft)] mt-2">{gmailResult}</p>}
                 </div>
               ) : (
                 <button onClick={handleGmailConnect}
-                  className="px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
+                  className="px-4 py-2 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] hover:border-[var(--color-ink)] rounded-[2px] text-sm transition-colors">
                   Connect Google Account
                 </button>
               )}
@@ -450,15 +450,15 @@ export default function CreatePersonalPage() {
 
             {/* Samples added */}
             {samples.length > 0 && (
-              <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
+              <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5">
                 <h3 className="font-medium mb-3">Samples Added ({samples.length})</h3>
                 <div className="space-y-2">
                   {samples.map((s, i) => (
                     <div key={i} className="flex items-center justify-between text-sm">
                       <span className="truncate mr-4">{s.title}</span>
                       <div className="flex items-center gap-3 shrink-0">
-                        <span className="text-xs text-stone-500">{s.wordCount.toLocaleString()} words</span>
-                        <span className="text-xs text-stone-600">{s.sourceType}</span>
+                        <span className="text-xs text-[var(--color-ink-mute)]">{s.wordCount.toLocaleString()} words</span>
+                        <span className="text-xs text-[var(--color-ink-mute)]">{s.sourceType}</span>
                       </div>
                     </div>
                   ))}
@@ -469,7 +469,7 @@ export default function CreatePersonalPage() {
             <button
               onClick={() => setStep(2)}
               disabled={!hasEnough}
-              className="w-full py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors disabled:opacity-40"
+              className="w-full py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors disabled:opacity-40"
             >
               {hasEnough
                 ? `Continue — Build Profile (${totalWords.toLocaleString()} words)`
@@ -477,10 +477,10 @@ export default function CreatePersonalPage() {
             </button>
 
             {/* Scrolling tips */}
-            <div className="bg-stone-900/30 border border-stone-800/30 rounded-lg px-5 py-3 overflow-hidden">
+            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] px-5 py-3 overflow-hidden">
               <div className="flex items-center gap-2">
-                <span className="text-amber-500 text-xs shrink-0">TIP</span>
-                <p className="text-stone-500 text-xs transition-opacity duration-500" key={currentTip}>
+                <span className="text-[var(--color-accent)] text-xs shrink-0">TIP</span>
+                <p className="text-[var(--color-ink-mute)] text-xs transition-opacity duration-500" key={currentTip}>
                   {TIPS[currentTip]}
                 </p>
               </div>
@@ -490,12 +490,12 @@ export default function CreatePersonalPage() {
 
         {step === 2 && (
           <div className="text-center py-12">
-            <h2 className="font-[family-name:var(--font-literata)] text-xl font-semibold mb-3">
+            <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold mb-3">
               {improveProfileId
                 ? "Ready to improve your voice profile"
                 : isStrong ? "Ready to build your DoppelWriter" : "You can build now, but more samples = better results"}
             </h2>
-            <p className="text-stone-400 mb-4 max-w-md mx-auto">
+            <p className="text-[var(--color-ink-soft)] mb-4 max-w-md mx-auto">
               {improveProfileId
                 ? `We'll analyze your ${samples.length} new sample${samples.length !== 1 ? "s" : ""} and merge them with your existing profile to improve accuracy.`
                 : `We'll analyze your ${samples.length} writing sample${samples.length !== 1 ? "s" : ""} (${totalWords.toLocaleString()} words) at the sentence and paragraph level, identify your distinctive patterns, and build a voice profile.`}
@@ -504,17 +504,17 @@ export default function CreatePersonalPage() {
             {!isStrong && (
               <button
                 onClick={() => setStep(1)}
-                className="text-sm text-amber-400 hover:text-amber-300 mb-6 inline-block"
+                className="text-sm text-[var(--color-accent)] hover:text-[var(--color-ink)] mb-6 inline-block"
               >
                 &larr; Go back and add more samples for better results
               </button>
             )}
 
             {analyzeError && (
-              <div className="mb-6 p-4 bg-red-900/20 border border-red-700/40 rounded-lg text-red-400 text-sm max-w-md mx-auto">
+              <div className="mb-6 p-4 bg-[var(--color-paper-deep)] border border-red-700/40 rounded-[2px] text-red-700 text-sm max-w-md mx-auto">
                 {analyzeError}
                 <button onClick={() => { setStep(1); setAnalyzeError(""); }}
-                  className="block mt-2 text-amber-400 hover:text-amber-300 underline">
+                  className="block mt-2 text-[var(--color-accent)] hover:text-[var(--color-ink)] underline">
                   &larr; Add more samples
                 </button>
               </div>
@@ -523,21 +523,21 @@ export default function CreatePersonalPage() {
             <div className="flex gap-3 justify-center">
               <button
                 onClick={() => setStep(1)}
-                className="px-6 py-3 border border-stone-700 hover:border-stone-500 rounded-lg text-stone-300 transition-colors"
+                className="px-6 py-3 border border-[var(--color-rule)] hover:border-[var(--color-ink)] rounded-[2px] text-[var(--color-ink-soft)] transition-colors"
               >
                 Add More Samples
               </button>
               <button
                 onClick={handleAnalyze}
                 disabled={analyzing}
-                className="px-8 py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium text-lg transition-colors disabled:opacity-50"
+                className="px-8 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium text-lg transition-colors disabled:opacity-50"
               >
                 {analyzing ? "Analyzing your voice..." : improveProfileId ? "Improve My DoppelWriter" : "Build My DoppelWriter"}
               </button>
             </div>
 
             {analyzing && (
-              <p className="text-stone-500 text-sm mt-4 animate-pulse">
+              <p className="text-[var(--color-ink-mute)] text-sm mt-4 animate-pulse">
                 This takes 30-60 seconds. We&apos;re reading your writing at a forensic level.
               </p>
             )}

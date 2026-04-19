@@ -82,7 +82,9 @@ export async function POST(request: NextRequest) {
           model: CLAUDE_MODEL,
           max_tokens: 300,
           temperature: 0.7,
-          system: systemPrompt,
+          system: [
+            { type: "text", text: systemPrompt, cache_control: { type: "ephemeral" } },
+          ],
           messages: [{ role: "user", content: brief }],
         });
 

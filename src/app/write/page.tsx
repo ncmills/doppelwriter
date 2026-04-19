@@ -95,7 +95,7 @@ export default function WritePage() {
   };
 
   if (!isReady) {
-    return <div className="min-h-screen bg-[#0C0A09]" />;
+    return <div className="min-h-screen bg-[var(--color-paper)]" />;
   }
 
   return (
@@ -117,11 +117,11 @@ export default function WritePage() {
             <div className="mb-6">
               <button
                 onClick={() => setSelectorOpen(true)}
-                className="flex items-center gap-3 px-4 py-2 bg-stone-900/50 border border-stone-800/40 rounded-lg hover:border-amber-600/40 transition-colors"
+                className="flex items-center gap-3 px-4 py-2 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] transition-colors hover:border-[var(--color-ink)]"
               >
                 <WriterAvatar name={profileName} size={28} />
                 <span className="text-sm font-medium">{profileName}</span>
-                <span className="text-xs text-stone-500 ml-1">Change voice</span>
+                <span className="text-xs text-[var(--color-ink-mute)] ml-1">Change voice</span>
               </button>
             </div>
             <Workspace profileId={profileId} profileName={profileName} defaultMode={initialMode} />
@@ -129,10 +129,10 @@ export default function WritePage() {
         ) : (
           /* First-time / no voice selected — the "magic first minute" */
           <div className="max-w-2xl mx-auto py-4 sm:py-8">
-            <h1 className="font-[family-name:var(--font-literata)] text-2xl sm:text-3xl font-bold text-center mb-3">
+            <h1 className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl font-bold text-center mb-3">
               {isNewUser ? "See DoppelWriter in action" : "Pick a voice to start writing"}
             </h1>
-            <p className="text-stone-400 text-center mb-10">
+            <p className="text-[var(--color-ink-soft)] text-center mb-10">
               {isNewUser
                 ? "Choose any voice below and watch the AI write in their style. One click."
                 : "Select a voice profile to edit or generate content."}
@@ -150,24 +150,24 @@ export default function WritePage() {
                   key={w.name}
                   onClick={() => handleQuickStart(w.name)}
                   disabled={buildingVoice !== null}
-                  className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5 text-left hover:border-amber-600/40 transition-colors group disabled:opacity-60"
+                  className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5 text-left transition-colors hover:border-[var(--color-ink)] group disabled:opacity-60"
                 >
                   <div className="flex items-center gap-3">
                     <WriterAvatar name={w.name} size={40} />
                     <div className="flex-1">
-                      <p className="font-semibold group-hover:text-amber-400 transition-colors">{w.name}</p>
-                      <p className="text-xs text-stone-500">{w.desc}</p>
+                      <p className="font-semibold group-hover:text-[var(--color-accent)] transition-colors">{w.name}</p>
+                      <p className="text-xs text-[var(--color-ink-mute)]">{w.desc}</p>
                     </div>
                     {buildingVoice === w.name ? (
                       <div className="flex items-center gap-2 ml-auto">
-                        <svg className="animate-spin h-4 w-4 text-amber-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg className="animate-spin h-4 w-4 text-[var(--color-accent)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                         </svg>
-                        <span className="text-xs text-amber-400">Building voice...</span>
+                        <span className="text-xs text-[var(--color-accent)]">Building voice...</span>
                       </div>
                     ) : buildingVoice ? (
-                      <span className="text-xs text-stone-600 ml-auto">Waiting...</span>
+                      <span className="text-xs text-[var(--color-ink-mute)] ml-auto">Waiting...</span>
                     ) : null}
                   </div>
                 </button>
@@ -177,12 +177,12 @@ export default function WritePage() {
             <div className="text-center">
               <button
                 onClick={() => setSelectorOpen(true)}
-                className="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors"
+                className="px-6 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors"
               >
                 Browse All 100 Voices
               </button>
-              <p className="text-stone-600 text-xs mt-3">
-                Or <a href="/create/personal" className="text-amber-400 hover:text-amber-300">clone your own voice</a>
+              <p className="text-[var(--color-ink-mute)] text-xs mt-3">
+                Or <a href="/create/personal" className="text-[var(--color-accent)] hover:text-[var(--color-ink)]">clone your own voice</a>
               </p>
             </div>
           </div>

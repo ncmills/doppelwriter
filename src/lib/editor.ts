@@ -53,7 +53,9 @@ ${cleanDraft}`;
     model: CLAUDE_MODEL,
     max_tokens: 8192,
     temperature: STYLE_TEMPERATURE,
-    system: systemPrompt,
+    system: [
+      { type: "text", text: systemPrompt, cache_control: { type: "ephemeral" } },
+    ],
     messages: [{ role: "user", content: userMessage }],
   });
 
@@ -76,7 +78,9 @@ export async function* reviseDraft(
     model: CLAUDE_MODEL,
     max_tokens: 8192,
     temperature: STYLE_TEMPERATURE,
-    system: systemPrompt,
+    system: [
+      { type: "text", text: systemPrompt, cache_control: { type: "ephemeral" } },
+    ],
     messages: [
       { role: "user", content: `Transform this text into the author's voice. Rewrite every sentence. Return ONLY the rewritten text:\n\n${original}` },
       { role: "assistant", content: currentEdit },

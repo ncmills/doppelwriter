@@ -112,23 +112,23 @@ function ProfileDetail() {
     setSlidersChanged(true);
   };
 
-  if (!profile) return <div className="min-h-screen bg-[#0C0A09]"><Nav /><div className="p-8 text-stone-500">Loading...</div></div>;
+  if (!profile) return <div className="min-h-screen bg-[var(--color-paper)]"><Nav /><div className="p-8 text-[var(--color-ink-mute)]">Loading...</div></div>;
 
   const statusColor = (status: string) => {
     switch (status) {
       case "strong": return "bg-green-500";
-      case "moderate": return "bg-amber-500";
+      case "moderate": return "bg-[var(--color-accent)]";
       case "weak": return "bg-red-500";
-      default: return "bg-stone-600";
+      default: return "bg-[var(--color-ink-mute)]";
     }
   };
 
   const statusBorder = (status: string) => {
     switch (status) {
       case "strong": return "border-green-500/30";
-      case "moderate": return "border-amber-500/30";
+      case "moderate": return "border-[var(--color-accent)]";
       case "weak": return "border-red-500/30";
-      default: return "border-stone-700/40";
+      default: return "border-[var(--color-rule)]";
     }
   };
 
@@ -138,7 +138,7 @@ function ProfileDetail() {
     <>
       <Nav />
       <main className="max-w-4xl mx-auto px-6 py-8">
-        <button onClick={() => router.back()} className="text-sm text-stone-400 hover:text-white mb-4 inline-block">
+        <button onClick={() => router.back()} className="text-sm text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] mb-4 inline-block">
           &larr; Back
         </button>
 
@@ -153,23 +153,23 @@ function ProfileDetail() {
                   onChange={(e) => setNameValue(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSaveName()}
                   autoFocus
-                  className="font-[family-name:var(--font-literata)] text-2xl font-bold bg-stone-900 border border-stone-700 rounded-lg px-3 py-1 text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="font-[family-name:var(--font-display)] text-2xl font-bold bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] px-3 py-1 text-[var(--color-ink)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
                 />
                 <button onClick={handleSaveName} disabled={saving}
-                  className="px-3 py-1 bg-amber-600 hover:bg-amber-500 rounded text-sm transition-colors disabled:opacity-50">
+                  className="px-3 py-1 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] text-sm transition-colors disabled:opacity-50">
                   {saving ? "..." : "Save"}
                 </button>
                 <button onClick={() => { setEditingName(false); setNameValue(profile.writer_name || profile.name); }}
-                  className="px-3 py-1 text-stone-500 hover:text-white text-sm">Cancel</button>
+                  className="px-3 py-1 text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] text-sm">Cancel</button>
               </div>
             ) : (
               <div className="flex items-center gap-3">
-                <h1 className="font-[family-name:var(--font-literata)] text-2xl font-bold">
+                <h1 className="font-[family-name:var(--font-display)] text-2xl font-bold">
                   {profile.writer_name || profile.name}
                 </h1>
                 {isPersonal && (
                   <button onClick={() => setEditingName(true)}
-                    className="text-stone-600 hover:text-stone-400 transition-colors" title="Rename">
+                    className="text-[var(--color-ink-mute)] hover:text-[var(--color-ink-soft)] transition-colors" title="Rename">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>
@@ -177,23 +177,23 @@ function ProfileDetail() {
                 )}
               </div>
             )}
-            <p className="text-stone-500 text-sm mt-1">
+            <p className="text-[var(--color-ink-mute)] text-sm mt-1">
               {profile.is_curated ? "Curated profile" : "Personal voice profile"} · Updated {new Date(profile.updated_at).toLocaleDateString()}
             </p>
           </div>
           <Link href={`/write?voice=${profile.id}`}
-            className="px-5 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors shrink-0">
+            className="px-5 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] text-sm font-medium transition-colors shrink-0">
             Use This Voice
           </Link>
         </div>
 
         {/* Overall Score */}
         {quality && (
-          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6 mb-6">
+          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 mb-6">
             <div className="flex items-center gap-6">
               <div className="relative w-24 h-24 shrink-0">
                 <svg viewBox="0 0 100 100" className="w-24 h-24 -rotate-90">
-                  <circle cx="50" cy="50" r="42" fill="none" stroke="#292524" strokeWidth="8" />
+                  <circle cx="50" cy="50" r="42" fill="none" stroke="#E8E4DA" strokeWidth="8" />
                   <circle cx="50" cy="50" r="42" fill="none"
                     stroke={quality.overall >= 80 ? "#22c55e" : quality.overall >= 60 ? "#f59e0b" : "#ef4444"}
                     strokeWidth="8" strokeLinecap="round"
@@ -204,39 +204,39 @@ function ProfileDetail() {
                 </div>
               </div>
               <div className="flex-1">
-                <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold mb-1">Voice Quality Score</h2>
-                <p className="text-stone-400 text-sm">{quality.topRecommendation}</p>
+                <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold mb-1">Voice Quality Score</h2>
+                <p className="text-[var(--color-ink-soft)] text-sm">{quality.topRecommendation}</p>
               </div>
             </div>
           </div>
         )}
 
         {loadingQuality && !quality && (
-          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-8 mb-6 text-center">
-            <p className="text-stone-400 animate-pulse">Analyzing profile quality...</p>
+          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-8 mb-6 text-center">
+            <p className="text-[var(--color-ink-soft)] animate-pulse">Analyzing profile quality...</p>
           </div>
         )}
 
         {/* Voice Dimensions */}
         {quality && (
           <div className="mb-8">
-            <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold mb-4">Voice Dimensions</h2>
+            <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold mb-4">Voice Dimensions</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {quality.dimensions.map((d) => (
-                <div key={d.name} className={`bg-stone-900/50 border ${statusBorder(d.status)} rounded-lg p-4`}>
+                <div key={d.name} className={`bg-[var(--color-paper-deep)] border ${statusBorder(d.status)} rounded-[2px] p-4`}>
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="font-medium text-sm">{d.name}</h3>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-stone-400">{d.score}/100</span>
-                      <div className={`w-2 h-2 rounded-full ${statusColor(d.status)}`} />
+                      <span className="text-xs text-[var(--color-ink-soft)]">{d.score}/100</span>
+                      <div className={`w-2 h-2 rounded-[2px] ${statusColor(d.status)}`} />
                     </div>
                   </div>
-                  <div className="w-full h-1.5 bg-stone-800 rounded-full mb-2">
-                    <div className={`h-full rounded-full transition-all ${statusColor(d.status)}`} style={{ width: `${d.score}%` }} />
+                  <div className="w-full h-1.5 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] mb-2">
+                    <div className={`h-full rounded-[2px] transition-all ${statusColor(d.status)}`} style={{ width: `${d.score}%` }} />
                   </div>
-                  <p className="text-xs text-stone-500 mb-1">{d.description}</p>
+                  <p className="text-xs text-[var(--color-ink-mute)] mb-1">{d.description}</p>
                   {d.status !== "strong" && (
-                    <p className="text-xs text-amber-400 mt-1">To improve: {d.improvement}</p>
+                    <p className="text-xs text-[var(--color-accent)] mt-1">To improve: {d.improvement}</p>
                   )}
                 </div>
               ))}
@@ -248,44 +248,44 @@ function ProfileDetail() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold">Voice Tuning</h2>
-              <p className="text-stone-500 text-xs mt-0.5">Adjust these sliders to fine-tune how this voice writes. Changes apply to all future edits and generations.</p>
+              <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold">Voice Tuning</h2>
+              <p className="text-[var(--color-ink-mute)] text-xs mt-0.5">Adjust these sliders to fine-tune how this voice writes. Changes apply to all future edits and generations.</p>
             </div>
             <div className="flex gap-2">
               {slidersChanged && (
                 <>
                   <button onClick={handleResetSliders}
-                    className="px-3 py-1.5 text-xs text-stone-500 hover:text-white transition-colors">
+                    className="px-3 py-1.5 text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">
                     Reset
                   </button>
                   <button onClick={handleSaveSliders} disabled={saving}
-                    className="px-4 py-1.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-xs font-medium transition-colors disabled:opacity-50">
+                    className="px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] text-xs font-medium transition-colors disabled:opacity-50">
                     {saving ? "Saving..." : "Save Changes"}
                   </button>
                 </>
               )}
             </div>
           </div>
-          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5 space-y-5">
+          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5 space-y-5">
             {SLIDERS.map((s) => (
               <div key={s.key}>
                 <div className="flex items-center justify-between mb-1.5">
-                  <label className="text-sm font-medium text-stone-300">{s.label}</label>
-                  <span className="text-xs text-stone-600">{sliders[s.key] ?? 5}/10</span>
+                  <label className="text-sm font-medium text-[var(--color-ink-soft)]">{s.label}</label>
+                  <span className="text-xs text-[var(--color-ink-mute)]">{sliders[s.key] ?? 5}/10</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[10px] text-stone-600 w-24 text-right shrink-0">{s.low}</span>
+                  <span className="text-[10px] text-[var(--color-ink-mute)] w-24 text-right shrink-0">{s.low}</span>
                   <input
                     type="range"
                     min={1}
                     max={10}
                     value={sliders[s.key] ?? 5}
                     onChange={(e) => handleSliderChange(s.key, Number(e.target.value))}
-                    className="flex-1 h-1.5 bg-stone-800 rounded-full appearance-none cursor-pointer accent-amber-500
-                      [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-amber-500 [&::-webkit-slider-thumb]:cursor-pointer
-                      [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-amber-500 [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
+                    className="flex-1 h-1.5 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] appearance-none cursor-pointer accent-[var(--color-accent)]
+                      [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-[2px] [&::-webkit-slider-thumb]:bg-[var(--color-accent)] [&::-webkit-slider-thumb]:cursor-pointer
+                      [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-[2px] [&::-moz-range-thumb]:bg-[var(--color-accent)] [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
                   />
-                  <span className="text-[10px] text-stone-600 w-24 shrink-0">{s.high}</span>
+                  <span className="text-[10px] text-[var(--color-ink-mute)] w-24 shrink-0">{s.high}</span>
                 </div>
               </div>
             ))}
@@ -294,8 +294,8 @@ function ProfileDetail() {
 
         {/* Upload More Samples */}
         {isPersonal && quality && quality.overall < 90 && (
-          <div className="bg-amber-600/10 border border-amber-500/30 rounded-lg p-6 mb-8">
-            <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold mb-3 text-amber-400">
+          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-accent)] rounded-[2px] p-6 mb-8">
+            <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold mb-3 text-[var(--color-accent)]">
               Improve This Voice
             </h2>
             <ul className="space-y-3 mb-4">
@@ -305,16 +305,16 @@ function ProfileDetail() {
                 .slice(0, 3)
                 .map((d) => (
                   <li key={d.name} className="flex gap-3 text-sm">
-                    <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${statusColor(d.status)}`} />
+                    <div className={`w-2 h-2 rounded-[2px] mt-1.5 shrink-0 ${statusColor(d.status)}`} />
                     <div>
-                      <span className="text-stone-300 font-medium">{d.name}</span>
-                      <span className="text-stone-500"> — {d.improvement}</span>
+                      <span className="text-[var(--color-ink-soft)] font-medium">{d.name}</span>
+                      <span className="text-[var(--color-ink-mute)]"> — {d.improvement}</span>
                     </div>
                   </li>
                 ))}
             </ul>
             <Link href={`/create/personal?improve=${profile.id}`}
-              className="inline-block px-5 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
+              className="inline-block px-5 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] text-sm font-medium transition-colors">
               Upload More Samples
             </Link>
           </div>
@@ -322,13 +322,13 @@ function ProfileDetail() {
 
         {/* Merge / Blend CTA */}
         {isPersonal && (
-          <div className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6">
-            <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold mb-2">Blend With a Famous Voice</h2>
-            <p className="text-stone-400 text-sm mb-4">
+          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6">
+            <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold mb-2">Blend With a Famous Voice</h2>
+            <p className="text-[var(--color-ink-soft)] text-sm mb-4">
               Want your voice to sound like you but with Hemingway&apos;s precision? Obama&apos;s cadence? Paul Graham&apos;s clarity? Merge your personal voice with any curated writer to create a hybrid.
             </p>
             <Link href="/merge"
-              className="inline-block px-5 py-2.5 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm font-medium transition-colors">
+              className="inline-block px-5 py-2.5 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] hover:border-[var(--color-ink)] rounded-[2px] text-sm font-medium transition-colors">
               Merge Voices
             </Link>
           </div>

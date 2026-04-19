@@ -94,14 +94,14 @@ export default function HowItWorksPage() {
       <JsonLd data={breadcrumbJsonLd} />
 
       {/* Nav */}
-      <nav className="border-b border-stone-800/40 sticky top-0 bg-[#0C0A09]/80 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/80 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-6 flex items-center h-14 justify-between">
-          <Link href="/" className="font-[family-name:var(--font-literata)] font-bold text-lg">
+          <Link href="/" className="font-[family-name:var(--font-display)] font-bold text-lg">
             DoppelWriter
           </Link>
           <Link
             href="/signup"
-            className="text-sm px-4 py-1.5 bg-amber-600 hover:bg-amber-500 rounded-lg transition-colors"
+            className="text-sm px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] transition-colors"
           >
             Try Free
           </Link>
@@ -110,13 +110,13 @@ export default function HowItWorksPage() {
 
       {/* Hero */}
       <section className="max-w-3xl mx-auto px-6 pt-24 pb-16 text-center">
-        <h1 className="font-[family-name:var(--font-literata)] text-4xl sm:text-5xl font-bold tracking-tight leading-tight mb-6">
+        <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold tracking-tight leading-tight mb-6">
           How Does AI Write in{" "}
-          <span className="bg-gradient-to-r from-amber-400 to-orange-300 bg-clip-text text-transparent">
+          <span className="text-[var(--color-accent)]">
             Your Voice?
           </span>
         </h1>
-        <p className="text-xl text-stone-400 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xl text-[var(--color-ink-soft)] max-w-2xl mx-auto leading-relaxed">
           Most AI writes like AI. DoppelWriter writes like you. Here&apos;s how.
         </p>
       </section>
@@ -127,15 +127,15 @@ export default function HowItWorksPage() {
           {steps.map((step) => (
             <div
               key={step.num}
-              className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-6"
+              className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6"
             >
-              <div className="w-8 h-8 rounded-full bg-amber-600/20 text-amber-400 flex items-center justify-center text-sm font-bold mb-4">
+              <div className="w-8 h-8 rounded-[2px] bg-[var(--color-paper)] text-[var(--color-accent)] border border-[var(--color-rule)] flex items-center justify-center text-sm font-bold mb-4">
                 {step.num}
               </div>
-              <h3 className="font-[family-name:var(--font-literata)] text-lg font-semibold mb-2">
+              <h3 className="font-[family-name:var(--font-display)] text-lg font-semibold mb-2">
                 {step.title}
               </h3>
-              <p className="text-stone-400 text-sm leading-relaxed">{step.desc}</p>
+              <p className="text-[var(--color-ink-soft)] text-sm leading-relaxed">{step.desc}</p>
             </div>
           ))}
         </div>
@@ -143,10 +143,10 @@ export default function HowItWorksPage() {
 
       {/* What Makes It Different */}
       <section className="max-w-3xl mx-auto px-6 py-16">
-        <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-3">
+        <h2 className="font-[family-name:var(--font-display)] text-3xl font-bold text-center mb-3">
           Why Voice Cloning Beats Prompt Engineering
         </h2>
-        <p className="text-stone-400 text-center mb-10 max-w-xl mx-auto">
+        <p className="text-[var(--color-ink-soft)] text-center mb-10 max-w-xl mx-auto">
           Telling ChatGPT to &ldquo;write in a casual tone&rdquo; is like telling an impersonator &ldquo;he talks fast.&rdquo;
           It&apos;s not enough. Here&apos;s what we actually analyze.
         </p>
@@ -159,9 +159,9 @@ export default function HowItWorksPage() {
             { label: "Argument structure", detail: "Do you lead with the point or build to it? Examples or abstractions?" },
             { label: "What you never say", detail: "The words, phrases, and patterns you consistently avoid" },
           ].map((dim) => (
-            <div key={dim.label} className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4">
-              <p className="font-medium text-sm text-amber-400 mb-1">{dim.label}</p>
-              <p className="text-stone-400 text-sm leading-relaxed">{dim.detail}</p>
+            <div key={dim.label} className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4">
+              <p className="font-medium text-sm text-[var(--color-accent)] mb-1">{dim.label}</p>
+              <p className="text-[var(--color-ink-soft)] text-sm leading-relaxed">{dim.detail}</p>
             </div>
           ))}
         </div>
@@ -169,17 +169,17 @@ export default function HowItWorksPage() {
 
       {/* FAQ */}
       <section className="max-w-3xl mx-auto px-6 py-16">
-        <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-8">
+        <h2 className="font-[family-name:var(--font-display)] text-3xl font-bold text-center mb-8">
           Common Questions
         </h2>
         <div className="space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.q} className="bg-stone-900/50 border border-stone-800/40 rounded-lg group">
+            <details key={faq.q} className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] group">
               <summary className="px-6 py-4 cursor-pointer text-sm font-medium list-none flex items-center justify-between">
                 {faq.q}
-                <span className="text-stone-500 group-open:rotate-45 transition-transform text-lg">+</span>
+                <span className="text-[var(--color-ink-mute)] group-open:rotate-45 transition-transform text-lg">+</span>
               </summary>
-              <div className="px-6 pb-4 text-sm text-stone-400 leading-relaxed">
+              <div className="px-6 pb-4 text-sm text-[var(--color-ink-soft)] leading-relaxed">
                 {faq.a}
               </div>
             </details>
@@ -189,17 +189,17 @@ export default function HowItWorksPage() {
 
       {/* CTA */}
       <section className="max-w-4xl mx-auto px-6 py-16 text-center">
-        <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold mb-4">
+        <h2 className="font-[family-name:var(--font-display)] text-3xl font-bold mb-4">
           Ready to hear your own voice?
         </h2>
-        <p className="text-stone-400 mb-8">Try it free — 5 uses, no credit card.</p>
+        <p className="text-[var(--color-ink-soft)] mb-8">Try it free — 5 uses, no credit card.</p>
         <Link
           href="/signup"
-          className="inline-block px-8 py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium text-lg transition-colors"
+          className="inline-block px-8 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium text-lg transition-colors"
         >
           Start Writing Free
         </Link>
-        <p className="text-stone-600 text-xs mt-3">No credit card required</p>
+        <p className="text-[var(--color-ink-mute)] text-xs mt-3">No credit card required</p>
       </section>
 
       {/* Explore Links */}
@@ -207,46 +207,46 @@ export default function HowItWorksPage() {
         <div className="grid sm:grid-cols-4 gap-4">
           <Link
             href="/write"
-            className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4 hover:border-amber-600/40 transition-colors block text-center"
+            className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)] block text-center"
           >
             <p className="font-medium text-sm mb-1">Use Cases</p>
-            <p className="text-xs text-stone-500">Speeches, emails, essays & more</p>
+            <p className="text-xs text-[var(--color-ink-mute)]">Speeches, emails, essays & more</p>
           </Link>
           <Link
             href="/analyze"
-            className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4 hover:border-amber-600/40 transition-colors block text-center"
+            className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)] block text-center"
           >
             <p className="font-medium text-sm mb-1">Free Voice Analyzer</p>
-            <p className="text-xs text-stone-500">See your writing style mapped out</p>
+            <p className="text-xs text-[var(--color-ink-mute)]">See your writing style mapped out</p>
           </Link>
           <Link
             href="/write-like"
-            className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4 hover:border-amber-600/40 transition-colors block text-center"
+            className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)] block text-center"
           >
             <p className="font-medium text-sm mb-1">Famous Writers</p>
-            <p className="text-xs text-stone-500">Write like Hemingway, Didion & more</p>
+            <p className="text-xs text-[var(--color-ink-mute)]">Write like Hemingway, Didion & more</p>
           </Link>
           <Link
             href="/pricing"
-            className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4 hover:border-amber-600/40 transition-colors block text-center"
+            className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)] block text-center"
           >
             <p className="font-medium text-sm mb-1">Pricing</p>
-            <p className="text-xs text-stone-500">Free forever, Pro for $19/mo</p>
+            <p className="text-xs text-[var(--color-ink-mute)]">Free forever, Pro for $19/mo</p>
           </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-stone-800/40 py-8">
+      <footer className="border-t border-[var(--color-rule)] py-8">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-stone-600">&copy; {new Date().getFullYear()} DoppelWriter</span>
+          <span className="text-xs text-[var(--color-ink-mute)]">&copy; {new Date().getFullYear()} DoppelWriter</span>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
-            <Link href="/analyze" className="text-xs text-stone-500 hover:text-white transition-colors">Voice Analyzer</Link>
-            <Link href="/blog" className="text-xs text-stone-500 hover:text-white transition-colors">Blog</Link>
-            <Link href="/for" className="text-xs text-stone-500 hover:text-white transition-colors">Use Cases</Link>
-            <Link href="/pricing" className="text-xs text-stone-500 hover:text-white transition-colors">Pricing</Link>
-            <Link href="/privacy" className="text-xs text-stone-500 hover:text-white transition-colors">Privacy</Link>
-            <Link href="/terms" className="text-xs text-stone-500 hover:text-white transition-colors">Terms</Link>
+            <Link href="/analyze" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">Voice Analyzer</Link>
+            <Link href="/blog" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">Blog</Link>
+            <Link href="/for" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">Use Cases</Link>
+            <Link href="/pricing" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">Pricing</Link>
+            <Link href="/privacy" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">Privacy</Link>
+            <Link href="/terms" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">Terms</Link>
           </div>
         </div>
       </footer>

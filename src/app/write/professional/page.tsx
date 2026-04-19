@@ -49,50 +49,50 @@ export default function CategoryPage() {
         }}
       />
 
-      <nav className="border-b border-stone-800/40 sticky top-0 bg-[#0C0A09]/80 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/95 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-6 flex items-center h-14 justify-between">
-          <Link href="/" className="font-[family-name:var(--font-literata)] font-bold text-lg">DoppelWriter</Link>
-          <Link href="/signup" className="text-sm px-4 py-1.5 bg-amber-600 hover:bg-amber-500 rounded-lg transition-colors">
+          <Link href="/" className="font-[family-name:var(--font-display)] font-bold text-lg">DoppelWriter</Link>
+          <Link href="/signup" className="text-sm px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-lg transition-colors">
             Try Free
           </Link>
         </div>
       </nav>
 
       <main className="max-w-5xl mx-auto px-6 py-16">
-        <nav aria-label="Breadcrumb" className="text-sm text-stone-500 mb-6 flex items-center gap-1.5 flex-wrap">
-          <Link href="/" className="hover:text-white transition-colors">Home</Link>
+        <nav aria-label="Breadcrumb" className="text-sm text-[var(--color-ink-mute)] mb-6 flex items-center gap-1.5 flex-wrap">
+          <Link href="/" className="hover:text-[var(--color-ink)] transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/write" className="hover:text-white transition-colors">Writing Tools</Link>
+          <Link href="/write" className="hover:text-[var(--color-ink)] transition-colors">Writing Tools</Link>
           <span>/</span>
-          <span className="text-stone-300">{CATEGORY_LABEL}</span>
+          <span className="text-[var(--color-ink-soft)]">{CATEGORY_LABEL}</span>
         </nav>
 
-        <h1 className="font-[family-name:var(--font-literata)] text-4xl sm:text-5xl font-bold mb-4">
+        <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold mb-4">
           {CATEGORY_LABEL} Writing Tools
         </h1>
-        <p className="text-xl text-stone-400 mb-12 leading-relaxed max-w-3xl">{INTRO}</p>
+        <p className="text-xl text-[var(--color-ink-soft)] mb-12 leading-relaxed max-w-3xl">{INTRO}</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-16">
           {useCases.map((uc) => (
             <Link
               key={uc.slug}
               href={`/write/${uc.slug}`}
-              className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-5 hover:border-amber-600/40 transition-colors"
+              className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-lg p-5 hover:border-[var(--color-ink)] transition-colors"
             >
               <p className="font-medium mb-1">Write My {uc.title}</p>
-              <p className="text-sm text-stone-400 line-clamp-2">{uc.description}</p>
+              <p className="text-sm text-[var(--color-ink-soft)] line-clamp-2">{uc.description}</p>
             </Link>
           ))}
         </div>
 
         <section>
-          <h2 className="font-[family-name:var(--font-literata)] text-2xl font-semibold mb-6">Other Categories</h2>
+          <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold mb-6">Other Categories</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {otherCategories.map((c) => (
               <Link
                 key={c.id}
                 href={`/write/${c.id}`}
-                className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-4 hover:border-amber-600/40 transition-colors text-center"
+                className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-lg p-4 hover:border-[var(--color-ink)] transition-colors text-center"
               >
                 <p className="font-medium text-sm">{c.label}</p>
               </Link>
@@ -101,7 +101,7 @@ export default function CategoryPage() {
         </section>
       </main>
 
-      <footer className="border-t border-stone-800/40 py-8 text-center text-xs text-stone-600">
+      <footer className="border-t border-[var(--color-rule)] py-8 text-center text-xs text-[var(--color-ink-mute)]">
         DoppelWriter
       </footer>
     </div>

@@ -60,14 +60,14 @@ export default async function SharedDraftPage({ params }: Props) {
   return (
     <div className="min-h-screen">
       {/* Minimal nav */}
-      <nav className="border-b border-stone-800/40 sticky top-0 bg-[#0C0A09]/80 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/90 backdrop-blur-sm z-50">
         <div className="max-w-3xl mx-auto px-6 flex items-center h-14 justify-between">
-          <Link href="/" className="font-[family-name:var(--font-literata)] font-bold text-lg">
+          <Link href="/" className="font-[family-name:var(--font-display)] font-bold text-lg">
             DoppelWriter
           </Link>
           <Link
             href="/signup"
-            className="text-sm px-4 py-1.5 bg-amber-600 hover:bg-amber-500 rounded-lg transition-colors"
+            className="text-sm px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] transition-colors"
           >
             Try It Free
           </Link>
@@ -78,11 +78,11 @@ export default async function SharedDraftPage({ params }: Props) {
       <main className="max-w-3xl mx-auto px-6 py-12">
         {draft.voice_name && (
           <div className="mb-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600/10 border border-amber-600/20 rounded-full mb-3">
-              <span className="text-amber-400 text-sm">Written in the voice of</span>
-              <span className="font-[family-name:var(--font-literata)] font-bold text-amber-300 text-lg">{draft.voice_name}</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] mb-3">
+              <span className="text-[var(--color-ink-soft)] text-sm">Written in the voice of</span>
+              <span className="font-[family-name:var(--font-display)] font-bold text-[var(--color-accent)] text-lg">{draft.voice_name}</span>
             </div>
-            <p className="text-stone-500 text-sm max-w-lg">
+            <p className="text-[var(--color-ink-mute)] text-sm max-w-lg">
               DoppelWriter uses AI to capture any writer&apos;s voice — sentence rhythm, word choice, and personality.
             </p>
           </div>
@@ -92,7 +92,7 @@ export default async function SharedDraftPage({ params }: Props) {
           <div className="mb-8">
             <Link
               href={voiceSignupUrl}
-              className="inline-block px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors text-sm"
+              className="inline-block px-6 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors text-sm"
             >
               Write your own version in {draft.voice_name}&apos;s voice
             </Link>
@@ -100,17 +100,17 @@ export default async function SharedDraftPage({ params }: Props) {
         )}
 
         <div
-          className="prose prose-invert prose-stone max-w-none leading-relaxed text-lg"
+          className="prose prose-stone max-w-none leading-relaxed text-lg text-[var(--color-ink)] prose-headings:font-[family-name:var(--font-display)] prose-headings:text-[var(--color-ink)] prose-p:text-[var(--color-ink)] prose-a:text-[var(--color-accent)] prose-strong:text-[var(--color-ink)] prose-blockquote:border-l-2 prose-blockquote:border-[var(--color-accent)] prose-blockquote:italic prose-blockquote:font-[family-name:var(--font-display)] prose-blockquote:text-[var(--color-ink-soft)]"
           dangerouslySetInnerHTML={{ __html: draft.content }}
         />
 
         {/* Watermark + CTAs */}
-        <div className="mt-16 pt-8 border-t border-stone-800/40 text-center">
+        <div className="mt-16 pt-8 border-t border-[var(--color-rule)] text-center">
           <a
             href="https://doppelwriter.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block text-stone-500 hover:text-amber-400 text-xs tracking-wide uppercase mb-6 transition-colors"
+            className="inline-block text-[var(--color-ink-mute)] hover:text-[var(--color-accent)] text-xs tracking-wide uppercase mb-6 transition-colors"
           >
             Written with DoppelWriter — Try it free
           </a>
@@ -118,7 +118,7 @@ export default async function SharedDraftPage({ params }: Props) {
             {draft.voice_name && (
               <Link
                 href={voiceSignupUrl}
-                className="inline-block px-8 py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors"
+                className="inline-block px-8 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors"
               >
                 Write in {draft.voice_name}&apos;s Voice
               </Link>
@@ -126,14 +126,14 @@ export default async function SharedDraftPage({ params }: Props) {
             <Link
               href="/signup"
               className={draft.voice_name
-                ? "inline-block px-8 py-3 border border-stone-700 hover:border-stone-500 rounded-lg font-medium transition-colors text-stone-300 hover:text-white"
-                : "inline-block px-8 py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors"
+                ? "inline-block px-8 py-3 border border-[var(--color-rule)] hover:border-[var(--color-ink)] rounded-[2px] font-medium transition-colors text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+                : "inline-block px-8 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors"
               }
             >
               {draft.voice_name ? "Try Your Own Voice" : "Write like this — try DoppelWriter free"}
             </Link>
           </div>
-          <p className="text-stone-600 text-xs mt-3">No credit card required</p>
+          <p className="text-[var(--color-ink-mute)] text-xs mt-3">No credit card required</p>
         </div>
       </main>
     </div>

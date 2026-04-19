@@ -156,45 +156,45 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
         key={w.name}
         onClick={() => built?.id ? handleSelect({ ...built, has_profile: true }) : handleBuild(w.name)}
         disabled={building !== null}
-        className={`bg-stone-900/50 border ${isReady ? "border-stone-700/60" : "border-stone-800/40"} rounded-lg ${size === "md" ? "p-3.5" : "p-2.5"} text-left hover:border-amber-600/40 transition-all disabled:opacity-50 flex items-center gap-3 group`}
+        className={`bg-[var(--color-paper)] border ${isReady ? "border-[var(--color-ink-mute)]" : "border-[var(--color-rule)]"} ${size === "md" ? "p-3.5" : "p-2.5"} text-left transition-colors hover:border-[var(--color-ink)] disabled:opacity-50 flex items-center gap-3 group`}
       >
         <WriterAvatar name={w.name} size={size === "md" ? 36 : 28} />
         <div className="min-w-0 flex-1">
-          <p className={`font-medium ${size === "md" ? "text-sm" : "text-xs"} truncate group-hover:text-amber-400 transition-colors`}>{w.name}</p>
+          <p className={`font-[family-name:var(--font-display)] ${size === "md" ? "text-sm" : "text-xs"} truncate text-[var(--color-ink)] group-hover:text-[var(--color-accent)] transition-colors`}>{w.name}</p>
           {w.bio && size === "md" && (
-            <p className="text-xs text-stone-500 truncate">{w.bio}</p>
+            <p className="text-xs text-[var(--color-ink-mute)] truncate">{w.bio}</p>
           )}
         </div>
-        {isReady && <span className="text-xs text-green-500/70 shrink-0">Ready</span>}
+        {isReady && <span className="text-[10px] uppercase tracking-[0.15em] text-[var(--color-accent)] shrink-0">Ready</span>}
       </button>
     );
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-start justify-center sm:pt-16" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-[var(--color-ink)]/40" />
       <div
-        className="relative bg-[#0C0A09] border border-stone-800 rounded-t-xl sm:rounded-xl w-full max-w-2xl max-h-[85vh] sm:max-h-[75vh] mx-0 sm:mx-4 overflow-hidden shadow-2xl flex flex-col"
+        className="relative bg-[var(--color-paper)] border border-[var(--color-rule)] w-full max-w-2xl max-h-[85vh] sm:max-h-[75vh] mx-0 sm:mx-4 overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Building overlay */}
         {building && (
-          <div className="absolute inset-0 z-10 bg-[#0C0A09]/90 flex flex-col items-center justify-center gap-4">
-            <svg className="animate-spin h-10 w-10 text-amber-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <div className="absolute inset-0 z-10 bg-[var(--color-paper)]/95 flex flex-col items-center justify-center gap-4">
+            <svg className="animate-spin h-10 w-10 text-[var(--color-accent)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
             </svg>
             <div className="text-center">
-              <p className="text-amber-400 font-medium text-lg">Building {building}&apos;s voice...</p>
-              <p className="text-stone-500 text-sm mt-1">Analyzing their writing patterns. This takes 30-60 seconds.</p>
+              <p className="font-[family-name:var(--font-display)] text-[var(--color-ink)] text-lg">Building {building}&apos;s voice...</p>
+              <p className="text-[var(--color-ink-mute)] text-sm mt-1 italic">Analyzing their writing patterns. This takes 30&ndash;60 seconds.</p>
             </div>
           </div>
         )}
 
         {/* Search */}
-        <div className="p-4 pb-3 border-b border-stone-800/60 shrink-0">
+        <div className="p-4 pb-3 border-b border-[var(--color-rule)] shrink-0">
           <div className="relative">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-ink-mute)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input
@@ -203,7 +203,7 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
               onChange={(e) => { setSearch(e.target.value); setCategoryFilter(null); }}
               placeholder="Search by name, style, or category..."
               autoFocus
-              className="w-full pl-10 pr-4 py-2.5 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+              className="w-full pl-10 pr-4 py-2.5 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] focus:outline-none text-sm"
             />
           </div>
         </div>
@@ -211,7 +211,7 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
         {/* Scrollable content */}
         <div className="overflow-y-auto flex-1 p-4">
 
-          {/* ═══ SEARCH MODE ═══ */}
+          {/* SEARCH MODE */}
           {isSearching && (
             <div>
               {searchResults.length > 0 && (
@@ -221,12 +221,12 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
                       key={p.writer_name || p.name}
                       onClick={() => handleSelect(p)}
                       disabled={building !== null}
-                      className="bg-stone-900/50 border border-stone-800/40 rounded-lg p-3 text-left hover:border-amber-600/40 transition-colors disabled:opacity-50 flex items-center gap-3 group"
+                      className="bg-[var(--color-paper)] border border-[var(--color-rule)] p-3 text-left transition-colors hover:border-[var(--color-ink)] disabled:opacity-50 flex items-center gap-3 group"
                     >
                       <WriterAvatar name={p.writer_name || p.name} size={32} />
                       <div className="min-w-0">
-                        <p className="font-medium text-sm truncate group-hover:text-amber-400 transition-colors">{p.writer_name || p.name}</p>
-                        <p className="text-xs text-stone-500">{p.is_curated ? (p.writer_bio || "Curated").toString().slice(0, 50) : "Personal voice"}</p>
+                        <p className="font-[family-name:var(--font-display)] text-sm truncate text-[var(--color-ink)] group-hover:text-[var(--color-accent)] transition-colors">{p.writer_name || p.name}</p>
+                        <p className="text-xs text-[var(--color-ink-mute)]">{p.is_curated ? (p.writer_bio || "Curated").toString().slice(0, 50) : "Personal voice"}</p>
                       </div>
                     </button>
                   ))}
@@ -235,28 +235,28 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
 
               {/* Add writer prompt */}
               {!building && (
-                <div className={`text-center ${searchResults.length > 0 ? "pt-3 border-t border-stone-800/40" : ""} py-4`}>
+                <div className={`text-center ${searchResults.length > 0 ? "pt-3 border-t border-[var(--color-rule)]" : ""} py-4`}>
                   {searchResults.length === 0 && (
-                    <p className="text-stone-400 text-sm mb-3">No voice found for &quot;{search}&quot;</p>
+                    <p className="text-[var(--color-ink-soft)] text-sm mb-3 italic font-[family-name:var(--font-display)]">No voice found for &ldquo;{search}&rdquo;</p>
                   )}
                   {buildError?.name === search ? (
                     <div className="space-y-3">
-                      <p className="text-stone-500 text-sm">{buildError.reason}</p>
+                      <p className="text-[var(--color-ink-soft)] text-sm">{buildError.reason}</p>
                       <a href={`/create/personal?name=${encodeURIComponent(search)}`}
-                        className="inline-block px-5 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
+                        className="inline-block px-5 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] uppercase tracking-[0.15em] text-xs font-medium transition-colors">
                         Upload {search}&apos;s writing to build their voice
                       </a>
                     </div>
                   ) : (
                     <div>
-                      <p className="text-stone-500 text-xs mb-2">
+                      <p className="text-[var(--color-ink-mute)] text-xs mb-2">
                         {searchResults.length > 0 ? "Don\u2019t see who you\u2019re looking for?" : `Want to write like ${search}?`}
                       </p>
                       <button onClick={() => handleAddWriter(search)}
-                        className="px-5 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
-                        Add &quot;{search}&quot; as a voice
+                        className="px-5 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] uppercase tracking-[0.15em] text-xs font-medium transition-colors">
+                        Add &ldquo;{search}&rdquo; as a voice
                       </button>
-                      <p className="text-stone-600 text-xs mt-1.5">We&apos;ll scan for their published writing and build a voice profile</p>
+                      <p className="text-[var(--color-ink-mute)] text-xs mt-1.5">We&apos;ll scan for their published writing and build a voice profile</p>
                     </div>
                   )}
                 </div>
@@ -264,26 +264,26 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
             </div>
           )}
 
-          {/* ═══ BROWSE MODE (no search) ═══ */}
+          {/* BROWSE MODE (no search) */}
           {!isSearching && (
             <div className="space-y-6">
 
-              {/* Your Voices — always at top if they have any */}
+              {/* Your Voices */}
               {personal.length > 0 && (
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-xs font-medium text-stone-400 uppercase tracking-wider">Your Voices</h3>
+                    <h3 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-[0.15em]">Your Voices</h3>
                     <Link href="/create/personal" onClick={onClose}
-                      className="text-xs text-amber-400 hover:text-amber-300">+ New</Link>
+                      className="text-xs text-[var(--color-accent)] uppercase tracking-[0.15em] hover:text-[var(--color-ink)]">+ New</Link>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     {personal.map((p) => (
                       <button key={p.id} onClick={() => handleSelect(p)}
-                        className="bg-stone-900/50 border border-amber-500/20 rounded-lg p-2.5 text-left hover:border-amber-500/50 transition-colors flex items-center gap-3 group">
-                        <div className="w-7 h-7 rounded-full bg-amber-600/20 flex items-center justify-center text-amber-400 text-xs font-bold shrink-0">
+                        className="bg-[var(--color-paper-deep)] border border-[var(--color-ink-mute)] p-2.5 text-left transition-colors hover:border-[var(--color-ink)] flex items-center gap-3 group">
+                        <div className="w-7 h-7 bg-[var(--color-paper)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-accent)] text-xs font-[family-name:var(--font-display)] font-bold shrink-0">
                           {p.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
                         </div>
-                        <p className="font-medium text-xs truncate group-hover:text-amber-400 transition-colors">{p.name}</p>
+                        <p className="font-[family-name:var(--font-display)] text-xs truncate text-[var(--color-ink)] group-hover:text-[var(--color-accent)] transition-colors">{p.name}</p>
                       </button>
                     ))}
                   </div>
@@ -292,12 +292,12 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
 
               {/* Category filter pills */}
               <div>
-                <h3 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-2">Famous Voices</h3>
+                <h3 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-[0.15em] mb-2">Famous Voices</h3>
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   <button
                     onClick={() => setCategoryFilter(null)}
-                    className={`px-3 py-1 rounded-full text-xs transition-colors ${
-                      !categoryFilter ? "bg-amber-600/20 text-amber-400 border border-amber-500/30" : "bg-stone-900 text-stone-500 border border-stone-800 hover:text-white hover:border-stone-600"
+                    className={`px-3 py-1 text-xs uppercase tracking-[0.15em] transition-colors ${
+                      !categoryFilter ? "bg-[var(--color-ink)] text-[var(--color-paper)] border border-[var(--color-ink)]" : "bg-[var(--color-paper)] text-[var(--color-ink-soft)] border border-[var(--color-rule)] hover:text-[var(--color-ink)] hover:border-[var(--color-ink)]"
                     }`}
                   >
                     Popular
@@ -306,8 +306,8 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
                     <button
                       key={cat.id}
                       onClick={() => setCategoryFilter(categoryFilter === cat.id ? null : cat.id)}
-                      className={`px-3 py-1 rounded-full text-xs transition-colors ${
-                        categoryFilter === cat.id ? "bg-amber-600/20 text-amber-400 border border-amber-500/30" : "bg-stone-900 text-stone-500 border border-stone-800 hover:text-white hover:border-stone-600"
+                      className={`px-3 py-1 text-xs uppercase tracking-[0.15em] transition-colors ${
+                        categoryFilter === cat.id ? "bg-[var(--color-ink)] text-[var(--color-paper)] border border-[var(--color-ink)]" : "bg-[var(--color-paper)] text-[var(--color-ink-soft)] border border-[var(--color-rule)] hover:text-[var(--color-ink)] hover:border-[var(--color-ink)]"
                       }`}
                     >
                       {cat.label}
@@ -318,10 +318,8 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
                 {/* Popular (default) or filtered category */}
                 <div className="grid grid-cols-2 gap-2">
                   {categoryFilter ? (
-                    // Filtered by category
                     categoryWriters!.map((w) => writerCard(w, "md"))
                   ) : (
-                    // Popular picks
                     POPULAR.map((name) => {
                       const w = CURATED_WRITERS.find((c) => c.name === name);
                       if (!w) return null;
@@ -330,20 +328,19 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
                   )}
                 </div>
 
-                {/* Show count when browsing popular */}
                 {!categoryFilter && (
-                  <p className="text-center text-stone-600 text-xs mt-3">
+                  <p className="text-center text-[var(--color-ink-mute)] text-xs mt-3 italic font-[family-name:var(--font-display)]">
                     Showing 6 popular voices. Use the filters above to browse all {CURATED_WRITERS.length}.
                   </p>
                 )}
               </div>
 
-              {/* Clone your own voice CTA — at the bottom if they don't have personal voices */}
+              {/* Clone your own voice CTA */}
               {personal.length === 0 && (
                 <Link href="/create/personal" onClick={onClose}
-                  className="block text-center py-4 border border-dashed border-stone-800 rounded-lg hover:border-amber-600/40 transition-colors group">
-                  <p className="text-stone-400 text-sm group-hover:text-amber-400 transition-colors">Clone your own voice</p>
-                  <p className="text-stone-600 text-xs mt-0.5">Upload your writing and we&apos;ll build a voice that sounds like you</p>
+                  className="block text-center py-4 border border-dashed border-[var(--color-rule)] transition-colors hover:border-[var(--color-ink)] group">
+                  <p className="text-[var(--color-ink-soft)] text-sm group-hover:text-[var(--color-accent)] transition-colors font-[family-name:var(--font-display)]">Clone your own voice</p>
+                  <p className="text-[var(--color-ink-mute)] text-xs mt-0.5">Upload your writing and we&apos;ll build a voice that sounds like you</p>
                 </Link>
               )}
             </div>

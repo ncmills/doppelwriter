@@ -341,24 +341,24 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
       )}
       {/* Share URL toast */}
       {shareUrl && (
-        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 bg-green-600 text-white rounded-lg text-sm font-medium shadow-lg flex items-center gap-2">
-          Link copied!
-          <button onClick={() => setShareUrl("")} className="text-green-200 hover:text-white ml-2">&times;</button>
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium uppercase tracking-[0.15em] flex items-center gap-2">
+          Link copied
+          <button onClick={() => setShareUrl("")} className="text-[var(--color-paper-deep)] hover:text-[var(--color-paper)] ml-2">&times;</button>
         </div>
       )}
       {/* Save toast */}
       {saved && (
-        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 bg-green-600 text-white rounded-lg text-sm font-medium shadow-lg">
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium uppercase tracking-[0.15em]">
           Saved to drafts
         </div>
       )}
       {/* Email verification banner */}
       {emailVerified === false && (
-        <div className="mb-4 px-4 py-2.5 bg-amber-900/30 border border-amber-700/40 rounded-lg flex items-center justify-between">
-          <span className="text-amber-300 text-sm">Verify your email to keep using DoppelWriter. Check your inbox for the verification link.</span>
+        <div className="mb-4 px-4 py-2.5 bg-[var(--color-paper-deep)] border border-[var(--color-accent)] flex items-center justify-between">
+          <span className="text-[var(--color-ink)] text-sm">Verify your email to keep using DoppelWriter. Check your inbox for the verification link.</span>
           <button
             onClick={() => fetch("/api/auth/signup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ resendVerification: true }) }).then(() => alert("Verification email sent!"))}
-            className="text-xs text-amber-400 hover:text-amber-300 underline shrink-0 ml-4"
+            className="text-xs text-[var(--color-accent)] hover:text-[var(--color-ink)] underline shrink-0 ml-4 uppercase tracking-[0.15em]"
           >
             Resend email
           </button>
@@ -368,39 +368,40 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
       {doneMode ? (
         <div>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
-            <h2 className="font-[family-name:var(--font-literata)] text-lg font-semibold">Final Draft</h2>
+            <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-ink)]">Final Draft</h2>
             <div className="flex flex-wrap gap-2">
-              <button onClick={handleBackToEdit} className="px-3 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs text-stone-400 hover:text-white transition-colors">
+              <button onClick={handleBackToEdit} className="px-3 py-2 border border-[var(--color-rule)] hover:border-[var(--color-ink)] text-xs uppercase tracking-[0.15em] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">
                 Back to Edit
               </button>
-              <button onClick={handleCopy} className="px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
-                {copied ? "Copied!" : "Copy Text"}
+              <button onClick={handleCopy} className="px-3 py-2 border border-[var(--color-rule)] hover:border-[var(--color-ink)] text-xs uppercase tracking-[0.15em] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">
+                {copied ? "Copied" : "Copy Text"}
               </button>
-              <button onClick={handleCopyFormatted} className="px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
-                {copied ? "Copied!" : "Copy Formatted"}
+              <button onClick={handleCopyFormatted} className="px-3 py-2 border border-[var(--color-rule)] hover:border-[var(--color-ink)] text-xs uppercase tracking-[0.15em] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">
+                {copied ? "Copied" : "Copy Formatted"}
               </button>
-              <button onClick={handleDownload} className="px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors">
+              <button onClick={handleDownload} className="px-3 py-2 border border-[var(--color-rule)] hover:border-[var(--color-ink)] text-xs uppercase tracking-[0.15em] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">
                 Download
               </button>
-              <button onClick={handleShare} disabled={sharing} className="px-3 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-xs transition-colors disabled:opacity-50">
-                {sharing ? "Sharing..." : shareUrl ? "Shared!" : "Share"}
+              <button onClick={handleShare} disabled={sharing} className="px-3 py-2 border border-[var(--color-rule)] hover:border-[var(--color-ink)] text-xs uppercase tracking-[0.15em] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors disabled:opacity-50">
+                {sharing ? "Sharing..." : shareUrl ? "Shared" : "Share"}
               </button>
-              <button onClick={handleSave} className="px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
+              <button onClick={handleSave} className="px-4 py-2 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] text-xs uppercase tracking-[0.15em] font-medium transition-colors">
                 Save
               </button>
             </div>
           </div>
+          <hr className="rule mb-4" />
           <div
-            className="prose prose-invert prose-stone max-w-none bg-stone-900 border border-stone-800 rounded-lg p-4 sm:p-8 min-h-[300px] sm:min-h-[500px] leading-relaxed"
+            className="max-w-none bg-[var(--color-paper)] border border-[var(--color-rule)] p-4 sm:p-8 min-h-[300px] sm:min-h-[500px] leading-relaxed text-[var(--color-ink)] font-[family-name:var(--font-display)]"
             dangerouslySetInnerHTML={{ __html: finalText }}
           />
-          <div className="mt-6 p-4 bg-stone-900/50 border border-stone-800/40 rounded-lg flex items-center justify-between">
+          <div className="mt-6 p-4 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] flex items-center justify-between">
             <div>
-              <p className="text-sm text-stone-300">Know someone who&apos;d love this?</p>
-              <p className="text-xs text-stone-500">Share DoppelWriter — they get 5 free uses</p>
+              <p className="text-sm text-[var(--color-ink)]">Know someone who&apos;d love this?</p>
+              <p className="text-xs text-[var(--color-ink-mute)] italic font-[family-name:var(--font-display)]">Share DoppelWriter &mdash; they get 5 free uses</p>
             </div>
-            <button onClick={copyReferralLink} className="px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
-              {referralCopied ? "Copied!" : "Copy Invite Link"}
+            <button onClick={copyReferralLink} className="px-4 py-2 border border-[var(--color-rule)] hover:border-[var(--color-ink)] text-xs uppercase tracking-[0.15em] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">
+              {referralCopied ? "Copied" : "Copy Invite Link"}
             </button>
           </div>
         </div>
@@ -409,41 +410,41 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
       {/* Top bar — minimal: mode toggle + actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
         <div className="flex items-center gap-3">
-          <div className="flex bg-stone-900 rounded-lg p-0.5">
+          <div className="flex border border-[var(--color-rule)] p-0.5 bg-[var(--color-paper)]">
             <button onClick={() => setMode("edit")}
-              className={`px-4 py-2 rounded-md text-sm transition-colors ${mode === "edit" ? "bg-stone-700 text-white" : "text-stone-400"}`}>
+              className={`px-4 py-2 text-xs uppercase tracking-[0.15em] transition-colors ${mode === "edit" ? "bg-[var(--color-ink)] text-[var(--color-paper)]" : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"}`}>
               Edit
             </button>
             <button onClick={() => setMode("generate")}
-              className={`px-4 py-2 rounded-md text-sm transition-colors ${mode === "generate" ? "bg-stone-700 text-white" : "text-stone-400"}`}>
+              className={`px-4 py-2 text-xs uppercase tracking-[0.15em] transition-colors ${mode === "generate" ? "bg-[var(--color-ink)] text-[var(--color-paper)]" : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"}`}>
               Generate
             </button>
           </div>
           <button onClick={() => setShowOptions(!showOptions)}
-            className="text-xs text-stone-500 hover:text-stone-300 transition-colors">
+            className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] uppercase tracking-[0.15em] transition-colors">
             {showOptions ? "Hide options" : "Options"}
           </button>
           {learningCount > 0 && (
-            <span className="text-xs text-stone-600 hidden sm:inline">{learningCount} edit{learningCount !== 1 ? "s" : ""} learned</span>
+            <span className="text-xs text-[var(--color-ink-mute)] hidden sm:inline italic font-[family-name:var(--font-display)]">{learningCount} edit{learningCount !== 1 ? "s" : ""} learned</span>
           )}
         </div>
         <div className="flex gap-2">
-          <button onClick={handleDownload} className="px-3 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs transition-colors text-stone-400 hover:text-white">
+          <button onClick={handleDownload} className="px-3 py-2 border border-[var(--color-rule)] hover:border-[var(--color-ink)] text-xs uppercase tracking-[0.15em] transition-colors text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]">
             Download
           </button>
           {output && (
-            <button onClick={handleShare} disabled={sharing} className="px-3 py-2 bg-stone-800 hover:bg-stone-700 rounded-lg text-xs transition-colors text-stone-400 hover:text-white disabled:opacity-50">
-              {sharing ? "Sharing..." : shareUrl ? "Shared!" : "Share"}
+            <button onClick={handleShare} disabled={sharing} className="px-3 py-2 border border-[var(--color-rule)] hover:border-[var(--color-ink)] text-xs uppercase tracking-[0.15em] transition-colors text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] disabled:opacity-50">
+              {sharing ? "Sharing..." : shareUrl ? "Shared" : "Share"}
             </button>
           )}
-          <button onClick={handleSave} className="px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm transition-colors">
+          <button onClick={handleSave} className="px-4 py-2 border border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] hover:border-[var(--color-accent)] text-xs uppercase tracking-[0.15em] transition-colors">
             Save
           </button>
         </div>
       </div>
 
       {error && (
-        <div className="mb-4 p-3 bg-red-900/20 border border-red-700/40 rounded-lg text-red-400 text-sm">
+        <div className="mb-4 p-3 bg-[var(--color-paper-deep)] border border-[var(--color-accent)] text-[var(--color-accent)] text-sm">
           {error}
         </div>
       )}
@@ -451,14 +452,14 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
 
       {/* Collapsible options — progressive disclosure */}
       {showOptions && (
-        <div className="mb-4 p-3 bg-stone-900/50 border border-stone-800/40 rounded-lg space-y-3">
+        <div className="mb-4 p-3 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] space-y-3">
           <input type="text" value={instructions} onChange={(e) => setInstructions(e.target.value)}
             placeholder={mode === "edit" ? "Instructions (e.g., 'tighten it up', 'more confident')" : "Special instructions for the draft"}
-            className="w-full px-3 py-2 bg-stone-900 border border-stone-800 rounded text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm" />
+            className="w-full px-3 py-2 bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] focus:outline-none text-sm" />
           {mode === "generate" && (
             <input type="number" value={wordCount} onChange={(e) => setWordCount(e.target.value)}
               placeholder="Target word count (e.g., 500)"
-              className="w-full px-3 py-2 bg-stone-900 border border-stone-800 rounded text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm" />
+              className="w-full px-3 py-2 bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] focus:outline-none text-sm" />
           )}
         </div>
       )}
@@ -468,19 +469,19 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
           {/* Edit action bar — at the top */}
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-4">
             <button onClick={handleEdit} disabled={!draft || loading}
-              className="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors disabled:opacity-40 w-full sm:w-auto">
+              className="px-6 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] uppercase tracking-[0.15em] text-xs font-medium transition-colors disabled:opacity-40 w-full sm:w-auto">
               {loading ? "Rewriting..." : "Edit in This Voice"}
             </button>
             {output && !loading && (
               <div className="flex flex-col sm:flex-row gap-2 flex-1">
                 <input type="text" value={feedback} onChange={(e) => setFeedback(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleRevise()} placeholder="Tell it how to revise..."
-                  className="flex-1 px-4 py-2.5 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+                  className="flex-1 px-4 py-2.5 bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] focus:outline-none" />
                 <div className="flex gap-2">
                   <button onClick={handleRevise} disabled={!feedback}
-                    className="flex-1 sm:flex-initial px-4 py-2.5 bg-stone-700 hover:bg-stone-600 rounded-lg transition-colors disabled:opacity-40">Revise</button>
+                    className="flex-1 sm:flex-initial px-4 py-2.5 border border-[var(--color-rule)] hover:border-[var(--color-ink)] text-xs uppercase tracking-[0.15em] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors disabled:opacity-40">Revise</button>
                   <button onClick={handleDone}
-                    className="flex-1 sm:flex-initial px-5 py-2.5 bg-green-600 hover:bg-green-500 rounded-lg font-medium transition-colors">Done</button>
+                    className="flex-1 sm:flex-initial px-5 py-2.5 bg-[var(--color-accent)] text-[var(--color-paper)] hover:bg-[var(--color-ink)] uppercase tracking-[0.15em] text-xs font-medium transition-colors">Done</button>
                 </div>
               </div>
             )}
@@ -490,13 +491,13 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col">
               <div className="flex items-center justify-between mb-2">
-                <h2 className="text-sm font-medium text-stone-400">Your Draft</h2>
-                <label className="text-xs text-amber-400 hover:text-amber-300 cursor-pointer">
+                <h2 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-[0.15em]">Your Draft</h2>
+                <label className="text-xs text-[var(--color-accent)] hover:text-[var(--color-ink)] uppercase tracking-[0.15em] cursor-pointer">
                   Upload file
                   <input type="file" accept=".docx,.txt,.md" onChange={handleFileUpload} className="hidden" />
                 </label>
               </div>
-              <div className="flex-1 min-h-[250px] sm:min-h-[400px] bg-stone-900 border border-stone-800 rounded-lg overflow-hidden">
+              <div className="flex-1 min-h-[250px] sm:min-h-[400px] bg-[var(--color-paper)] border border-[var(--color-rule)] overflow-hidden">
               <RichEditor
                 value={draft}
                 onChange={setDraft}
@@ -506,17 +507,17 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
             </div>
             <div className="flex flex-col">
               <div className="flex items-center justify-between mb-2">
-                <h2 className="text-sm font-medium text-stone-400">{showDiff ? "Changes" : "Output"}</h2>
+                <h2 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-[0.15em]">{showDiff ? "Changes" : "Output"}</h2>
                 {output && (
                   <div className="flex gap-2">
-                    <button onClick={() => setShowDiff(!showDiff)} className="text-xs text-stone-400 hover:text-white">
+                    <button onClick={() => setShowDiff(!showDiff)} className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] uppercase tracking-[0.15em]">
                       {showDiff ? "Clean" : "Diff"}
                     </button>
-                    <button onClick={handleAccept} className="text-xs text-amber-400 hover:text-amber-300">Accept & Keep Editing</button>
+                    <button onClick={handleAccept} className="text-xs text-[var(--color-accent)] hover:text-[var(--color-ink)] uppercase tracking-[0.15em]">Accept &amp; Keep Editing</button>
                   </div>
                 )}
               </div>
-              <div className="flex-1 min-h-[250px] sm:min-h-[400px] bg-stone-900 border border-stone-800 rounded-lg overflow-auto">
+              <div className="flex-1 min-h-[250px] sm:min-h-[400px] bg-[var(--color-paper)] border border-[var(--color-rule)] overflow-auto">
                 {showDiff && diffChunks.length > 0 ? (
                   <div className="p-4"><DiffView chunks={diffChunks} /></div>
                 ) : loading ? (
@@ -525,7 +526,7 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
                   <textarea
                     value={output}
                     onChange={(e) => setOutput(e.target.value)}
-                    className="w-full h-full min-h-[250px] sm:min-h-[400px] p-4 bg-transparent text-white resize-none focus:outline-none leading-relaxed"
+                    className="w-full h-full min-h-[250px] sm:min-h-[400px] p-4 bg-transparent text-[var(--color-ink)] resize-none focus:outline-none leading-relaxed"
                   />
                 ) : (
                   <div className="p-4"><StreamingOutput text="" loading={false} /></div>
@@ -540,29 +541,29 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4">
             <div className="space-y-4">
               <textarea value={brief} onChange={(e) => setBrief(e.target.value)} placeholder="Describe what you want to write..."
-                className="w-full min-h-[200px] sm:min-h-[300px] p-4 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-600 resize-none focus:outline-none focus:ring-2 focus:ring-amber-500 leading-relaxed" />
+                className="w-full min-h-[200px] sm:min-h-[300px] p-4 bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] resize-none focus:outline-none leading-relaxed" />
               <div>
-                <label className="block text-sm text-stone-400 mb-2">Target word count</label>
+                <label className="block text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-[0.15em] mb-2">Target word count</label>
                 <input type="number" value={wordCount} onChange={(e) => setWordCount(e.target.value)} placeholder="e.g., 500"
-                  className="w-full px-4 py-2 bg-stone-900 border border-stone-800 rounded-lg text-white placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+                  className="w-full px-4 py-2 bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] focus:outline-none" />
               </div>
               <button onClick={handleGenerate} disabled={!brief || loading}
-                className="w-full py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors disabled:opacity-40">
+                className="w-full py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] uppercase tracking-[0.15em] text-xs font-medium transition-colors disabled:opacity-40">
                 {loading ? "Writing..." : "Generate Draft"}
               </button>
             </div>
             <div className="flex flex-col">
               <div className="flex items-center justify-between mb-2">
-                <h2 className="text-sm font-medium text-stone-400">Output</h2>
+                <h2 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-[0.15em]">Output</h2>
                 <div className="flex items-center gap-3">
-                  {output && <span className="text-xs text-stone-500">{output.split(/\s+/).length} words</span>}
+                  {output && <span className="text-xs text-[var(--color-ink-mute)] font-mono">{output.split(/\s+/).length} words</span>}
                   {output && !loading && (
                     <button onClick={handleDone}
-                      className="px-4 py-1 bg-green-600 hover:bg-green-500 rounded text-xs font-medium transition-colors">Done</button>
+                      className="px-4 py-1 bg-[var(--color-accent)] text-[var(--color-paper)] hover:bg-[var(--color-ink)] text-xs uppercase tracking-[0.15em] font-medium transition-colors">Done</button>
                   )}
                 </div>
               </div>
-              <div className="flex-1 min-h-[250px] sm:min-h-[400px] p-4 bg-stone-900 border border-stone-800 rounded-lg overflow-auto">
+              <div className="flex-1 min-h-[250px] sm:min-h-[400px] p-4 bg-[var(--color-paper)] border border-[var(--color-rule)] overflow-auto">
                 <StreamingOutput text={output} loading={loading} />
               </div>
             </div>

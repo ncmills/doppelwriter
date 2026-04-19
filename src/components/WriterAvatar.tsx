@@ -23,7 +23,7 @@ export default function WriterAvatar({
 
     return (
       <div
-        className="rounded-full bg-stone-800 flex items-center justify-center text-stone-400 font-medium shrink-0"
+        className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-ink-soft)] font-[family-name:var(--font-display)] font-medium shrink-0"
         style={{ width: size, height: size, fontSize: size * 0.35 }}
       >
         {initials}
@@ -37,7 +37,7 @@ export default function WriterAvatar({
       alt={`Portrait of ${name}`}
       width={size}
       height={size}
-      className="rounded-full object-cover shrink-0 bg-stone-800"
+      className="object-cover shrink-0 bg-[var(--color-paper-deep)] duotone"
       loading="lazy"
     />
   );
