@@ -3,6 +3,9 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 
+const DEMO_BRIEF =
+  "Write a paragraph about why the best ideas come when you're not trying.";
+
 export default function LandingDemo() {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,7 +22,7 @@ export default function LandingDemo() {
     try {
       const res = await fetch("/api/demo", { method: "POST" });
       if (res.status === 429) {
-        setError("Demo limit reached — sign up to keep writing!");
+        setError("Demo limit reached — create an account to keep writing.");
         setLoading(false);
         return;
       }
@@ -43,71 +46,103 @@ export default function LandingDemo() {
   }, [loading]);
 
   return (
-    <div className="bg-stone-900/80 border border-stone-800/60 rounded-xl overflow-hidden shadow-2xl">
-      {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-stone-800/40">
-        <div className="flex items-center gap-3">
-          <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-stone-700" />
-            <div className="w-3 h-3 rounded-full bg-stone-700" />
-            <div className="w-3 h-3 rounded-full bg-stone-700" />
+    <div className="mx-auto max-w-3xl">
+      <div className="bg-[var(--color-paper)] border border-[var(--color-rule)]">
+        {/* Slug line — the editorial masthead */}
+        <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--color-rule)]">
+          <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-[var(--color-ink-soft)]">
+            <span>The Demo</span>
+            <span className="h-[1px] w-6 bg-[var(--color-rule)]" />
+            <span>Live</span>
           </div>
-          <span className="text-xs text-stone-500">Live Demo</span>
+          <div className="text-[11px] uppercase tracking-[0.2em] text-[var(--color-ink-soft)]">
+            <span className="text-[var(--color-accent)]">●</span>{" "}
+            Voice: Hemingway
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-stone-700" />
-          <span className="text-xs text-amber-400">Hemingway</span>
+
+        {/* Brief — typewriter prompt */}
+        <div className="px-5 sm:px-8 pt-6 pb-4">
+          <div className="flex items-baseline gap-3 mb-3">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[var(--color-ink-mute)]">
+              Brief
+            </span>
+            <span className="h-[1px] flex-1 bg-[var(--color-rule)]" />
+          </div>
+          <p className="font-mono text-[15px] leading-relaxed text-[var(--color-ink)]">
+            <span className="text-[var(--color-ink-mute)] select-none mr-2">
+              ›
+            </span>
+            {DEMO_BRIEF}
+            {!loading && !output && !error && (
+              <span className="type-cursor" aria-hidden="true" />
+            )}
+          </p>
         </div>
-      </div>
 
-      {/* Content area */}
-      <div className="p-4 sm:p-6">
-        <p className="text-xs text-stone-500 mb-2">Brief</p>
-        <p className="text-sm text-stone-400 mb-4">
-          &ldquo;Write a paragraph about why the best ideas come when you&apos;re not trying&rdquo;
-        </p>
-
+        {/* Action */}
         {!output && !loading && !error && (
-          <button
-            onClick={handleGenerate}
-            className="w-full py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors"
-          >
-            Generate — Watch Hemingway Write
-          </button>
+          <div className="px-5 sm:px-8 pb-6">
+            <button
+              onClick={handleGenerate}
+              className="w-full py-3 bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium tracking-wide uppercase hover:bg-[var(--color-accent)] transition-colors"
+              style={{ borderRadius: "2px" }}
+            >
+              Compose — Watch Hemingway Write
+            </button>
+          </div>
         )}
 
         {error && (
-          <div className="text-center">
-            <p className="text-amber-400 text-sm mb-4">{error}</p>
-            <Link href="/signup" className="inline-block px-6 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-sm font-medium transition-colors">
-              Sign Up Free
+          <div className="px-5 sm:px-8 pb-8 text-center">
+            <p className="text-[var(--color-accent)] text-sm mb-4 font-[family-name:var(--font-display)] italic">
+              {error}
+            </p>
+            <Link
+              href="/signup"
+              className="inline-block px-6 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium tracking-wide uppercase hover:bg-[var(--color-accent)] transition-colors"
+              style={{ borderRadius: "2px" }}
+            >
+              Create an account
             </Link>
           </div>
         )}
 
         {(output || loading) && (
-          <div className="mt-2">
-            <p className="text-xs text-stone-500 mb-2">Hemingway&apos;s Voice</p>
-            <p className="text-sm text-white leading-relaxed">
+          <div className="px-5 sm:px-8 pb-8">
+            <div className="flex items-baseline gap-3 mb-4">
+              <span className="text-[10px] uppercase tracking-[0.25em] text-[var(--color-ink-mute)]">
+                In Hemingway&apos;s voice
+              </span>
+              <span className="h-[1px] flex-1 bg-[var(--color-rule)]" />
+            </div>
+            <p className="font-[family-name:var(--font-display)] text-lg sm:text-xl leading-[1.55] text-[var(--color-ink)]">
               {output}
-              {loading && <span className="inline-block w-0.5 h-4 bg-amber-400 ml-0.5 animate-pulse" />}
+              {loading && <span className="type-cursor" aria-hidden="true" />}
             </p>
-          </div>
-        )}
 
-        {done && (
-          <div className="mt-6 pt-4 border-t border-stone-800/40 text-center">
-            <p className="text-stone-400 text-sm mb-3">That was Hemingway. Want to try your own voice?</p>
-            <Link
-              href="/signup"
-              className="inline-block px-6 py-2.5 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium transition-colors"
-            >
-              Create Your Voice — Free
-            </Link>
-            <p className="text-stone-600 text-xs mt-2">No credit card required</p>
+            {done && (
+              <div className="mt-8 pt-6 border-t border-[var(--color-rule)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <p className="text-sm text-[var(--color-ink-soft)] italic">
+                  That was Hemingway. What would yours sound like?
+                </p>
+                <Link
+                  href="/signup"
+                  className="inline-block px-5 py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium tracking-wide uppercase hover:bg-[var(--color-accent)] transition-colors whitespace-nowrap"
+                  style={{ borderRadius: "2px" }}
+                >
+                  Create your voice →
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>
+
+      {/* Colophon line */}
+      <p className="mt-3 text-center text-[11px] uppercase tracking-[0.2em] text-[var(--color-ink-mute)]">
+        No account required · No credit card
+      </p>
     </div>
   );
 }

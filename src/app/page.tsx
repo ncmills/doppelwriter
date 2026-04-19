@@ -1,23 +1,32 @@
 import Link from "next/link";
-import { CURATED_WRITERS, CATEGORIES } from "@/lib/writer-data";
 import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
-import { WRITER_PHOTOS } from "@/lib/writer-photos";
 import LandingDemo from "@/components/LandingDemo";
 import LandingNav from "@/components/LandingNav";
 import WriterCarousel from "@/components/WriterCarousel";
 
+const CATEGORY_SUBHEADS: Record<string, string> = {
+  personal: "The ones that matter most.",
+  professional: "Letters that get opened, read, answered.",
+  business: "Proposals, updates, pages that don't sound like a template.",
+  content: "Essays, posts, scripts — written the way you'd say it.",
+  formal: "Official correspondence, said clearly.",
+};
+
 const features = [
   {
-    title: "Clone Any Voice",
-    desc: "Upload writing from anyone — yourself, your mom, your boss, a friend. DoppelWriter reads their voice the way a musician reads sheet music: rhythm, dynamics, the spaces between notes.",
+    eyebrow: "01 — Clone a voice",
+    title: "Any voice you can point to",
+    body: "Upload emails, essays, posts — your own, a friend's, a founder's. DoppelWriter reads the voice the way a musician reads sheet music: rhythm, dynamics, the spaces between notes.",
   },
   {
-    title: "Write Like the Greats",
-    desc: "Pick from our library of iconic writers, or name anyone. We build a forensic style profile from their published work so you can draft in their voice.",
+    eyebrow: "02 — Hire the greats",
+    title: "Or borrow from the canon",
+    body: "Pick from 140+ prebuilt voice profiles: Hemingway, Didion, Graham, Morrison, Buffett. Or name anyone — we build a forensic style profile from their published work.",
   },
   {
-    title: "Edit & Generate",
-    desc: "Paste a rough draft and get it refined in your chosen voice. Or start from a brief. Streaming output, word-level tracked changes, iterative revision.",
+    eyebrow: "03 — Draft & revise",
+    title: "Edit in place, stream in voice",
+    body: "Paste a rough draft and get it refined. Start from a brief and watch it stream. Word-level tracked changes. Iterate until it sounds like you actually wrote it.",
   },
 ];
 
@@ -57,285 +66,375 @@ const jsonLd = {
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web",
   url: "https://doppelwriter.com",
-  description: "AI-powered writing tool that clones your voice or lets you write like any famous author.",
+  description:
+    "AI-powered writing tool that clones your voice or lets you write like any famous author.",
   offers: [
-    { "@type": "Offer", price: "0", priceCurrency: "USD", name: "Free", description: "AI-powered writing tool that clones any voice" },
+    {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+      name: "Free",
+      description: "AI-powered writing tool that clones any voice",
+    },
   ],
 };
 
+const crossSites = [
+  { label: "Tour de Fore", href: "https://tourdefore.com", note: "Golf trip planner" },
+  { label: "Peptide Stack", href: "https://whatpeptidesdo.com", note: "Research journal" },
+  { label: "I Don't Have a Will", href: "https://idonthaveawill.com", note: "Estate tool" },
+  { label: "Imfrustrated", href: "https://imfrustrated.org", note: "Venting, done well" },
+];
+
+const footerCols: { title: string; links: { label: string; href: string }[] }[] = [
+  {
+    title: "Product",
+    links: [
+      { label: "Voice Analyzer", href: "/analyze" },
+      { label: "The Editor", href: "/write" },
+      { label: "For Writers", href: "/for" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Journal", href: "/blog" },
+      { label: "How it works", href: "/how-it-works" },
+    ],
+  },
+  {
+    title: "Use Cases",
+    links: [
+      { label: "Wedding speech", href: "/write/wedding-speech" },
+      { label: "Cover letter", href: "/write/cover-letter" },
+      { label: "Newsletter", href: "/write/newsletter" },
+      { label: "Blog post", href: "/write/blog-post" },
+      { label: "LinkedIn post", href: "/write/linkedin-post" },
+      { label: "All templates", href: "/write" },
+    ],
+  },
+  {
+    title: "Compare",
+    links: [
+      { label: "vs. ChatGPT", href: "/vs/chatgpt" },
+      { label: "vs. Jasper", href: "/vs/jasper" },
+      { label: "vs. Grammarly", href: "/vs/grammarly" },
+      { label: "vs. Copy.ai", href: "/vs/copyai" },
+      { label: "vs. Writesonic", href: "/vs/writesonic" },
+      { label: "All alternatives", href: "/alternatives" },
+    ],
+  },
+];
+
 export default function LandingPage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[var(--color-paper)] text-[var(--color-ink)]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <LandingNav />
 
-      {/* Hero */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 pt-11 sm:pt-17 pb-8 sm:pb-11 text-center">
-        <h1 className="font-[family-name:var(--font-literata)] text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight mb-6">
-          Your writing has a{" "}
-          <span className="bg-gradient-to-r from-amber-400 to-orange-300 bg-clip-text text-transparent">
-            fingerprint.
-          </span>
-        </h1>
-        <p className="text-lg sm:text-xl text-stone-400 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
-          AI that writes like anyone. Clone your voice, your mom&apos;s, your boss&apos;s —
-          or write like Hemingway, Paul Graham, and the greats.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+      <main id="main-content">
+        {/* ━━━━━━━━━━ HERO ━━━━━━━━━━ */}
+        <section className="max-w-5xl mx-auto px-5 sm:px-8 pt-14 sm:pt-24 pb-10 sm:pb-16">
+          <div className="text-center mb-10 sm:mb-14">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-6">
+              <span className="text-[var(--color-accent)]">●</span>{" "}
+              Vol. I — AI Writing, Voice-Matched
+            </p>
+            <h1 className="font-[family-name:var(--font-display)] font-bold text-[44px] sm:text-[64px] md:text-[72px] leading-[1.02] tracking-[-0.02em] mb-6 sm:mb-8">
+              Write in anyone&apos;s voice.
+              <br />
+              <em className="font-normal text-[var(--color-ink-soft)]">
+                Starting with yours.
+              </em>
+            </h1>
+            <p className="font-[family-name:var(--font-display)] text-lg sm:text-2xl text-[var(--color-ink-soft)] max-w-2xl mx-auto leading-snug italic">
+              The AI that sounds like you. Or Hemingway. Or your mom.
+            </p>
+          </div>
+
+          {/* The demo IS the hero */}
+          <LandingDemo />
+        </section>
+
+        <hr className="rule max-w-6xl mx-auto" />
+
+        {/* ━━━━━━━━━━ THREE-UP FEATURES — newspaper columns ━━━━━━━━━━ */}
+        <section className="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
+          <div className="grid md:grid-cols-3 gap-10 md:gap-14">
+            {features.map((f) => (
+              <div key={f.title}>
+                <p className="text-[11px] uppercase tracking-[0.25em] text-[var(--color-accent)] mb-4">
+                  {f.eyebrow}
+                </p>
+                <h3 className="font-[family-name:var(--font-display)] text-[28px] leading-[1.1] mb-4">
+                  {f.title}
+                </h3>
+                <div className="w-8 h-[1px] bg-[var(--color-rule)] mb-4" />
+                <p className="text-[15px] leading-[1.7] text-[var(--color-ink-soft)]">
+                  {f.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="rule max-w-6xl mx-auto" />
+
+        {/* ━━━━━━━━━━ WRITER GALLERY — literary trading cards ━━━━━━━━━━ */}
+        <section id="writers" className="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
+          <div className="flex items-baseline justify-between mb-4 gap-6 flex-wrap">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-3">
+                The Writers
+              </p>
+              <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em]">
+                Or borrow <em className="font-normal">someone else&apos;s.</em>
+              </h2>
+            </div>
+            <Link
+              href="/write-like/authors"
+              className="ed-link text-sm text-[var(--color-ink)]"
+            >
+              Browse all 140+ →
+            </Link>
+          </div>
+          <p className="max-w-xl text-[var(--color-ink-soft)] mb-10 italic font-[family-name:var(--font-display)] text-lg">
+            Prebuilt profiles for 140 iconic voices. Name anyone else — we&apos;ll
+            build a forensic style profile from their published work.
+          </p>
+          <WriterCarousel />
+        </section>
+
+        <hr className="rule max-w-6xl mx-auto" />
+
+        {/* ━━━━━━━━━━ USE CASES — newspaper columns ━━━━━━━━━━ */}
+        <section className="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
+          <div className="mb-12 max-w-2xl">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-3">
+              The Assignments
+            </p>
+            <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em] mb-4">
+              What will you write?
+            </h2>
+            <p className="font-[family-name:var(--font-display)] italic text-lg text-[var(--color-ink-soft)]">
+              Any writing task — in any voice.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-10">
+            {USE_CASE_CATEGORIES.map((cat) => {
+              const cases = USE_CASES.filter((u) => u.category === cat.id).slice(0, 5);
+              return (
+                <div key={cat.id} className="border-t border-[var(--color-ink)] pt-4">
+                  <h3 className="font-[family-name:var(--font-display)] text-[22px] leading-tight mb-2">
+                    {cat.label}
+                  </h3>
+                  <p className="text-[13px] italic text-[var(--color-ink-soft)] mb-5 font-[family-name:var(--font-display)]">
+                    — {CATEGORY_SUBHEADS[cat.id]}
+                  </p>
+                  <ul className="space-y-2.5">
+                    {cases.map((uc) => (
+                      <li key={uc.slug}>
+                        <Link
+                          href={`/write/${uc.slug}`}
+                          className="ed-link text-[14px] text-[var(--color-ink)] leading-snug"
+                        >
+                          {uc.title}
+                        </Link>
+                      </li>
+                    ))}
+                    <li className="pt-1">
+                      <Link
+                        href={`/write/${cat.id}`}
+                        className="ed-link ed-link-accent text-[13px] uppercase tracking-[0.15em]"
+                      >
+                        See all →
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <hr className="rule max-w-6xl mx-auto" />
+
+        {/* ━━━━━━━━━━ FIELD NOTES — testimonials as marginalia ━━━━━━━━━━ */}
+        <section className="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-10 text-center">
+            Field Notes — From 50+ Writers In Practice
+          </p>
+          <div className="grid md:grid-cols-3 gap-10">
+            {[
+              {
+                quote:
+                  "I used DoppelWriter for my wedding speech. People thought I hired a professional. It nailed my voice.",
+                attribution: "Sarah K. — marketing director",
+              },
+              {
+                quote:
+                  "I write a weekly newsletter. DoppelWriter cut my drafting time in half. The Hemingway voice is scary good.",
+                attribution: "James M. — founder",
+              },
+              {
+                quote:
+                  "Finally an AI tool that doesn't sound like an AI. I cloned my own voice. I use it for every client email now.",
+                attribution: "Priya R. — consultant",
+              },
+            ].map((t, i) => (
+              <figure key={i} className="border-l-2 border-[var(--color-accent)] pl-5">
+                <blockquote className="font-[family-name:var(--font-display)] italic text-[19px] leading-[1.5] text-[var(--color-ink)] mb-4">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <figcaption className="text-[12px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)]">
+                  {t.attribution}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+
+        <hr className="rule max-w-6xl mx-auto" />
+
+        {/* ━━━━━━━━━━ FAQ — editorial accordion ━━━━━━━━━━ */}
+        <section className="max-w-4xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
+          <div className="mb-10 max-w-2xl">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-3">
+              Frequently Asked
+            </p>
+            <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em]">
+              Questions.
+            </h2>
+          </div>
+          <div className="border-t border-[var(--color-ink)]">
+            {faqs.map((faq) => (
+              <details
+                key={faq.q}
+                className="border-b border-[var(--color-rule)] group"
+              >
+                <summary className="py-5 cursor-pointer list-none flex items-baseline justify-between gap-6">
+                  <span className="font-[family-name:var(--font-display)] text-[20px] sm:text-[22px] leading-snug text-[var(--color-ink)]">
+                    {faq.q}
+                  </span>
+                  <span className="text-[var(--color-ink-mute)] group-open:rotate-45 transition-transform text-xl font-light shrink-0">
+                    +
+                  </span>
+                </summary>
+                <div className="pb-6 pr-8 text-[15px] leading-[1.7] text-[var(--color-ink-soft)]">
+                  {faq.a}
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <hr className="rule max-w-6xl mx-auto" />
+
+        {/* ━━━━━━━━━━ CTA — ink stamp close ━━━━━━━━━━ */}
+        <section className="max-w-4xl mx-auto px-5 sm:px-8 py-20 sm:py-32 text-center">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-6">
+            Fin.
+          </p>
+          <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[64px] leading-[1.03] tracking-[-0.02em] mb-6">
+            Now — <em className="font-normal">your turn.</em>
+          </h2>
+          <p className="font-[family-name:var(--font-display)] italic text-lg sm:text-xl text-[var(--color-ink-soft)] max-w-md mx-auto mb-10">
+            Free to use. No credit card. Voice cloned in under a minute.
+          </p>
           <Link
             href="/signup"
-            className="px-6 sm:px-8 py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium text-base sm:text-lg transition-colors"
+            className="inline-block px-8 py-4 bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium tracking-[0.15em] uppercase hover:bg-[var(--color-accent)] transition-colors"
+            style={{ borderRadius: "2px" }}
           >
-            <span className="sm:hidden">Start Writing Free</span>
-            <span className="hidden sm:inline">Start Writing Free — 5 uses, no credit card</span>
+            Start Writing →
           </Link>
-          <Link
-            href="#writers"
-            className="px-6 sm:px-8 py-3 border border-stone-700 hover:border-stone-500 rounded-lg text-base sm:text-lg transition-colors text-stone-300"
-          >
-            Browse Writers
-          </Link>
-        </div>
-        <p className="mt-4 text-stone-500 text-sm">
-          New to AI writing? <Link href="/how-it-works" className="text-amber-400 hover:text-amber-300 transition-colors underline underline-offset-2">See how it works</Link>
-        </p>
-      </section>
+        </section>
+      </main>
 
-      {/* Features */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-11">
-        <div className="grid md:grid-cols-3 gap-6">
-          {features.map((f, i) => (
-            <div
-              key={f.title}
-              className="card-hover bg-stone-900/50 border border-stone-800/40 rounded-lg p-6"
-            >
-              <div className="w-8 h-8 rounded-full bg-amber-600/20 text-amber-400 flex items-center justify-center text-sm font-bold mb-4">
-                {i + 1}
-              </div>
-              <h3 className="font-[family-name:var(--font-literata)] text-lg font-semibold mb-2">{f.title}</h3>
-              <p className="text-stone-400 text-sm leading-relaxed">{f.desc}</p>
+      {/* ━━━━━━━━━━ FOOTER — 3 columns + cross-site list ━━━━━━━━━━ */}
+      <footer className="border-t border-[var(--color-ink)] bg-[var(--color-paper-deep)]">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-14">
+            {/* Masthead */}
+            <div className="col-span-2 md:col-span-1">
+              <Link href="/" className="flex items-center gap-3 mb-4 text-[var(--color-ink)]">
+                <svg
+                  viewBox="0 0 64 64"
+                  className="h-7 w-7"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path fillRule="evenodd" d="M 4 12 L 18 12 C 28 12 30 20 30 32 C 30 44 28 52 18 52 L 4 52 Z M 10 16 L 17 16 C 22 16 24 22 24 32 C 24 42 22 48 17 48 L 10 48 Z" />
+                  <rect x="30" y="12" width="2" height="40" />
+                  <path d="M 32 12 L 36 12 L 42 52 L 38 52 Z" />
+                  <path d="M 39 52 L 41 52 L 48 12 L 46 12 Z" />
+                  <path d="M 45 12 L 49 12 L 55 52 L 51 52 Z" />
+                  <path d="M 52 52 L 54 52 L 61 12 L 59 12 Z" />
+                </svg>
+                <span className="font-[family-name:var(--font-display)] font-bold text-xl tracking-[-0.02em]">
+                  DoppelWriter
+                </span>
+              </Link>
+              <p className="text-[13px] leading-relaxed text-[var(--color-ink-soft)] italic font-[family-name:var(--font-display)]">
+                Voice-matched writing for people who still read.
+              </p>
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* Live Demo */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-11">
-        <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-3">See it in action</h2>
-        <p className="text-stone-400 text-center mb-8 max-w-xl mx-auto">
-          Watch Hemingway write about ideas — live, right here. No signup needed.
-        </p>
-        <LandingDemo />
-      </section>
-
-      {/* Social Proof */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-        <p className="text-center text-stone-500 text-sm mb-8 uppercase tracking-wider">Trusted by 50+ writers</p>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="card-hover bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
-            <p className="text-stone-300 text-sm leading-relaxed mb-3">
-              &ldquo;I used DoppelWriter for my wedding speech and people thought I hired a professional writer. It nailed my voice perfectly.&rdquo;
-            </p>
-            <p className="text-stone-500 text-xs">— Sarah K., marketing director</p>
-          </div>
-          <div className="card-hover bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
-            <p className="text-stone-300 text-sm leading-relaxed mb-3">
-              &ldquo;I write a weekly newsletter and DoppelWriter cut my drafting time in half. The Hemingway voice is scary good.&rdquo;
-            </p>
-            <p className="text-stone-500 text-xs">— James M., founder</p>
-          </div>
-          <div className="card-hover bg-stone-900/50 border border-stone-800/40 rounded-lg p-5">
-            <p className="text-stone-300 text-sm leading-relaxed mb-3">
-              &ldquo;Finally an AI tool that doesn&apos;t sound like an AI. I cloned my own voice and now I use it for every client email.&rdquo;
-            </p>
-            <p className="text-stone-500 text-xs">— Priya R., consultant</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Writer Showcase — Rotating Gallery */}
-      <section id="writers" className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-11">
-        <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-3">Write Like the Greats</h2>
-        <p className="text-stone-400 text-center mb-8 max-w-xl mx-auto">
-          Pre-built voice profiles for 140+ iconic writers. Or name anyone — we&apos;ll build a custom
-          profile from their published work.
-        </p>
-        <WriterCarousel />
-        <div className="text-center mt-8">
-          <Link href="/write-like/authors" className="inline-block bg-amber-600 hover:bg-amber-500 text-white font-semibold px-8 py-3 rounded-lg transition-colors">
-            Browse All 140+ Writers
-          </Link>
-        </div>
-      </section>
-
-      {/* Use Cases — By Category */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-11">
-        <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-3">What will you write?</h2>
-        <p className="text-stone-400 text-center mb-12 max-w-xl mx-auto">
-          DoppelWriter handles any writing task — in any voice.
-        </p>
-        {USE_CASE_CATEGORIES.map((cat) => {
-          const cases = USE_CASES.filter((u) => u.category === cat.id).slice(0, 4);
-          return (
-            <div key={cat.id} className="mb-10">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-[family-name:var(--font-literata)] text-xl font-semibold">{cat.label}</h3>
-                <Link href={`/write/${cat.id}`} className="text-sm text-amber-400 hover:text-amber-300 transition-colors">
-                  See all &rarr;
-                </Link>
+            {/* 3 columns */}
+            {footerCols.map((col) => (
+              <div key={col.title}>
+                <p className="text-[11px] uppercase tracking-[0.25em] text-[var(--color-ink-mute)] mb-5">
+                  {col.title}
+                </p>
+                <ul className="space-y-2.5">
+                  {col.links.map((l) => (
+                    <li key={l.href}>
+                      <Link
+                        href={l.href}
+                        className="ed-link text-[14px] text-[var(--color-ink)]"
+                      >
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-                {cases.map((uc) => (
-                  <Link
-                    key={uc.slug}
-                    href={`/write/${uc.slug}`}
-                    className="card-hover bg-stone-900/50 border border-stone-800/40 rounded-lg p-4"
+            ))}
+          </div>
+
+          {/* Cross-site reading list */}
+          <div className="border-t border-[var(--color-rule)] pt-8 mb-8">
+            <p className="text-[11px] uppercase tracking-[0.25em] text-[var(--color-ink-mute)] mb-5">
+              Also from the same desk
+            </p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3">
+              {crossSites.map((s) => (
+                <li key={s.href} className="flex items-baseline gap-2">
+                  <a
+                    href={s.href}
+                    rel="nofollow"
+                    className="ed-link text-[13px] text-[var(--color-ink)]"
                   >
-                    <p className="font-medium text-sm mb-1">Write My {uc.title}</p>
-                    <p className="text-xs text-stone-500 line-clamp-2">{uc.description}</p>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </section>
-
-      {/* FAQ */}
-      <section className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-11">
-        <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-8">Questions</h2>
-        <div className="space-y-4">
-          {faqs.map((faq) => (
-            <details key={faq.q} className="card-hover bg-stone-900/50 border border-stone-800/40 rounded-lg group">
-              <summary className="px-6 py-4 cursor-pointer text-sm font-medium list-none flex items-center justify-between">
-                {faq.q}
-                <span className="text-stone-500 group-open:rotate-45 transition-transform text-lg">+</span>
-              </summary>
-              <div className="px-6 pb-4 text-sm text-stone-400 leading-relaxed">
-                {faq.a}
-              </div>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      {/* Free Tools & Resources */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-11">
-        <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold text-center mb-3">Free Tools & Resources</h2>
-        <p className="text-stone-400 text-center mb-8 max-w-xl mx-auto">
-          Explore DoppelWriter beyond the editor — free tools, guides, and niche solutions.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <Link
-            href="/analyze"
-            className="card-hover bg-stone-900/50 border border-stone-800/40 rounded-lg p-5 block"
-          >
-            <h3 className="font-[family-name:var(--font-literata)] font-semibold mb-1">Free Writing Voice Analyzer</h3>
-            <p className="text-sm text-stone-400">Paste any text and get a detailed breakdown of its writing style — sentence rhythm, vocabulary, tone, and personality.</p>
-          </Link>
-          <Link
-            href="/for"
-            className="card-hover bg-stone-900/50 border border-stone-800/40 rounded-lg p-5 block"
-          >
-            <h3 className="font-[family-name:var(--font-literata)] font-semibold mb-1">DoppelWriter For...</h3>
-            <p className="text-sm text-stone-400">Newsletter writers, ghostwriters, fiction authors, content marketers, students — see how DoppelWriter fits your niche.</p>
-          </Link>
-          <Link
-            href="/blog"
-            className="card-hover bg-stone-900/50 border border-stone-800/40 rounded-lg p-5 block"
-          >
-            <h3 className="font-[family-name:var(--font-literata)] font-semibold mb-1">Blog</h3>
-            <p className="text-sm text-stone-400">Writing tips, AI insights, and the craft of sounding like yourself. Learn how to get the most out of voice-matched AI.</p>
-          </Link>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-11 text-center">
-        <h2 className="font-[family-name:var(--font-literata)] text-3xl font-bold mb-4">Ready to find your voice?</h2>
-        <p className="text-stone-400 mb-8">Free to use. No credit card needed.</p>
-        <Link
-          href="/signup"
-          className="inline-block px-8 py-3 bg-amber-600 hover:bg-amber-500 rounded-lg font-medium text-lg transition-colors"
-        >
-          Start Writing Free
-        </Link>
-        <p className="text-stone-600 text-xs mt-3">No credit card required</p>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-stone-800/40 py-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-stone-600">&copy; {new Date().getFullYear()} DoppelWriter</span>
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
-            <Link href="/analyze" className="text-xs text-stone-500 hover:text-white transition-colors">Voice Analyzer</Link>
-            <Link href="/blog" className="text-xs text-stone-500 hover:text-white transition-colors">Blog</Link>
-            <Link href="/for" className="text-xs text-stone-500 hover:text-white transition-colors">Use Cases</Link>
-            <Link href="/privacy" className="text-xs text-stone-500 hover:text-white transition-colors">Privacy</Link>
-            <Link href="/terms" className="text-xs text-stone-500 hover:text-white transition-colors">Terms</Link>
-            <a href="mailto:info@doppelwriter.com" className="text-xs text-stone-500 hover:text-white transition-colors">Contact Us</a>
+                    {s.label}
+                  </a>
+                  <span className="text-[11px] text-[var(--color-ink-mute)] italic font-[family-name:var(--font-display)]">
+                    {s.note}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <a
-            href="mailto:enterprise@doppelwriter.com?subject=Enterprise%20Inquiry"
-            className="text-xs text-stone-500 hover:text-amber-400 transition-colors"
-          >
-            Enterprise &rarr;
-          </a>
+
+          {/* Bottom bar */}
+          <div className="border-t border-[var(--color-rule)] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] uppercase tracking-[0.2em] text-[var(--color-ink-mute)]">
+            <span>© {new Date().getFullYear()} DoppelWriter · All rights reserved</span>
+            <div className="flex gap-5">
+              <Link href="/privacy" className="ed-link">Privacy</Link>
+              <Link href="/terms" className="ed-link">Terms</Link>
+              <a href="mailto:info@doppelwriter.com" className="ed-link">Contact</a>
+            </div>
+          </div>
         </div>
       </footer>
 
-      {/* SEO internal links — visually hidden, accessible to crawlers */}
-      <nav
-        aria-label="Site pages"
-        className="absolute w-px h-px overflow-hidden"
-        style={{ clip: "rect(0,0,0,0)", whiteSpace: "nowrap", border: 0 }}
-      >
-        {/* Comparison pages */}
-        <Link href="/vs/chatgpt">DoppelWriter vs ChatGPT</Link>
-        <Link href="/vs/jasper">DoppelWriter vs Jasper</Link>
-        <Link href="/vs/grammarly">DoppelWriter vs Grammarly</Link>
-        <Link href="/vs/copyai">DoppelWriter vs Copy.ai</Link>
-        <Link href="/vs/writesonic">DoppelWriter vs Writesonic</Link>
-
-        {/* Alternatives */}
-        <Link href="/alternatives">AI Writing Tool Alternatives</Link>
-        <Link href="/alternatives/chatgpt">ChatGPT Alternative</Link>
-        <Link href="/alternatives/jasper">Jasper Alternative</Link>
-        <Link href="/alternatives/grammarly">Grammarly Alternative</Link>
-        <Link href="/alternatives/copy-ai">Copy.ai Alternative</Link>
-        <Link href="/alternatives/writesonic">Writesonic Alternative</Link>
-        <Link href="/alternatives/quillbot">QuillBot Alternative</Link>
-        <Link href="/alternatives/wordtune">Wordtune Alternative</Link>
-        <Link href="/alternatives/rytr">Rytr Alternative</Link>
-
-        {/* Write templates */}
-        <Link href="/write/wedding-speech">Write My Wedding Speech</Link>
-        <Link href="/write/best-man-speech">Write My Best Man Speech</Link>
-        <Link href="/write/eulogy">Write My Eulogy</Link>
-        <Link href="/write/cover-letter">Write My Cover Letter</Link>
-        <Link href="/write/cold-email">Write My Cold Email</Link>
-        <Link href="/write/linkedin-post">Write My LinkedIn Post</Link>
-        <Link href="/write/blog-post">Write My Blog Post</Link>
-        <Link href="/write/newsletter">Write My Newsletter</Link>
-        <Link href="/write/resume">Write My Resume</Link>
-        <Link href="/write/personal-statement">Write My Personal Statement</Link>
-        <Link href="/write/business-proposal">Write My Business Proposal</Link>
-        <Link href="/write/love-letter">Write My Love Letter</Link>
-
-        {/* Audience pages */}
-        <Link href="/for">DoppelWriter For...</Link>
-        <Link href="/for/newsletter-writers">AI Writing for Newsletter Writers</Link>
-        <Link href="/for/ghostwriters">AI Writing for Ghostwriters</Link>
-        <Link href="/for/fiction-writers">AI Writing for Fiction Writers</Link>
-        <Link href="/for/content-marketers">AI Writing for Content Marketers</Link>
-        <Link href="/for/students">AI Writing for Students</Link>
-        <Link href="/for/wedding-speeches">AI Wedding Speech Writer</Link>
-        <Link href="/for/eulogies">AI Eulogy Writer</Link>
-        <Link href="/for/cover-letters">AI Cover Letter Writer</Link>
-      </nav>
-
-      {/* Referral param handler */}
+      {/* Referral param handler — unchanged */}
       <ReferralHandler />
     </div>
   );

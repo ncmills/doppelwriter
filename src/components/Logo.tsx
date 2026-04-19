@@ -1,19 +1,20 @@
 export default function Logo({ className = "w-5 h-5" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 95 68" className={className} fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <g transform="translate(48, 34) rotate(-90) translate(-60, -55)">
-        {/* Pen nib body */}
-        <path d="M60 8 L92 65 L85 80 L35 80 L28 65 Z" />
-        {/* Nib slit */}
-        <line x1="54" y1="40" x2="54" y2="62" />
-        <line x1="66" y1="40" x2="66" y2="62" />
-        {/* Nib slit dots */}
-        <circle cx="54" cy="38" r="3" fill="currentColor" stroke="none" />
-        <circle cx="66" cy="38" r="3" fill="currentColor" stroke="none" />
-        {/* Base band */}
-        <line x1="35" y1="90" x2="85" y2="90" />
-        <line x1="37" y1="96" x2="83" y2="96" />
-      </g>
+    <svg
+      viewBox="0 0 64 64"
+      className={className}
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path
+        fillRule="evenodd"
+        d="M 4 12 L 18 12 C 28 12 30 20 30 32 C 30 44 28 52 18 52 L 4 52 Z M 10 16 L 17 16 C 22 16 24 22 24 32 C 24 42 22 48 17 48 L 10 48 Z"
+      />
+      <rect x="30" y="12" width="2" height="40" />
+      <path d="M 32 12 L 36 12 L 42 52 L 38 52 Z" />
+      <path d="M 39 52 L 41 52 L 48 12 L 46 12 Z" />
+      <path d="M 45 12 L 49 12 L 55 52 L 51 52 Z" />
+      <path d="M 52 52 L 54 52 L 61 12 L 59 12 Z" />
     </svg>
   );
 }

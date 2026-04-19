@@ -1,26 +1,26 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Literata } from "next/font/google";
+import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google";
 import SessionProvider from "@/components/SessionProvider";
 import PostHogProvider from "@/components/PostHogProvider";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
+  weight: ["400", "700", "900"],
   display: "swap",
 });
 
-const literata = Literata({
-  variable: "--font-literata",
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin"],
   display: "swap",
 });
@@ -70,15 +70,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://upload.wikimedia.org" />
         <link rel="dns-prefetch" href="https://upload.wikimedia.org" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${literata.variable} antialiased bg-[#0C0A09] text-[#FAFAF9]`}
+        className={`${inter.variable} ${playfair.variable} ${jetbrains.variable} antialiased`}
       >
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-amber-600 focus:text-white focus:rounded-lg">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--color-ink)] focus:text-[var(--color-paper)]"
+        >
           Skip to content
         </a>
         <script
@@ -94,17 +97,6 @@ export default function RootLayout({
         <SessionProvider>
           <PostHogProvider>{children}</PostHogProvider>
         </SessionProvider>
-        <footer className="py-4 text-center">
-          <p className="text-[10px] text-stone-800/30">
-            <a href="https://whatpeptidesdo.com" rel="nofollow" className="hover:text-stone-700/40 transition-colors">whatpeptidesdo.com</a>
-            {" · "}
-            <a href="https://idonthaveawill.com" rel="nofollow" className="hover:text-stone-700/40 transition-colors">idonthaveawill.com</a>
-            {" · "}
-            <a href="https://imfrustrated.org" rel="nofollow" className="hover:text-stone-700/40 transition-colors">imfrustrated.org</a>
-            {" · "}
-            <a href="https://tourdefore.com" rel="nofollow" className="hover:text-stone-700/40 transition-colors">tourdefore.com</a>
-          </p>
-        </footer>
         <Analytics />
         <SpeedInsights />
       </body>

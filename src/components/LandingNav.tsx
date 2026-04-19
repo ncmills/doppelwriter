@@ -8,31 +8,56 @@ export default function LandingNav() {
   const { data: session } = useSession();
 
   return (
-    <nav aria-label="Main navigation" className="border-b border-stone-800/40 sticky top-0 bg-[#0C0A09]/80 backdrop-blur-sm z-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center h-14 justify-between">
-        <Link href="/" className="font-[family-name:var(--font-literata)] font-bold text-lg flex items-center gap-0 hover:text-white transition-colors">
-            <Logo className="h-[0.86em] w-auto mr-0.5 text-amber-600" />
-            <span className="hidden sm:inline">DoppelWriter</span>
-            <span className="sm:hidden">DW</span>
+    <nav
+      aria-label="Main navigation"
+      className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/95 backdrop-blur-sm z-50"
+    >
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center h-16 justify-between">
+        <Link
+          href="/"
+          aria-label="DoppelWriter — home"
+          className="flex items-center gap-3 text-[var(--color-ink)]"
+        >
+          <Logo className="h-6 w-6 text-[var(--color-ink)]" />
+          <span className="font-[family-name:var(--font-display)] font-bold text-xl tracking-[-0.02em]">
+            DoppelWriter
+          </span>
         </Link>
-        <div className="flex gap-3 sm:gap-4 items-center">
+        <div className="flex gap-5 sm:gap-8 items-center">
+          <Link
+            href="/analyze"
+            className="hidden sm:inline ed-link text-sm text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+          >
+            Analyzer
+          </Link>
+          <Link
+            href="/blog"
+            className="hidden sm:inline ed-link text-sm text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+          >
+            Journal
+          </Link>
           {session?.user ? (
             <Link
               href="/write"
-              className="text-sm px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg transition-colors"
+              className="text-sm px-4 py-2 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] transition-colors uppercase tracking-wide font-medium"
+              style={{ borderRadius: "2px" }}
             >
-              Go to App
+              Open editor
             </Link>
           ) : (
             <>
-              <Link href="/login" className="text-sm text-stone-400 hover:text-white transition-colors">
+              <Link
+                href="/login"
+                className="ed-link text-sm text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+              >
                 Log in
               </Link>
               <Link
                 href="/signup"
-                className="text-sm px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg transition-colors"
+                className="text-sm px-4 py-2 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] transition-colors uppercase tracking-wide font-medium"
+                style={{ borderRadius: "2px" }}
               >
-                Start Writing
+                Start writing
               </Link>
             </>
           )}
