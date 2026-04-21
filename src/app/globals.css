@@ -4,7 +4,7 @@
   /* Ink & paper — literary palette */
   --color-ink: #1a1a1a;
   --color-ink-soft: #4a4a4a;
-  --color-ink-mute: #8a8378;
+  --color-ink-mute: #625a50; /* darkened from #8a8378 (2026-04-21) — clears WCAG AA 4.5 on both paper (6.4:1) and paper-deep (5.8:1) */
   --color-paper: #faf7f0;
   --color-paper-deep: #f0ebe0;
   --color-rule: #d9d2c2;
