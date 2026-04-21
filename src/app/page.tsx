@@ -317,7 +317,7 @@ export default function LandingPage() {
                     +
                   </span>
                 </summary>
-                <div className="pb-6 pr-8 text-[15px] leading-[1.7] text-[var(--color-ink-soft)]">
+                <div className="pb-6 pr-8 text-[15px] leading-[1.7] text-[var(--color-ink-soft)] max-w-[65ch]">
                   {faq.a}
                 </div>
               </details>

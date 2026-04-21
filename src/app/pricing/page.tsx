@@ -133,7 +133,7 @@ export default function PricingPage() {
           </div>
         </div>
 
-        <p className="text-center text-[var(--color-ink-mute)] text-sm mt-8">
+        <p className="text-center text-[var(--color-ink-mute)] text-sm mt-8 max-w-[60ch] mx-auto">
           Pro users are never cut off — heavy usage past 200/month is gently throttled, never blocked.
         </p>
       </main>

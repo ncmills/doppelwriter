@@ -110,7 +110,7 @@ export default function BlogPage() {
               <h2 className="font-[family-name:var(--font-display)] text-xl sm:text-2xl font-semibold mb-2 group-hover:text-[var(--color-accent)] transition-colors">
                 {post.title}
               </h2>
-              <p className="text-[var(--color-ink-soft)] leading-relaxed mb-4">
+              <p className="text-[var(--color-ink-soft)] leading-relaxed mb-4 max-w-[65ch]">
                 {post.description}
               </p>
               <div className="flex flex-wrap gap-2">
