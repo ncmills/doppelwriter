@@ -14,10 +14,8 @@ export async function GET(
   const profile = await getProfile(Number(id));
   if (!profile) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  // Ownership check: user can see their own profiles + curated profiles
-  const db = sql();
-  const [p] = await db`SELECT user_id, is_curated FROM style_profiles WHERE id = ${Number(id)}`;
-  if (!p?.is_curated && p?.user_id !== session.user.id) {
+  // Ownership check uses fields already on the row from getProfile.
+  if (!profile.is_curated && profile.user_id !== session.user.id) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 

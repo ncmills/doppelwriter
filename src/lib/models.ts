@@ -24,15 +24,17 @@ export function logUsage(
   );
 }
 
-// Single shared client with explicit timeout. The SDK default is 10 minutes;
-// our route-level maxDuration is 60s, so we cap below that to surface failures
-// before Vercel kills the function.
-//
-// Existing call sites that do `new Anthropic()` directly still work — they
-// just don't get the timeout. New code should prefer this.
+// Lazy singleton. SDK default timeout is 10 minutes; our route maxDuration is
+// 60s, so we cap below that to surface failures before Vercel kills the function.
+// Streaming generators (lib/generator.ts, lib/editor.ts) keep their own clients
+// without this timeout to avoid clipping long-form generations.
+let _anthropic: Anthropic | null = null;
 export function getAnthropicClient(): Anthropic {
-  return new Anthropic({
-    timeout: 55_000, // 55s — under typical 60s function maxDuration
-    maxRetries: 2,
-  });
+  if (!_anthropic) {
+    _anthropic = new Anthropic({
+      timeout: 55_000,
+      maxRetries: 2,
+    });
+  }
+  return _anthropic;
 }

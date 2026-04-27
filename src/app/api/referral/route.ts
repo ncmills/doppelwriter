@@ -9,27 +9,24 @@ export async function GET() {
   const db = sql();
   const userId = session.user.id;
 
-  const [user] = await db`SELECT referral_code FROM users WHERE id = ${userId}`;
-  if (!user?.referral_code) {
+  const [row] = await db`
+    SELECT
+      u.referral_code,
+      (SELECT COUNT(*)::int FROM referrals WHERE referrer_id = ${userId}) AS count,
+      (SELECT COUNT(*)::int FROM referrals
+        WHERE (referrer_id = ${userId} OR referred_id = ${userId})
+        AND bonus_applied = TRUE) AS bonus_count
+    FROM users u
+    WHERE u.id = ${userId}
+  `;
+
+  if (!row?.referral_code) {
     return NextResponse.json({ error: "No referral code" }, { status: 404 });
   }
 
-  const [countRow] = await db`
-    SELECT COUNT(*)::int as count FROM referrals WHERE referrer_id = ${userId}
-  `;
-  const count = countRow?.count || 0;
-
-  // Total bonus from all referral relationships (both as referrer and referred)
-  const [bonusRow] = await db`
-    SELECT COUNT(*)::int as count FROM referrals
-    WHERE (referrer_id = ${userId} OR referred_id = ${userId})
-    AND bonus_applied = TRUE
-  `;
-  const bonus = (bonusRow?.count || 0) * 5;
-
   return NextResponse.json({
-    code: user.referral_code,
-    count,
-    bonus,
+    code: row.referral_code,
+    count: row.count || 0,
+    bonus: (row.bonus_count || 0) * 5,
   });
 }

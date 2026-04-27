@@ -1,8 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { sql } from "./db";
-import { CLAUDE_MODEL } from "./models";
+import { CLAUDE_MODEL, getAnthropicClient } from "./models";
 
-const client = new Anthropic();
+const client = getAnthropicClient();
 
 // Retry wrapper for Anthropic API calls with rate limit backoff
 async function callWithRetry(
@@ -433,17 +433,18 @@ export async function updateProfile(
   updates: { name?: string; system_prompt?: string; profile_json?: string; voice_overrides?: Record<string, number> }
 ) {
   const db = sql();
-  if (updates.name) {
-    await db`UPDATE style_profiles SET name = ${updates.name}, updated_at = NOW() WHERE id = ${id}`;
-  }
-  if (updates.system_prompt) {
-    await db`UPDATE style_profiles SET system_prompt = ${updates.system_prompt}, updated_at = NOW() WHERE id = ${id}`;
-  }
-  if (updates.profile_json) {
-    await db`UPDATE style_profiles SET profile_json = ${updates.profile_json}, updated_at = NOW() WHERE id = ${id}`;
-  }
-  if (updates.voice_overrides) {
-    // Store overrides as JSON — these modify the system prompt at generation time
-    await db`UPDATE style_profiles SET voice_overrides = ${JSON.stringify(updates.voice_overrides)}, updated_at = NOW() WHERE id = ${id}`;
-  }
+  const name = updates.name ?? null;
+  const sys = updates.system_prompt ?? null;
+  const json = updates.profile_json ?? null;
+  const overrides = updates.voice_overrides ? JSON.stringify(updates.voice_overrides) : null;
+  if (name === null && sys === null && json === null && overrides === null) return;
+  await db`
+    UPDATE style_profiles SET
+      name = COALESCE(${name}, name),
+      system_prompt = COALESCE(${sys}, system_prompt),
+      profile_json = COALESCE(${json}, profile_json),
+      voice_overrides = COALESCE(${overrides}::jsonb, voice_overrides),
+      updated_at = NOW()
+    WHERE id = ${id}
+  `;
 }

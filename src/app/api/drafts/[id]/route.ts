@@ -48,16 +48,15 @@ export async function PUT(
     revisions.push({ content: existing[0].content, timestamp: new Date().toISOString() });
   }
 
-  await db`
+  const [updated] = await db`
     UPDATE drafts SET
       title = COALESCE(${body.title || null}, title),
       content = COALESCE(${body.content || null}, content),
       revisions = ${JSON.stringify(revisions)}::jsonb,
       updated_at = NOW()
     WHERE id = ${Number(id)} AND user_id = ${session.user.id}
+    RETURNING *
   `;
-
-  const [updated] = await db`SELECT * FROM drafts WHERE id = ${Number(id)}`;
   return NextResponse.json(updated);
 }
 

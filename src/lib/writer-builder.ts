@@ -1,9 +1,8 @@
 // Server-only module — imports Anthropic SDK, must not be imported from client components.
 // For writer data (CURATED_WRITERS, CATEGORIES), import from "./writer-data" instead.
 
-import Anthropic from "@anthropic-ai/sdk";
 import { sql } from "./db";
-import { CLAUDE_MODEL } from "./models";
+import { CLAUDE_MODEL, getAnthropicClient } from "./models";
 import { CURATED_WRITERS } from "./writer-data";
 import { buildMultiLayerPrompt } from "./style-analyzer";
 
@@ -11,7 +10,7 @@ import { buildMultiLayerPrompt } from "./style-analyzer";
 export { CURATED_WRITERS, CATEGORIES } from "./writer-data";
 export type { CuratedWriter } from "./writer-data";
 
-const client = new Anthropic();
+const client = getAnthropicClient();
 
 export async function buildWriterProfile(
   writerName: string,

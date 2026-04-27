@@ -3,11 +3,15 @@ import type { CreateEmailOptions } from "resend";
 import crypto from "crypto";
 import { sql } from "./db";
 
+let _resend: Resend | null = null;
 export function getResend() {
-  if (!process.env.RESEND_API_KEY) {
-    throw new Error("RESEND_API_KEY is not configured");
+  if (!_resend) {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error("RESEND_API_KEY is not configured");
+    }
+    _resend = new Resend(process.env.RESEND_API_KEY);
   }
-  return new Resend(process.env.RESEND_API_KEY);
+  return _resend;
 }
 
 /**

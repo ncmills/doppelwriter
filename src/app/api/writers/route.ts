@@ -30,7 +30,10 @@ export async function GET(request: NextRequest) {
       })),
     ];
 
-    return NextResponse.json({ writers: all, categories: CATEGORIES });
+    return NextResponse.json(
+      { writers: all, categories: CATEGORIES },
+      { headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300" } }
+    );
   }
 
   const built = await getCuratedProfiles(category || undefined);
@@ -51,5 +54,8 @@ export async function GET(request: NextRequest) {
     })),
   ];
 
-  return NextResponse.json({ writers: all, categories: CATEGORIES });
+  return NextResponse.json(
+    { writers: all, categories: CATEGORIES },
+    { headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300" } }
+  );
 }

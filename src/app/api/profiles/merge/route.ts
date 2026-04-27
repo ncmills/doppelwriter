@@ -2,10 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { checkRateLimit } from "@/lib/usage";
-import Anthropic from "@anthropic-ai/sdk";
-import { CLAUDE_MODEL } from "@/lib/models";
-
-const client = new Anthropic();
+import { CLAUDE_MODEL, getAnthropicClient } from "@/lib/models";
 
 export const maxDuration = 60;
 
@@ -55,7 +52,7 @@ export async function POST(request: NextRequest) {
     return `--- Voice ${i + 1}: "${p.writer_name || p.name}" (${weight}% influence) ---\n${p.system_prompt || JSON.stringify(p.profile_json)}`;
   }).join("\n\n");
 
-  const response = await client.messages.create({
+  const response = await getAnthropicClient().messages.create({
     model: CLAUDE_MODEL,
     max_tokens: 3000,
     messages: [

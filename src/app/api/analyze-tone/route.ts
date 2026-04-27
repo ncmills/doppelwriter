@@ -1,9 +1,6 @@
 import { NextRequest } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
-import { CLAUDE_MODEL } from "@/lib/models";
+import { CLAUDE_MODEL, getAnthropicClient } from "@/lib/models";
 import { trackServerEvent } from "@/lib/track";
-
-const anthropic = new Anthropic();
 
 // In-memory rate limit: 10 requests per IP per hour
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -72,7 +69,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const response = await anthropic.messages.create({
+    const response = await getAnthropicClient().messages.create({
       model: CLAUDE_MODEL,
       max_tokens: 512,
       messages: [

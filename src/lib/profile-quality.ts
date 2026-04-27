@@ -1,8 +1,7 @@
-import Anthropic from "@anthropic-ai/sdk";
 import { sql } from "./db";
-import { CLAUDE_MODEL } from "./models";
+import { CLAUDE_MODEL, getAnthropicClient } from "./models";
 
-const client = new Anthropic();
+const client = getAnthropicClient();
 
 export interface QualityDimension {
   name: string;

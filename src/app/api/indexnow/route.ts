@@ -25,16 +25,26 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "urls array required" }, { status: 400 });
   }
 
-  const res = await fetch(`${INDEXNOW_HOST}/indexnow`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      host: "doppelwriter.com",
-      key: INDEXNOW_KEY,
-      keyLocation: `https://doppelwriter.com/${INDEXNOW_KEY}.txt`,
-      urlList: urls.slice(0, 10000),
-    }),
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${INDEXNOW_HOST}/indexnow`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        host: "doppelwriter.com",
+        key: INDEXNOW_KEY,
+        keyLocation: `https://doppelwriter.com/${INDEXNOW_KEY}.txt`,
+        urlList: urls.slice(0, 10000),
+      }),
+      signal: AbortSignal.timeout(10_000),
+    });
+  } catch (err) {
+    const aborted = err instanceof DOMException && err.name === "TimeoutError";
+    return NextResponse.json(
+      { error: aborted ? "IndexNow timeout" : "IndexNow request failed" },
+      { status: 504 }
+    );
+  }
 
   return NextResponse.json({
     status: res.status,
