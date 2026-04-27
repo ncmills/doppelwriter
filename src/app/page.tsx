@@ -177,6 +177,29 @@ export default function LandingPage() {
 
         <hr className="rule max-w-6xl mx-auto" />
 
+        {/* ━━━━━━━━━━ VOICE ANALYZER — free on-ramp to a personal profile ━━━━━━━━━━ */}
+        <section className="max-w-4xl mx-auto px-5 sm:px-8 py-16 sm:py-24 text-center">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-4">
+            The Voice Analyzer — Free, No Signup
+          </p>
+          <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em] mb-4">
+            Curious how <em className="font-normal">you</em> sound?
+          </h2>
+          <p className="font-[family-name:var(--font-display)] italic text-lg text-[var(--color-ink-soft)] max-w-xl mx-auto mb-8">
+            Paste anything you&apos;ve written — we&apos;ll break down your style in seconds.
+            Sentence rhythm, vocabulary, signature words, the writers you most resemble.
+          </p>
+          <Link
+            href="/analyze"
+            className="inline-block text-sm px-6 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] transition-colors uppercase tracking-wide font-medium"
+            style={{ borderRadius: "2px" }}
+          >
+            Analyze your writing →
+          </Link>
+        </section>
+
+        <hr className="rule max-w-6xl mx-auto" />
+
         {/* ━━━━━━━━━━ WRITER GALLERY — literary trading cards ━━━━━━━━━━ */}
         <section id="writers" className="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
           <div className="flex items-baseline justify-between mb-4 gap-6 flex-wrap">
