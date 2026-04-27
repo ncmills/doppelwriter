@@ -1,20 +1,31 @@
-// Auto-populate WRITER_PHOTOS for any curated writer that lacks a portrait.
+// Auto-populate WRITER_PHOTOS for any curated writer that lacks a portrait,
+// and self-host every portrait under /public/writers/ to bypass Wikimedia's
+// per-User-Agent thumbnail policy (Vercel's image optimizer + plain browser
+// UAs both get HTTP 400 on most thumb sizes; only sizes already pre-cached
+// by the foundation reliably serve to non-allow-listed UAs).
+//
 //   npx tsx scripts/sync-writer-photos.ts
 //
-// Strategy: query Wikipedia's REST summary API for each missing name, extract
-// thumbnail.source, write back to src/lib/writer-photos.ts (sorted, alpha).
+// Strategy:
+//   1. Diff CURATED_WRITERS vs WRITER_PHOTOS.
+//   2. For missing writers, hit Wikipedia REST summary, take thumbnail.source.
+//   3. Download every portrait to /public/writers/{slug}.{ext} with a real UA.
+//   4. Write WRITER_PHOTOS entries pointing at the local path.
 //
-// Wired as `prebuild` so every Vercel deploy auto-syncs new curated writers.
-// Curated writers must have sufficient online presence to be added — Wikipedia
-// coverage is the floor, so this should resolve cleanly in nearly every case.
+// Wired as `prebuild` — Vercel re-downloads any missing files on each deploy
+// (no-op if /public/writers/ is committed; one-time fetch if gitignored).
 
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync, existsSync, statSync, mkdirSync } from "fs";
 import { join } from "path";
 
-const WRITER_DATA_PATH = join(__dirname, "..", "src", "lib", "writer-data.ts");
-const PHOTOS_PATH = join(__dirname, "..", "src", "lib", "writer-photos.ts");
+const ROOT = join(__dirname, "..");
+const WRITER_DATA_PATH = join(ROOT, "src", "lib", "writer-data.ts");
+const PHOTOS_PATH = join(ROOT, "src", "lib", "writer-photos.ts");
+const PUBLIC_WRITERS_DIR = join(ROOT, "public", "writers");
 
-// Wikipedia titles that disambiguate to the wrong article when queried by display name.
+const UA = "DoppelWriter/1.0 (https://doppelwriter.com; nicholauscmills@gmail.com)";
+
+// Wikipedia article titles for writers whose display name disambiguates wrong.
 const NAME_OVERRIDES: Record<string, string> = {
   "Ben Thompson": "Ben_Thompson_(business_writer)",
   "Howard Marks": "Howard_Marks_(investor)",
@@ -27,13 +38,19 @@ const NAME_OVERRIDES: Record<string, string> = {
   "Conan O'Brien": "Conan_O%27Brien",
 };
 
-// Hand-curated photo URLs for writers Wikipedia can't auto-resolve (no infobox image,
-// no article, or disambiguation is too noisy). Keep this list short — each entry is a
-// commitment to maintain. WriterAvatar falls back to initials if a writer is omitted.
-const MANUAL_PHOTOS: Record<string, string> = {
+// Hand-curated source URLs for writers Wikipedia can't auto-resolve.
+const MANUAL_SOURCES: Record<string, string> = {
   "Matt Levine":
     "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Matt_levine.jpg/250px-Matt_levine.jpg",
 };
+
+function slugify(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/['']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
 
 function parseCuratedNames(): string[] {
   const src = readFileSync(WRITER_DATA_PATH, "utf-8");
@@ -44,7 +61,8 @@ function parseCuratedNames(): string[] {
   return names;
 }
 
-function parsePhotos(): Record<string, string> {
+function parseExistingPhotos(): Record<string, string> {
+  if (!existsSync(PHOTOS_PATH)) return {};
   const src = readFileSync(PHOTOS_PATH, "utf-8");
   const photos: Record<string, string> = {};
   const re = /"([^"]+)":\s*"([^"]+)"/g;
@@ -53,15 +71,14 @@ function parsePhotos(): Record<string, string> {
   return photos;
 }
 
-async function fetchPortrait(name: string): Promise<string | null> {
+async function fetchPortraitUrl(name: string): Promise<string | null> {
+  if (MANUAL_SOURCES[name]) return MANUAL_SOURCES[name];
   const title = NAME_OVERRIDES[name] ?? encodeURIComponent(name.replace(/\s+/g, "_"));
   const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${title}`;
   try {
-    const res = await fetch(url, {
-      headers: { "User-Agent": "DoppelWriter/1.0 (https://doppelwriter.com)" },
-    });
+    const res = await fetch(url, { headers: { "User-Agent": UA } });
     if (!res.ok) {
-      console.warn(`[sync-photos] ${name}: HTTP ${res.status}`);
+      console.warn(`[sync-photos] ${name}: summary HTTP ${res.status}`);
       return null;
     }
     const data = (await res.json()) as {
@@ -70,18 +87,38 @@ async function fetchPortrait(name: string): Promise<string | null> {
       originalimage?: { source?: string };
     };
     if (data.type === "disambiguation") {
-      console.warn(`[sync-photos] ${name}: disambiguation — add NAME_OVERRIDES entry`);
+      console.warn(`[sync-photos] ${name}: disambiguation`);
       return null;
     }
-    const src = data.thumbnail?.source ?? data.originalimage?.source ?? null;
-    if (!src) {
-      console.warn(`[sync-photos] ${name}: no image on Wikipedia article`);
-      return null;
-    }
-    return src;
+    return data.thumbnail?.source ?? data.originalimage?.source ?? null;
   } catch (err) {
-    console.warn(`[sync-photos] ${name}: fetch error — ${err}`);
+    console.warn(`[sync-photos] ${name}: summary error — ${err}`);
     return null;
+  }
+}
+
+function extFromUrl(url: string): string {
+  const m = url.match(/\.(jpe?g|png|webp|gif)(?:\?|$)/i);
+  return (m?.[1] ?? "jpg").toLowerCase().replace("jpeg", "jpg");
+}
+
+async function downloadTo(url: string, fullPath: string): Promise<boolean> {
+  try {
+    const res = await fetch(url, { headers: { "User-Agent": UA } });
+    if (!res.ok) {
+      console.warn(`[sync-photos] download HTTP ${res.status}: ${url}`);
+      return false;
+    }
+    const buf = Buffer.from(await res.arrayBuffer());
+    if (buf.length < 500) {
+      console.warn(`[sync-photos] download tiny (${buf.length}B): ${url}`);
+      return false;
+    }
+    writeFileSync(fullPath, buf);
+    return true;
+  } catch (err) {
+    console.warn(`[sync-photos] download error — ${err}`);
+    return false;
   }
 }
 
@@ -90,60 +127,76 @@ function writePhotos(photos: Record<string, string>) {
   const body = sorted
     .map((k) => `  ${JSON.stringify(k)}: ${JSON.stringify(photos[k])},`)
     .join("\n");
-  const file = `export const WRITER_PHOTOS: Record<string, string> = {\n${body}\n};\n`;
+  const file = `// Local paths under /public/writers/. Generated by scripts/sync-writer-photos.ts.\nexport const WRITER_PHOTOS: Record<string, string> = {\n${body}\n};\n`;
   writeFileSync(PHOTOS_PATH, file, "utf-8");
 }
 
+async function ensureLocal(
+  name: string,
+  existing: Record<string, string>,
+): Promise<string | null> {
+  const slug = slugify(name);
+  const existingValue = existing[name];
+
+  // Already a local path that exists on disk → keep.
+  if (existingValue?.startsWith("/writers/")) {
+    const filename = existingValue.slice("/writers/".length);
+    const fullPath = join(PUBLIC_WRITERS_DIR, filename);
+    if (existsSync(fullPath) && statSync(fullPath).size > 500) return existingValue;
+  }
+
+  // Otherwise, find a source URL: existing remote, manual, or Wikipedia lookup.
+  let sourceUrl =
+    existingValue && existingValue.startsWith("http")
+      ? existingValue
+      : MANUAL_SOURCES[name] ?? (await fetchPortraitUrl(name));
+  if (!sourceUrl) return null;
+
+  const ext = extFromUrl(sourceUrl);
+  const filename = `${slug}.${ext}`;
+  const fullPath = join(PUBLIC_WRITERS_DIR, filename);
+  const localPath = `/writers/${filename}`;
+
+  if (existsSync(fullPath) && statSync(fullPath).size > 500) return localPath;
+
+  const ok = await downloadTo(sourceUrl, fullPath);
+  return ok ? localPath : null;
+}
+
 async function main() {
+  if (!existsSync(PUBLIC_WRITERS_DIR)) mkdirSync(PUBLIC_WRITERS_DIR, { recursive: true });
+
   const curated = parseCuratedNames();
-  const photos = parsePhotos();
+  const existing = parseExistingPhotos();
 
-  // 1. Fix legacy key drift: "Ben Thompson (analyst)" → "Ben Thompson"
-  if (photos["Ben Thompson (analyst)"] && !photos["Ben Thompson"]) {
-    photos["Ben Thompson"] = photos["Ben Thompson (analyst)"];
+  // Fix legacy key drift before we start.
+  if (existing["Ben Thompson (analyst)"] && !existing["Ben Thompson"]) {
+    existing["Ben Thompson"] = existing["Ben Thompson (analyst)"];
   }
 
-  // 2. Prune orphan entries (photos for writers no longer in the curated roster).
-  const curatedSet = new Set(curated);
-  const before = Object.keys(photos).length;
-  for (const key of Object.keys(photos)) {
-    if (!curatedSet.has(key)) {
-      console.log(`[sync-photos] prune orphan: ${key}`);
-      delete photos[key];
-    }
-  }
-  const pruned = before - Object.keys(photos).length;
-
-  // 3. Apply manual overrides (always — these win over Wikipedia auto-resolution).
-  for (const [name, url] of Object.entries(MANUAL_PHOTOS)) {
-    if (curatedSet.has(name)) photos[name] = url;
-  }
-
-  // 4. Backfill missing curated writers from Wikipedia.
-  const missing = curated.filter((n) => !photos[n]);
-  console.log(
-    `[sync-photos] curated=${curated.length} have=${Object.keys(photos).length} missing=${missing.length} pruned=${pruned}`,
-  );
-
-  let added = 0;
+  const photos: Record<string, string> = {};
+  let resolved = 0;
   let failed = 0;
-  for (const name of missing) {
-    const src = await fetchPortrait(name);
-    if (src) {
-      photos[name] = src;
-      added++;
-      console.log(`[sync-photos] + ${name}`);
+  const failures: string[] = [];
+
+  for (const name of curated) {
+    const localPath = await ensureLocal(name, existing);
+    if (localPath) {
+      photos[name] = localPath;
+      resolved++;
     } else {
       failed++;
+      failures.push(name);
     }
-    // Polite throttle — Wikipedia REST is generous but no need to hammer.
-    await new Promise((r) => setTimeout(r, 100));
+    await new Promise((r) => setTimeout(r, 80));
   }
 
   writePhotos(photos);
-  console.log(`[sync-photos] done. added=${added} failed=${failed} total=${Object.keys(photos).length}`);
-  if (failed > 0) {
-    console.log(`[sync-photos] ${failed} writer(s) need manual NAME_OVERRIDES entries.`);
+  console.log(
+    `[sync-photos] done. curated=${curated.length} resolved=${resolved} failed=${failed}`,
+  );
+  if (failures.length) {
+    console.log(`[sync-photos] no portrait: ${failures.join(", ")}`);
   }
 }
 

@@ -39,7 +39,6 @@ export default function WriterAvatar({
       height={size}
       className="object-cover shrink-0 bg-[var(--color-paper-deep)] duotone"
       loading="lazy"
-      unoptimized
     />
   );
 }
