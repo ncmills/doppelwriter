@@ -128,6 +128,7 @@ export default function WriterCarousel() {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover duotone"
                     loading="lazy"
+                    unoptimized
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center font-[family-name:var(--font-display)] text-5xl text-[var(--color-ink-mute)]">
