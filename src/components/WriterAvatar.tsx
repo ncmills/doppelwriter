@@ -13,20 +13,13 @@ export default function WriterAvatar({
   const url = WRITER_PHOTOS[name];
 
   if (!url) {
-    // Fallback: initials
-    const initials = name
-      .split(" ")
-      .map((w) => w[0])
-      .join("")
-      .slice(0, 2)
-      .toUpperCase();
-
     return (
       <div
-        className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-ink-soft)] font-[family-name:var(--font-display)] font-medium shrink-0"
-        style={{ width: size, height: size, fontSize: size * 0.35 }}
+        className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-ink-mute)] shrink-0"
+        style={{ width: size, height: size }}
+        aria-label={`No portrait available for ${name}`}
       >
-        {initials}
+        <FaceQuestionGlyph size={size} />
       </div>
     );
   }
@@ -40,5 +33,29 @@ export default function WriterAvatar({
       className="object-cover shrink-0 bg-[var(--color-paper-deep)] duotone"
       loading="lazy"
     />
+  );
+}
+
+function FaceQuestionGlyph({ size }: { size: number }) {
+  // Single-stroke, ink-on-paper face with a question mark on the forehead.
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      width={size * 0.65}
+      height={size * 0.65}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="16" cy="16" r="11" />
+      <circle cx="12" cy="17" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="20" cy="17" r="0.9" fill="currentColor" stroke="none" />
+      <path d="M13 21 Q16 23 19 21" />
+      <path d="M14 11 Q14 9 16 9 Q18 9 18 11 Q18 12 16.5 12.5 Q16 13 16 14" />
+      <circle cx="16" cy="15.4" r="0.6" fill="currentColor" stroke="none" />
+    </svg>
   );
 }
