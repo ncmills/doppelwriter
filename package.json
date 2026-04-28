@@ -6,6 +6,7 @@
     "dev": "next dev",
     "prebuild": "npx tsx scripts/sync-writer-photos.ts",
     "build": "next build",
+    "postbuild": "npx tsx scripts/submit-indexnow.ts || true",
     "start": "next start",
     "lint": "eslint",
     "indexnow": "npx tsx scripts/submit-indexnow.ts",
