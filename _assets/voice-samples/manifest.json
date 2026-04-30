@@ -1,0 +1,45 @@
+{
+  "brief": "Write a paragraph about why the best ideas come when you're not trying",
+  "writers": [
+    {
+      "writer": "Joan Didion",
+      "slug": "joan-didion",
+      "brief": "Write a paragraph about why the best ideas come when you're not trying",
+      "sample": "The best ideas come when you're not trying, which is another way of saying they come when you have stopped performing the act of thinking and have instead allowed the mind to return to its own rhythms, the way one allows a horse to find its way home in the dark. We know this and yet we resist it, scheduling our brainstorming sessions and our creative hours as if illumination could be summoned by Outlook calendar, as if insight respected office hours in Midtown or Silver Lake. I have noticed that my own ideas arrive in the shower, or on the freeway between the San Bernardino exit and the merge toward LAX, or in the specific quality of boredom that descends at a dinner party in Brentwood when someone is explaining their position on interest rates—which is to say they arrive precisely when I have abandoned the notion that I am the kind of person who has ideas worth having. The mechanism seems to be this: we crowd the conscious mind with intention, with the performance of being someone who thinks, and in doing so we obscure the deeper frequencies, the ones that have been working all along in the white noise beneath our awareness, the ones that surface only when we stop listening for them.",
+      "capturedAt": "2026-04-30T16:36:57.507Z",
+      "model": "claude-sonnet-4-5"
+    },
+    {
+      "writer": "Ernest Hemingway",
+      "slug": "ernest-hemingway",
+      "brief": "Write a paragraph about why the best ideas come when you're not trying",
+      "sample": "The best ideas came when you walked. Or when you were in the shower. Or when you were looking at the water. You did not sit at the desk and wait for them. That was no good. You could sit there all day and nothing would come and you would feel bad. But then you would go out and walk by the river and you would not think about the problem and the idea would be there. It was always there. You just had to stop looking for it. You had to do something else. You had to let your mind go quiet. And then it would come. It was like fishing. You put the line in and you did not watch it. You looked at the hills and the trees and you felt the sun. And then there was the pull. The idea came when you were not trying. That was the way it worked and it was the only way it worked.",
+      "capturedAt": "2026-04-30T16:37:05.139Z",
+      "model": "claude-sonnet-4-5"
+    },
+    {
+      "writer": "Paul Graham",
+      "slug": "paul-graham",
+      "brief": "Write a paragraph about why the best ideas come when you're not trying",
+      "sample": "The reason the best ideas come when you're not trying is that your conscious mind is terrible at making novel connections but excellent at getting in the way. When you're actively trying to solve a problem, you're basically running a search through familiar territory—the same neural pathways you've worn smooth through repetition. But when you're in the shower or walking the dog, your unconscious mind starts doing something more like annealing in metallurgy: it lets connections form at random and keeps the ones that reduce tension in your overall mental model. I've noticed that startup founders who've been grinding on a problem for weeks will often have their breakthrough while explaining it to someone at a party, not because the other person said anything useful, but because the act of verbalizing it differently jostled something loose. Your unconscious has been working on it the whole time, trying combinations you'd never consciously attempt because they seem too weird or too simple. The constraint isn't time or effort—it's that deliberate thought is like trying to find something by gripping it tighter, when what you need to do is relax your hand and let it surface.",
+      "capturedAt": "2026-04-30T16:37:14.684Z",
+      "model": "claude-sonnet-4-5"
+    },
+    {
+      "writer": "Barack Obama",
+      "slug": "barack-obama",
+      "brief": "Write a paragraph about why the best ideas come when you're not trying",
+      "sample": "Look, we've all been there—you're wrestling with a problem at your desk, grinding through draft after draft, proposal after proposal, and nothing quite clicks. Then you step away. You're out for a walk, or you're washing dishes, or you're throwing a ball with your kid in the backyard, and suddenly—there it is. The answer you've been chasing reveals itself, not because you forced it, but because you made room for it. There's a reason for that, and it's worth understanding: our best thinking doesn't happen in a straight line. When we loosen our grip, when we trust that the work we've already done is percolating somewhere beneath the surface, we allow the disparate pieces—experience, intuition, all those fragments of knowledge we've gathered—to find each other and form something new. It's a reminder that progress isn't always about pushing harder; sometimes, it's about having the wisdom to step back, to let our minds wander, and to trust that the very act of not trying can be its own form of trying—one that honors both the complexity of the challenges we face and the creative capacity we all carry within us.",
+      "capturedAt": "2026-04-30T16:37:23.046Z",
+      "model": "claude-sonnet-4-5"
+    },
+    {
+      "writer": "Toni Morrison",
+      "slug": "toni-morrison",
+      "brief": "Write a paragraph about why the best ideas come when you're not trying",
+      "sample": "The best ideas arrive like uninvited grace, slipping through the mind's unguarded door when vigilance has gone slack and the soul sits idle in its own quiet company—peeling an orange, say, or watching rain bead and merge on glass, the fingers doing their small work while the brain lies fallow as turned earth in winter. It is then, in that deliberate inattention, that knowing rises up whole and gleaming from wherever it is such things wait—not the strained knowing that comes from wrestling meaning into submission, but the kind that was always there, patient as roots, needing only the cease of effort to surface. The mind in pursuit is a clenched fist; the mind at rest, an open palm. And what lands there, unbidden, carries the weight of truth that no amount of hunting could have flushed from its hiding place, for some understandings refuse the tyranny of intention and give themselves only to surrender, only to the moment when you have stopped asking and simply become the space where answers choose to dwell.",
+      "capturedAt": "2026-04-30T16:37:32.959Z",
+      "model": "claude-sonnet-4-5"
+    }
+  ]
+}

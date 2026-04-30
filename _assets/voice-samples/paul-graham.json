@@ -1,0 +1,8 @@
+{
+  "writer": "Paul Graham",
+  "slug": "paul-graham",
+  "brief": "Write a paragraph about why the best ideas come when you're not trying",
+  "sample": "The reason the best ideas come when you're not trying is that your conscious mind is terrible at making novel connections but excellent at getting in the way. When you're actively trying to solve a problem, you're basically running a search through familiar territory—the same neural pathways you've worn smooth through repetition. But when you're in the shower or walking the dog, your unconscious mind starts doing something more like annealing in metallurgy: it lets connections form at random and keeps the ones that reduce tension in your overall mental model. I've noticed that startup founders who've been grinding on a problem for weeks will often have their breakthrough while explaining it to someone at a party, not because the other person said anything useful, but because the act of verbalizing it differently jostled something loose. Your unconscious has been working on it the whole time, trying combinations you'd never consciously attempt because they seem too weird or too simple. The constraint isn't time or effort—it's that deliberate thought is like trying to find something by gripping it tighter, when what you need to do is relax your hand and let it surface.",
+  "capturedAt": "2026-04-30T16:37:14.684Z",
+  "model": "claude-sonnet-4-5"
+}
