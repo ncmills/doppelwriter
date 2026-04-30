@@ -57,24 +57,43 @@ function HomepageCinematic({ mode = "auto" }: Props) {
     return () => cancelAnimationFrame(rafRef.current);
   }, [mode, totalMs]);
 
-  // Scrub mode: bind scroll progress
+  // Scrub mode: bind progress to the nearest .cinematic-scroll-track parent.
+  // The track is a tall container (≥180vh) wrapping a sticky child where this
+  // component renders; scroll progress through the track drives the timeline.
   useEffect(() => {
     if (mode !== "scrub") return;
     const el = containerRef.current;
     if (!el) return;
+    const track = el.closest<HTMLElement>(".cinematic-scroll-track");
+    if (!track) return;
+
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setProgress(1);
+      return;
+    }
+
     const onScroll = () => {
-      const rect = el.getBoundingClientRect();
+      const rect = track.getBoundingClientRect();
       const vh = window.innerHeight;
-      // Progress 0 when top of element hits bottom of viewport,
-      // 1 when bottom of element hits top.
-      const total = rect.height + vh;
-      const seen = vh - rect.top;
-      const p = Math.max(0, Math.min(1, seen / total));
+      const range = track.offsetHeight - vh; // distance scrolled while sticky engages
+      if (range <= 0) {
+        setProgress(0);
+        return;
+      }
+      const scrolled = -rect.top;
+      const p = Math.max(0, Math.min(1, scrolled / range));
       setProgress(p);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [mode]);
 
   return (

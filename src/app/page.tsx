@@ -4,6 +4,7 @@ import LandingDemo from "@/components/LandingDemo";
 import LandingNav from "@/components/LandingNav";
 import WriterCarousel from "@/components/WriterCarouselGallery";
 import CrossSiteList from "@/components/CrossSiteList";
+import HomepageCinematic from "@/components/HomepageCinematic";
 
 const CATEGORY_SUBHEADS: Record<string, string> = {
   personal: "The ones that matter most.",
@@ -145,6 +146,17 @@ export default function LandingPage() {
 
           {/* The demo IS the hero */}
           <LandingDemo />
+        </section>
+
+        <hr className="rule max-w-6xl mx-auto" />
+
+        {/* ━━━━━━━━━━ CINEMATIC — three voices, one brief, scrubbed by scroll ━━━━━━━━━━ */}
+        <section className="cinematic-scroll-track relative" style={{ minHeight: "180vh" }}>
+          <div className="sticky top-0 h-screen flex flex-col justify-center px-5 sm:px-8">
+            <div className="max-w-6xl mx-auto w-full">
+              <HomepageCinematic mode="scrub" />
+            </div>
+          </div>
         </section>
 
         <hr className="rule max-w-6xl mx-auto" />
