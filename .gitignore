@@ -48,3 +48,6 @@ dw-prod-env
 
 # Readability audit screenshots (large binaries)
 /audit/
+
+# Marketing film working artifacts — canonical deliverables live in /public/film/
+/_assets/scenes/exports/

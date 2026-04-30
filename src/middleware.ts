@@ -31,6 +31,7 @@ const publicPaths = [
   "/tools",
   "/sitemap-html",
   "/embed",
+  "/preview",
 ];
 
 export default auth((req) => {

@@ -32,6 +32,22 @@ export default function FilmPreviewPage() {
         <MarketingFilm key={key} mode="auto" />
       </section>
 
+      <section className="max-w-6xl mx-auto px-6 py-6">
+        <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-3">
+          Exported MP4 — with BGM + SFX
+        </p>
+        <video
+          src="/film/voice-in-motion.mp4"
+          poster="/film/voice-in-motion.gif"
+          controls
+          preload="metadata"
+          className="w-full border border-[var(--color-rule)] bg-[var(--color-paper-deep)]"
+        />
+        <p className="text-[12px] text-[var(--color-ink-mute)] mt-2">
+          Deliverables in <code>/public/film/</code>: <a href="/film/voice-in-motion.mp4" className="ed-link" download>1080p MP4 (2.9 MB)</a> · <a href="/film/voice-in-motion-720.mp4" className="ed-link" download>720p Twitter MP4 (1.2 MB)</a> · <a href="/film/voice-in-motion.gif" className="ed-link" download>GIF (6.8 MB)</a>.
+        </p>
+      </section>
+
       <section className="max-w-6xl mx-auto px-6 py-12 border-t border-[var(--color-rule)] text-sm text-[var(--color-ink-soft)] leading-relaxed">
         <p className="mb-3 font-medium text-[var(--color-ink)]">Segments</p>
         <ol className="list-decimal pl-6 space-y-2">
