@@ -189,7 +189,7 @@ export default function MergePage() {
                   <button
                     key={p.id}
                     onClick={() => toggleSelect(p.id)}
-                    className={`rounded-[2px] p-4 text-left transition-colors border ${
+                    className={`group rounded-[2px] p-4 text-left transition-colors border ${
                       selected.includes(p.id)
                         ? "bg-[var(--color-paper-deep)] border-[var(--color-ink)]"
                         : "bg-[var(--color-paper-deep)] border-[var(--color-rule)] hover:border-[var(--color-ink)]"

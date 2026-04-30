@@ -232,10 +232,10 @@ export default function HomePage() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {curatedProfiles.slice(0, 4).map((p) => (
                   <Link key={p.id} href={`/write?voice=${p.id}`}
-                    className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-3 transition-colors hover:border-[var(--color-ink)] flex items-center gap-3">
+                    className="group bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-3 transition-colors hover:border-[var(--color-ink)] flex items-center gap-3">
                     <WriterAvatar name={p.writer_name || p.name} size={32} />
                     <div className="min-w-0">
-                      <p className="font-medium text-sm truncate">{p.writer_name || p.name}</p>
+                      <p className="font-medium text-sm truncate"><span className="ed-display-link">{p.writer_name || p.name}</span></p>
                       <p className="text-xs text-[var(--color-ink-mute)]">{p.writer_category}</p>
                     </div>
                   </Link>
@@ -248,9 +248,9 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {suggestedWriters.map((w) => (
               <Link key={w.name} href="/write"
-                className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-3 transition-colors hover:border-[var(--color-ink)] text-center">
+                className="group bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-3 transition-colors hover:border-[var(--color-ink)] text-center">
                 <div className="flex justify-center"><WriterAvatar name={w.name} size={40} /></div>
-                <p className="font-medium text-xs mt-2">{w.name}</p>
+                <p className="font-medium text-xs mt-2"><span className="ed-display-link">{w.name}</span></p>
                 <p className="text-xs text-[var(--color-ink-mute)] mt-0.5">{w.category}</p>
               </Link>
             ))}

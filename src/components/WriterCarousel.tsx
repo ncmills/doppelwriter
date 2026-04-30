@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { WRITER_PHOTOS } from "@/lib/writer-photos";
+import HairlineFrame from "./HairlineFrame";
 
 type FeaturedWriter = {
   name: string;
@@ -155,15 +156,17 @@ export default function WriterCarousel() {
                   </div>
                 )}
                 {/* Category stamp — top-left corner */}
-                <span className="absolute top-3 left-3 text-[9px] uppercase tracking-[0.25em] text-[var(--color-paper)] bg-[var(--color-ink)]/80 px-2 py-1">
+                <span className="absolute top-3 left-3 text-[9px] uppercase tracking-[0.25em] text-[var(--color-paper)] bg-[var(--color-ink)]/80 px-2 py-1 z-10">
                   {w.category}
                 </span>
+                {/* Hairline accent frame — draws in on hover */}
+                <HairlineFrame />
               </div>
 
               {/* Card body */}
               <div className="flex flex-col flex-1 p-5">
                 <h3 className="font-[family-name:var(--font-display)] text-2xl leading-tight mb-1 text-[var(--color-ink)]">
-                  {w.name}
+                  <span className="ed-display-link">{w.name}</span>
                 </h3>
                 <div className="w-10 h-[1px] bg-[var(--color-accent)] mb-4" />
                 <p className="font-[family-name:var(--font-display)] italic text-[15px] leading-snug text-[var(--color-ink-soft)] mb-6 flex-1">

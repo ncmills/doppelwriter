@@ -3,6 +3,7 @@ import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
 import LandingDemo from "@/components/LandingDemo";
 import LandingNav from "@/components/LandingNav";
 import WriterCarousel from "@/components/WriterCarousel";
+import CrossSiteList from "@/components/CrossSiteList";
 
 const CATEGORY_SUBHEADS: Record<string, string> = {
   personal: "The ones that matter most.",
@@ -78,13 +79,6 @@ const jsonLd = {
     },
   ],
 };
-
-const crossSites = [
-  { label: "Tour de Fore", href: "https://tourdefore.com", note: "Golf trip planner" },
-  { label: "Peptide Stack", href: "https://whatpeptidesdo.com", note: "Research journal" },
-  { label: "I Don't Have a Will", href: "https://idonthaveawill.com", note: "Estate tool" },
-  { label: "Imfrustrated", href: "https://imfrustrated.org", note: "Venting, done well" },
-];
 
 const footerCols: { title: string; links: { label: string; href: string }[] }[] = [
   {
@@ -422,27 +416,12 @@ export default function LandingPage() {
             ))}
           </div>
 
-          {/* Cross-site reading list */}
+          {/* Cross-site reading list — staggered reveal on viewport entry */}
           <div className="border-t border-[var(--color-rule)] pt-8 mb-8">
             <p className="text-[11px] uppercase tracking-[0.25em] text-[var(--color-ink-mute)] mb-5">
               Also from the same desk
             </p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3">
-              {crossSites.map((s) => (
-                <li key={s.href} className="flex items-baseline gap-2">
-                  <a
-                    href={s.href}
-                    rel="nofollow"
-                    className="ed-link text-[13px] text-[var(--color-ink)]"
-                  >
-                    {s.label}
-                  </a>
-                  <span className="text-[11px] text-[var(--color-ink-mute)] italic font-[family-name:var(--font-display)]">
-                    {s.note}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <CrossSiteList />
           </div>
 
           {/* Bottom bar */}

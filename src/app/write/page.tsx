@@ -7,6 +7,7 @@ import Nav from "@/components/Nav";
 import Workspace from "@/components/Workspace";
 import VoiceSelector from "@/components/VoiceSelector";
 import WriterAvatar from "@/components/WriterAvatar";
+import WorkspaceFrame from "@/components/WorkspaceFrame";
 
 export default function WritePage() {
   const { data: session, status } = useSession();
@@ -70,6 +71,29 @@ export default function WritePage() {
   // Instead, render the same tree but hide it while loading.
   const isReady = status !== "loading" && !!session;
 
+  // First-visit page-load orchestration: nav slides, voice badge fades,
+  // workspace frame draws, ready-dot pulses. sessionStorage gate so returning
+  // users see a flat mount. Honors prefers-reduced-motion.
+  const [orchestrate, setOrchestrate] = useState(false);
+  useEffect(() => {
+    if (!isReady || !profileId) return;
+    try {
+      if (sessionStorage.getItem("dw_write_loaded")) return;
+      sessionStorage.setItem("dw_write_loaded", "1");
+    } catch {
+      return;
+    }
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+    setOrchestrate(true);
+    const t = setTimeout(() => setOrchestrate(false), 1600);
+    return () => clearTimeout(t);
+  }, [isReady, profileId]);
+
   const handleSelectVoice = (id: number, name: string) => {
     setProfileId(id);
     setProfileName(name);
@@ -99,7 +123,7 @@ export default function WritePage() {
   }
 
   return (
-    <>
+    <div className={orchestrate ? "write-orchestrate" : ""}>
       <Nav />
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Voice selector modal */}
@@ -117,14 +141,18 @@ export default function WritePage() {
             <div className="mb-6">
               <button
                 onClick={() => setSelectorOpen(true)}
-                className="flex items-center gap-3 px-4 py-2 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] transition-colors hover:border-[var(--color-ink)]"
+                className="voice-badge flex items-center gap-3 px-4 py-2 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] transition-colors hover:border-[var(--color-ink)]"
               >
                 <WriterAvatar name={profileName} size={28} />
                 <span className="text-sm font-medium">{profileName}</span>
                 <span className="text-xs text-[var(--color-ink-mute)] ml-1">Change voice</span>
               </button>
             </div>
-            <Workspace profileId={profileId} profileName={profileName} defaultMode={initialMode} />
+            <div className="relative">
+              {orchestrate && <WorkspaceFrame />}
+              {orchestrate && <span aria-hidden className="workspace-ready-dot" />}
+              <Workspace profileId={profileId} profileName={profileName} defaultMode={initialMode} />
+            </div>
           </>
         ) : (
           /* First-time / no voice selected — the "magic first minute" */
@@ -188,6 +216,6 @@ export default function WritePage() {
           </div>
         )}
       </main>
-    </>
+    </div>
   );
 }

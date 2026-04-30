@@ -20,12 +20,54 @@ const TASKS: Task[] = [
   { key: "other", label: "Something else", blurb: "I&apos;ll show you around" },
 ];
 
+// Deterministic resting offsets for the swim-into-place animation.
+// Index-keyed so SSR matches client and the layout feels organic, not symmetric.
+const SWIM_OFFSETS: { x: number; y: number; r: number }[] = [
+  { x: -32, y: 18, r: -2 },
+  { x: 28, y: -16, r: 1.5 },
+  { x: -18, y: -28, r: 2.5 },
+  { x: 22, y: 26, r: -2 },
+  { x: -28, y: -14, r: 1 },
+  { x: 30, y: 14, r: -1.5 },
+  { x: -20, y: 22, r: 2 },
+];
+
+const HEADLINE = "What do you write every week?";
+
 export default function OnboardingPage() {
   const { status } = useSession();
   const router = useRouter();
   const [selected, setSelected] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [mounted, setMounted] = useState(false);
+  const [typed, setTyped] = useState("");
+
+  // Defer the "settled" mount state by one frame so chips paint at their
+  // scattered start positions before transitioning to rest.
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setMounted(true);
+      setTyped(HEADLINE);
+      return;
+    }
+    const r1 = requestAnimationFrame(() => {
+      requestAnimationFrame(() => setMounted(true));
+    });
+    let i = 0;
+    const id = setInterval(() => {
+      i += 1;
+      setTyped(HEADLINE.slice(0, i));
+      if (i >= HEADLINE.length) clearInterval(id);
+    }, 25);
+    return () => {
+      cancelAnimationFrame(r1);
+      clearInterval(id);
+    };
+  }, []);
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
@@ -87,8 +129,9 @@ export default function OnboardingPage() {
     <div className="min-h-screen flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-2xl">
         <div className="text-center mb-8">
-          <h1 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-semibold tracking-tight mb-3">
-            What do you write every week?
+          <h1 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-semibold tracking-tight mb-3 min-h-[1.2em]">
+            {typed}
+            {typed.length < HEADLINE.length && <span className="type-cursor" />}
           </h1>
           <p className="text-[var(--color-ink-soft)] text-sm sm:text-base">
             Pick the closest match. We&apos;ll tailor your first draft to it.
@@ -96,19 +139,28 @@ export default function OnboardingPage() {
         </div>
 
         <div className="grid sm:grid-cols-2 gap-3">
-          {TASKS.map((t) => {
+          {TASKS.map((t, i) => {
             const active = selected === t.key;
+            const off = SWIM_OFFSETS[i] ?? { x: 0, y: 0, r: 0 };
             return (
               <button
                 key={t.key}
                 type="button"
                 disabled={saving}
                 onClick={() => handleSelect(t.key)}
-                className={`text-left px-5 py-4 rounded-[2px] border transition-colors ${
+                className={`onb-chip text-left px-5 py-4 rounded-[2px] border ${
                   active
-                    ? "bg-[var(--color-paper-deep)] border-[var(--color-ink)]"
+                    ? "bg-[var(--color-paper-deep)] border-[var(--color-ink)] onb-chip-active"
                     : "bg-[var(--color-paper-deep)] border-[var(--color-rule)] hover:border-[var(--color-ink)]"
-                } ${saving && !active ? "opacity-50" : ""}`}
+                } ${saving && !active ? "opacity-50" : ""} ${mounted ? "is-settled" : ""}`}
+                style={
+                  {
+                    "--swim-x": `${off.x}px`,
+                    "--swim-y": `${off.y}px`,
+                    "--swim-r": `${off.r}deg`,
+                    "--swim-delay": `${i * 80}ms`,
+                  } as React.CSSProperties
+                }
               >
                 <div className="font-semibold text-[var(--color-ink)]">{t.label}</div>
                 <div className="text-xs text-[var(--color-ink-mute)] mt-1" dangerouslySetInnerHTML={{ __html: t.blurb }} />
