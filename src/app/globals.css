@@ -178,6 +178,158 @@ input:focus, textarea:focus, select:focus, [contenteditable]:focus {
   }
 }
 
+/* /write-like/[slug] hero — curtain reveal on first paint.
+   Portrait is server-rendered (LCP-eligible); the curtain is a paper-colored
+   absolute overlay that recedes top-down via clip-path. Text and body fade-up
+   stagger after. CSS-only so works without JS. */
+.writer-hero-curtain {
+  position: absolute;
+  inset: 0;
+  background: var(--color-paper);
+  z-index: 5;
+  pointer-events: none;
+  clip-path: inset(100% 0 0 0); /* hidden by default — paper already gone */
+}
+@media (prefers-reduced-motion: no-preference) {
+  .writer-hero-curtain {
+    clip-path: inset(0 0 0 0);
+    animation: curtainRise 800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .writer-hero-tag {
+    opacity: 0;
+    animation: heroFadeUp 320ms ease-out 600ms forwards;
+  }
+  .writer-hero-name {
+    opacity: 0;
+    animation: heroFadeUp 400ms ease-out 700ms forwards;
+  }
+  .writer-hero-bio {
+    opacity: 0;
+    animation: heroFadeUp 320ms ease-out 900ms forwards;
+  }
+  .writer-hero-rule {
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: heroRuleDraw 320ms ease-out 1100ms forwards;
+  }
+  .writer-hero-body {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: heroBodyRise 320ms ease-out 1200ms forwards;
+  }
+}
+@keyframes curtainRise {
+  from { clip-path: inset(0 0 0 0); }
+  to   { clip-path: inset(100% 0 0 0); }
+}
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroRuleDraw {
+  to { transform: scaleX(1); }
+}
+@keyframes heroBodyRise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* /analyze choreographed result reveal.
+   Outer cards stagger via --reveal-i. Inner metric cards stagger via --metric-i.
+   Signature-word tags physics-toss in via --tag-i. Formality bar draws
+   left-to-right. Voice Card preview develops like a Polaroid. */
+.analyze-results > [data-reveal-index] {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.analyze-metric-card {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.signature-tag {
+  opacity: 0;
+  transform: scale(0.6) rotate(-3deg);
+}
+.formality-fill {
+  transform-origin: left center;
+}
+.voice-card-preview {
+  filter: blur(4px);
+  opacity: 0.3;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .analyze-results > [data-reveal-index] {
+    animation: revealCard 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(var(--reveal-i, 0) * 100ms);
+  }
+  .analyze-metric-card {
+    animation: revealCard 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(var(--metric-i, 0) * 100ms + 200ms);
+  }
+  .signature-tag {
+    animation: tagToss 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(var(--tag-i, 0) * 80ms + 600ms);
+  }
+  .formality-fill {
+    animation: formalityDraw 800ms cubic-bezier(0.16, 1, 0.3, 1) 600ms backwards;
+  }
+  .voice-card-preview {
+    animation: polaroidDevelop 1200ms ease-out 800ms forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .analyze-results > [data-reveal-index],
+  .analyze-metric-card,
+  .signature-tag {
+    opacity: 1;
+    transform: none;
+  }
+  .voice-card-preview {
+    filter: none;
+    opacity: 1;
+  }
+}
+
+@keyframes revealCard {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes tagToss {
+  from { opacity: 0; transform: scale(0.6) rotate(-3deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes formalityDraw {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes polaroidDevelop {
+  from { filter: blur(4px); opacity: 0.3; }
+  to   { filter: blur(0); opacity: 1; }
+}
+
+/* WriterCarouselGallery — 3D tilted floating gallery with smooth focus shift.
+   Cards transform via inline-style values that change on focus/hover; CSS
+   here just defines the transition. */
+.writer-gallery {
+  /* perspective set via inline style based on tilt3D state */
+  transform-style: preserve-3d;
+}
+.writer-gallery-card {
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 700ms ease-out,
+              border-color 400ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .writer-gallery-card {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: border-color 200ms ease-out;
+  }
+}
+
 /* /write first-visit page-load orchestration.
    Wrapper gets .write-orchestrate; children animate once via CSS keyframes. */
 .workspace-frame {

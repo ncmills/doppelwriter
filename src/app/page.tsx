@@ -2,7 +2,7 @@ import Link from "next/link";
 import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
 import LandingDemo from "@/components/LandingDemo";
 import LandingNav from "@/components/LandingNav";
-import WriterCarousel from "@/components/WriterCarousel";
+import WriterCarousel from "@/components/WriterCarouselGallery";
 import CrossSiteList from "@/components/CrossSiteList";
 
 const CATEGORY_SUBHEADS: Record<string, string> = {

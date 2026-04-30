@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { CURATED_WRITERS, CATEGORIES } from "@/lib/writer-builder";
+import { WRITER_PHOTOS } from "@/lib/writer-photos";
 import { USE_CASES } from "@/lib/use-cases";
 import { JsonLd } from "@/components/JsonLd";
 import EmailCapture from "@/components/EmailCapture";
@@ -262,12 +264,46 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
           <span>/</span>
           <span className="text-[var(--color-ink)]">Write Like {writer.name}</span>
         </nav>
-        <p className="text-[var(--color-accent)] text-sm font-medium mb-3 uppercase tracking-wider">{writer.tag}</p>
-        <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold mb-4">
-          Write Like {writer.name}
-        </h1>
-        <p className="text-xl text-[var(--color-ink-soft)] mb-12 leading-relaxed">{writer.bio}</p>
 
+        {/* Hero — portrait + writer info, with curtain reveal on first paint */}
+        <div className="writer-hero grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-6 sm:gap-10 mb-10">
+          {WRITER_PHOTOS[writer.name] ? (
+            <div className="writer-hero-portrait relative aspect-[4/5] overflow-hidden bg-[var(--color-paper-deep)] border border-[var(--color-rule)]">
+              <Image
+                src={WRITER_PHOTOS[writer.name]}
+                alt={`Portrait of ${writer.name}`}
+                fill
+                sizes="(max-width: 640px) 100vw, 220px"
+                className="object-cover duotone"
+                priority
+              />
+              <span aria-hidden className="writer-hero-curtain" />
+            </div>
+          ) : (
+            <div className="writer-hero-portrait relative aspect-[4/5] overflow-hidden bg-[var(--color-paper-deep)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-ink-mute)]">
+              <svg viewBox="0 0 32 32" width="80" height="80" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="16" cy="16" r="11" />
+                <circle cx="12" cy="17" r="0.9" fill="currentColor" stroke="none" />
+                <circle cx="20" cy="17" r="0.9" fill="currentColor" stroke="none" />
+                <path d="M13 21 Q16 23 19 21" />
+                <path d="M14 11 Q14 9 16 9 Q18 9 18 11 Q18 12 16.5 12.5 Q16 13 16 14" />
+                <circle cx="16" cy="15.4" r="0.6" fill="currentColor" stroke="none" />
+              </svg>
+              <span aria-hidden className="writer-hero-curtain" />
+            </div>
+          )}
+          <div>
+            <p className="writer-hero-tag text-[var(--color-accent)] text-sm font-medium mb-3 uppercase tracking-wider">{writer.tag}</p>
+            <h1 className="writer-hero-name font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold mb-4">
+              Write Like {writer.name}
+            </h1>
+            <p className="writer-hero-bio text-xl text-[var(--color-ink-soft)] leading-relaxed">{writer.bio}</p>
+          </div>
+        </div>
+
+        <hr className="writer-hero-rule rule mb-12" />
+
+        <div className="writer-hero-body">
         <section className="space-y-8 mb-12">
           <div>
             <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold mb-3">
@@ -358,6 +394,7 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
             </div>
           </section>
         )}
+        </div>
       </main>
 
       <footer className="border-t border-[var(--color-rule)] py-8 text-center text-xs text-[var(--color-ink-mute)]">

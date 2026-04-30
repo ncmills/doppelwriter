@@ -196,9 +196,13 @@ export default function AnalyzePage() {
 
       {/* Results */}
       {analysis && !loading && (
-        <section className="max-w-4xl mx-auto px-4 sm:px-6 pb-16 space-y-6">
+        <section className="analyze-results max-w-4xl mx-auto px-4 sm:px-6 pb-16 space-y-6">
           {/* Voice Summary */}
-          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6">
+          <div
+            data-reveal-index="0"
+            style={{ ["--reveal-i" as string]: 0 } as React.CSSProperties}
+            className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6"
+          >
             <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold mb-3 text-[var(--color-accent)]">
               Voice Summary
             </h2>
@@ -208,9 +212,16 @@ export default function AnalyzePage() {
           </div>
 
           {/* Metrics Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div
+            data-reveal-index="1"
+            style={{ ["--reveal-i" as string]: 1 } as React.CSSProperties}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-4"
+          >
             {/* Sentence Length */}
-            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5">
+            <div
+              style={{ ["--metric-i" as string]: 0 } as React.CSSProperties}
+              className="analyze-metric-card bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5"
+            >
               <h3 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-wider mb-2">
                 Sentence Length
               </h3>
@@ -238,7 +249,10 @@ export default function AnalyzePage() {
             </div>
 
             {/* Vocabulary */}
-            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5">
+            <div
+              style={{ ["--metric-i" as string]: 1 } as React.CSSProperties}
+              className="analyze-metric-card bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5"
+            >
               <h3 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-wider mb-2">
                 Vocabulary Level
               </h3>
@@ -251,7 +265,10 @@ export default function AnalyzePage() {
             </div>
 
             {/* Tone */}
-            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5">
+            <div
+              style={{ ["--metric-i" as string]: 2 } as React.CSSProperties}
+              className="analyze-metric-card bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5"
+            >
               <h3 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-wider mb-2">
                 Tone
               </h3>
@@ -268,7 +285,7 @@ export default function AnalyzePage() {
                 </div>
                 <div className="h-2 bg-[var(--color-rule)] rounded-[2px] overflow-hidden">
                   <div
-                    className="h-full bg-[var(--color-ink)] rounded-[2px] transition-all"
+                    className="formality-fill h-full bg-[var(--color-ink)] rounded-[2px]"
                     style={{ width: `${(analysis.tone.formality / 10) * 100}%` }}
                   />
                 </div>
@@ -279,7 +296,10 @@ export default function AnalyzePage() {
             </div>
 
             {/* Structure */}
-            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5">
+            <div
+              style={{ ["--metric-i" as string]: 3 } as React.CSSProperties}
+              className="analyze-metric-card bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5"
+            >
               <h3 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-wider mb-2">
                 Structure
               </h3>
@@ -308,15 +328,20 @@ export default function AnalyzePage() {
 
           {/* Signature Words */}
           {analysis.vocabulary.signatureWords.length > 0 && (
-            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5">
+            <div
+              data-reveal-index="2"
+              style={{ ["--reveal-i" as string]: 2 } as React.CSSProperties}
+              className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5"
+            >
               <h3 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-wider mb-3">
                 Signature Words
               </h3>
               <div className="flex flex-wrap gap-2">
-                {analysis.vocabulary.signatureWords.map((word) => (
+                {analysis.vocabulary.signatureWords.map((word, i) => (
                   <span
                     key={word}
-                    className="px-3 py-1.5 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-[var(--color-accent)] text-sm font-medium"
+                    style={{ ["--tag-i" as string]: i } as React.CSSProperties}
+                    className="signature-tag inline-block px-3 py-1.5 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-[var(--color-accent)] text-sm font-medium"
                   >
                     {word}
                   </span>
@@ -327,7 +352,11 @@ export default function AnalyzePage() {
 
           {/* Similar To */}
           {analysis.similarTo.length > 0 && (
-            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5">
+            <div
+              data-reveal-index="3"
+              style={{ ["--reveal-i" as string]: 3 } as React.CSSProperties}
+              className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5"
+            >
               <h3 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-wider mb-3">
                 Your Writing Resembles
               </h3>
@@ -342,7 +371,11 @@ export default function AnalyzePage() {
           )}
 
           {/* Strengths & Quirks */}
-          <div className="grid md:grid-cols-2 gap-4">
+          <div
+            data-reveal-index="4"
+            style={{ ["--reveal-i" as string]: 4 } as React.CSSProperties}
+            className="grid md:grid-cols-2 gap-4"
+          >
             {analysis.personality.strengths.length > 0 && (
               <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5">
                 <h3 className="text-xs font-medium text-[var(--color-ink-soft)] uppercase tracking-wider mb-3">
@@ -377,7 +410,11 @@ export default function AnalyzePage() {
 
           {/* Share Your Voice Card */}
           {shareUrl && (
-            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 sm:p-8">
+            <div
+              data-reveal-index="5"
+              style={{ ["--reveal-i" as string]: 5 } as React.CSSProperties}
+              className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 sm:p-8"
+            >
               <div className="text-center mb-6">
                 <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold mb-2">
                   Share Your{" "}
@@ -390,8 +427,8 @@ export default function AnalyzePage() {
                 </p>
               </div>
 
-              {/* Card Preview */}
-              <div className="bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] p-5 mb-6 max-w-lg mx-auto">
+              {/* Card Preview — Polaroid develop */}
+              <div className="voice-card-preview bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] p-5 mb-6 max-w-lg mx-auto">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-bold text-[var(--color-accent)]">DoppelWriter</span>
                   <span className="text-xs text-[var(--color-ink-mute)] uppercase tracking-widest">Voice Analysis</span>
@@ -466,7 +503,11 @@ export default function AnalyzePage() {
           )}
 
           {/* CTA Banner — graduation to full voice profile */}
-          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5 sm:p-8 text-center">
+          <div
+            data-reveal-index="6"
+            style={{ ["--reveal-i" as string]: 6 } as React.CSSProperties}
+            className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5 sm:p-8 text-center"
+          >
             <h3 className="font-[family-name:var(--font-display)] text-xl sm:text-2xl font-semibold mb-2">
               Keep this voice — build your full profile
             </h3>
