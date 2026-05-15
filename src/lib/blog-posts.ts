@@ -182,8 +182,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "best-ai-writing-tools-2026",
-    title: "Best AI Writing Tools That Actually Sound Like You (2026)",
-    description: "A comparison of the best AI writing tools in 2026, including ChatGPT, Jasper, Copy.ai, Grammarly, and DoppelWriter. Find the tool that matches your voice.",
+    title: "Best AI Writing Tools That Sound Like You: 5 Tested for Voice (2026)",
+    description: "5 AI writing tools tested for voice matching — ChatGPT, Jasper, Copy.ai, Grammarly, DoppelWriter. Which ones keep your style intact and which flatten it.",
     publishedAt: "2026-03-18T09:00:00Z",
     author: "DoppelWriter",
     tags: ["AI writing tools", "comparison", "2026"],
