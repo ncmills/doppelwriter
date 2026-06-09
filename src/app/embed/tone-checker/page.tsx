@@ -90,6 +90,16 @@ export default function EmbedToneChecker() {
             <p className="text-xs text-[var(--color-ink-soft)]">{result.suggestion}</p>
           </div>
         )}
+        <footer className="mt-6 pt-3 border-t border-[var(--color-rule)] text-center">
+          <a
+            href="https://doppelwriter.com/?utm_source=embed&utm_medium=widget"
+            target="_blank"
+            rel="noopener"
+            className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-accent)] transition-colors"
+          >
+            Powered by DoppelWriter &rarr;
+          </a>
+        </footer>
       </div>
     </div>
   );

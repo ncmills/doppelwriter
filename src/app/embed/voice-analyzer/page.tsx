@@ -13,8 +13,15 @@ export default function EmbedVoiceAnalyzer() {
       >
         Analyze Your Voice Free &rarr;
       </a>
-      <p className="text-xs text-[var(--color-ink-mute)] mt-4">
-        Powered by <a href="https://doppelwriter.com" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-ink)]">DoppelWriter</a>
+      <p className="text-xs text-[var(--color-ink-mute)] mt-6">
+        <a
+          href="https://doppelwriter.com/?utm_source=embed&utm_medium=widget"
+          target="_blank"
+          rel="noopener"
+          className="text-[var(--color-ink-mute)] hover:text-[var(--color-accent)] transition-colors"
+        >
+          Powered by DoppelWriter &rarr;
+        </a>
       </p>
     </div>
   );
