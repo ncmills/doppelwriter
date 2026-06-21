@@ -10,3 +10,4 @@ Base: (pre-Task-1 HEAD recorded below)
 
 - Task 2: complete (commits 1cb4b8e..d37851f, review SPEC ok / quality approved; legacy aliases bridge un-migrated components)
 - DECISION (mid-run): animation layer = Framer Motion. Plan A gains a Motion-layer task; Plan B gets rich page interactions.
+- Tasks 3-5: complete (static primitives, commits f506267..c7d6ef9 + fix 8391a68; review SPEC ok/approved; pattern = arbitrary [var(--color-*)] syntax)
