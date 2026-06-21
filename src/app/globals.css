@@ -1,23 +1,39 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Ink & paper — literary palette */
-  --color-ink: #1a1a1a;
-  --color-ink-soft: #4a4a4a;
-  --color-ink-mute: #625a50; /* darkened from #8a8378 (2026-04-21) — clears WCAG AA 4.5 on both paper (6.4:1) and paper-deep (5.8:1) */
-  --color-paper: #faf7f0;
-  --color-paper-deep: #f0ebe0;
-  --color-rule: #d9d2c2;
-  --color-accent: #8b2e2e;
+  /* Raw palette — Sand & Ember (locked 2026-06-21) */
+  --color-bg:            #faf8f4;   /* warm off-white base surface */
+  --color-bg-raised:     #f1ece3;   /* elevated surface (cards) */
+  --color-fg-strong:     #1c1a17;   /* warm near-black, primary text */
+  --color-fg-muted-raw:  #6b6358;   /* secondary text — AA verified: 5.57:1 on bg, 5.18:1 on raised */
+  --color-line:          #e4ded2;   /* hairline / border */
+  --color-accent-raw:    #c2410c;   /* ember / terracotta — the single vivid accent */
+
+  /* Semantic aliases — components consume ONLY these */
+  --color-surface:        var(--color-bg);
+  --color-surface-raised: var(--color-bg-raised);
+  --color-fg:             var(--color-fg-strong);
+  --color-fg-muted:       var(--color-fg-muted-raw);
+  --color-border:         var(--color-line);
+  --color-brand:          var(--color-accent-raw);
+  --color-accent:         var(--color-accent-raw);  /* primary accent shorthand */
+
+  /* Legacy aliases — kept so un-migrated components reskin automatically; removed in Plan B */
+  --color-ink:        var(--color-fg-strong);    /* #1c1a17 — was dark ink */
+  --color-ink-soft:   #4a443b;                   /* warm mid — AA on surface (4.68:1) */
+  --color-ink-mute:   var(--color-fg-muted-raw); /* #6b6358 — was muted ink */
+  --color-paper:      var(--color-bg);           /* #faf8f4 — was base surface */
+  --color-paper-deep: var(--color-bg-raised);    /* #f1ece3 — was elevated surface */
+  --color-rule:       var(--color-line);         /* #e4ded2 — was hairline/divider */
 
   /* Default background/foreground */
-  --color-background: #faf7f0;
-  --color-foreground: #1a1a1a;
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-fg-strong);
 
   /* Typography */
-  --font-display: var(--font-playfair);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-jetbrains);
+  --font-display: var(--font-display-face);
+  --font-sans:    var(--font-sans-face);
+  --font-mono:    var(--font-mono-face);
 
   /* Modular type scale — 1.2 ratio on a 16px base. Tokens only (no replacement sweep). */
   --fs-micro: 0.75rem;    /* 12px — eyebrows, tags, timestamps */
@@ -40,6 +56,10 @@
   --space-16: 4rem;    /* 64px */
   --space-24: 6rem;    /* 96px */
   --space-32: 8rem;    /* 128px */
+
+  /* Radii + motion */
+  --radius: 10px;
+  --motion-fast: 140ms; --motion-base: 220ms; --motion-cinematic: 600ms;
 }
 
 html {
@@ -49,8 +69,8 @@ html {
 }
 
 body {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: var(--color-surface);
+  color: var(--color-fg);
   font-family: var(--font-sans), -apple-system, system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.6;
@@ -58,7 +78,7 @@ body {
 
 /* Display headlines — tight tracking */
 h1, h2, h3, .display {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), system-ui, sans-serif;
   letter-spacing: -0.02em;
   line-height: 1.05;
 }
@@ -67,7 +87,7 @@ h1, h2, h3, .display {
 .rule {
   border: 0;
   height: 1px;
-  background: var(--color-rule);
+  background: var(--color-border);
 }
 
 /* Prose — clamp body-copy line length for readability (target 55–70ch) */
@@ -87,15 +107,15 @@ main {
 
 /* Input focus — single hairline ring, no glow */
 input:focus, textarea:focus, select:focus, [contenteditable]:focus {
-  outline: 1px solid var(--color-ink);
+  outline: 1px solid var(--color-fg);
   outline-offset: 2px;
 }
 
-/* Scrollbar — thin, ink-on-paper */
+/* Scrollbar — thin, warm-on-sand */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--color-rule); border-radius: 0; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-ink-mute); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-fg-muted); }
 
 /* Blinking typewriter cursor */
 @keyframes blink {
@@ -107,14 +127,14 @@ input:focus, textarea:focus, select:focus, [contenteditable]:focus {
   width: 0.55em;
   height: 1em;
   vertical-align: text-bottom;
-  background: var(--color-ink);
+  background: var(--color-fg);
   margin-left: 2px;
   animation: blink 1s steps(1) infinite;
 }
 
 /* Editorial underline — shows on hover for nav-ish links */
 .ed-link {
-  background-image: linear-gradient(var(--color-ink), var(--color-ink));
+  background-image: linear-gradient(var(--color-fg), var(--color-fg));
   background-size: 0 1px;
   background-position: 0 100%;
   background-repeat: no-repeat;
@@ -185,10 +205,10 @@ input:focus, textarea:focus, select:focus, [contenteditable]:focus {
 .writer-hero-curtain {
   position: absolute;
   inset: 0;
-  background: var(--color-paper);
+  background: var(--color-surface);
   z-index: 5;
   pointer-events: none;
-  clip-path: inset(100% 0 0 0); /* hidden by default — paper already gone */
+  clip-path: inset(100% 0 0 0); /* hidden by default — surface already gone */
 }
 @media (prefers-reduced-motion: no-preference) {
   .writer-hero-curtain {
@@ -337,7 +357,7 @@ input:focus, textarea:focus, select:focus, [contenteditable]:focus {
 }
 .workspace-frame path {
   fill: none;
-  stroke: var(--color-rule);
+  stroke: var(--color-border);
   stroke-width: 1;
   stroke-dasharray: 100;
   stroke-dashoffset: 100;
@@ -443,7 +463,7 @@ input:focus, textarea:focus, select:focus, [contenteditable]:focus {
 /* Footer cross-site list — IntersectionObserver staggered reveal.
    --reveal-delay is set per-li by JS (0ms / 180ms / 360ms / 540ms). */
 .cross-site-link {
-  background-image: linear-gradient(var(--color-ink), var(--color-ink));
+  background-image: linear-gradient(var(--color-fg), var(--color-fg));
   background-size: 0 1px;
   background-position: 0 100%;
   background-repeat: no-repeat;
@@ -506,6 +526,6 @@ input:focus, textarea:focus, select:focus, [contenteditable]:focus {
 [contenteditable] a { color: var(--color-accent); text-decoration: underline; }
 [contenteditable]:empty:before {
   content: attr(data-placeholder);
-  color: var(--color-ink-mute);
+  color: var(--color-fg-muted);
   pointer-events: none;
 }

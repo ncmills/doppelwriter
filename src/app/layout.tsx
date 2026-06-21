@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google";
+import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import SessionProvider from "@/components/SessionProvider";
 import PostHogProvider from "@/components/PostHogProvider";
 import { Analytics } from "@vercel/analytics/react";
@@ -7,20 +7,21 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const inter = Inter({
-  variable: "--font-inter",
+  variable: "--font-sans-face",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-display-face",
   subsets: ["latin"],
-  weight: ["400", "700", "900"],
+  weight: ["500", "700"],
   display: "swap",
 });
 
 const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
+  variable: "--font-mono-face",
   subsets: ["latin"],
   display: "swap",
 });
@@ -76,11 +77,11 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://upload.wikimedia.org" />
       </head>
       <body
-        className={`${inter.variable} ${playfair.variable} ${jetbrains.variable} antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrains.variable} antialiased`}
       >
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--color-ink)] focus:text-[var(--color-paper)]"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--color-fg)] focus:text-[var(--color-surface)]"
         >
           Skip to content
         </a>
