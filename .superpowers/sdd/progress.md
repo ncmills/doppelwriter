@@ -5,5 +5,5 @@ Branch: design-system-rebrand
 Base: (pre-Task-1 HEAD recorded below)
 
 ## Status
-- Task 1: in progress (identity gate — operator-driven)
+- Task 1: complete (commits 4487fe4..83307e1, identity locked = Option A Sand & Ember)
 - Tasks 2–8: pending
