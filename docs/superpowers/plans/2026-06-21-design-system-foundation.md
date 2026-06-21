@@ -13,7 +13,8 @@
 ## Global Constraints
 
 - Next.js 16 App Router; Tailwind v4 with `@theme` in `src/app/globals.css` — no migration off this.
-- No heavyweight component framework (no Radix/shadcn); thin local primitives only. No new runtime deps beyond what's already in `package.json` — a local `cn` helper, not `clsx`/`tailwind-merge`, unless already present.
+- No heavyweight component framework (no Radix/shadcn); thin local primitives only. A local `cn` helper, not `clsx`/`tailwind-merge`, unless already present. **One** new runtime dep is allowed: `framer-motion` (the chosen animation library) — no others.
+- Animation/interaction layer uses **Framer Motion**, applied tastefully ("where appropriate," never gratuitous). All motion MUST honor `prefers-reduced-motion` (via a `MotionConfig reducedMotion="user"` provider) and never break mobile layout.
 - Brand direction is fixed: **Modern AI-product, warm** — bold grotesk display + clean sans, warm-neutral base + exactly one vivid accent, precise/quick motion. No blue-corporate.
 - Components read **semantic tokens only** (`bg-surface`, `text-fg`, `border-border`, `bg-brand`, …), never raw `--color-*` palette values or arbitrary hexes.
 - `/style-guide` is `noindex` — must not enter the sitemap or be crawlable.
@@ -353,7 +354,113 @@ git commit -m "feat(ui): add Badge, Eyebrow, Rule, Prose primitives"
 
 ---
 
-### Task 6: `/style-guide` route (live, noindex)
+### Task 6: Motion layer (Framer Motion)
+
+**Files:**
+- Modify: `package.json` (add `framer-motion`)
+- Create: `src/components/ui/motion/MotionProvider.tsx`, `src/components/ui/motion/Reveal.tsx`, `src/components/ui/motion/Stagger.tsx`, `src/components/ui/motion/HoverLift.tsx`
+- Modify: `src/app/layout.tsx` (wrap children in `MotionProvider`)
+- Modify: `src/app/_smoke/page.tsx`
+
+**Interfaces:**
+- Consumes: `cn` (Task 3).
+- Produces:
+  - `MotionProvider` — wraps the app in Framer Motion's `MotionConfig reducedMotion="user"` (`"use client"`). `{ children: React.ReactNode }`.
+  - `Reveal` — scroll-triggered fade+rise via `whileInView`. Props `{ as?: keyof JSX.IntrinsicElements; delay?: number; y?: number } & React.HTMLAttributes<HTMLElement>`. Default `y=12`, `delay=0`. `"use client"`.
+  - `Stagger` — container that staggers its `Reveal`/`motion` children. Props `{ gap?: number } & React.HTMLAttributes<HTMLDivElement>`. Default `gap=0.06`. `"use client"`.
+  - `HoverLift` — hover/tap spring wrapper for interactive cards/buttons. Props `{ lift?: number } & React.HTMLAttributes<HTMLDivElement>`. Default `lift=-3` (px translateY on hover). `"use client"`.
+
+- [ ] **Step 1: Install dep.** Run `npm install framer-motion`. Confirm it lands in `package.json` dependencies.
+- [ ] **Step 2: Write `MotionProvider`.**
+
+```tsx
+// src/components/ui/motion/MotionProvider.tsx
+"use client";
+import { MotionConfig } from "framer-motion";
+export function MotionProvider({ children }: { children: React.ReactNode }) {
+  return <MotionConfig reducedMotion="user" transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}>{children}</MotionConfig>;
+}
+```
+
+- [ ] **Step 3: Write `Reveal`.**
+
+```tsx
+// src/components/ui/motion/Reveal.tsx
+"use client";
+import { motion } from "framer-motion";
+export function Reveal({ delay = 0, y = 12, className, children, ...props }: { delay?: number; y?: number } & React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.4, delay, ease: [0.16, 1, 0.3, 1] }}
+      {...(props as React.ComponentProps<typeof motion.div>)}
+    >
+      {children}
+    </motion.div>
+  );
+}
+```
+
+- [ ] **Step 4: Write `Stagger` and `HoverLift`.**
+
+```tsx
+// src/components/ui/motion/Stagger.tsx
+"use client";
+import { motion } from "framer-motion";
+export function Stagger({ gap = 0.06, className, children, ...props }: { gap?: number } & React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <motion.div
+      className={className}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-80px" }}
+      variants={{ hidden: {}, show: { transition: { staggerChildren: gap } } }}
+      {...(props as React.ComponentProps<typeof motion.div>)}
+    >
+      {children}
+    </motion.div>
+  );
+}
+```
+
+```tsx
+// src/components/ui/motion/HoverLift.tsx
+"use client";
+import { motion } from "framer-motion";
+export function HoverLift({ lift = -3, className, children, ...props }: { lift?: number } & React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <motion.div
+      className={className}
+      whileHover={{ y: lift }}
+      whileTap={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 400, damping: 28 }}
+      {...(props as React.ComponentProps<typeof motion.div>)}
+    >
+      {children}
+    </motion.div>
+  );
+}
+```
+
+- [ ] **Step 5: Wrap the app.** In `src/app/layout.tsx`, import `MotionProvider` and wrap the existing children (inside the existing providers, around `{children}`). Keep all existing providers intact.
+- [ ] **Step 6: Add to smoke harness; build + render check.** Add a `Stagger` of three `Reveal` cards and a `HoverLift` button to `_smoke/page.tsx`.
+
+Run: `npx next build`; open `/_smoke`, scroll, hover.
+Expected: build clean; cards fade+rise on scroll-in; button lifts on hover; with OS "reduce motion" on, content appears with no transform.
+
+- [ ] **Step 7: Commit.**
+
+```bash
+git add package.json package-lock.json src/components/ui/motion/ src/app/layout.tsx src/app/_smoke/page.tsx
+git commit -m "feat(ui): add Framer Motion layer — MotionProvider, Reveal, Stagger, HoverLift"
+```
+
+---
+
+### Task 7: `/style-guide` route (live, noindex)
 
 **Files:**
 - Create: `src/app/style-guide/page.tsx`
@@ -364,7 +471,7 @@ git commit -m "feat(ui): add Badge, Eyebrow, Rule, Prose primitives"
 - Consumes: every `ui/` primitive (Tasks 3–5), the tokens (Task 2).
 - Produces: a single rendered reference page. No exported API.
 
-- [ ] **Step 1: Build the page.** Sections, each reading tokens directly so it can't drift: (a) Colors — swatches for surface/surface-raised/fg/fg-muted/border/brand with hex + a computed-contrast note; (b) Type scale — one specimen line per `--fs-*` token; (c) Spacing — bars sized to each `--space-*`; (d) Components — every primitive in every variant; (e) Motion/helpers — `.rule`, focus rings, hover states. Set `noindex`:
+- [ ] **Step 1: Build the page.** Sections, each reading tokens directly so it can't drift: (a) Colors — swatches for surface/surface-raised/fg/fg-muted/border/brand with hex + a computed-contrast note; (b) Type scale — one specimen line per `--fs-*` token; (c) Spacing — bars sized to each `--space-*`; (d) Components — every primitive in every variant; (e) **Motion playground** — live demos of the Framer Motion primitives (Task 6): a `Stagger` of `Reveal` cards that replay on scroll, a `HoverLift` interactive card, and a note that all motion honors reduced-motion. Import `Reveal`, `Stagger`, `HoverLift` from `@/components/ui/motion/*`. Set `noindex`:
 
 ```tsx
 // src/app/style-guide/page.tsx
@@ -451,7 +558,7 @@ git commit -m "feat(design): add live /style-guide reference route (noindex)"
 
 ---
 
-### Task 7: `DESIGN-SYSTEM.md` + fix stale `CLAUDE.md`
+### Task 8: `DESIGN-SYSTEM.md` + fix stale `CLAUDE.md`
 
 **Files:**
 - Create: `DESIGN-SYSTEM.md` (repo root)
@@ -459,7 +566,7 @@ git commit -m "feat(design): add live /style-guide reference route (noindex)"
 
 **Interfaces:** none (docs only).
 
-- [ ] **Step 1: Write `DESIGN-SYSTEM.md`.** Sections: brand direction (one paragraph), the token table (palette + semantic aliases + type + spacing + radii + motion, copied from `globals.css`), each primitive's props/variants, do/don'ts ("read semantic tokens only; never arbitrary hexes or raw `--color-*` palette in components"), and the three-surface model (this doc · `/style-guide` · claude.ai/design).
+- [ ] **Step 1: Write `DESIGN-SYSTEM.md`.** Sections: brand direction (one paragraph), the token table (palette + semantic aliases + type + spacing + radii + motion, copied from `globals.css`), each primitive's props/variants (static primitives Tasks 3–5 **and** the Framer Motion primitives from Task 6: `MotionProvider`, `Reveal`, `Stagger`, `HoverLift` — with the reduced-motion rule), do/don'ts ("read semantic tokens only; never arbitrary hexes or raw `--color-*` palette in components"; "wrap motion in the provider; always honor reduced-motion"), and the three-surface model (this doc · `/style-guide` · claude.ai/design).
 - [ ] **Step 2: Replace the `CLAUDE.md` `## Style` block.** Delete the `Dark theme (#0C0A09 …) Literata serif …` lines. Replace with:
 
 ```markdown
@@ -476,7 +583,7 @@ git commit -m "docs: add DESIGN-SYSTEM.md; replace stale CLAUDE.md brand block"
 
 ---
 
-### Task 8: Mirror the system to the Claude app (DesignSync)
+### Task 9: Mirror the system to the Claude app (DesignSync)
 
 **Files:**
 - Create: `claude-design/components/*.html` (one card per token group + primitive group)
@@ -500,7 +607,7 @@ git commit -m "feat(design): mirror design system to Claude app via DesignSync c
 
 ## Self-Review
 
-**Spec coverage:** Phase 0 → Task 1. Token layer + semantic aliases → Task 2. Fonts → Task 2. Primitives → Tasks 3–5. `/style-guide` noindex → Task 6. `DESIGN-SYSTEM.md` + CLAUDE.md fix → Task 7. Claude-app sync → Task 8. Verification (build + contrast) → folded into each task's render-check + Task 2 Step 5. **Deferred to Plan B (out of scope here, stated up front):** big-bang refactor of the 27 components, logo/OG/cinematic asset redo, Playwright multi-route sweep, deploy. These are correctly excluded because they depend on these primitives existing.
+**Spec coverage:** Phase 0 → Task 1. Token layer + semantic aliases → Task 2. Fonts → Task 2. Static primitives → Tasks 3–5. Motion/interaction layer (Framer Motion) → Task 6. `/style-guide` noindex (incl. motion playground) → Task 7. `DESIGN-SYSTEM.md` + CLAUDE.md fix → Task 8. Claude-app sync → Task 9. Verification (build + contrast) → folded into each task's render-check + Task 2 Step 5. **Deferred to Plan B (out of scope here, stated up front):** big-bang refactor of the 27 components, logo/OG/cinematic asset redo, Playwright multi-route sweep, deploy. These are correctly excluded because they depend on these primitives existing.
 
 **Placeholder scan:** The `<hex>`/`<value>` tokens in Task 2 are not placeholders — they are an explicit data dependency consumed from Task 1's output (`TOKENS.md`), which is the legitimate purpose of the Phase-0 gate. All component code is complete and concrete.
 
