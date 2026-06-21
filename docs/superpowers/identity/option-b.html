@@ -1,0 +1,85 @@
+<!-- @dsCard group="Identity Options" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DoppelWriter — Option B · Signal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #fbfaf8;          /* near-white, faint warm */
+    --bg-raised: #f3f1ec;   /* elevated surface */
+    --fg: #18161c;          /* near-black */
+    --fg-muted: #6a6770;    /* secondary text */
+    --border: #e6e3dc;      /* hairline */
+    --accent: #e11d48;      /* vivid warm rose */
+    --radius: 14px;
+    --display: "Manrope", system-ui, sans-serif;
+    --sans: "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--sans); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 56px 28px 72px; }
+  .eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-muted); font-weight: 600; }
+  .optname { font-family: var(--display); font-weight: 700; font-size: 13px; color: var(--accent); letter-spacing: .02em; }
+  .topbar { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 48px; }
+  h1 { font-family: var(--display); font-weight: 800; font-size: 62px; line-height: 1.0; letter-spacing: -0.035em; margin-bottom: 18px; }
+  h1 .ink { color: var(--accent); }
+  .lede { font-size: 19px; color: var(--fg-muted); max-width: 46ch; margin-bottom: 32px; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
+  .btn { font-family: var(--sans); font-weight: 600; font-size: 15px; padding: 11px 22px; border-radius: var(--radius); border: 1px solid transparent; cursor: pointer; transition: all .14s ease; }
+  .btn-primary { background: var(--fg); color: var(--bg); }
+  .btn-ghost { background: transparent; color: var(--fg); border-color: var(--border); }
+  .btn-accent { background: var(--accent); color: #fff; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 56px; }
+  @media (max-width: 640px){ .grid{ grid-template-columns:1fr; } h1{ font-size:46px; } }
+  .card { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; }
+  .card .eyebrow { margin-bottom: 12px; }
+  .input { width: 100%; background: var(--bg); color: var(--fg); border: 1px solid var(--border); border-radius: calc(var(--radius) - 4px); padding: 11px 13px; font-family: var(--sans); font-size: 15px; }
+  .input::placeholder { color: var(--fg-muted); }
+  .chip { display: inline-flex; align-items: center; font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); margin-top: 14px; }
+  .swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 44px; }
+  .sw { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .sw .chip-color { height: 64px; }
+  .sw .meta { padding: 9px 11px; font-size: 12px; }
+  .sw .meta b { display: block; font-weight: 600; }
+  .sw .meta code { color: var(--fg-muted); font-size: 11px; }
+  .specimen { font-family: var(--display); font-weight: 800; font-size: 34px; letter-spacing: -0.025em; }
+  .specimen small { display:block; font-family:var(--sans); font-weight:500; font-size:13px; color:var(--fg-muted); letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar"><span class="eyebrow">DoppelWriter</span><span class="optname">Option B · Signal</span></div>
+    <h1>Write in your <span class="ink">own voice.</span></h1>
+    <p class="lede">Clone a writing voice from a few samples, then draft and edit anything in that exact style.</p>
+    <div class="btns">
+      <button class="btn btn-primary">Start writing</button>
+      <button class="btn btn-ghost">See examples</button>
+      <button class="btn btn-accent">Clone a voice</button>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <span class="eyebrow">Your voice profile</span>
+        <input class="input" placeholder="Paste a few paragraphs you've written…" />
+        <span class="chip">98% match</span>
+      </div>
+      <div class="card">
+        <span class="eyebrow">Type</span>
+        <div class="specimen"><small>Display · Manrope</small>The quick brown fox</div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw"><div class="chip-color" style="background:var(--bg)"></div><div class="meta"><b>surface</b><code>#fbfaf8</code></div></div>
+      <div class="sw"><div class="chip-color" style="background:var(--bg-raised)"></div><div class="meta"><b>raised</b><code>#f3f1ec</code></div></div>
+      <div class="sw"><div class="chip-color" style="background:var(--fg)"></div><div class="meta"><b>ink</b><code>#18161c</code></div></div>
+      <div class="sw"><div class="chip-color" style="background:var(--fg-muted)"></div><div class="meta"><b>muted</b><code>#6a6770</code></div></div>
+      <div class="sw"><div class="chip-color" style="background:var(--border)"></div><div class="meta"><b>border</b><code>#e6e3dc</code></div></div>
+      <div class="sw"><div class="chip-color" style="background:var(--accent)"></div><div class="meta"><b>accent</b><code>#e11d48</code></div></div>
+    </div>
+  </div>
+</body>
+</html>
