@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* Brand: "Modern AI-product, warm" — Sand & Ember. Rebranded 2026-06-21. Canonical tokens below; see DESIGN-SYSTEM.md. */
 @theme inline {
   /* Raw palette — Sand & Ember (locked 2026-06-21) */
   --color-bg:            #faf8f4;   /* warm off-white base surface */
