@@ -16,7 +16,7 @@
     --color-fg-muted: #6b6358;
     --color-border: #e4ded2;
     --color-brand: #c2410c;
-    --radius: 10px;
+    --radius: 2px;
     --font-display: "Space Grotesk", system-ui, sans-serif;
     --font-sans: "Inter", system-ui, sans-serif;
     --motion-fast: 140ms;
@@ -36,10 +36,11 @@
     border: 1px solid transparent;
     border-radius: var(--radius);
     cursor: pointer;
-    transition: opacity var(--motion-fast) ease, transform var(--motion-fast) ease;
+    transition: background var(--motion-fast) ease;
     line-height: 1;
   }
-  .btn:hover { opacity: .85; transform: translateY(-1px); }
+  /* signature CTA interaction: primary ink fill → ember on hover */
+  .btn-primary:hover { background: var(--color-brand); }
   .btn:active { transform: translateY(0); }
   /* sizes */
   .btn-sm { font-size: 13px; padding: 8px 16px; }
