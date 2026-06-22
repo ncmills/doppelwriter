@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import Logo from "./Logo";
+import { Button } from "./ui/Button";
 
 export default function LandingNav() {
   const { data: session } = useSession();
@@ -37,13 +38,9 @@ export default function LandingNav() {
             Journal
           </Link>
           {session?.user ? (
-            <Link
-              href="/write"
-              className="text-sm px-4 py-2 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] transition-colors uppercase tracking-wide font-medium"
-              style={{ borderRadius: "2px" }}
-            >
+            <Button href="/write" size="sm" className="uppercase tracking-wide">
               Open editor
-            </Link>
+            </Button>
           ) : (
             <>
               <Link
@@ -52,13 +49,9 @@ export default function LandingNav() {
               >
                 Log in
               </Link>
-              <Link
-                href="/signup"
-                className="text-sm px-4 py-2 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] transition-colors uppercase tracking-wide font-medium"
-                style={{ borderRadius: "2px" }}
-              >
+              <Button href="/signup" size="sm" className="uppercase tracking-wide">
                 Start writing
-              </Link>
+              </Button>
             </>
           )}
         </div>

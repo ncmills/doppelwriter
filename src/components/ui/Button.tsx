@@ -19,8 +19,8 @@ const variants: Record<Variant, string> = {
 };
 
 const sizes: Record<Size, string> = {
-  sm: "text-[var(--fs-caption)] px-4 py-1.5",
-  md: "text-[var(--fs-body)] px-6 py-2.5",
+  sm: "text-[length:var(--fs-caption)] px-4 py-1.5",
+  md: "text-[length:var(--fs-body)] px-6 py-2.5",
   lg: "text-lg px-8 py-3",
 };
 

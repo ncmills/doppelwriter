@@ -2,6 +2,7 @@ import Link from "next/link";
 import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
 import LandingDemo from "@/components/LandingDemo";
 import LandingNav from "@/components/LandingNav";
+import { Button } from "@/components/ui/Button";
 import WriterCarousel from "@/components/WriterCarouselGallery";
 import CrossSiteList from "@/components/CrossSiteList";
 import HomepageCinematic from "@/components/HomepageCinematic";
@@ -195,13 +196,9 @@ export default function LandingPage() {
             Paste anything you&apos;ve written — we&apos;ll break down your style in seconds.
             Sentence rhythm, vocabulary, signature words, the writers you most resemble.
           </p>
-          <Link
-            href="/analyze"
-            className="inline-block text-sm px-6 py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] transition-colors uppercase tracking-wide font-medium"
-            style={{ borderRadius: "2px" }}
-          >
+          <Button href="/analyze" className="uppercase tracking-wide">
             Analyze your writing →
-          </Link>
+          </Button>
         </section>
 
         <hr className="rule max-w-6xl mx-auto" />

@@ -35,12 +35,12 @@ export default function StyleGuide() {
       {/* ── Header ── */}
       <header>
         <Eyebrow>DoppelWriter</Eyebrow>
-        <h1 className="text-[var(--fs-h1)] text-[var(--color-fg)]">Design System</h1>
+        <h1 className="text-[length:var(--fs-h1)] text-[var(--color-fg)]">Design System</h1>
       </header>
 
       {/* ── (a) Colors ── */}
       <section>
-        <h2 className="text-[var(--fs-h2)] text-[var(--color-fg)] mb-6">Colors</h2>
+        <h2 className="text-[length:var(--fs-h2)] text-[var(--color-fg)] mb-6">Colors</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {SWATCHES.map(([name, varName]) => (
             <div
@@ -48,7 +48,7 @@ export default function StyleGuide() {
               className="border border-[var(--color-border)] rounded-[var(--radius)] overflow-hidden"
             >
               <div className="h-20" style={{ background: `var(${varName})` }} />
-              <div className="p-3 text-[var(--fs-caption)]">
+              <div className="p-3 text-[length:var(--fs-caption)]">
                 <div className="text-[var(--color-fg)] font-medium">{name}</div>
                 <code className="text-[var(--color-fg-muted)]">{varName}</code>
               </div>
@@ -61,7 +61,7 @@ export default function StyleGuide() {
 
       {/* ── (b) Type scale ── */}
       <section>
-        <h2 className="text-[var(--fs-h2)] text-[var(--color-fg)] mb-6">Type scale</h2>
+        <h2 className="text-[length:var(--fs-h2)] text-[var(--color-fg)] mb-6">Type scale</h2>
         <div className="space-y-4">
           {TYPE.map((t) => (
             <div key={t} className="flex items-baseline gap-4">
@@ -83,7 +83,7 @@ export default function StyleGuide() {
 
       {/* ── (c) Spacing ── */}
       <section>
-        <h2 className="text-[var(--fs-h2)] text-[var(--color-fg)] mb-6">Spacing</h2>
+        <h2 className="text-[length:var(--fs-h2)] text-[var(--color-fg)] mb-6">Spacing</h2>
         <div className="space-y-3">
           {SPACE.map((s) => (
             <div key={s} className="flex items-center gap-4">
@@ -106,7 +106,7 @@ export default function StyleGuide() {
 
       {/* ── (d) Components ── */}
       <section>
-        <h2 className="text-[var(--fs-h2)] text-[var(--color-fg)] mb-6">Components</h2>
+        <h2 className="text-[length:var(--fs-h2)] text-[var(--color-fg)] mb-6">Components</h2>
         <div className="space-y-8">
           {/* Buttons */}
           <div>
@@ -165,8 +165,8 @@ export default function StyleGuide() {
 
       {/* ── (e) Motion playground ── */}
       <section>
-        <h2 className="text-[var(--fs-h2)] text-[var(--color-fg)] mb-2">Motion playground</h2>
-        <p className="text-[var(--color-fg-muted)] text-[var(--fs-caption)] mb-8">
+        <h2 className="text-[length:var(--fs-h2)] text-[var(--color-fg)] mb-2">Motion playground</h2>
+        <p className="text-[var(--color-fg-muted)] text-[length:var(--fs-caption)] mb-8">
           All motion honors <code>prefers-reduced-motion</code> — Framer Motion disables animations
           when the OS setting is active.
         </p>
@@ -178,30 +178,30 @@ export default function StyleGuide() {
             <Stagger className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <Reveal>
                 <Card>
-                  <p className="text-[var(--fs-body)] text-[var(--color-fg)] font-medium">
+                  <p className="text-[length:var(--fs-body)] text-[var(--color-fg)] font-medium">
                     Reveal card 1
                   </p>
-                  <p className="text-[var(--fs-caption)] text-[var(--color-fg-muted)] mt-1">
+                  <p className="text-[length:var(--fs-caption)] text-[var(--color-fg-muted)] mt-1">
                     Fades and rises on scroll-in
                   </p>
                 </Card>
               </Reveal>
               <Reveal delay={0.06}>
                 <Card>
-                  <p className="text-[var(--fs-body)] text-[var(--color-fg)] font-medium">
+                  <p className="text-[length:var(--fs-body)] text-[var(--color-fg)] font-medium">
                     Reveal card 2
                   </p>
-                  <p className="text-[var(--fs-caption)] text-[var(--color-fg-muted)] mt-1">
+                  <p className="text-[length:var(--fs-caption)] text-[var(--color-fg-muted)] mt-1">
                     Staggered 60 ms later
                   </p>
                 </Card>
               </Reveal>
               <Reveal delay={0.12}>
                 <Card>
-                  <p className="text-[var(--fs-body)] text-[var(--color-fg)] font-medium">
+                  <p className="text-[length:var(--fs-body)] text-[var(--color-fg)] font-medium">
                     Reveal card 3
                   </p>
-                  <p className="text-[var(--fs-caption)] text-[var(--color-fg-muted)] mt-1">
+                  <p className="text-[length:var(--fs-caption)] text-[var(--color-fg-muted)] mt-1">
                     Staggered 120 ms later
                   </p>
                 </Card>
@@ -214,10 +214,10 @@ export default function StyleGuide() {
             <Eyebrow className="mb-4">HoverLift — hover the card below</Eyebrow>
             <HoverLift className="max-w-xs cursor-pointer">
               <Card raised>
-                <p className="text-[var(--fs-body)] text-[var(--color-fg)] font-medium">
+                <p className="text-[length:var(--fs-body)] text-[var(--color-fg)] font-medium">
                   Hover me — spring lift
                 </p>
-                <p className="text-[var(--fs-caption)] text-[var(--color-fg-muted)] mt-1">
+                <p className="text-[length:var(--fs-caption)] text-[var(--color-fg-muted)] mt-1">
                   translateY springs to −3px on hover, returns on tap
                 </p>
               </Card>
