@@ -16,7 +16,7 @@ export default function CinematicPreviewPage() {
         <h1 className="font-[family-name:var(--font-display)] font-bold text-3xl sm:text-4xl tracking-[-0.02em] mb-2">
           Homepage scrubbed cinematic
         </h1>
-        <p className="text-[var(--color-fg-muted)] italic font-[family-name:var(--font-display)]">
+        <p className="text-[var(--color-fg-muted)]">
           3-portrait reveal sequence — Didion / Hemingway / Paul Graham, real
           /api/demo captures, auto-play loop.
         </p>

@@ -169,7 +169,7 @@ export default function WriterCarousel() {
                   <span className="ed-display-link">{w.name}</span>
                 </h3>
                 <div className="w-10 h-[1px] bg-[var(--color-brand)] mb-4" />
-                <p className="font-[family-name:var(--font-display)] italic text-[15px] leading-snug text-[var(--color-fg-muted)] mb-6 flex-1">
+                <p className="font-[family-name:var(--font-display)] text-[15px] leading-snug text-[var(--color-fg-muted)] mb-6 flex-1">
                   &ldquo;{w.pullQuote}&rdquo;
                 </p>
                 <span className="text-[11px] uppercase tracking-[0.2em] text-[var(--color-fg)] border border-[var(--color-border)] group-hover:border-[var(--color-fg)] group-hover:bg-[var(--color-fg)] group-hover:text-[var(--color-surface)] px-3 py-2 text-center transition-colors">

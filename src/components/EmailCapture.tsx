@@ -41,7 +41,7 @@ export default function EmailCapture({
   if (status === "success") {
     return (
       <div className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] p-6 text-center">
-        <p className="text-[var(--color-brand)] font-[family-name:var(--font-display)] italic">You&apos;re on the list!</p>
+        <p className="text-[var(--color-brand)] font-[family-name:var(--font-display)]">You&apos;re on the list!</p>
         <p className="text-[var(--color-fg-muted)] text-sm mt-1">We&apos;ll let you know when new voices drop.</p>
       </div>
     );

@@ -398,7 +398,7 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
           <div className="mt-6 p-4 bg-[var(--color-surface-raised)] border border-[var(--color-border)] flex items-center justify-between">
             <div>
               <p className="text-sm text-[var(--color-fg)]">Know someone who&apos;d love this?</p>
-              <p className="text-xs text-[var(--color-fg-muted)] italic font-[family-name:var(--font-display)]">Share DoppelWriter &mdash; they get 5 free uses</p>
+              <p className="text-xs text-[var(--color-fg-muted)]">Share DoppelWriter &mdash; they get 5 free uses</p>
             </div>
             <button onClick={copyReferralLink} className="px-4 py-2 border border-[var(--color-border)] hover:border-[var(--color-fg)] text-xs uppercase tracking-[0.15em] text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">
               {referralCopied ? "Copied" : "Copy Invite Link"}
@@ -425,7 +425,7 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
             {showOptions ? "Hide options" : "Options"}
           </button>
           {learningCount > 0 && (
-            <span className="text-xs text-[var(--color-fg-muted)] hidden sm:inline italic font-[family-name:var(--font-display)]">{learningCount} edit{learningCount !== 1 ? "s" : ""} learned</span>
+            <span className="text-xs text-[var(--color-fg-muted)] hidden sm:inline">{learningCount} edit{learningCount !== 1 ? "s" : ""} learned</span>
           )}
         </div>
         <div className="flex gap-2">

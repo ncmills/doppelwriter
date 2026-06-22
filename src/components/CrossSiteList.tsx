@@ -56,7 +56,7 @@ export default function CrossSiteList() {
           >
             {s.label}
           </a>
-          <span className="cross-site-note text-[11px] text-[var(--color-fg-muted)] italic font-[family-name:var(--font-display)]">
+          <span className="cross-site-note text-[11px] text-[var(--color-fg-muted)]">
             {s.note}
           </span>
         </li>

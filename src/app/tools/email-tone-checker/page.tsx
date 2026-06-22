@@ -101,7 +101,7 @@ export default function EmailToneCheckerPage() {
       <section className="max-w-4xl mx-auto px-6 pt-24 pb-12 text-center">
         <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold tracking-tight leading-tight mb-4">
           Email{" "}
-          <span className="italic text-[var(--color-brand)]">
+          <span className="text-[var(--color-brand)]">
             Tone Checker
           </span>
         </h1>

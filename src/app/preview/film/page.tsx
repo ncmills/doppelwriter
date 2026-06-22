@@ -17,7 +17,7 @@ export default function FilmPreviewPage() {
         <h1 className="font-[family-name:var(--font-display)] font-bold text-3xl sm:text-4xl tracking-[-0.02em] mb-2">
           Voice in motion — 30s film
         </h1>
-        <p className="text-[var(--color-fg-muted)] italic font-[family-name:var(--font-display)]">
+        <p className="text-[var(--color-fg-muted)]">
           5-segment Junior pass · real Claude captures · no audio yet
         </p>
         <button

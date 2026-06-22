@@ -117,7 +117,7 @@ export default async function SharedAnalysisPage({ params }: PageProps) {
       <section className="max-w-4xl mx-auto px-6 pt-24 pb-8 text-center">
         <h1 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold tracking-tight leading-tight mb-3">
           Writing Voice{" "}
-          <span className="italic text-[var(--color-brand)]">
+          <span className="text-[var(--color-brand)]">
             Analysis
           </span>
         </h1>

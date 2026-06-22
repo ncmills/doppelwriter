@@ -16,7 +16,7 @@ export default function StreamingOutput({
         )}
       </div>
       {!text && !loading && (
-        <p className="text-[var(--color-fg-muted)] italic font-[family-name:var(--font-display)]">Output will appear here...</p>
+        <p className="text-[var(--color-fg-muted)]">Output will appear here...</p>
       )}
     </div>
   );

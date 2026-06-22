@@ -125,7 +125,7 @@ export default function AnalyzePage() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-10 sm:pb-12 text-center">
         <h1 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-4">
           Analyze Your{" "}
-          <span className="italic text-[var(--color-brand)]">
+          <span className="text-[var(--color-brand)]">
             Writing Voice
           </span>
         </h1>
@@ -418,7 +418,7 @@ export default function AnalyzePage() {
               <div className="text-center mb-6">
                 <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold mb-2">
                   Share Your{" "}
-                  <span className="italic text-[var(--color-brand)]">
+                  <span className="text-[var(--color-brand)]">
                     Voice Card
                   </span>
                 </h3>

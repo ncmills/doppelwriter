@@ -143,7 +143,7 @@ export default function LandingDemo() {
                   key={s}
                   type="button"
                   onClick={() => setBrief(s)}
-                  className="text-[12px] italic font-[family-name:var(--font-display)] text-[var(--color-fg-muted)] border border-[var(--color-border)] px-3 py-1.5 hover:border-[var(--color-fg)] hover:text-[var(--color-fg)] transition-colors text-left"
+                  className="text-[12px] text-[var(--color-fg-muted)] border border-[var(--color-border)] px-3 py-1.5 hover:border-[var(--color-fg)] hover:text-[var(--color-fg)] transition-colors text-left"
                   style={{ borderRadius: "2px" }}
                 >
                   &ldquo;{s.replace(/^Write (a |an |the )?/, "").replace(/\.$/, "")}&rdquo;
@@ -169,7 +169,7 @@ export default function LandingDemo() {
 
         {error && !showingResult && (
           <div className="px-5 sm:px-8 pb-8 text-center">
-            <p className="text-[var(--color-brand)] text-sm mb-4 font-[family-name:var(--font-display)] italic">
+            <p className="text-[var(--color-brand)] text-sm mb-4">
               {error}
             </p>
             <div className="flex gap-3 justify-center">

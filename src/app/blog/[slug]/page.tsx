@@ -316,7 +316,7 @@ export default async function BlogPostPage({
           </header>
 
           <div
-            className="prose prose-stone max-w-none text-[var(--color-fg)] prose-headings:font-[family-name:var(--font-display)] prose-headings:text-[var(--color-fg)] prose-p:text-[var(--color-fg)] prose-li:text-[var(--color-fg)] prose-a:text-[var(--color-brand)] prose-a:no-underline hover:prose-a:underline prose-strong:text-[var(--color-fg)] prose-th:text-left prose-table:text-sm prose-blockquote:border-l-2 prose-blockquote:border-[var(--color-brand)] prose-blockquote:italic prose-blockquote:font-[family-name:var(--font-display)] prose-blockquote:text-[var(--color-fg-muted)] prose-hr:border-[var(--color-border)]"
+            className="prose prose-stone max-w-none text-[var(--color-fg)] prose-headings:font-[family-name:var(--font-display)] prose-headings:text-[var(--color-fg)] prose-p:text-[var(--color-fg)] prose-li:text-[var(--color-fg)] prose-a:text-[var(--color-brand)] prose-a:no-underline hover:prose-a:underline prose-strong:text-[var(--color-fg)] prose-th:text-left prose-table:text-sm prose-blockquote:border-l-2 prose-blockquote:border-[var(--color-brand)] prose-blockquote:font-[family-name:var(--font-display)] prose-blockquote:text-[var(--color-fg-muted)] prose-hr:border-[var(--color-border)]"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </article>

@@ -261,7 +261,7 @@ export default async function NichePage({
               >
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983z" />
               </svg>
-              <p className="text-[var(--color-fg-muted)] text-lg md:text-xl leading-relaxed italic font-[family-name:var(--font-display)]">
+              <p className="text-[var(--color-fg-muted)] text-lg md:text-xl leading-relaxed">
                 {niche.testimonialPlaceholder.replace(/^"|"$/g, "")}
               </p>
               <p className="text-[var(--color-fg-muted)] text-sm mt-6">

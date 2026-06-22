@@ -63,7 +63,7 @@ export default function RichEditor({ value, onChange, placeholder, className }: 
           <span className="font-bold text-xs">B</span>
         </button>
         <button onClick={() => exec("italic")} className="p-2 sm:p-1.5 hover:bg-[var(--color-surface)] text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors shrink-0" title="Italic">
-          <span className="italic text-xs font-[family-name:var(--font-display)]">I</span>
+          <span className="italic text-xs">I</span>
         </button>
         <button onClick={() => exec("underline")} className="p-2 sm:p-1.5 hover:bg-[var(--color-surface)] text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors shrink-0" title="Underline">
           <span className="underline text-xs">U</span>

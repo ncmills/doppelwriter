@@ -104,7 +104,7 @@ function HomepageCinematic({ mode = "auto" }: Props) {
     >
       <p className="cinematic-brief text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-6 text-center">
         Same brief — three voices.{" "}
-        <span className="italic font-[family-name:var(--font-display)] tracking-normal text-[var(--color-fg-muted)]">
+        <span className="font-[family-name:var(--font-display)] tracking-normal text-[var(--color-fg-muted)]">
           &ldquo;{VOICE_SAMPLE_BRIEF}&rdquo;
         </span>
       </p>

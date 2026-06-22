@@ -190,7 +190,7 @@ function SetupSegment({ ms }: { ms: number }) {
         {monoCursor && <span className="type-cursor" />}
       </p>
       <p
-        className="font-[family-name:var(--font-display)] italic text-[var(--color-fg-muted)] text-3xl sm:text-4xl"
+        className="font-[family-name:var(--font-display)] text-[var(--color-fg-muted)] text-3xl sm:text-4xl"
         style={{ opacity: italicOpacity, transform: `translateY(${italicY}px)` }}
       >
         Starting with yours.
@@ -241,7 +241,7 @@ function RevealSegment({ ms }: { ms: number }) {
             <p className="font-[family-name:var(--font-display)] text-[10px] mt-1 text-[var(--color-fg)] truncate">
               {s.writer}
             </p>
-            <p className="font-[family-name:var(--font-display)] italic text-[9px] text-[var(--color-fg-muted)] line-clamp-2 leading-snug">
+            <p className="text-[9px] text-[var(--color-fg-muted)] line-clamp-2 leading-snug">
               {s.sample.slice(0, 60)}…
             </p>
           </div>
@@ -346,7 +346,7 @@ function CloseSegment({ ms }: { ms: number }) {
         {urlT < 1 && <span className="type-cursor" />}
       </p>
       <p
-        className="font-[family-name:var(--font-display)] italic text-[var(--color-fg-muted)] text-base mt-3"
+        className="font-[family-name:var(--font-display)] text-[var(--color-fg-muted)] text-base mt-3"
         style={{ opacity: taglineOpacity }}
       >
         Voice-matched writing for people who still read.

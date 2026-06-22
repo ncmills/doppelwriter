@@ -237,7 +237,7 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
               {!building && (
                 <div className={`text-center ${searchResults.length > 0 ? "pt-3 border-t border-[var(--color-border)]" : ""} py-4`}>
                   {searchResults.length === 0 && (
-                    <p className="text-[var(--color-fg-muted)] text-sm mb-3 italic font-[family-name:var(--font-display)]">No voice found for &ldquo;{search}&rdquo;</p>
+                    <p className="text-[var(--color-fg-muted)] text-sm mb-3">No voice found for &ldquo;{search}&rdquo;</p>
                   )}
                   {buildError?.name === search ? (
                     <div className="space-y-3">
@@ -329,7 +329,7 @@ export default function VoiceSelector({ selectedId, selectedName, onSelect, open
                 </div>
 
                 {!categoryFilter && (
-                  <p className="text-center text-[var(--color-fg-muted)] text-xs mt-3 italic font-[family-name:var(--font-display)]">
+                  <p className="text-center text-[var(--color-fg-muted)] text-xs mt-3">
                     Showing 6 popular voices. Use the filters above to browse all {CURATED_WRITERS.length}.
                   </p>
                 )}

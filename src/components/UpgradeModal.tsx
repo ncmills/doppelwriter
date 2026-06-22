@@ -68,7 +68,7 @@ export default function UpgradeModal({ used, onClose }: UpgradeModalProps) {
         </div>
 
         {/* Social proof */}
-        <p className="text-center text-[var(--color-fg-muted)] text-xs mb-5 italic font-[family-name:var(--font-display)]">
+        <p className="text-center text-[var(--color-fg-muted)] text-xs mb-5">
           Join writers who create 10x more with Pro
         </p>
 

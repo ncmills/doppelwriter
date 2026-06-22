@@ -139,7 +139,7 @@ export default function LandingPage() {
                 Starting with yours.
               </em>
             </h1>
-            <p className="font-[family-name:var(--font-display)] text-lg sm:text-2xl text-[var(--color-fg-muted)] max-w-2xl mx-auto leading-snug italic">
+            <p className="text-lg sm:text-2xl text-[var(--color-fg-muted)] max-w-2xl mx-auto leading-snug">
               The AI that sounds like you. Or Hemingway. Or your mom.
             </p>
           </div>
@@ -191,7 +191,7 @@ export default function LandingPage() {
           <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em] mb-4">
             Curious how <em className="font-normal">you</em> sound?
           </h2>
-          <p className="font-[family-name:var(--font-display)] italic text-lg text-[var(--color-fg-muted)] max-w-xl mx-auto mb-8">
+          <p className="text-lg text-[var(--color-fg-muted)] max-w-xl mx-auto mb-8">
             Paste anything you&apos;ve written — we&apos;ll break down your style in seconds.
             Sentence rhythm, vocabulary, signature words, the writers you most resemble.
           </p>
@@ -224,7 +224,7 @@ export default function LandingPage() {
               Browse all 140+ →
             </Link>
           </div>
-          <p className="max-w-xl text-[var(--color-fg-muted)] mb-10 italic font-[family-name:var(--font-display)] text-lg">
+          <p className="max-w-xl text-[var(--color-fg-muted)] mb-10 text-lg">
             Prebuilt profiles for 140 iconic voices. Name anyone else — we&apos;ll
             build a forensic style profile from their published work.
           </p>
@@ -242,7 +242,7 @@ export default function LandingPage() {
             <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em] mb-4">
               What will you write?
             </h2>
-            <p className="font-[family-name:var(--font-display)] italic text-lg text-[var(--color-fg-muted)]">
+            <p className="text-lg text-[var(--color-fg-muted)]">
               Any writing task — in any voice.
             </p>
           </div>
@@ -254,7 +254,7 @@ export default function LandingPage() {
                   <h3 className="font-[family-name:var(--font-display)] text-[22px] leading-tight mb-2">
                     {cat.label}
                   </h3>
-                  <p className="text-[13px] italic text-[var(--color-fg-muted)] mb-5 font-[family-name:var(--font-display)]">
+                  <p className="text-[13px] text-[var(--color-fg-muted)] mb-5">
                     — {CATEGORY_SUBHEADS[cat.id]}
                   </p>
                   <ul className="space-y-2.5">
@@ -309,7 +309,7 @@ export default function LandingPage() {
               },
             ].map((t, i) => (
               <figure key={i} className="border-l-2 border-[var(--color-brand)] pl-5">
-                <blockquote className="font-[family-name:var(--font-display)] italic text-[19px] leading-[1.5] text-[var(--color-fg)] mb-4">
+                <blockquote className="font-[family-name:var(--font-display)] text-[19px] leading-[1.5] text-[var(--color-fg)] mb-4">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
                 <figcaption className="text-[12px] uppercase tracking-[0.18em] text-[var(--color-fg-muted)]">
@@ -364,7 +364,7 @@ export default function LandingPage() {
           <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[64px] leading-[1.03] tracking-[-0.02em] mb-6">
             Now — <em className="font-normal">your turn.</em>
           </h2>
-          <p className="font-[family-name:var(--font-display)] italic text-lg sm:text-xl text-[var(--color-fg-muted)] max-w-md mx-auto mb-10">
+          <p className="text-lg sm:text-xl text-[var(--color-fg-muted)] max-w-md mx-auto mb-10">
             Free to use. No credit card. Voice cloned in under a minute.
           </p>
           <Link
@@ -401,7 +401,7 @@ export default function LandingPage() {
                   DoppelWriter
                 </span>
               </Link>
-              <p className="text-[13px] leading-relaxed text-[var(--color-fg-muted)] italic font-[family-name:var(--font-display)]">
+              <p className="text-[13px] leading-relaxed text-[var(--color-fg-muted)]">
                 Voice-matched writing for people who still read.
               </p>
             </div>

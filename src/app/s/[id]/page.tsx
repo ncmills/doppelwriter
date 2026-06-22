@@ -100,7 +100,7 @@ export default async function SharedDraftPage({ params }: Props) {
         )}
 
         <div
-          className="prose prose-stone max-w-none leading-relaxed text-lg text-[var(--color-fg)] prose-headings:font-[family-name:var(--font-display)] prose-headings:text-[var(--color-fg)] prose-p:text-[var(--color-fg)] prose-a:text-[var(--color-brand)] prose-strong:text-[var(--color-fg)] prose-blockquote:border-l-2 prose-blockquote:border-[var(--color-brand)] prose-blockquote:italic prose-blockquote:font-[family-name:var(--font-display)] prose-blockquote:text-[var(--color-fg-muted)]"
+          className="prose prose-stone max-w-none leading-relaxed text-lg text-[var(--color-fg)] prose-headings:font-[family-name:var(--font-display)] prose-headings:text-[var(--color-fg)] prose-p:text-[var(--color-fg)] prose-a:text-[var(--color-brand)] prose-strong:text-[var(--color-fg)] prose-blockquote:border-l-2 prose-blockquote:border-[var(--color-brand)] prose-blockquote:font-[family-name:var(--font-display)] prose-blockquote:text-[var(--color-fg-muted)]"
           dangerouslySetInnerHTML={{ __html: draft.content }}
         />
 
