@@ -32,6 +32,7 @@ const publicPaths = [
   "/sitemap-html",
   "/embed",
   "/preview",
+  "/style-guide", // noindex design-system reference — public so it's viewable without login
 ];
 
 export default auth((req) => {
