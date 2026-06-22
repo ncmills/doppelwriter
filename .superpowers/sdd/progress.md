@@ -12,3 +12,4 @@ Base: (pre-Task-1 HEAD recorded below)
 - DECISION (mid-run): animation layer = Framer Motion. Plan A gains a Motion-layer task; Plan B gets rich page interactions.
 - Tasks 3-5: complete (static primitives, commits f506267..c7d6ef9 + fix 8391a68; review SPEC ok/approved; pattern = arbitrary [var(--color-*)] syntax)
 - Task 6 (motion): complete (commit b93f3db; framer-motion ^12.40.0; controller-verified after subagent session-limit death; build clean, providers preserved). MINOR for final review: Reveal uses whileInView not parent variants, so Stagger cascade is independent-reveal not true stagger.
+- Task 7 (/style-guide): complete (commit 592f680 + middleware fix). VERIFIED via screenshot — all sections render in Sand&Ember; motion playground present; noindex; made public in middleware. Plan B findings recorded in docs/superpowers/PLAN-B-FINDINGS.md.
