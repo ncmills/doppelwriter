@@ -52,7 +52,7 @@ export default async function OGImage({ params }: { params: Promise<{ slug: stri
             Sand &amp; Ember
           </span>
           <span style={{ color: "#6b6358" }}>
-            <span style={{ color: "#c2410c" }}>●</span>{"  "}Writing Tools
+            <div style={{ width: 14, height: 14, borderRadius: 9999, background: "#c2410c", display: "flex" }} />{"  "}Writing Tools
           </span>
         </div>
 

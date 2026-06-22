@@ -49,7 +49,7 @@ function OGShell({ title, subtitle, fontData }: { title: string; subtitle: strin
           Sand &amp; Ember
         </span>
         <span style={{ color: "#6b6358" }}>
-          <span style={{ color: "#c2410c" }}>●</span>{"  "}Voice Library
+          <div style={{ width: 14, height: 14, borderRadius: 9999, background: "#c2410c", display: "flex" }} />{"  "}Voice Library
         </span>
       </div>
 

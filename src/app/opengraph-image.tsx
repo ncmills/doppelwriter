@@ -54,7 +54,7 @@ export default async function OGImage() {
             </span>
           </div>
           <span style={{ color: "#6b6358" }}>
-            <span style={{ color: "#c2410c" }}>●</span>{"  "}Vol. I
+            <div style={{ width: 14, height: 14, borderRadius: 9999, background: "#c2410c", display: "flex" }} />{"  "}Vol. I
           </span>
         </div>
 

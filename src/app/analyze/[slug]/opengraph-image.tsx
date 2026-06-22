@@ -109,7 +109,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               letterSpacing: "0.25em",
             }}
           >
-            <span style={{ color: "#c2410c" }}>●</span>{"  "}Writing Voice Analysis
+            <div style={{ width: 14, height: 14, borderRadius: 9999, background: "#c2410c", display: "flex" }} />{"  "}Writing Voice Analysis
           </div>
         </div>
 
