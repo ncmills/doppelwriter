@@ -17,15 +17,6 @@
   --color-fg-muted:       var(--color-fg-muted-raw);
   --color-border:         var(--color-line);
   --color-brand:          var(--color-accent-raw);
-  --color-accent:         var(--color-accent-raw);  /* primary accent shorthand */
-
-  /* Legacy aliases — kept so un-migrated components reskin automatically; removed in Plan B */
-  --color-ink:        var(--color-fg-strong);    /* #1c1a17 — was dark ink */
-  --color-ink-soft:   #4a443b;                   /* warm mid — AA on surface (9.08:1) */
-  --color-ink-mute:   var(--color-fg-muted-raw); /* #6b6358 — was muted ink */
-  --color-paper:      var(--color-bg);           /* #faf8f4 — was base surface */
-  --color-paper-deep: var(--color-bg-raised);    /* #f1ece3 — was elevated surface */
-  --color-rule:       var(--color-line);         /* #e4ded2 — was hairline/divider */
 
   /* Default background/foreground */
   --color-background: var(--color-bg);
