@@ -1,0 +1,82 @@
+<!-- @dsCard group="Buttons" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DoppelWriter — Buttons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --color-surface: #faf8f4;
+    --color-surface-raised: #f1ece3;
+    --color-fg: #1c1a17;
+    --color-fg-muted: #6b6358;
+    --color-border: #e4ded2;
+    --color-brand: #c2410c;
+    --radius: 10px;
+    --font-display: "Space Grotesk", system-ui, sans-serif;
+    --font-sans: "Inter", system-ui, sans-serif;
+    --motion-fast: 140ms;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--color-surface); color: var(--color-fg); font-family: var(--font-sans); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 28px 64px; }
+  .eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-fg-muted); font-weight: 600; }
+  .topbar { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--color-border); padding-bottom: 16px; margin-bottom: 40px; }
+  .optname { font-family: var(--font-display); font-weight: 500; font-size: 13px; color: var(--color-brand); letter-spacing: .02em; }
+  h2 { font-family: var(--font-display); font-weight: 700; font-size: 32px; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .section-label { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-fg-muted); font-weight: 600; margin-bottom: 14px; margin-top: 32px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: opacity var(--motion-fast) ease, transform var(--motion-fast) ease;
+    line-height: 1;
+  }
+  .btn:hover { opacity: .85; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  /* sizes */
+  .btn-sm { font-size: 13px; padding: 8px 16px; }
+  .btn-md { font-size: 15px; padding: 11px 22px; }
+  /* variants */
+  .btn-primary { background: var(--color-fg); color: #fff; }
+  .btn-ghost { background: transparent; color: var(--color-fg); border-color: var(--color-border); }
+  .btn-accent { background: var(--color-brand); color: #fff; }
+  .variant-block { margin-bottom: 4px; }
+  .variant-name { font-size: 12px; color: var(--color-fg-muted); margin-bottom: 10px; font-family: monospace; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="eyebrow">DoppelWriter</span>
+      <span class="optname">Buttons</span>
+    </div>
+    <h2>Buttons</h2>
+
+    <div class="section-label">Primary — ink fill</div>
+    <div class="row">
+      <button class="btn btn-primary btn-sm">primary sm</button>
+      <button class="btn btn-primary btn-md">primary md</button>
+    </div>
+
+    <div class="section-label">Ghost — hairline border</div>
+    <div class="row">
+      <button class="btn btn-ghost btn-sm">ghost sm</button>
+      <button class="btn btn-ghost btn-md">ghost md</button>
+    </div>
+
+    <div class="section-label">Accent — ember fill</div>
+    <div class="row">
+      <button class="btn btn-accent btn-sm">accent sm</button>
+      <button class="btn btn-accent btn-md">accent md</button>
+    </div>
+  </div>
+</body>
+</html>

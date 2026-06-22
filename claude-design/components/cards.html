@@ -1,0 +1,68 @@
+<!-- @dsCard group="Cards" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DoppelWriter — Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --color-surface: #faf8f4;
+    --color-surface-raised: #f1ece3;
+    --color-fg: #1c1a17;
+    --color-fg-muted: #6b6358;
+    --color-border: #e4ded2;
+    --color-brand: #c2410c;
+    --radius: 10px;
+    --font-display: "Space Grotesk", system-ui, sans-serif;
+    --font-sans: "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--color-surface); color: var(--color-fg); font-family: var(--font-sans); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 28px 64px; }
+  .eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-fg-muted); font-weight: 600; }
+  .topbar { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--color-border); padding-bottom: 16px; margin-bottom: 40px; }
+  .optname { font-family: var(--font-display); font-weight: 500; font-size: 13px; color: var(--color-brand); letter-spacing: .02em; }
+  h2 { font-family: var(--font-display); font-weight: 700; font-size: 32px; letter-spacing: -0.02em; margin-bottom: 24px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 540px) { .grid { grid-template-columns: 1fr; } }
+  .card { border: 1px solid var(--color-border); border-radius: var(--radius); padding: 22px; }
+  .card-default { background: var(--color-surface); }
+  .card-raised { background: var(--color-surface-raised); }
+  .card .eyebrow { margin-bottom: 10px; }
+  .card-body { font-size: 15px; color: var(--color-fg); margin-top: 6px; }
+  .card-muted { font-size: 13px; color: var(--color-fg-muted); margin-top: 6px; }
+  .card-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--color-fg-muted); margin-bottom: 4px; opacity: .7; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="eyebrow">DoppelWriter</span>
+      <span class="optname">Cards</span>
+    </div>
+    <h2>Cards</h2>
+    <div class="grid">
+      <div>
+        <div class="card-label">Default — surface</div>
+        <div class="card card-default">
+          <span class="eyebrow">Voice Profile</span>
+          <p class="card-body">Your writing style, captured.</p>
+          <p class="card-muted">Paste a few paragraphs and DoppelWriter builds a fingerprint of your voice.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card-label">Raised — surface-raised</div>
+        <div class="card card-raised">
+          <span class="eyebrow">Draft Output</span>
+          <p class="card-body">Ready to publish.</p>
+          <p class="card-muted">Generated text matches your cadence, word choice, and sentence rhythm.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

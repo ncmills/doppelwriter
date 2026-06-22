@@ -1,0 +1,99 @@
+<!-- @dsCard group="Colors" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DoppelWriter — Colors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --color-surface: #faf8f4;
+    --color-surface-raised: #f1ece3;
+    --color-fg: #1c1a17;
+    --color-fg-muted: #6b6358;
+    --color-border: #e4ded2;
+    --color-brand: #c2410c;
+    --radius: 10px;
+    --font-display: "Space Grotesk", system-ui, sans-serif;
+    --font-sans: "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--color-surface); color: var(--color-fg); font-family: var(--font-sans); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 28px 64px; }
+  .eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-fg-muted); font-weight: 600; font-family: var(--font-sans); }
+  .topbar { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--color-border); padding-bottom: 16px; margin-bottom: 40px; }
+  .optname { font-family: var(--font-display); font-weight: 500; font-size: 13px; color: var(--color-brand); letter-spacing: .02em; }
+  h2 { font-family: var(--font-display); font-weight: 700; font-size: 32px; letter-spacing: -0.02em; margin-bottom: 24px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 560px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  .swatch { border: 1px solid var(--color-border); border-radius: var(--radius); overflow: hidden; }
+  .swatch-block { height: 80px; }
+  .swatch-meta { padding: 10px 12px; background: var(--color-surface-raised); }
+  .swatch-name { font-size: 13px; font-weight: 600; color: var(--color-fg); font-family: var(--font-sans); }
+  .swatch-hex { font-size: 12px; color: var(--color-fg-muted); font-family: monospace; display: block; margin-top: 2px; }
+  .swatch-var { font-size: 11px; color: var(--color-fg-muted); font-family: monospace; display: block; margin-top: 1px; opacity: .8; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="eyebrow">DoppelWriter</span>
+      <span class="optname">Colors · Sand &amp; Ember</span>
+    </div>
+    <h2>Colors</h2>
+    <div class="grid">
+      <div class="swatch">
+        <div class="swatch-block" style="background:#faf8f4; border-bottom:1px solid var(--color-border);"></div>
+        <div class="swatch-meta">
+          <span class="swatch-name">surface</span>
+          <code class="swatch-hex">#faf8f4</code>
+          <code class="swatch-var">--color-surface</code>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#f1ece3;"></div>
+        <div class="swatch-meta">
+          <span class="swatch-name">surface-raised</span>
+          <code class="swatch-hex">#f1ece3</code>
+          <code class="swatch-var">--color-surface-raised</code>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#1c1a17;"></div>
+        <div class="swatch-meta">
+          <span class="swatch-name">fg</span>
+          <code class="swatch-hex">#1c1a17</code>
+          <code class="swatch-var">--color-fg</code>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#6b6358;"></div>
+        <div class="swatch-meta">
+          <span class="swatch-name">fg-muted</span>
+          <code class="swatch-hex">#6b6358</code>
+          <code class="swatch-var">--color-fg-muted</code>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#e4ded2; border-bottom:1px solid var(--color-border);"></div>
+        <div class="swatch-meta">
+          <span class="swatch-name">border</span>
+          <code class="swatch-hex">#e4ded2</code>
+          <code class="swatch-var">--color-border</code>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#c2410c;"></div>
+        <div class="swatch-meta">
+          <span class="swatch-name">brand</span>
+          <code class="swatch-hex">#c2410c</code>
+          <code class="swatch-var">--color-brand</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

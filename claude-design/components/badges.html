@@ -1,0 +1,78 @@
+<!-- @dsCard group="Badges" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DoppelWriter — Badges</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --color-surface: #faf8f4;
+    --color-surface-raised: #f1ece3;
+    --color-fg: #1c1a17;
+    --color-fg-muted: #6b6358;
+    --color-border: #e4ded2;
+    --color-brand: #c2410c;
+    --radius: 10px;
+    --font-display: "Space Grotesk", system-ui, sans-serif;
+    --font-sans: "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--color-surface); color: var(--color-fg); font-family: var(--font-sans); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 520px; margin: 0 auto; padding: 48px 28px 64px; }
+  .eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-fg-muted); font-weight: 600; }
+  .topbar { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--color-border); padding-bottom: 16px; margin-bottom: 40px; }
+  .optname { font-family: var(--font-display); font-weight: 500; font-size: 13px; color: var(--color-brand); letter-spacing: .02em; }
+  h2 { font-family: var(--font-display); font-weight: 700; font-size: 32px; letter-spacing: -0.02em; margin-bottom: 28px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 28px; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    letter-spacing: .04em;
+  }
+  .badge-default { border: 1px solid var(--color-border); color: var(--color-fg-muted); background: transparent; }
+  .badge-brand { border: 1px solid var(--color-brand); color: var(--color-brand); background: transparent; }
+  .section-label { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-fg-muted); font-weight: 600; margin-bottom: 12px; }
+  .context-block { background: var(--color-surface-raised); border: 1px solid var(--color-border); border-radius: var(--radius); padding: 20px; margin-top: 16px; }
+  .context-title { font-size: 15px; font-weight: 600; color: var(--color-fg); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .context-body { font-size: 13px; color: var(--color-fg-muted); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="eyebrow">DoppelWriter</span>
+      <span class="optname">Badges</span>
+    </div>
+    <h2>Badges</h2>
+
+    <div class="section-label">Default — border + fg-muted</div>
+    <div class="row">
+      <span class="badge badge-default">default</span>
+      <span class="badge badge-default">Beta</span>
+      <span class="badge badge-default">Pro</span>
+    </div>
+
+    <div class="section-label">Brand — border + ember text</div>
+    <div class="row">
+      <span class="badge badge-brand">brand</span>
+      <span class="badge badge-brand">98% match</span>
+      <span class="badge badge-brand">New</span>
+    </div>
+
+    <div class="section-label">In context</div>
+    <div class="context-block">
+      <div class="context-title">Voice Analysis <span class="badge badge-brand">98% match</span></div>
+      <p class="context-body">Your writing fingerprint has been captured across 847 unique patterns.</p>
+    </div>
+  </div>
+</body>
+</html>

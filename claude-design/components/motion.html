@@ -1,0 +1,113 @@
+<!-- @dsCard group="Motion" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DoppelWriter — Motion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --color-surface: #faf8f4;
+    --color-surface-raised: #f1ece3;
+    --color-fg: #1c1a17;
+    --color-fg-muted: #6b6358;
+    --color-border: #e4ded2;
+    --color-brand: #c2410c;
+    --radius: 10px;
+    --motion-fast: 140ms;
+    --motion-base: 220ms;
+    --motion-cinematic: 600ms;
+    --font-display: "Space Grotesk", system-ui, sans-serif;
+    --font-sans: "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--color-surface); color: var(--color-fg); font-family: var(--font-sans); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 28px 64px; }
+  .eyebrow-sm { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-fg-muted); font-weight: 600; }
+  .topbar { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--color-border); padding-bottom: 16px; margin-bottom: 40px; }
+  .optname { font-family: var(--font-display); font-weight: 500; font-size: 13px; color: var(--color-brand); letter-spacing: .02em; }
+  h2 { font-family: var(--font-display); font-weight: 700; font-size: 32px; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .caption { font-size: 13px; color: var(--color-fg-muted); margin-bottom: 32px; max-width: 58ch; line-height: 1.6; }
+  .section-label { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-fg-muted); font-weight: 600; margin-bottom: 14px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+  @media (max-width: 560px) { .grid-3 { grid-template-columns: 1fr; } }
+  .card { border: 1px solid var(--color-border); border-radius: var(--radius); padding: 20px; background: var(--color-surface); }
+  .card-title { font-size: 15px; font-weight: 600; color: var(--color-fg); margin-bottom: 4px; }
+  .card-body { font-size: 13px; color: var(--color-fg-muted); }
+  .card-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--color-brand); background: rgba(194,65,12,.08); border-radius: 4px; padding: 2px 7px; margin-bottom: 10px; }
+
+  /* Reveal — simulated static state (as-if mid-fade-in) */
+  .reveal-card { opacity: .92; transform: translateY(3px); transition: opacity var(--motion-cinematic) ease, transform var(--motion-cinematic) ease; }
+
+  /* HoverLift — actual CSS spring-ish lift on hover */
+  .hoverlift-card {
+    background: var(--color-surface-raised);
+    cursor: pointer;
+    transition: transform var(--motion-base) cubic-bezier(.34,1.56,.64,1), box-shadow var(--motion-base) ease;
+  }
+  .hoverlift-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(28,26,23,.10);
+  }
+
+  /* Token reference strip */
+  .token-strip { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--color-border); }
+  .token-pill { font-size: 12px; font-family: monospace; background: var(--color-surface-raised); border: 1px solid var(--color-border); border-radius: 6px; padding: 4px 10px; color: var(--color-fg-muted); }
+  .token-val { color: var(--color-brand); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-card, .hoverlift-card, .hoverlift-card:hover { transition: none; transform: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="eyebrow-sm">DoppelWriter</span>
+      <span class="optname">Motion</span>
+    </div>
+    <h2>Motion</h2>
+    <p class="caption">
+      Reveal (fade+rise on scroll) · Stagger · HoverLift (spring on hover) — all honor <code>prefers-reduced-motion</code>.
+      This static card shows the intended motion vocabulary; live behavior requires Framer Motion.
+    </p>
+
+    <div class="section-label">Reveal + Stagger — static representation</div>
+    <div class="grid-3">
+      <div class="card reveal-card">
+        <div class="card-tag">Reveal</div>
+        <div class="card-title">Reveal card 1</div>
+        <div class="card-body">Fades and rises on scroll-in · 600ms cinematic ease</div>
+      </div>
+      <div class="card reveal-card" style="opacity:.78;transform:translateY(5px);">
+        <div class="card-tag">Stagger</div>
+        <div class="card-title">Reveal card 2</div>
+        <div class="card-body">Staggered 60 ms later · same easing curve</div>
+      </div>
+      <div class="card reveal-card" style="opacity:.65;transform:translateY(7px);">
+        <div class="card-tag">Stagger</div>
+        <div class="card-title">Reveal card 3</div>
+        <div class="card-body">Staggered 120 ms later · sequential choreography</div>
+      </div>
+    </div>
+
+    <div class="section-label">HoverLift — hover to see</div>
+    <div style="max-width:260px;">
+      <div class="card hoverlift-card">
+        <div class="card-tag">HoverLift</div>
+        <div class="card-title">Hover me — spring lift</div>
+        <div class="card-body">translateY springs to −3px on hover, returns on mouse-out · cubic-bezier spring</div>
+      </div>
+    </div>
+
+    <div class="token-strip">
+      <span class="token-pill">--motion-fast <span class="token-val">140ms</span></span>
+      <span class="token-pill">--motion-base <span class="token-val">220ms</span></span>
+      <span class="token-pill">--motion-cinematic <span class="token-val">600ms</span></span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!-- @dsCard group="Spacing" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DoppelWriter — Spacing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --color-surface: #faf8f4;
+    --color-surface-raised: #f1ece3;
+    --color-fg: #1c1a17;
+    --color-fg-muted: #6b6358;
+    --color-border: #e4ded2;
+    --color-brand: #c2410c;
+    --radius: 10px;
+    --space-1: .25rem;
+    --space-2: .5rem;
+    --space-3: .75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-24: 6rem;
+    --space-32: 8rem;
+    --font-display: "Space Grotesk", system-ui, sans-serif;
+    --font-sans: "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--color-surface); color: var(--color-fg); font-family: var(--font-sans); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 28px 64px; }
+  .eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-fg-muted); font-weight: 600; }
+  .topbar { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--color-border); padding-bottom: 16px; margin-bottom: 40px; }
+  .optname { font-family: var(--font-display); font-weight: 500; font-size: 13px; color: var(--color-brand); letter-spacing: .02em; }
+  h2 { font-family: var(--font-display); font-weight: 700; font-size: 32px; letter-spacing: -0.02em; margin-bottom: 24px; }
+  .scale { display: flex; flex-direction: column; gap: 12px; }
+  .scale-row { display: flex; align-items: center; gap: 16px; }
+  .scale-label { width: 80px; flex-shrink: 0; }
+  .scale-name { font-size: 12px; font-weight: 600; color: var(--color-fg-muted); font-family: monospace; }
+  .scale-px { font-size: 11px; color: var(--color-fg-muted); opacity: .7; display: block; margin-top: 1px; }
+  .bar { height: 14px; background: var(--color-brand); border-radius: 3px; min-width: 2px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="eyebrow">DoppelWriter</span>
+      <span class="optname">Spacing · 8pt Register</span>
+    </div>
+    <h2>Spacing</h2>
+    <div class="scale">
+      <div class="scale-row">
+        <div class="scale-label"><span class="scale-name">space-1</span><span class="scale-px">4px</span></div>
+        <div class="bar" style="width:var(--space-1)"></div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label"><span class="scale-name">space-2</span><span class="scale-px">8px</span></div>
+        <div class="bar" style="width:var(--space-2)"></div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label"><span class="scale-name">space-3</span><span class="scale-px">12px</span></div>
+        <div class="bar" style="width:var(--space-3)"></div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label"><span class="scale-name">space-4</span><span class="scale-px">16px</span></div>
+        <div class="bar" style="width:var(--space-4)"></div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label"><span class="scale-name">space-6</span><span class="scale-px">24px</span></div>
+        <div class="bar" style="width:var(--space-6)"></div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label"><span class="scale-name">space-8</span><span class="scale-px">32px</span></div>
+        <div class="bar" style="width:var(--space-8)"></div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label"><span class="scale-name">space-12</span><span class="scale-px">48px</span></div>
+        <div class="bar" style="width:var(--space-12)"></div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label"><span class="scale-name">space-16</span><span class="scale-px">64px</span></div>
+        <div class="bar" style="width:var(--space-16)"></div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label"><span class="scale-name">space-24</span><span class="scale-px">96px</span></div>
+        <div class="bar" style="width:var(--space-24)"></div>
+      </div>
+      <div class="scale-row">
+        <div class="scale-label"><span class="scale-name">space-32</span><span class="scale-px">128px</span></div>
+        <div class="bar" style="width:var(--space-32)"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
