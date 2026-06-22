@@ -144,9 +144,9 @@ input:focus, textarea:focus, select:focus, [contenteditable]:focus {
   background-image: linear-gradient(var(--color-accent), var(--color-accent));
 }
 
-/* Duotone portrait filter — sepia ink wash */
+/* Duotone portrait filter — warm ember wash (Sand & Ember; hue-rotated off sepia toward terracotta) */
 .duotone {
-  filter: grayscale(1) sepia(0.35) contrast(1.08) brightness(0.98);
+  filter: grayscale(1) sepia(0.5) saturate(1.5) hue-rotate(-12deg) contrast(1.05) brightness(0.97);
 }
 
 /* Hover bleed — duotone resolves to color when ancestor .group is hovered.
