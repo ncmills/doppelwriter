@@ -13,3 +13,6 @@ Base: (pre-Task-1 HEAD recorded below)
 - Tasks 3-5: complete (static primitives, commits f506267..c7d6ef9 + fix 8391a68; review SPEC ok/approved; pattern = arbitrary [var(--color-*)] syntax)
 - Task 6 (motion): complete (commit b93f3db; framer-motion ^12.40.0; controller-verified after subagent session-limit death; build clean, providers preserved). MINOR for final review: Reveal uses whileInView not parent variants, so Stagger cascade is independent-reveal not true stagger.
 - Task 7 (/style-guide): complete (commit 592f680 + middleware fix). VERIFIED via screenshot — all sections render in Sand&Ember; motion playground present; noindex; made public in middleware. Plan B findings recorded in docs/superpowers/PLAN-B-FINDINGS.md.
+- Task 8 (docs): complete (commit 5e21caa, DESIGN-SYSTEM.md + CLAUDE.md fixed)
+- Task 9 (Claude Design sync): complete (cards commit 137c8c2; 8 cards pushed to claude.ai/design project 17089edf, verified renders)
+- PLAN A COMPLETE. Pending: final whole-branch review, then finishing-a-development-branch.
