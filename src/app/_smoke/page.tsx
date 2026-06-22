@@ -7,6 +7,9 @@ import { Badge } from "@/components/ui/Badge";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Rule } from "@/components/ui/Rule";
 import { Prose } from "@/components/ui/Prose";
+import { Reveal } from "@/components/ui/motion/Reveal";
+import { Stagger } from "@/components/ui/motion/Stagger";
+import { HoverLift } from "@/components/ui/motion/HoverLift";
 
 export default function Smoke() {
   return (
@@ -45,6 +48,43 @@ export default function Smoke() {
           syntax.
         </p>
       </Prose>
+
+      <Rule />
+
+      {/* ── Motion primitives smoke test ── */}
+      <Eyebrow>Motion — Stagger + Reveal (scroll down to trigger)</Eyebrow>
+
+      <Stagger className="flex flex-col gap-4 max-w-md">
+        <Reveal>
+          <Card>
+            <p className="text-sm">Reveal card 1 — fades + rises on scroll-in</p>
+          </Card>
+        </Reveal>
+        <Reveal delay={0.06}>
+          <Card>
+            <p className="text-sm">Reveal card 2 — staggered 60 ms later</p>
+          </Card>
+        </Reveal>
+        <Reveal delay={0.12}>
+          <Card>
+            <p className="text-sm">Reveal card 3 — staggered 120 ms later</p>
+          </Card>
+        </Reveal>
+      </Stagger>
+
+      <Rule />
+
+      <Eyebrow>Motion — HoverLift (hover the card below)</Eyebrow>
+
+      <HoverLift className="max-w-xs cursor-pointer">
+        <Card>
+          <p className="text-sm font-medium">Hover me — spring lift</p>
+          <p className="text-xs opacity-60 mt-1">translateY springs to −3px on hover, back on tap</p>
+        </Card>
+      </HoverLift>
+
+      {/* Spacer so scroll-triggered reveals actually fire */}
+      <div className="h-64" />
     </main>
   );
 }

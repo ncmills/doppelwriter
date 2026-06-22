@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import SessionProvider from "@/components/SessionProvider";
 import PostHogProvider from "@/components/PostHogProvider";
+import { MotionProvider } from "@/components/ui/motion/MotionProvider";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -96,7 +97,9 @@ export default function RootLayout({
           }) }}
         />
         <SessionProvider>
-          <PostHogProvider>{children}</PostHogProvider>
+          <PostHogProvider>
+            <MotionProvider>{children}</MotionProvider>
+          </PostHogProvider>
         </SessionProvider>
         <Analytics />
         <SpeedInsights />
