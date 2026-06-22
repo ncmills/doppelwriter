@@ -16,3 +16,5 @@ Base: (pre-Task-1 HEAD recorded below)
 - Task 8 (docs): complete (commit 5e21caa, DESIGN-SYSTEM.md + CLAUDE.md fixed)
 - Task 9 (Claude Design sync): complete (cards commit 137c8c2; 8 cards pushed to claude.ai/design project 17089edf, verified renders)
 - PLAN A COMPLETE. Pending: final whole-branch review, then finishing-a-development-branch.
+- FINAL REVIEW: READY TO MERGE (opus). All constraints pass; AA holds; reduced-motion correct; noindex safe. 5 Minors found; fixed contrast-number accuracy (x3) + motion prop-typing (commit 6667f1e). Accent #fff-vs-surface divergence left (both AA pass).
+- PLAN A DONE & REVIEWED @ 6667f1e. Plan B (27-file refactor, homepage italic fix, brand assets, OG) NOT started.
