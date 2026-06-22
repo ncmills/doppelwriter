@@ -49,8 +49,8 @@
   --space-24: 6rem;    /* 96px */
   --space-32: 8rem;    /* 128px */
 
-  /* Radii + motion */
-  --radius: 10px;
+  /* Radii + motion — 2px = the sharp editorial corner the live site ships (buttons/panels) */
+  --radius: 2px;
   --motion-fast: 140ms; --motion-base: 220ms; --motion-cinematic: 600ms;
 }
 
