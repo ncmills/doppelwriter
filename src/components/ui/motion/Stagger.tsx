@@ -7,7 +7,7 @@ export function Stagger({
   className,
   children,
   ...props
-}: { gap?: number } & React.HTMLAttributes<HTMLDivElement>) {
+}: { gap?: number } & React.ComponentProps<typeof motion.div>) {
   return (
     <motion.div
       className={className}
@@ -18,7 +18,7 @@ export function Stagger({
         hidden: {},
         show: { transition: { staggerChildren: gap } },
       }}
-      {...(props as React.ComponentProps<typeof motion.div>)}
+      {...props}
     >
       {children}
     </motion.div>

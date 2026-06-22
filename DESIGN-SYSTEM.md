@@ -21,7 +21,7 @@ These are the locked primitive values. **Components must never reference these d
 | `--color-bg` | `#faf8f4` | warm off-white base surface |
 | `--color-bg-raised` | `#f1ece3` | elevated surface (cards) |
 | `--color-fg-strong` | `#1c1a17` | warm near-black, primary text |
-| `--color-fg-muted-raw` | `#6b6358` | secondary text (AA verified: 5.57:1 on bg, 5.18:1 on raised) |
+| `--color-fg-muted-raw` | `#6b6358` | secondary text (AA verified: 5.57:1 on bg, 5.03:1 on raised) |
 | `--color-line` | `#e4ded2` | hairline / border |
 | `--color-accent-raw` | `#c2410c` | ember / terracotta — the single vivid accent |
 
@@ -39,20 +39,20 @@ These are the locked primitive values. **Components must never reference these d
 | `--color-background` | `--color-bg` | Next.js / Tailwind default background |
 | `--color-foreground` | `--color-fg-strong` | Next.js / Tailwind default foreground |
 
-### Legacy Back-Compat Aliases (7 total)
+### Legacy Back-Compat Aliases (6 total)
 
 These exist **only** so un-migrated components automatically reskin without a find-replace sweep. Do not use them in new code.
 
 | Legacy alias | Value | Original meaning |
 |---|---|---|
 | `--color-ink` | `var(--color-fg-strong)` (#1c1a17) | dark ink — was primary text |
-| `--color-ink-soft` | `#4a443b` | warm mid — AA on surface (4.68:1) |
+| `--color-ink-soft` | `#4a443b` | warm mid — AA on surface (9.08:1) |
 | `--color-ink-mute` | `var(--color-fg-muted-raw)` (#6b6358) | muted ink |
 | `--color-paper` | `var(--color-bg)` (#faf8f4) | base surface |
 | `--color-paper-deep` | `var(--color-bg-raised)` (#f1ece3) | elevated surface |
 | `--color-rule` | `var(--color-line)` (#e4ded2) | hairline / divider |
 
-The seventh legacy alias is `--color-ink-soft` (listed above as a direct hex, not a pointer). These will be removed in a future Plan B migration once all components are on semantic tokens.
+These will be removed in a future Plan B migration once all components are on semantic tokens.
 
 ### Typography
 

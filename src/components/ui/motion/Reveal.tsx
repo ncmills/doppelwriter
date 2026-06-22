@@ -8,7 +8,7 @@ export function Reveal({
   className,
   children,
   ...props
-}: { delay?: number; y?: number } & React.HTMLAttributes<HTMLDivElement>) {
+}: { delay?: number; y?: number } & React.ComponentProps<typeof motion.div>) {
   return (
     <motion.div
       className={className}
@@ -16,7 +16,7 @@ export function Reveal({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.4, delay, ease: [0.16, 1, 0.3, 1] }}
-      {...(props as React.ComponentProps<typeof motion.div>)}
+      {...props}
     >
       {children}
     </motion.div>
