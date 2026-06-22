@@ -78,38 +78,38 @@ export default function SettingsPage() {
           </div>
         )}
 
-        <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 mb-6">
+        <div className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-6 mb-6">
           <h2 className="text-lg font-semibold mb-4 font-[family-name:var(--font-display)]">Account</h2>
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
-              <span className="text-[var(--color-ink-soft)]">Email</span>
+              <span className="text-[var(--color-fg-muted)]">Email</span>
               <span>{session?.user?.email}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-[var(--color-ink-soft)]">Name</span>
+              <span className="text-[var(--color-fg-muted)]">Name</span>
               <span>{session?.user?.name || "—"}</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 mb-6">
+        <div className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-6 mb-6">
           <h2 className="text-lg font-semibold mb-4 font-[family-name:var(--font-display)]">Usage</h2>
           <div className="space-y-3 text-sm">
             {usage && (
               <>
                 <div className="flex justify-between items-center">
-                  <span className="text-[var(--color-ink-soft)]">Used this month</span>
+                  <span className="text-[var(--color-fg-muted)]">Used this month</span>
                   <span>{usage.used} / {usage.limit}</span>
                 </div>
                 {usage.throttled && (
-                  <p className="text-[var(--color-accent)] text-xs">
+                  <p className="text-[var(--color-brand)] text-xs">
                     You&apos;ve passed your monthly soft cap. Requests are slowed but never blocked.
                   </p>
                 )}
-                <div className="w-full h-2 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] overflow-hidden">
+                <div className="w-full h-2 bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] overflow-hidden">
                   <div
                     className={`h-full rounded-[2px] transition-all ${
-                      usage.throttled ? "bg-[var(--color-accent)]" : usage.used / usage.limit > 0.8 ? "bg-red-500" : "bg-green-500"
+                      usage.throttled ? "bg-[var(--color-brand)]" : usage.used / usage.limit > 0.8 ? "bg-red-500" : "bg-green-500"
                     }`}
                     style={{ width: `${Math.min((usage.used / usage.limit) * 100, 100)}%` }}
                   />
@@ -119,7 +119,7 @@ export default function SettingsPage() {
           </div>
           {plan === "pro" && (
             <div className="mt-5">
-              <button onClick={handleManage} className="px-4 py-2 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] hover:border-[var(--color-ink)] rounded-[2px] text-sm transition-colors">
+              <button onClick={handleManage} className="px-4 py-2 bg-[var(--color-surface-raised)] border border-[var(--color-border)] hover:border-[var(--color-fg)] rounded-[2px] text-sm transition-colors">
                 Manage Subscription
               </button>
               {stripeError && (
@@ -130,22 +130,22 @@ export default function SettingsPage() {
         </div>
         {/* Referral */}
         {referral && (
-          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 mb-6">
+          <div className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-6 mb-6">
             <h2 className="text-lg font-semibold mb-4 font-[family-name:var(--font-display)]">Referrals</h2>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-[var(--color-ink-soft)]">Friends invited</span>
+                <span className="text-[var(--color-fg-muted)]">Friends invited</span>
                 <span>{referral.count}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[var(--color-ink-soft)]">Bonus uses earned</span>
+                <span className="text-[var(--color-fg-muted)]">Bonus uses earned</span>
                 <span className="text-green-700">+{referral.bonus}</span>
               </div>
               <div className="flex items-center gap-2 mt-3">
                 <input
                   readOnly
                   value={`https://doppelwriter.com/?ref=${referral.code}`}
-                  className="flex-1 px-3 py-2 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-sm text-[var(--color-ink-soft)] focus:outline-none"
+                  className="flex-1 px-3 py-2 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[2px] text-sm text-[var(--color-fg-muted)] focus:outline-none"
                 />
                 <button
                   onClick={() => {
@@ -153,12 +153,12 @@ export default function SettingsPage() {
                     setRefCopied(true);
                     setTimeout(() => setRefCopied(false), 2000);
                   }}
-                  className="px-4 py-2 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] text-sm font-medium transition-colors shrink-0"
+                  className="px-4 py-2 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] text-sm font-medium transition-colors shrink-0"
                 >
                   {refCopied ? "Copied!" : "Copy"}
                 </button>
               </div>
-              <p className="text-xs text-[var(--color-ink-mute)]">You and your friend both get +5 free uses.</p>
+              <p className="text-xs text-[var(--color-fg-muted)]">You and your friend both get +5 free uses.</p>
             </div>
           </div>
         )}

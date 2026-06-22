@@ -29,15 +29,15 @@ export default function Nav() {
   return (
     <nav
       aria-label="App navigation"
-      className="border-b border-[var(--color-rule)] bg-[var(--color-paper)]/95 backdrop-blur-sm sticky top-0 z-50"
+      className="border-b border-[var(--color-border)] bg-[var(--color-surface)]/95 backdrop-blur-sm sticky top-0 z-50"
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center h-16 gap-4 sm:gap-8">
         <Link
           href="/home"
           aria-label="DoppelWriter — home"
-          className="flex items-center gap-3 shrink-0 text-[var(--color-ink)]"
+          className="flex items-center gap-3 shrink-0 text-[var(--color-fg)]"
         >
-          <Logo className="h-6 w-6 text-[var(--color-ink)]" />
+          <Logo className="h-6 w-6 text-[var(--color-fg)]" />
           <span className="hidden sm:inline font-[family-name:var(--font-display)] font-bold text-xl tracking-[-0.02em]">
             DoppelWriter
           </span>
@@ -50,8 +50,8 @@ export default function Nav() {
             href="/write"
             className={`text-sm tracking-wide uppercase font-medium px-1 py-2 transition-colors ${
               isActive("/write")
-                ? "text-[var(--color-ink)] border-b-2 border-[var(--color-accent)]"
-                : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+                ? "text-[var(--color-fg)] border-b-2 border-[var(--color-brand)]"
+                : "text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
             }`}
           >
             Write
@@ -67,8 +67,8 @@ export default function Nav() {
                   href="/home"
                   className={`ed-link text-xs uppercase tracking-[0.15em] py-2 ${
                     pathname === "/home"
-                      ? "text-[var(--color-ink)]"
-                      : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+                      ? "text-[var(--color-fg)]"
+                      : "text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
                   }`}
                 >
                   Home
@@ -77,15 +77,15 @@ export default function Nav() {
                   href="/settings"
                   className={`ed-link text-xs uppercase tracking-[0.15em] py-2 ${
                     pathname === "/settings"
-                      ? "text-[var(--color-ink)]"
-                      : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
+                      ? "text-[var(--color-fg)]"
+                      : "text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
                   }`}
                 >
                   Settings
                 </Link>
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="ed-link text-xs uppercase tracking-[0.15em] py-2 text-[var(--color-ink-mute)] hover:text-[var(--color-ink)]"
+                  className="ed-link text-xs uppercase tracking-[0.15em] py-2 text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
                 >
                   Sign out
                 </button>
@@ -93,7 +93,7 @@ export default function Nav() {
               {/* Mobile hamburger */}
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="sm:hidden p-2 text-[var(--color-ink)] transition-colors"
+                className="sm:hidden p-2 text-[var(--color-fg)] transition-colors"
                 aria-label="Menu"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,13 +110,13 @@ export default function Nav() {
       </div>
       {/* Mobile dropdown menu */}
       {menuOpen && session?.user && (
-        <div className="sm:hidden border-t border-[var(--color-rule)] bg-[var(--color-paper)] px-5 py-4 space-y-1">
+        <div className="sm:hidden border-t border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-4 space-y-1">
           <UsageBar />
           <Link
             href="/home"
             onClick={() => setMenuOpen(false)}
             className={`block py-2.5 text-sm uppercase tracking-wide ${
-              pathname === "/home" ? "text-[var(--color-ink)]" : "text-[var(--color-ink-soft)]"
+              pathname === "/home" ? "text-[var(--color-fg)]" : "text-[var(--color-fg-muted)]"
             }`}
           >
             Home
@@ -124,13 +124,13 @@ export default function Nav() {
           <Link
             href="/settings"
             onClick={() => setMenuOpen(false)}
-            className="block py-2.5 text-sm uppercase tracking-wide text-[var(--color-ink-soft)]"
+            className="block py-2.5 text-sm uppercase tracking-wide text-[var(--color-fg-muted)]"
           >
             Settings
           </Link>
           <button
             onClick={() => { setMenuOpen(false); signOut({ callbackUrl: "/" }); }}
-            className="block py-2.5 text-sm uppercase tracking-wide text-[var(--color-ink-mute)]"
+            className="block py-2.5 text-sm uppercase tracking-wide text-[var(--color-fg-muted)]"
           >
             Sign out
           </button>

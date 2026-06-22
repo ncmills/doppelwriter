@@ -53,14 +53,14 @@ export default function ForIndexPage() {
       />
 
       {/* Nav */}
-      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/80 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-border)] sticky top-0 bg-[var(--color-surface)]/80 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-6 flex items-center h-14 justify-between">
           <Link href="/" className="font-[family-name:var(--font-display)] font-bold text-lg">
             DoppelWriter
           </Link>
           <Link
             href="/signup"
-            className="text-sm px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] transition-colors"
+            className="text-sm px-4 py-1.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] transition-colors"
           >
             Try Free
           </Link>
@@ -71,7 +71,7 @@ export default function ForIndexPage() {
         <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl font-bold mb-4">
           DoppelWriter For...
         </h1>
-        <p className="text-xl text-[var(--color-ink-soft)] mb-12 max-w-2xl leading-relaxed">
+        <p className="text-xl text-[var(--color-fg-muted)] mb-12 max-w-2xl leading-relaxed">
           AI writing that matches your voice. Whatever you write, whoever you write for.
         </p>
 
@@ -80,12 +80,12 @@ export default function ForIndexPage() {
             <Link
               key={niche.slug}
               href={`/for/${niche.slug}`}
-              className="group bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 transition-colors hover:border-[var(--color-ink)]"
+              className="group bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-6 transition-colors hover:border-[var(--color-fg)]"
             >
-              <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold mb-2 group-hover:text-[var(--color-accent)] transition-colors">
+              <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold mb-2 group-hover:text-[var(--color-brand)] transition-colors">
                 {niche.title}
               </h2>
-              <p className="text-[var(--color-ink-soft)] text-sm leading-relaxed">
+              <p className="text-[var(--color-fg-muted)] text-sm leading-relaxed">
                 {NICHE_DESCRIPTIONS[niche.slug] ?? niche.heroSubtitle}
               </p>
             </Link>
@@ -93,33 +93,33 @@ export default function ForIndexPage() {
         </div>
 
         <div className="mt-16 text-center">
-          <p className="text-[var(--color-ink-mute)] mb-4">Don&apos;t see your niche?</p>
+          <p className="text-[var(--color-fg-muted)] mb-4">Don&apos;t see your niche?</p>
           <Link
             href="/signup"
-            className="inline-block px-8 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors"
+            className="inline-block px-8 py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium transition-colors"
           >
             Try DoppelWriter Free
           </Link>
-          <p className="text-[var(--color-ink-mute)] text-xs mt-3">
+          <p className="text-[var(--color-fg-muted)] text-xs mt-3">
             DoppelWriter works for any kind of writing. These are just starting points.
           </p>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--color-rule)] py-8">
+      <footer className="border-t border-[var(--color-border)] py-8">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-[var(--color-ink-mute)]">
+          <span className="text-xs text-[var(--color-fg-muted)]">
             &copy; {new Date().getFullYear()} DoppelWriter
           </span>
           <div className="flex gap-6">
-            <Link href="/pricing" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">
+            <Link href="/pricing" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">
               Pricing
             </Link>
-            <Link href="/privacy" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">
+            <Link href="/privacy" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">
               Privacy
             </Link>
-            <Link href="/terms" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">
+            <Link href="/terms" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">
               Terms
             </Link>
           </div>

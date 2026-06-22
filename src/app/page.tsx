@@ -119,7 +119,7 @@ const footerCols: { title: string; links: { label: string; href: string }[] }[] 
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[var(--color-paper)] text-[var(--color-ink)]">
+    <div className="min-h-screen bg-[var(--color-surface)] text-[var(--color-fg)]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <LandingNav />
@@ -128,18 +128,18 @@ export default function LandingPage() {
         {/* ━━━━━━━━━━ HERO ━━━━━━━━━━ */}
         <section className="max-w-5xl mx-auto px-5 sm:px-8 pt-14 sm:pt-24 pb-10 sm:pb-16">
           <div className="text-center mb-10 sm:mb-14">
-            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-6">
-              <span className="text-[var(--color-accent)]">●</span>{" "}
+            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-6">
+              <span className="text-[var(--color-brand)]">●</span>{" "}
               Vol. I — AI Writing, Voice-Matched
             </p>
             <h1 className="font-[family-name:var(--font-display)] font-bold text-[44px] sm:text-[64px] md:text-[72px] leading-[1.02] tracking-[-0.02em] mb-6 sm:mb-8">
               Write in anyone&apos;s voice.
               <br />
-              <em className="font-normal text-[var(--color-ink-soft)]">
+              <em className="font-normal text-[var(--color-fg-muted)]">
                 Starting with yours.
               </em>
             </h1>
-            <p className="font-[family-name:var(--font-display)] text-lg sm:text-2xl text-[var(--color-ink-soft)] max-w-2xl mx-auto leading-snug italic">
+            <p className="font-[family-name:var(--font-display)] text-lg sm:text-2xl text-[var(--color-fg-muted)] max-w-2xl mx-auto leading-snug italic">
               The AI that sounds like you. Or Hemingway. Or your mom.
             </p>
           </div>
@@ -166,14 +166,14 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-3 gap-10 md:gap-14">
             {features.map((f) => (
               <div key={f.title}>
-                <p className="text-[11px] uppercase tracking-[0.25em] text-[var(--color-accent)] mb-4">
+                <p className="text-[11px] uppercase tracking-[0.25em] text-[var(--color-brand)] mb-4">
                   {f.eyebrow}
                 </p>
                 <h3 className="font-[family-name:var(--font-display)] text-[28px] leading-[1.1] mb-4">
                   {f.title}
                 </h3>
-                <div className="w-8 h-[1px] bg-[var(--color-rule)] mb-4" />
-                <p className="text-[15px] leading-[1.7] text-[var(--color-ink-soft)]">
+                <div className="w-8 h-[1px] bg-[var(--color-border)] mb-4" />
+                <p className="text-[15px] leading-[1.7] text-[var(--color-fg-muted)]">
                   {f.body}
                 </p>
               </div>
@@ -185,19 +185,19 @@ export default function LandingPage() {
 
         {/* ━━━━━━━━━━ VOICE ANALYZER — free on-ramp to a personal profile ━━━━━━━━━━ */}
         <section className="max-w-4xl mx-auto px-5 sm:px-8 py-16 sm:py-24 text-center">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-4">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-4">
             The Voice Analyzer — Free, No Signup
           </p>
           <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em] mb-4">
             Curious how <em className="font-normal">you</em> sound?
           </h2>
-          <p className="font-[family-name:var(--font-display)] italic text-lg text-[var(--color-ink-soft)] max-w-xl mx-auto mb-8">
+          <p className="font-[family-name:var(--font-display)] italic text-lg text-[var(--color-fg-muted)] max-w-xl mx-auto mb-8">
             Paste anything you&apos;ve written — we&apos;ll break down your style in seconds.
             Sentence rhythm, vocabulary, signature words, the writers you most resemble.
           </p>
           <Link
             href="/analyze"
-            className="inline-block text-sm px-6 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] transition-colors uppercase tracking-wide font-medium"
+            className="inline-block text-sm px-6 py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] transition-colors uppercase tracking-wide font-medium"
             style={{ borderRadius: "2px" }}
           >
             Analyze your writing →
@@ -210,7 +210,7 @@ export default function LandingPage() {
         <section id="writers" className="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
           <div className="flex items-baseline justify-between mb-4 gap-6 flex-wrap">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-3">
+              <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-3">
                 The Writers
               </p>
               <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em]">
@@ -219,12 +219,12 @@ export default function LandingPage() {
             </div>
             <Link
               href="/write-like/authors"
-              className="ed-link text-sm text-[var(--color-ink)]"
+              className="ed-link text-sm text-[var(--color-fg)]"
             >
               Browse all 140+ →
             </Link>
           </div>
-          <p className="max-w-xl text-[var(--color-ink-soft)] mb-10 italic font-[family-name:var(--font-display)] text-lg">
+          <p className="max-w-xl text-[var(--color-fg-muted)] mb-10 italic font-[family-name:var(--font-display)] text-lg">
             Prebuilt profiles for 140 iconic voices. Name anyone else — we&apos;ll
             build a forensic style profile from their published work.
           </p>
@@ -236,13 +236,13 @@ export default function LandingPage() {
         {/* ━━━━━━━━━━ USE CASES — newspaper columns ━━━━━━━━━━ */}
         <section className="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
           <div className="mb-12 max-w-2xl">
-            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-3">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-3">
               The Assignments
             </p>
             <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em] mb-4">
               What will you write?
             </h2>
-            <p className="font-[family-name:var(--font-display)] italic text-lg text-[var(--color-ink-soft)]">
+            <p className="font-[family-name:var(--font-display)] italic text-lg text-[var(--color-fg-muted)]">
               Any writing task — in any voice.
             </p>
           </div>
@@ -250,11 +250,11 @@ export default function LandingPage() {
             {USE_CASE_CATEGORIES.map((cat) => {
               const cases = USE_CASES.filter((u) => u.category === cat.id).slice(0, 5);
               return (
-                <div key={cat.id} className="border-t border-[var(--color-ink)] pt-4">
+                <div key={cat.id} className="border-t border-[var(--color-fg)] pt-4">
                   <h3 className="font-[family-name:var(--font-display)] text-[22px] leading-tight mb-2">
                     {cat.label}
                   </h3>
-                  <p className="text-[13px] italic text-[var(--color-ink-soft)] mb-5 font-[family-name:var(--font-display)]">
+                  <p className="text-[13px] italic text-[var(--color-fg-muted)] mb-5 font-[family-name:var(--font-display)]">
                     — {CATEGORY_SUBHEADS[cat.id]}
                   </p>
                   <ul className="space-y-2.5">
@@ -262,7 +262,7 @@ export default function LandingPage() {
                       <li key={uc.slug}>
                         <Link
                           href={`/write/${uc.slug}`}
-                          className="ed-link text-[14px] text-[var(--color-ink)] leading-snug"
+                          className="ed-link text-[14px] text-[var(--color-fg)] leading-snug"
                         >
                           {uc.title}
                         </Link>
@@ -287,7 +287,7 @@ export default function LandingPage() {
 
         {/* ━━━━━━━━━━ FIELD NOTES — testimonials as marginalia ━━━━━━━━━━ */}
         <section className="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-10 text-center">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-10 text-center">
             Field Notes — From 50+ Writers In Practice
           </p>
           <div className="grid md:grid-cols-3 gap-10">
@@ -308,11 +308,11 @@ export default function LandingPage() {
                 attribution: "Priya R. — consultant",
               },
             ].map((t, i) => (
-              <figure key={i} className="border-l-2 border-[var(--color-accent)] pl-5">
-                <blockquote className="font-[family-name:var(--font-display)] italic text-[19px] leading-[1.5] text-[var(--color-ink)] mb-4">
+              <figure key={i} className="border-l-2 border-[var(--color-brand)] pl-5">
+                <blockquote className="font-[family-name:var(--font-display)] italic text-[19px] leading-[1.5] text-[var(--color-fg)] mb-4">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
-                <figcaption className="text-[12px] uppercase tracking-[0.18em] text-[var(--color-ink-soft)]">
+                <figcaption className="text-[12px] uppercase tracking-[0.18em] text-[var(--color-fg-muted)]">
                   {t.attribution}
                 </figcaption>
               </figure>
@@ -325,28 +325,28 @@ export default function LandingPage() {
         {/* ━━━━━━━━━━ FAQ — editorial accordion ━━━━━━━━━━ */}
         <section className="max-w-4xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
           <div className="mb-10 max-w-2xl">
-            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-3">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-3">
               Frequently Asked
             </p>
             <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em]">
               Questions.
             </h2>
           </div>
-          <div className="border-t border-[var(--color-ink)]">
+          <div className="border-t border-[var(--color-fg)]">
             {faqs.map((faq) => (
               <details
                 key={faq.q}
-                className="border-b border-[var(--color-rule)] group"
+                className="border-b border-[var(--color-border)] group"
               >
                 <summary className="py-5 cursor-pointer list-none flex items-baseline justify-between gap-6">
-                  <span className="font-[family-name:var(--font-display)] text-[20px] sm:text-[22px] leading-snug text-[var(--color-ink)]">
+                  <span className="font-[family-name:var(--font-display)] text-[20px] sm:text-[22px] leading-snug text-[var(--color-fg)]">
                     {faq.q}
                   </span>
-                  <span className="text-[var(--color-ink-mute)] group-open:rotate-45 transition-transform text-xl font-light shrink-0">
+                  <span className="text-[var(--color-fg-muted)] group-open:rotate-45 transition-transform text-xl font-light shrink-0">
                     +
                   </span>
                 </summary>
-                <div className="pb-6 pr-8 text-[15px] leading-[1.7] text-[var(--color-ink-soft)] max-w-[65ch]">
+                <div className="pb-6 pr-8 text-[15px] leading-[1.7] text-[var(--color-fg-muted)] max-w-[65ch]">
                   {faq.a}
                 </div>
               </details>
@@ -358,18 +358,18 @@ export default function LandingPage() {
 
         {/* ━━━━━━━━━━ CTA — ink stamp close ━━━━━━━━━━ */}
         <section className="max-w-4xl mx-auto px-5 sm:px-8 py-20 sm:py-32 text-center">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-6">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-6">
             Fin.
           </p>
           <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[64px] leading-[1.03] tracking-[-0.02em] mb-6">
             Now — <em className="font-normal">your turn.</em>
           </h2>
-          <p className="font-[family-name:var(--font-display)] italic text-lg sm:text-xl text-[var(--color-ink-soft)] max-w-md mx-auto mb-10">
+          <p className="font-[family-name:var(--font-display)] italic text-lg sm:text-xl text-[var(--color-fg-muted)] max-w-md mx-auto mb-10">
             Free to use. No credit card. Voice cloned in under a minute.
           </p>
           <Link
             href="/signup"
-            className="inline-block px-8 py-4 bg-[var(--color-ink)] text-[var(--color-paper)] text-sm font-medium tracking-[0.15em] uppercase hover:bg-[var(--color-accent)] transition-colors"
+            className="inline-block px-8 py-4 bg-[var(--color-fg)] text-[var(--color-surface)] text-sm font-medium tracking-[0.15em] uppercase hover:bg-[var(--color-brand)] transition-colors"
             style={{ borderRadius: "2px" }}
           >
             Start Writing →
@@ -378,12 +378,12 @@ export default function LandingPage() {
       </main>
 
       {/* ━━━━━━━━━━ FOOTER — 3 columns + cross-site list ━━━━━━━━━━ */}
-      <footer className="border-t border-[var(--color-ink)] bg-[var(--color-paper-deep)]">
+      <footer className="border-t border-[var(--color-fg)] bg-[var(--color-surface-raised)]">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-14">
             {/* Masthead */}
             <div className="col-span-2 md:col-span-1">
-              <Link href="/" className="flex items-center gap-3 mb-4 text-[var(--color-ink)]">
+              <Link href="/" className="flex items-center gap-3 mb-4 text-[var(--color-fg)]">
                 <svg
                   viewBox="0 0 64 64"
                   className="h-7 w-7"
@@ -401,7 +401,7 @@ export default function LandingPage() {
                   DoppelWriter
                 </span>
               </Link>
-              <p className="text-[13px] leading-relaxed text-[var(--color-ink-soft)] italic font-[family-name:var(--font-display)]">
+              <p className="text-[13px] leading-relaxed text-[var(--color-fg-muted)] italic font-[family-name:var(--font-display)]">
                 Voice-matched writing for people who still read.
               </p>
             </div>
@@ -409,7 +409,7 @@ export default function LandingPage() {
             {/* 3 columns */}
             {footerCols.map((col) => (
               <div key={col.title}>
-                <p className="text-[11px] uppercase tracking-[0.25em] text-[var(--color-ink-mute)] mb-5">
+                <p className="text-[11px] uppercase tracking-[0.25em] text-[var(--color-fg-muted)] mb-5">
                   {col.title}
                 </p>
                 <ul className="space-y-2.5">
@@ -417,7 +417,7 @@ export default function LandingPage() {
                     <li key={l.href}>
                       <Link
                         href={l.href}
-                        className="ed-link text-[14px] text-[var(--color-ink)]"
+                        className="ed-link text-[14px] text-[var(--color-fg)]"
                       >
                         {l.label}
                       </Link>
@@ -429,15 +429,15 @@ export default function LandingPage() {
           </div>
 
           {/* Cross-site reading list — staggered reveal on viewport entry */}
-          <div className="border-t border-[var(--color-rule)] pt-8 mb-8">
-            <p className="text-[11px] uppercase tracking-[0.25em] text-[var(--color-ink-mute)] mb-5">
+          <div className="border-t border-[var(--color-border)] pt-8 mb-8">
+            <p className="text-[11px] uppercase tracking-[0.25em] text-[var(--color-fg-muted)] mb-5">
               Also from the same desk
             </p>
             <CrossSiteList />
           </div>
 
           {/* Bottom bar */}
-          <div className="border-t border-[var(--color-rule)] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] uppercase tracking-[0.2em] text-[var(--color-ink-mute)]">
+          <div className="border-t border-[var(--color-border)] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] uppercase tracking-[0.2em] text-[var(--color-fg-muted)]">
             <span>© {new Date().getFullYear()} DoppelWriter · All rights reserved</span>
             <div className="flex gap-5">
               <Link href="/privacy" className="ed-link">Privacy</Link>

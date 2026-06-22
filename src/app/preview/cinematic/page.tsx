@@ -8,15 +8,15 @@ export const metadata: Metadata = {
 
 export default function CinematicPreviewPage() {
   return (
-    <main className="min-h-screen bg-[var(--color-paper)] text-[var(--color-ink)]">
+    <main className="min-h-screen bg-[var(--color-surface)] text-[var(--color-fg)]">
       <header className="max-w-6xl mx-auto px-6 pt-12 pb-6">
-        <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-3">
+        <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-3">
           Internal preview · item #1
         </p>
         <h1 className="font-[family-name:var(--font-display)] font-bold text-3xl sm:text-4xl tracking-[-0.02em] mb-2">
           Homepage scrubbed cinematic
         </h1>
-        <p className="text-[var(--color-ink-soft)] italic font-[family-name:var(--font-display)]">
+        <p className="text-[var(--color-fg-muted)] italic font-[family-name:var(--font-display)]">
           3-portrait reveal sequence — Didion / Hemingway / Paul Graham, real
           /api/demo captures, auto-play loop.
         </p>
@@ -26,8 +26,8 @@ export default function CinematicPreviewPage() {
         <HomepageCinematic mode="auto" />
       </section>
 
-      <section className="max-w-6xl mx-auto px-6 py-12 border-t border-[var(--color-rule)] text-sm text-[var(--color-ink-soft)] leading-relaxed">
-        <p className="mb-3 font-medium text-[var(--color-ink)]">Notes for review</p>
+      <section className="max-w-6xl mx-auto px-6 py-12 border-t border-[var(--color-border)] text-sm text-[var(--color-fg-muted)] leading-relaxed">
+        <p className="mb-3 font-medium text-[var(--color-fg)]">Notes for review</p>
         <ul className="list-disc pl-6 space-y-1">
           <li>Auto-play loop · ~16.5 s total · resets after a 1.5 s hold.</li>
           <li>

@@ -15,7 +15,7 @@ export default function WriterAvatar({
   if (!url) {
     return (
       <div
-        className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-ink-mute)] shrink-0"
+        className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-fg-muted)] shrink-0"
         style={{ width: size, height: size }}
         aria-label={`No portrait available for ${name}`}
       >
@@ -30,7 +30,7 @@ export default function WriterAvatar({
       alt={`Portrait of ${name}`}
       width={size}
       height={size}
-      className="object-cover shrink-0 bg-[var(--color-paper-deep)] duotone"
+      className="object-cover shrink-0 bg-[var(--color-surface-raised)] duotone"
       loading="lazy"
     />
   );

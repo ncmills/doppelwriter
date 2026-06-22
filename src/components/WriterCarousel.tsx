@@ -117,10 +117,10 @@ export default function WriterCarousel() {
             <Link
               key={w.name}
               href={`/write-like/${slug}`}
-              className="group flex flex-col bg-[var(--color-paper)] border border-[var(--color-rule)] hover:border-[var(--color-ink)] transition-colors"
+              className="group flex flex-col bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[var(--color-fg)] transition-colors"
             >
               {/* Portrait — duotone ink wash */}
-              <div className="relative bg-[var(--color-paper-deep)] aspect-[4/5] overflow-hidden border-b border-[var(--color-rule)]">
+              <div className="relative bg-[var(--color-surface-raised)] aspect-[4/5] overflow-hidden border-b border-[var(--color-border)]">
                 {photo ? (
                   <Image
                     src={photo}
@@ -132,7 +132,7 @@ export default function WriterCarousel() {
                   />
                 ) : (
                   <div
-                    className="w-full h-full flex items-center justify-center text-[var(--color-ink-mute)]"
+                    className="w-full h-full flex items-center justify-center text-[var(--color-fg-muted)]"
                     aria-label={`No portrait available for ${w.name}`}
                   >
                     <svg
@@ -156,7 +156,7 @@ export default function WriterCarousel() {
                   </div>
                 )}
                 {/* Category stamp — top-left corner */}
-                <span className="absolute top-3 left-3 text-[9px] uppercase tracking-[0.25em] text-[var(--color-paper)] bg-[var(--color-ink)]/80 px-2 py-1 z-10">
+                <span className="absolute top-3 left-3 text-[9px] uppercase tracking-[0.25em] text-[var(--color-surface)] bg-[var(--color-fg)]/80 px-2 py-1 z-10">
                   {w.category}
                 </span>
                 {/* Hairline accent frame — draws in on hover */}
@@ -165,14 +165,14 @@ export default function WriterCarousel() {
 
               {/* Card body */}
               <div className="flex flex-col flex-1 p-5">
-                <h3 className="font-[family-name:var(--font-display)] text-2xl leading-tight mb-1 text-[var(--color-ink)]">
+                <h3 className="font-[family-name:var(--font-display)] text-2xl leading-tight mb-1 text-[var(--color-fg)]">
                   <span className="ed-display-link">{w.name}</span>
                 </h3>
-                <div className="w-10 h-[1px] bg-[var(--color-accent)] mb-4" />
-                <p className="font-[family-name:var(--font-display)] italic text-[15px] leading-snug text-[var(--color-ink-soft)] mb-6 flex-1">
+                <div className="w-10 h-[1px] bg-[var(--color-brand)] mb-4" />
+                <p className="font-[family-name:var(--font-display)] italic text-[15px] leading-snug text-[var(--color-fg-muted)] mb-6 flex-1">
                   &ldquo;{w.pullQuote}&rdquo;
                 </p>
-                <span className="text-[11px] uppercase tracking-[0.2em] text-[var(--color-ink)] border border-[var(--color-rule)] group-hover:border-[var(--color-ink)] group-hover:bg-[var(--color-ink)] group-hover:text-[var(--color-paper)] px-3 py-2 text-center transition-colors">
+                <span className="text-[11px] uppercase tracking-[0.2em] text-[var(--color-fg)] border border-[var(--color-border)] group-hover:border-[var(--color-fg)] group-hover:bg-[var(--color-fg)] group-hover:text-[var(--color-surface)] px-3 py-2 text-center transition-colors">
                   Write like {w.name.split(" ").slice(-1)[0]}
                 </span>
               </div>
@@ -189,7 +189,7 @@ export default function WriterCarousel() {
             aria-selected={i === page}
             role="tab"
             className={`h-[2px] transition-all ${
-              i === page ? "w-10 bg-[var(--color-ink)]" : "w-6 bg-[var(--color-rule)] hover:bg-[var(--color-ink-mute)]"
+              i === page ? "w-10 bg-[var(--color-fg)]" : "w-6 bg-[var(--color-border)] hover:bg-[var(--color-fg-muted)]"
             }`}
           />
         ))}

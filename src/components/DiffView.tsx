@@ -10,18 +10,18 @@ export default function DiffView({ chunks }: { chunks: DiffChunk[] }) {
   if (chunks.length === 0) return null;
 
   return (
-    <div className="whitespace-pre-wrap leading-relaxed text-[var(--color-ink)]">
+    <div className="whitespace-pre-wrap leading-relaxed text-[var(--color-fg)]">
       {chunks.map((chunk, i) => {
         if (chunk.added) {
           return (
-            <span key={i} className="bg-[var(--color-paper-deep)] text-[var(--color-ink)] underline decoration-[var(--color-accent)]">
+            <span key={i} className="bg-[var(--color-surface-raised)] text-[var(--color-fg)] underline decoration-[var(--color-brand)]">
               {chunk.value}
             </span>
           );
         }
         if (chunk.removed) {
           return (
-            <span key={i} className="text-[var(--color-ink-mute)] line-through">
+            <span key={i} className="text-[var(--color-fg-muted)] line-through">
               {chunk.value}
             </span>
           );

@@ -13,10 +13,10 @@ export function NetworkFooter({ currentDomain }: { currentDomain: string }) {
       style={{
         marginTop: "4rem",
         paddingTop: "1.5rem",
-        borderTop: "1px solid var(--color-rule)",
+        borderTop: "1px solid var(--color-border)",
         fontSize: "11px",
         lineHeight: 1.7,
-        color: "var(--color-ink-mute)",
+        color: "var(--color-fg-muted)",
         textAlign: "center",
         letterSpacing: "0.18em",
         textTransform: "uppercase",
@@ -25,13 +25,13 @@ export function NetworkFooter({ currentDomain }: { currentDomain: string }) {
       <span style={{ marginRight: "0.6em" }}>From the same desk —</span>
       {sites.map((s, i) => (
         <span key={s.domain}>
-          {i > 0 && <span style={{ color: "var(--color-rule)" }}> · </span>}
+          {i > 0 && <span style={{ color: "var(--color-border)" }}> · </span>}
           <a
             href={`https://${s.domain}`}
             title={s.tagline}
             rel="noopener"
             style={{
-              color: "var(--color-ink-soft)",
+              color: "var(--color-fg-muted)",
               textDecoration: "none",
               borderBottom: "1px solid transparent",
               paddingBottom: "1px",

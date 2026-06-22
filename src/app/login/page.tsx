@@ -42,9 +42,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-paper)] flex items-center justify-center px-4">
-      <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-8 w-full max-w-sm">
-        <h1 className="text-2xl font-bold text-[var(--color-ink)] mb-6 text-center font-[family-name:var(--font-display)]">Log In</h1>
+    <div className="min-h-screen bg-[var(--color-surface)] flex items-center justify-center px-4">
+      <div className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-8 w-full max-w-sm">
+        <h1 className="text-2xl font-bold text-[var(--color-fg)] mb-6 text-center font-[family-name:var(--font-display)]">Log In</h1>
         {verified && (
           <div className="mb-4 p-3 bg-green-900/20 border border-green-700/40 rounded-[2px] text-green-700 text-sm text-center">
             Email verified! You can now log in.
@@ -66,7 +66,7 @@ export default function LoginPage() {
               placeholder="Email"
               autoComplete="email"
               inputMode="email"
-              className="w-full px-4 py-3 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+              className="w-full px-4 py-3 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[2px] text-[var(--color-fg)] placeholder-[var(--color-fg-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand)]"
               autoFocus
             />
           </div>
@@ -79,10 +79,10 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               autoComplete="current-password"
-              className="w-full px-4 py-3 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+              className="w-full px-4 py-3 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[2px] text-[var(--color-fg)] placeholder-[var(--color-fg-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand)]"
             />
             <div className="mt-1.5 text-right">
-              <Link href="/forgot-password" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-accent)] transition-colors">
+              <Link href="/forgot-password" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-brand)] transition-colors">
                 Forgot password?
               </Link>
             </div>
@@ -91,21 +91,21 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors disabled:opacity-50"
+            className="w-full py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium transition-colors disabled:opacity-50"
           >
             {loading ? "..." : "Log In"}
           </button>
         </form>
 
         <div className="flex items-center gap-3 my-5">
-          <div className="flex-1 h-px bg-[var(--color-rule)]" />
-          <span className="text-xs text-[var(--color-ink-mute)]">or</span>
-          <div className="flex-1 h-px bg-[var(--color-rule)]" />
+          <div className="flex-1 h-px bg-[var(--color-border)]" />
+          <span className="text-xs text-[var(--color-fg-muted)]">or</span>
+          <div className="flex-1 h-px bg-[var(--color-border)]" />
         </div>
 
         <button
           onClick={() => { trackLogin("google"); signIn("google", { callbackUrl: "/write" }); }}
-          className="w-full py-3 border border-[var(--color-rule)] hover:border-[var(--color-ink)] rounded-[2px] text-sm text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors flex items-center justify-center gap-3"
+          className="w-full py-3 border border-[var(--color-border)] hover:border-[var(--color-fg)] rounded-[2px] text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors flex items-center justify-center gap-3"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/>
@@ -116,16 +116,16 @@ export default function LoginPage() {
           Continue with Google
         </button>
 
-        <p className="mt-5 text-center text-sm text-[var(--color-ink-mute)]">
+        <p className="mt-5 text-center text-sm text-[var(--color-fg-muted)]">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-[var(--color-accent)] hover:text-[var(--color-ink)]">
+          <Link href="/signup" className="text-[var(--color-brand)] hover:text-[var(--color-fg)]">
             Sign up
           </Link>
         </p>
-        <div className="mt-6 pt-6 border-t border-[var(--color-rule)]">
+        <div className="mt-6 pt-6 border-t border-[var(--color-border)]">
           <a
             href="mailto:enterprise@doppelwriter.com?subject=Enterprise%20Inquiry%20-%20DoppelWriter%20for%20Business&body=Hi%20DoppelWriter%20team%2C%0A%0AI%27m%20interested%20in%20building%20DoppelWriter%20for%20our%20organization%27s%20internal%20use.%0A%0ACompany%3A%20%0ATeam%20size%3A%20%0AUse%20case%3A%20%0A%0AThanks!"
-            className="block w-full py-2.5 border border-[var(--color-rule)] hover:border-[var(--color-ink)] rounded-[2px] text-center text-sm text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors"
+            className="block w-full py-2.5 border border-[var(--color-border)] hover:border-[var(--color-fg)] rounded-[2px] text-center text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors"
           >
             Business? Build DoppelWriter for your team &rarr;
           </a>

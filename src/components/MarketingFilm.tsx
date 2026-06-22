@@ -74,7 +74,7 @@ export default function MarketingFilm({ mode = "auto" }: Props) {
 
   return (
     <div
-      className="film-stage relative w-full bg-[var(--color-paper)] border border-[var(--color-rule)] overflow-hidden"
+      className="film-stage relative w-full bg-[var(--color-surface)] border border-[var(--color-border)] overflow-hidden"
       style={{ aspectRatio: "16/9" }}
       aria-label="DoppelWriter — voice in motion (30 second marketing film)"
     >
@@ -85,14 +85,14 @@ export default function MarketingFilm({ mode = "auto" }: Props) {
       <CloseSegment ms={ms} />
 
       {/* Persistent watermark per huashu-design skill rules */}
-      <div className="film-watermark absolute bottom-3 right-4 text-[10px] tracking-[0.2em] uppercase text-[var(--color-ink-mute)] font-mono pointer-events-none z-[100]">
+      <div className="film-watermark absolute bottom-3 right-4 text-[10px] tracking-[0.2em] uppercase text-[var(--color-fg-muted)] font-mono pointer-events-none z-[100]">
         Created by Huashu-Design
       </div>
 
       {/* Time scrubber for review */}
-      <div className="film-scrubber absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--color-rule)]/30 pointer-events-none">
+      <div className="film-scrubber absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--color-border)]/30 pointer-events-none">
         <div
-          className="h-full bg-[var(--color-accent)]"
+          className="h-full bg-[var(--color-brand)]"
           style={{ width: `${(ms / TOTAL) * 100}%` }}
         />
       </div>
@@ -147,11 +147,11 @@ function ColdOpenSegment({ ms }: { ms: number }) {
   const fadeOut = clamp01(1 - (t - 0.85) / 0.15);
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center" style={{ opacity: fadeOut, color: "var(--color-ink)" }}>
+    <div className="absolute inset-0 flex items-center justify-center" style={{ opacity: fadeOut, color: "var(--color-fg)" }}>
       <div className="relative">
         {/* Single ink dot */}
         <span
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[var(--color-accent)]"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[var(--color-brand)]"
           style={{ opacity: dotOpacity }}
         />
         <DittoMark scale={stampScale} opacity={stampOpacity} size={120} />
@@ -185,12 +185,12 @@ function SetupSegment({ ms }: { ms: number }) {
       className="absolute inset-0 flex flex-col items-center justify-center text-center px-12"
       style={{ opacity: fadeOut }}
     >
-      <p className="font-mono text-[var(--color-ink)] text-2xl sm:text-3xl tracking-tight mb-6">
+      <p className="font-mono text-[var(--color-fg)] text-2xl sm:text-3xl tracking-tight mb-6">
         {monoTyped}
         {monoCursor && <span className="type-cursor" />}
       </p>
       <p
-        className="font-[family-name:var(--font-display)] italic text-[var(--color-ink-soft)] text-3xl sm:text-4xl"
+        className="font-[family-name:var(--font-display)] italic text-[var(--color-fg-muted)] text-3xl sm:text-4xl"
         style={{ opacity: italicOpacity, transform: `translateY(${italicY}px)` }}
       >
         Starting with yours.
@@ -229,7 +229,7 @@ function RevealSegment({ ms }: { ms: number }) {
               width: "20%",
             }}
           >
-            <div className="relative aspect-[4/5] bg-[var(--color-paper-deep)] border border-[var(--color-rule)] overflow-hidden">
+            <div className="relative aspect-[4/5] bg-[var(--color-surface-raised)] border border-[var(--color-border)] overflow-hidden">
               <Image
                 src={`/writers/${s.photoSlug}.jpg`}
                 alt={s.writer}
@@ -238,10 +238,10 @@ function RevealSegment({ ms }: { ms: number }) {
                 className="object-cover duotone"
               />
             </div>
-            <p className="font-[family-name:var(--font-display)] text-[10px] mt-1 text-[var(--color-ink)] truncate">
+            <p className="font-[family-name:var(--font-display)] text-[10px] mt-1 text-[var(--color-fg)] truncate">
               {s.writer}
             </p>
-            <p className="font-[family-name:var(--font-display)] italic text-[9px] text-[var(--color-ink-soft)] line-clamp-2 leading-snug">
+            <p className="font-[family-name:var(--font-display)] italic text-[9px] text-[var(--color-fg-muted)] line-clamp-2 leading-snug">
               {s.sample.slice(0, 60)}…
             </p>
           </div>
@@ -285,7 +285,7 @@ function AnchorSegment({ ms }: { ms: number }) {
                 opacity: portraitOpacity,
               }}
             >
-              <div className="relative aspect-[4/5] bg-[var(--color-paper-deep)] border border-[var(--color-rule)] overflow-hidden">
+              <div className="relative aspect-[4/5] bg-[var(--color-surface-raised)] border border-[var(--color-border)] overflow-hidden">
                 <Image
                   src={`/writers/${s.photoSlug}.jpg`}
                   alt=""
@@ -303,11 +303,11 @@ function AnchorSegment({ ms }: { ms: number }) {
         className="absolute inset-x-12 top-1/2 -translate-y-1/2 text-center"
         style={{ opacity: collapseT }}
       >
-        <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-accent)] mb-3">
+        <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-brand)] mb-3">
           Voice merge
         </p>
         <p
-          className="font-[family-name:var(--font-display)] text-xl sm:text-2xl text-[var(--color-ink)] leading-snug max-w-3xl mx-auto"
+          className="font-[family-name:var(--font-display)] text-xl sm:text-2xl text-[var(--color-fg)] leading-snug max-w-3xl mx-auto"
           style={{ clipPath: `inset(0 ${clipRight}% 0 0)` }}
         >
           {STITCHED}
@@ -336,17 +336,17 @@ function CloseSegment({ ms }: { ms: number }) {
   const taglineOpacity = clamp01((t - 0.6) / 0.25);
 
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center text-center" style={{ color: "var(--color-ink)" }}>
+    <div className="absolute inset-0 flex flex-col items-center justify-center text-center" style={{ color: "var(--color-fg)" }}>
       <DittoMark scale={stampScale} opacity={clamp01(stampT * 1.5)} size={88} />
       <p className="font-[family-name:var(--font-display)] text-2xl mt-4 tracking-[-0.01em]">
         DoppelWriter
       </p>
-      <p className="font-mono text-[var(--color-accent)] text-base mt-2 tracking-wide">
+      <p className="font-mono text-[var(--color-brand)] text-base mt-2 tracking-wide">
         {urlTyped}
         {urlT < 1 && <span className="type-cursor" />}
       </p>
       <p
-        className="font-[family-name:var(--font-display)] italic text-[var(--color-ink-soft)] text-base mt-3"
+        className="font-[family-name:var(--font-display)] italic text-[var(--color-fg-muted)] text-base mt-3"
         style={{ opacity: taglineOpacity }}
       >
         Voice-matched writing for people who still read.

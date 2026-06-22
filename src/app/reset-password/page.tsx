@@ -52,10 +52,10 @@ export default function ResetPasswordPage() {
 
   if (!token) {
     return (
-      <div className="min-h-screen bg-[var(--color-paper)] flex items-center justify-center px-4">
-        <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-8 w-full max-w-sm text-center">
-          <p className="text-[var(--color-ink-soft)] mb-4">Invalid or missing reset token.</p>
-          <Link href="/forgot-password" className="text-[var(--color-accent)] hover:text-[var(--color-ink)] text-sm">
+      <div className="min-h-screen bg-[var(--color-surface)] flex items-center justify-center px-4">
+        <div className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-8 w-full max-w-sm text-center">
+          <p className="text-[var(--color-fg-muted)] mb-4">Invalid or missing reset token.</p>
+          <Link href="/forgot-password" className="text-[var(--color-brand)] hover:text-[var(--color-fg)] text-sm">
             Request a new reset link
           </Link>
         </div>
@@ -64,16 +64,16 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-paper)] flex items-center justify-center px-4">
-      <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-8 w-full max-w-sm">
-        <h1 className="text-2xl font-bold text-[var(--color-ink)] mb-6 text-center font-[family-name:var(--font-display)]">
+    <div className="min-h-screen bg-[var(--color-surface)] flex items-center justify-center px-4">
+      <div className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-8 w-full max-w-sm">
+        <h1 className="text-2xl font-bold text-[var(--color-fg)] mb-6 text-center font-[family-name:var(--font-display)]">
           Set New Password
         </h1>
 
         {success ? (
           <div className="text-center py-4">
             <p className="text-green-700 mb-2">Password reset successfully!</p>
-            <p className="text-[var(--color-ink-mute)] text-sm">Redirecting to login...</p>
+            <p className="text-[var(--color-fg-muted)] text-sm">Redirecting to login...</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -83,7 +83,7 @@ export default function ResetPasswordPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="New password"
               minLength={8}
-              className="w-full px-4 py-3 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+              className="w-full px-4 py-3 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[2px] text-[var(--color-fg)] placeholder-[var(--color-fg-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand)]"
               autoFocus
             />
             <input
@@ -92,14 +92,14 @@ export default function ResetPasswordPage() {
               onChange={(e) => setConfirm(e.target.value)}
               placeholder="Confirm password"
               minLength={8}
-              className="w-full px-4 py-3 bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] text-[var(--color-ink)] placeholder-[var(--color-ink-mute)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
+              className="w-full px-4 py-3 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[2px] text-[var(--color-fg)] placeholder-[var(--color-fg-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand)]"
             />
-            <p className="text-xs text-[var(--color-ink-mute)] -mt-2">Min 8 characters, with uppercase, lowercase, and a number</p>
+            <p className="text-xs text-[var(--color-fg-muted)] -mt-2">Min 8 characters, with uppercase, lowercase, and a number</p>
             {error && <p className="text-red-700 text-sm">{error}</p>}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors disabled:opacity-50"
+              className="w-full py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium transition-colors disabled:opacity-50"
             >
               {loading ? "Resetting..." : "Reset Password"}
             </button>

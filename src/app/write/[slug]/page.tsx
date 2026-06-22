@@ -229,34 +229,34 @@ export default async function WritePage({
         }}
       />
 
-      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/90 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-border)] sticky top-0 bg-[var(--color-surface)]/90 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-6 flex items-center h-14 justify-between">
           <Link href="/" className="font-[family-name:var(--font-display)] font-bold text-lg">DoppelWriter</Link>
-          <Link href="/signup" className="text-sm px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] transition-colors">
+          <Link href="/signup" className="text-sm px-4 py-1.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] transition-colors">
             Try Free
           </Link>
         </div>
       </nav>
 
       <main className="max-w-3xl mx-auto px-6 py-16">
-        <nav aria-label="Breadcrumb" className="text-sm text-[var(--color-ink-soft)] mb-6 flex items-center gap-1.5 flex-wrap">
-          <Link href="/" className="hover:text-[var(--color-ink)] transition-colors">Home</Link>
+        <nav aria-label="Breadcrumb" className="text-sm text-[var(--color-fg-muted)] mb-6 flex items-center gap-1.5 flex-wrap">
+          <Link href="/" className="hover:text-[var(--color-fg)] transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/write" className="hover:text-[var(--color-ink)] transition-colors">Writing Tools</Link>
+          <Link href="/write" className="hover:text-[var(--color-fg)] transition-colors">Writing Tools</Link>
           <span>/</span>
-          <Link href={`/write/${uc.category}`} className="hover:text-[var(--color-ink)] transition-colors">{category?.label}</Link>
+          <Link href={`/write/${uc.category}`} className="hover:text-[var(--color-fg)] transition-colors">{category?.label}</Link>
           <span>/</span>
-          <span className="text-[var(--color-ink)]">Write My {uc.title}</span>
+          <span className="text-[var(--color-fg)]">Write My {uc.title}</span>
         </nav>
-        <p className="text-[var(--color-accent)] text-sm font-medium mb-3 uppercase tracking-wider">{category?.label}</p>
+        <p className="text-[var(--color-brand)] text-sm font-medium mb-3 uppercase tracking-wider">{category?.label}</p>
         <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold mb-4">
           Write My {uc.title}
         </h1>
-        <p className="text-xl text-[var(--color-ink-soft)] mb-8 leading-relaxed">{uc.description}</p>
+        <p className="text-xl text-[var(--color-fg-muted)] mb-8 leading-relaxed">{uc.description}</p>
 
         <Link
           href="/signup"
-          className="inline-block px-8 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium text-lg transition-colors mb-12"
+          className="inline-block px-8 py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium text-lg transition-colors mb-12"
         >
           Write My {uc.title} Now
         </Link>
@@ -271,12 +271,12 @@ export default async function WritePage({
               { n: "3", title: "Get a draft that sounds like you", desc: `DoppelWriter generates a ${uc.title.toLowerCase()} in your natural voice — not AI-sounding, not generic. Edit it, revise it, or use it as-is.` },
             ].map((step) => (
               <div key={step.n} className="flex gap-4">
-                <div className="w-8 h-8 rounded-[2px] bg-[var(--color-paper-deep)] text-[var(--color-accent)] flex items-center justify-center text-sm font-bold shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-[2px] bg-[var(--color-surface-raised)] text-[var(--color-brand)] flex items-center justify-center text-sm font-bold shrink-0 mt-0.5">
                   {step.n}
                 </div>
                 <div>
                   <h3 className="font-medium mb-1">{step.title}</h3>
-                  <p className="text-[var(--color-ink-soft)] text-sm leading-relaxed">{step.desc}</p>
+                  <p className="text-[var(--color-fg-muted)] text-sm leading-relaxed">{step.desc}</p>
                 </div>
               </div>
             ))}
@@ -284,16 +284,16 @@ export default async function WritePage({
         </section>
 
         {/* Why DoppelWriter */}
-        <section className="mb-12 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6">
+        <section className="mb-12 bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-6">
           <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold mb-3">
             Why Not Just Use ChatGPT?
           </h2>
-          <p className="text-[var(--color-ink-soft)] text-sm leading-relaxed mb-3">
+          <p className="text-[var(--color-fg-muted)] text-sm leading-relaxed mb-3">
             ChatGPT writes like ChatGPT. It uses words like &quot;delve,&quot; &quot;tapestry,&quot; and &quot;multifaceted&quot;
             at 150x the rate humans do. It sounds competent but generic — like a college intern who read too many
             business books.
           </p>
-          <p className="text-[var(--color-ink-soft)] text-sm leading-relaxed">
+          <p className="text-[var(--color-fg-muted)] text-sm leading-relaxed">
             DoppelWriter is different. It analyzes your actual writing — your sentence rhythm, your word choices,
             your punctuation habits, even what you <em>never</em> say — and builds a voice model that&apos;s
             uniquely yours. The result sounds like you wrote it, because your voice is in every word.
@@ -308,7 +308,7 @@ export default async function WritePage({
               {uc.faqs.map((faq) => (
                 <div key={faq.q}>
                   <h3 className="font-medium mb-2">{faq.q}</h3>
-                  <p className="text-[var(--color-ink-soft)] text-sm leading-relaxed">{faq.a}</p>
+                  <p className="text-[var(--color-fg-muted)] text-sm leading-relaxed">{faq.a}</p>
                 </div>
               ))}
             </div>
@@ -317,10 +317,10 @@ export default async function WritePage({
 
         {/* CTA */}
         <section className="text-center mb-16 py-8">
-          <p className="text-[var(--color-ink-mute)] text-sm mb-4">Sound like yourself, not ChatGPT.</p>
+          <p className="text-[var(--color-fg-muted)] text-sm mb-4">Sound like yourself, not ChatGPT.</p>
           <Link
             href="/signup"
-            className="inline-block px-8 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium text-lg transition-colors"
+            className="inline-block px-8 py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium text-lg transition-colors"
           >
             Write My {uc.title} Free
           </Link>
@@ -337,10 +337,10 @@ export default async function WritePage({
                 <Link
                   key={w.slug}
                   href={`/write-like/${w.slug}`}
-                  className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)] group"
+                  className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-fg)] group"
                 >
-                  <p className="font-medium text-sm group-hover:text-[var(--color-accent)] transition-colors">{w.name}</p>
-                  <p className="text-xs text-[var(--color-ink-mute)] mt-1">Write in their voice</p>
+                  <p className="font-medium text-sm group-hover:text-[var(--color-brand)] transition-colors">{w.name}</p>
+                  <p className="text-xs text-[var(--color-fg-muted)] mt-1">Write in their voice</p>
                 </Link>
               ))}
             </div>
@@ -356,10 +356,10 @@ export default async function WritePage({
                 <Link
                   key={r.slug}
                   href={`/write/${r.slug}`}
-                  className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)]"
+                  className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-fg)]"
                 >
                   <p className="font-medium text-sm">Write My {r.title}</p>
-                  <p className="text-xs text-[var(--color-ink-mute)] mt-1 line-clamp-2">{r.description}</p>
+                  <p className="text-xs text-[var(--color-fg-muted)] mt-1 line-clamp-2">{r.description}</p>
                 </Link>
               ))}
             </div>
@@ -367,7 +367,7 @@ export default async function WritePage({
         )}
       </main>
 
-      <footer className="border-t border-[var(--color-rule)] py-8 text-center text-xs text-[var(--color-ink-mute)]">
+      <footer className="border-t border-[var(--color-border)] py-8 text-center text-xs text-[var(--color-fg-muted)]">
         DoppelWriter
       </footer>
     </div>

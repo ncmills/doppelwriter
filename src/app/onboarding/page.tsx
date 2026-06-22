@@ -133,7 +133,7 @@ export default function OnboardingPage() {
             {typed}
             {typed.length < HEADLINE.length && <span className="type-cursor" />}
           </h1>
-          <p className="text-[var(--color-ink-soft)] text-sm sm:text-base">
+          <p className="text-[var(--color-fg-muted)] text-sm sm:text-base">
             Pick the closest match. We&apos;ll tailor your first draft to it.
           </p>
         </div>
@@ -150,8 +150,8 @@ export default function OnboardingPage() {
                 onClick={() => handleSelect(t.key)}
                 className={`onb-chip text-left px-5 py-4 rounded-[2px] border ${
                   active
-                    ? "bg-[var(--color-paper-deep)] border-[var(--color-ink)] onb-chip-active"
-                    : "bg-[var(--color-paper-deep)] border-[var(--color-rule)] hover:border-[var(--color-ink)]"
+                    ? "bg-[var(--color-surface-raised)] border-[var(--color-fg)] onb-chip-active"
+                    : "bg-[var(--color-surface-raised)] border-[var(--color-border)] hover:border-[var(--color-fg)]"
                 } ${saving && !active ? "opacity-50" : ""} ${mounted ? "is-settled" : ""}`}
                 style={
                   {
@@ -162,8 +162,8 @@ export default function OnboardingPage() {
                   } as React.CSSProperties
                 }
               >
-                <div className="font-semibold text-[var(--color-ink)]">{t.label}</div>
-                <div className="text-xs text-[var(--color-ink-mute)] mt-1" dangerouslySetInnerHTML={{ __html: t.blurb }} />
+                <div className="font-semibold text-[var(--color-fg)]">{t.label}</div>
+                <div className="text-xs text-[var(--color-fg-muted)] mt-1" dangerouslySetInnerHTML={{ __html: t.blurb }} />
               </button>
             );
           })}
@@ -171,7 +171,7 @@ export default function OnboardingPage() {
 
         {error && <p className="text-red-700 text-sm text-center mt-4">{error}</p>}
 
-        <p className="text-center text-xs text-[var(--color-ink-mute)] mt-8">
+        <p className="text-center text-xs text-[var(--color-fg-muted)] mt-8">
           You can change this later in Settings.
         </p>
       </div>

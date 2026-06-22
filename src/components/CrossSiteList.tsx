@@ -52,11 +52,11 @@ export default function CrossSiteList() {
           <a
             href={s.href}
             rel="nofollow"
-            className="cross-site-link text-[13px] text-[var(--color-ink)]"
+            className="cross-site-link text-[13px] text-[var(--color-fg)]"
           >
             {s.label}
           </a>
-          <span className="cross-site-note text-[11px] text-[var(--color-ink-mute)] italic font-[family-name:var(--font-display)]">
+          <span className="cross-site-note text-[11px] text-[var(--color-fg-muted)] italic font-[family-name:var(--font-display)]">
             {s.note}
           </span>
         </li>

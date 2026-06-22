@@ -104,13 +104,13 @@ export default async function AlternativePage({
       <main className="max-w-4xl mx-auto px-6">
         {/* Hero */}
         <section className="py-16 md:py-24 text-center">
-          <p className="text-[var(--color-accent)] text-sm font-medium tracking-wide uppercase mb-4">
+          <p className="text-[var(--color-brand)] text-sm font-medium tracking-wide uppercase mb-4">
             {alt.competitor} Alternative
           </p>
           <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl font-bold mb-4">
             Looking for a {alt.competitor} Alternative?
           </h1>
-          <p className="text-lg md:text-xl text-[var(--color-ink-soft)] max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-[var(--color-fg-muted)] max-w-2xl mx-auto">
             {alt.tagline}
           </p>
         </section>
@@ -124,10 +124,10 @@ export default async function AlternativePage({
             {alt.reasons.map((reason, i) => (
               <div
                 key={i}
-                className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6"
+                className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-6"
               >
                 <h3 className="font-medium text-lg mb-2">{reason.title}</h3>
-                <p className="text-[var(--color-ink-soft)] text-sm leading-relaxed">
+                <p className="text-[var(--color-fg-muted)] text-sm leading-relaxed">
                   {reason.description}
                 </p>
               </div>
@@ -140,42 +140,42 @@ export default async function AlternativePage({
           <h2 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-bold mb-8 text-center">
             {alt.competitor} vs DoppelWriter at a glance
           </h2>
-          <div className="overflow-x-auto rounded-[2px] border border-[var(--color-rule)]">
+          <div className="overflow-x-auto rounded-[2px] border border-[var(--color-border)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[var(--color-rule)] bg-[var(--color-paper-deep)]">
-                  <th className="text-left px-5 py-4 font-medium text-[var(--color-ink-soft)] w-1/3">Feature</th>
-                  <th className="text-left px-5 py-4 font-medium text-[var(--color-ink-soft)] w-1/3">{alt.competitor}</th>
-                  <th className="text-left px-5 py-4 font-medium text-[var(--color-accent)] w-1/3">DoppelWriter</th>
+                <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface-raised)]">
+                  <th className="text-left px-5 py-4 font-medium text-[var(--color-fg-muted)] w-1/3">Feature</th>
+                  <th className="text-left px-5 py-4 font-medium text-[var(--color-fg-muted)] w-1/3">{alt.competitor}</th>
+                  <th className="text-left px-5 py-4 font-medium text-[var(--color-brand)] w-1/3">DoppelWriter</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[var(--color-rule)]">
-                <tr className="bg-[var(--color-paper-deep)]">
+              <tbody className="divide-y divide-[var(--color-border)]">
+                <tr className="bg-[var(--color-surface-raised)]">
                   <td className="px-5 py-4 font-medium">Voice matching</td>
-                  <td className="px-5 py-4 text-[var(--color-ink-mute)]">Generic tone selectors</td>
-                  <td className="px-5 py-4 text-[var(--color-ink-soft)]">Forensic voice profile from your writing samples</td>
+                  <td className="px-5 py-4 text-[var(--color-fg-muted)]">Generic tone selectors</td>
+                  <td className="px-5 py-4 text-[var(--color-fg-muted)]">Forensic voice profile from your writing samples</td>
                 </tr>
                 <tr>
                   <td className="px-5 py-4 font-medium">Learns from edits</td>
-                  <td className="px-5 py-4 text-[var(--color-ink-mute)]">No</td>
-                  <td className="px-5 py-4 text-[var(--color-ink-soft)]">Yes — gets better with every correction</td>
+                  <td className="px-5 py-4 text-[var(--color-fg-muted)]">No</td>
+                  <td className="px-5 py-4 text-[var(--color-fg-muted)]">Yes — gets better with every correction</td>
                 </tr>
-                <tr className="bg-[var(--color-paper-deep)]">
+                <tr className="bg-[var(--color-surface-raised)]">
                   <td className="px-5 py-4 font-medium">Famous writer voices</td>
-                  <td className="px-5 py-4 text-[var(--color-ink-mute)]">No</td>
-                  <td className="px-5 py-4 text-[var(--color-ink-soft)]">140+ curated profiles</td>
+                  <td className="px-5 py-4 text-[var(--color-fg-muted)]">No</td>
+                  <td className="px-5 py-4 text-[var(--color-fg-muted)]">140+ curated profiles</td>
                 </tr>
                 <tr>
                   <td className="px-5 py-4 font-medium">Price</td>
-                  <td className="px-5 py-4 text-[var(--color-ink-mute)]">{alt.competitorPrice}</td>
-                  <td className="px-5 py-4 text-[var(--color-ink-soft)]">
-                    Free (5/mo) or <span className="text-[var(--color-accent)] font-medium">$19/mo</span> Pro
+                  <td className="px-5 py-4 text-[var(--color-fg-muted)]">{alt.competitorPrice}</td>
+                  <td className="px-5 py-4 text-[var(--color-fg-muted)]">
+                    Free (5/mo) or <span className="text-[var(--color-brand)] font-medium">$19/mo</span> Pro
                   </td>
                 </tr>
-                <tr className="bg-[var(--color-paper-deep)]">
+                <tr className="bg-[var(--color-surface-raised)]">
                   <td className="px-5 py-4 font-medium">Key limitation</td>
-                  <td className="px-5 py-4 text-[var(--color-ink-mute)]">{alt.competitorLimitation}</td>
-                  <td className="px-5 py-4 text-[var(--color-ink-soft)]">Built for voice — not a general-purpose tool</td>
+                  <td className="px-5 py-4 text-[var(--color-fg-muted)]">{alt.competitorLimitation}</td>
+                  <td className="px-5 py-4 text-[var(--color-fg-muted)]">Built for voice — not a general-purpose tool</td>
                 </tr>
               </tbody>
             </table>
@@ -183,31 +183,31 @@ export default async function AlternativePage({
         </section>
 
         {/* CTA */}
-        <section className="py-16 text-center border-t border-[var(--color-rule)]">
+        <section className="py-16 text-center border-t border-[var(--color-border)]">
           <h2 className="font-[family-name:var(--font-display)] text-3xl font-bold mb-4">
             Try DoppelWriter free
           </h2>
-          <p className="text-[var(--color-ink-soft)] mb-8">
+          <p className="text-[var(--color-fg-muted)] mb-8">
             5 uses per month. No credit card. See how your writing sounds when AI actually
             matches your voice.
           </p>
           <Link
             href="/signup"
-            className="inline-block px-8 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium text-lg transition-colors"
+            className="inline-block px-8 py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium text-lg transition-colors"
           >
             Start Writing Free
           </Link>
-          <p className="text-[var(--color-ink-mute)] text-xs mt-3">No credit card required</p>
+          <p className="text-[var(--color-fg-muted)] text-xs mt-3">No credit card required</p>
         </section>
 
         {/* Cross-links: VS page */}
         {vsSlug && (
           <section className="pb-12">
-            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 text-center">
-              <p className="text-[var(--color-ink-soft)] text-sm mb-3">Want a detailed feature-by-feature comparison?</p>
+            <div className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-6 text-center">
+              <p className="text-[var(--color-fg-muted)] text-sm mb-3">Want a detailed feature-by-feature comparison?</p>
               <Link
                 href={`/vs/${vsSlug}`}
-                className="text-[var(--color-accent)] hover:text-[var(--color-ink)] font-medium transition-colors"
+                className="text-[var(--color-brand)] hover:text-[var(--color-fg)] font-medium transition-colors"
               >
                 Read DoppelWriter vs {alt.competitor} &rarr;
               </Link>
@@ -225,10 +225,10 @@ export default async function AlternativePage({
               <Link
                 key={a.slug}
                 href={`/alternatives/${a.slug}`}
-                className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)]"
+                className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-fg)]"
               >
                 <p className="font-medium text-sm">{a.competitor} Alternative</p>
-                <p className="text-[var(--color-ink-mute)] text-xs mt-1">{a.competitorLimitation.split(" — ")[0]}</p>
+                <p className="text-[var(--color-fg-muted)] text-xs mt-1">{a.competitorLimitation.split(" — ")[0]}</p>
               </Link>
             ))}
           </div>
@@ -236,17 +236,17 @@ export default async function AlternativePage({
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--color-rule)] py-8">
+      <footer className="border-t border-[var(--color-border)] py-8">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-[var(--color-ink-mute)]">&copy; {new Date().getFullYear()} DoppelWriter</span>
+          <span className="text-xs text-[var(--color-fg-muted)]">&copy; {new Date().getFullYear()} DoppelWriter</span>
           <div className="flex gap-6">
-            <Link href="/pricing" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">Pricing</Link>
-            <Link href="/privacy" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">Privacy</Link>
-            <Link href="/terms" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">Terms</Link>
+            <Link href="/pricing" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Pricing</Link>
+            <Link href="/privacy" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Privacy</Link>
+            <Link href="/terms" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Terms</Link>
           </div>
           <a
             href="mailto:enterprise@doppelwriter.com?subject=Enterprise%20Inquiry"
-            className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-accent)] transition-colors"
+            className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-brand)] transition-colors"
           >
             Enterprise &rarr;
           </a>

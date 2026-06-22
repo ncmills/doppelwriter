@@ -40,16 +40,16 @@ export default function EmailCapture({
 
   if (status === "success") {
     return (
-      <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] p-6 text-center">
-        <p className="text-[var(--color-accent)] font-[family-name:var(--font-display)] italic">You&apos;re on the list!</p>
-        <p className="text-[var(--color-ink-soft)] text-sm mt-1">We&apos;ll let you know when new voices drop.</p>
+      <div className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] p-6 text-center">
+        <p className="text-[var(--color-brand)] font-[family-name:var(--font-display)] italic">You&apos;re on the list!</p>
+        <p className="text-[var(--color-fg-muted)] text-sm mt-1">We&apos;ll let you know when new voices drop.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] p-6">
-      <p className="font-[family-name:var(--font-display)] font-medium mb-3 text-[var(--color-ink)]">{headline}</p>
+    <div className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] p-6">
+      <p className="font-[family-name:var(--font-display)] font-medium mb-3 text-[var(--color-fg)]">{headline}</p>
       <form onSubmit={handleSubmit} className="flex gap-3">
         <input
           type="email"
@@ -57,18 +57,18 @@ export default function EmailCapture({
           placeholder="you@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="flex-1 bg-[var(--color-paper)] border border-[var(--color-rule)] px-4 py-2 text-[var(--color-ink)] placeholder:text-[var(--color-ink-mute)] focus:outline-none text-sm"
+          className="flex-1 bg-[var(--color-surface)] border border-[var(--color-border)] px-4 py-2 text-[var(--color-fg)] placeholder:text-[var(--color-fg-muted)] focus:outline-none text-sm"
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="px-5 py-2 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] uppercase tracking-[0.15em] text-xs font-medium transition-colors disabled:opacity-50"
+          className="px-5 py-2 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] uppercase tracking-[0.15em] text-xs font-medium transition-colors disabled:opacity-50"
         >
           {status === "loading" ? "..." : "Notify Me"}
         </button>
       </form>
       {status === "error" && (
-        <p className="text-[var(--color-accent)] text-sm mt-2">Something went wrong. Try again.</p>
+        <p className="text-[var(--color-brand)] text-sm mt-2">Something went wrong. Try again.</p>
       )}
     </div>
   );

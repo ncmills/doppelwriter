@@ -141,14 +141,14 @@ export default async function NichePage({
       )}
 
       {/* Nav */}
-      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/80 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-border)] sticky top-0 bg-[var(--color-surface)]/80 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-6 flex items-center h-14 justify-between">
           <Link href="/" className="font-[family-name:var(--font-display)] font-bold text-lg">
             DoppelWriter
           </Link>
           <Link
             href="/signup"
-            className="text-sm px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] transition-colors"
+            className="text-sm px-4 py-1.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] transition-colors"
           >
             Try Free
           </Link>
@@ -162,23 +162,23 @@ export default async function NichePage({
             <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               {niche.title}
             </h1>
-            <p className="text-lg md:text-xl text-[var(--color-ink-soft)] leading-relaxed mb-10 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-[var(--color-fg-muted)] leading-relaxed mb-10 max-w-2xl mx-auto">
               {niche.heroSubtitle}
             </p>
             <Link
               href="/signup"
-              className="inline-block px-8 py-3.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium text-lg transition-colors"
+              className="inline-block px-8 py-3.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium text-lg transition-colors"
             >
               {niche.ctaText}
             </Link>
-            <p className="text-[var(--color-ink-mute)] text-xs mt-3">Free to start. No credit card required.</p>
+            <p className="text-[var(--color-fg-muted)] text-xs mt-3">Free to start. No credit card required.</p>
           </div>
         </section>
 
         {/* The Problem */}
-        <section className="py-16 md:py-20 px-6 bg-[var(--color-paper-deep)]">
+        <section className="py-16 md:py-20 px-6 bg-[var(--color-surface-raised)]">
           <div className="max-w-5xl mx-auto">
-            <p className="text-[var(--color-accent)] text-sm font-medium uppercase tracking-wider mb-3">
+            <p className="text-[var(--color-brand)] text-sm font-medium uppercase tracking-wider mb-3">
               The problem
             </p>
             <h2 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold mb-10">
@@ -188,11 +188,11 @@ export default async function NichePage({
               {niche.painPoints.map((pain, i) => (
                 <div
                   key={i}
-                  className="bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] p-6"
+                  className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[2px] p-6"
                 >
                   <div className="flex items-start gap-4">
-                    <span className="text-[var(--color-accent)] text-lg mt-0.5 shrink-0">&times;</span>
-                    <p className="text-[var(--color-ink-soft)] leading-relaxed">{pain}</p>
+                    <span className="text-[var(--color-brand)] text-lg mt-0.5 shrink-0">&times;</span>
+                    <p className="text-[var(--color-fg-muted)] leading-relaxed">{pain}</p>
                   </div>
                 </div>
               ))}
@@ -203,7 +203,7 @@ export default async function NichePage({
         {/* How DoppelWriter Helps */}
         <section className="py-16 md:py-20 px-6">
           <div className="max-w-5xl mx-auto">
-            <p className="text-[var(--color-accent)] text-sm font-medium uppercase tracking-wider mb-3">
+            <p className="text-[var(--color-brand)] text-sm font-medium uppercase tracking-wider mb-3">
               The solution
             </p>
             <h2 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold mb-10">
@@ -213,13 +213,13 @@ export default async function NichePage({
               {niche.howItHelps.map((help, i) => (
                 <div
                   key={i}
-                  className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6"
+                  className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-6"
                 >
                   <div className="flex items-start gap-4">
-                    <span className="text-[var(--color-accent)] font-bold text-lg mt-0.5 shrink-0">
+                    <span className="text-[var(--color-brand)] font-bold text-lg mt-0.5 shrink-0">
                       {i + 1}.
                     </span>
-                    <p className="text-[var(--color-ink-soft)] leading-relaxed">{help}</p>
+                    <p className="text-[var(--color-fg-muted)] leading-relaxed">{help}</p>
                   </div>
                 </div>
               ))}
@@ -228,9 +228,9 @@ export default async function NichePage({
         </section>
 
         {/* What You Can Write */}
-        <section className="py-16 md:py-20 px-6 bg-[var(--color-paper-deep)]">
+        <section className="py-16 md:py-20 px-6 bg-[var(--color-surface-raised)]">
           <div className="max-w-5xl mx-auto">
-            <p className="text-[var(--color-accent)] text-sm font-medium uppercase tracking-wider mb-3">
+            <p className="text-[var(--color-brand)] text-sm font-medium uppercase tracking-wider mb-3">
               Use cases
             </p>
             <h2 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold mb-10">
@@ -240,10 +240,10 @@ export default async function NichePage({
               {niche.useCases.map((useCase, i) => (
                 <div
                   key={i}
-                  className="bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] px-5 py-4 flex items-center gap-3"
+                  className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[2px] px-5 py-4 flex items-center gap-3"
                 >
-                  <span className="text-[var(--color-accent)] shrink-0">&#10003;</span>
-                  <span className="text-[var(--color-ink-soft)] text-sm">{useCase}</span>
+                  <span className="text-[var(--color-brand)] shrink-0">&#10003;</span>
+                  <span className="text-[var(--color-fg-muted)] text-sm">{useCase}</span>
                 </div>
               ))}
             </div>
@@ -253,18 +253,18 @@ export default async function NichePage({
         {/* Testimonial Placeholder */}
         <section className="py-16 md:py-20 px-6">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-8 md:p-12">
+            <div className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-8 md:p-12">
               <svg
-                className="w-10 h-10 text-[var(--color-ink-mute)] mx-auto mb-6"
+                className="w-10 h-10 text-[var(--color-fg-muted)] mx-auto mb-6"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983z" />
               </svg>
-              <p className="text-[var(--color-ink-soft)] text-lg md:text-xl leading-relaxed italic font-[family-name:var(--font-display)]">
+              <p className="text-[var(--color-fg-muted)] text-lg md:text-xl leading-relaxed italic font-[family-name:var(--font-display)]">
                 {niche.testimonialPlaceholder.replace(/^"|"$/g, "")}
               </p>
-              <p className="text-[var(--color-ink-mute)] text-sm mt-6">
+              <p className="text-[var(--color-fg-muted)] text-sm mt-6">
                 {isSensitive ? "A DoppelWriter user" : "Early DoppelWriter user"}
               </p>
             </div>
@@ -272,9 +272,9 @@ export default async function NichePage({
         </section>
 
         {/* FAQ */}
-        <section className="py-16 md:py-20 px-6 bg-[var(--color-paper-deep)]">
+        <section className="py-16 md:py-20 px-6 bg-[var(--color-surface-raised)]">
           <div className="max-w-3xl mx-auto">
-            <p className="text-[var(--color-accent)] text-sm font-medium uppercase tracking-wider mb-3">
+            <p className="text-[var(--color-brand)] text-sm font-medium uppercase tracking-wider mb-3">
               FAQ
             </p>
             <h2 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold mb-10">
@@ -284,10 +284,10 @@ export default async function NichePage({
               {niche.faqs.map((faq, i) => (
                 <div
                   key={i}
-                  className="bg-[var(--color-paper)] border border-[var(--color-rule)] rounded-[2px] p-6"
+                  className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[2px] p-6"
                 >
                   <h3 className="font-medium text-lg mb-3">{faq.q}</h3>
-                  <p className="text-[var(--color-ink-soft)] leading-relaxed">{faq.a}</p>
+                  <p className="text-[var(--color-fg-muted)] leading-relaxed">{faq.a}</p>
                 </div>
               ))}
             </div>
@@ -297,7 +297,7 @@ export default async function NichePage({
         {/* Related — cross-links to other niches, writers, and tools */}
         <section className="py-16 md:py-20 px-6">
           <div className="max-w-5xl mx-auto">
-            <p className="text-[var(--color-accent)] text-sm font-medium uppercase tracking-wider mb-3">
+            <p className="text-[var(--color-brand)] text-sm font-medium uppercase tracking-wider mb-3">
               Explore more
             </p>
             <h2 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold mb-10">
@@ -307,7 +307,7 @@ export default async function NichePage({
             {/* Other niches */}
             {RELATED_NICHES[niche.slug] && (
               <div className="mb-8">
-                <h3 className="font-medium text-[var(--color-ink-soft)] mb-4">DoppelWriter for other writers</h3>
+                <h3 className="font-medium text-[var(--color-fg-muted)] mb-4">DoppelWriter for other writers</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {RELATED_NICHES[niche.slug].map((s) => {
                     const related = NICHES.find((n) => n.slug === s);
@@ -316,9 +316,9 @@ export default async function NichePage({
                       <Link
                         key={s}
                         href={`/for/${s}`}
-                        className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)] group"
+                        className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-fg)] group"
                       >
-                        <p className="font-medium text-sm group-hover:text-[var(--color-accent)] transition-colors">{related.title.replace("DoppelWriter for ", "")}</p>
+                        <p className="font-medium text-sm group-hover:text-[var(--color-brand)] transition-colors">{related.title.replace("DoppelWriter for ", "")}</p>
                       </Link>
                     );
                   })}
@@ -329,15 +329,15 @@ export default async function NichePage({
             {/* Writer voices for this niche */}
             {NICHE_WRITERS[niche.slug] && (
               <div className="mb-8">
-                <h3 className="font-medium text-[var(--color-ink-soft)] mb-4">Popular voices for your niche</h3>
+                <h3 className="font-medium text-[var(--color-fg-muted)] mb-4">Popular voices for your niche</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {NICHE_WRITERS[niche.slug].map((w) => (
                     <Link
                       key={w.slug}
                       href={`/write-like/${w.slug}`}
-                      className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)] group"
+                      className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-fg)] group"
                     >
-                      <p className="font-medium text-sm group-hover:text-[var(--color-accent)] transition-colors">Write Like {w.label}</p>
+                      <p className="font-medium text-sm group-hover:text-[var(--color-brand)] transition-colors">Write Like {w.label}</p>
                     </Link>
                   ))}
                 </div>
@@ -346,13 +346,13 @@ export default async function NichePage({
 
             {/* Analyzer tool */}
             <div>
-              <h3 className="font-medium text-[var(--color-ink-soft)] mb-4">Tools</h3>
+              <h3 className="font-medium text-[var(--color-fg-muted)] mb-4">Tools</h3>
               <Link
                 href="/analyze"
-                className="inline-block bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)] group"
+                className="inline-block bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-fg)] group"
               >
-                <p className="font-medium text-sm group-hover:text-[var(--color-accent)] transition-colors">Voice Analyzer</p>
-                <p className="text-xs text-[var(--color-ink-mute)] mt-1">Paste your writing and see your style fingerprint</p>
+                <p className="font-medium text-sm group-hover:text-[var(--color-brand)] transition-colors">Voice Analyzer</p>
+                <p className="text-xs text-[var(--color-fg-muted)] mt-1">Paste your writing and see your style fingerprint</p>
               </Link>
             </div>
           </div>
@@ -366,14 +366,14 @@ export default async function NichePage({
                 ? "We're here when you're ready"
                 : "Ready to start writing?"}
             </h2>
-            <p className="text-[var(--color-ink-soft)] mb-8 text-lg">
+            <p className="text-[var(--color-fg-muted)] mb-8 text-lg">
               {isSensitive
                 ? "Take your time. DoppelWriter is here whenever you need it."
                 : "5 free uses per month. No credit card. See the difference voice-matched AI makes."}
             </p>
             <Link
               href="/signup"
-              className="inline-block px-8 py-3.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium text-lg transition-colors"
+              className="inline-block px-8 py-3.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium text-lg transition-colors"
             >
               {niche.ctaText}
             </Link>
@@ -382,19 +382,19 @@ export default async function NichePage({
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--color-rule)] py-8">
+      <footer className="border-t border-[var(--color-border)] py-8">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-[var(--color-ink-mute)]">
+          <span className="text-xs text-[var(--color-fg-muted)]">
             &copy; {new Date().getFullYear()} DoppelWriter
           </span>
           <div className="flex gap-6">
-            <Link href="/pricing" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">
+            <Link href="/pricing" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">
               Pricing
             </Link>
-            <Link href="/privacy" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">
+            <Link href="/privacy" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">
               Privacy
             </Link>
-            <Link href="/terms" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">
+            <Link href="/terms" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">
               Terms
             </Link>
           </div>

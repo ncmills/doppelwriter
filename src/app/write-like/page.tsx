@@ -82,21 +82,21 @@ export default function WriteLikeIndexPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-paper)] text-[var(--color-ink)]">
+    <div className="min-h-screen bg-[var(--color-surface)] text-[var(--color-fg)]">
       <JsonLd data={breadcrumbLd} />
       <JsonLd data={collectionLd} />
 
       {/* Nav */}
-      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/90 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-border)] sticky top-0 bg-[var(--color-surface)]/90 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center h-14 justify-between">
           <Link href="/" className="font-[family-name:var(--font-display)] font-bold text-lg flex items-center gap-0">
-            <Logo className="h-[0.86em] w-auto mr-0.5 text-[var(--color-accent)]" />
+            <Logo className="h-[0.86em] w-auto mr-0.5 text-[var(--color-brand)]" />
             <span className="hidden sm:inline">DoppelWriter</span>
             <span className="sm:hidden">DW</span>
           </Link>
           <Link
             href="/signup"
-            className="text-sm px-4 py-2 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] transition-colors"
+            className="text-sm px-4 py-2 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] transition-colors"
           >
             Try Free
           </Link>
@@ -109,7 +109,7 @@ export default function WriteLikeIndexPage() {
           <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl font-bold mb-4">
             Write Like Famous Authors
           </h1>
-          <p className="text-lg md:text-xl text-[var(--color-ink-soft)] max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-[var(--color-fg-muted)] max-w-2xl mx-auto">
             140+ curated voice profiles. Pick an iconic writer, paste your topic,
             and generate content that matches their style — forensically.
           </p>
@@ -123,24 +123,24 @@ export default function WriteLikeIndexPage() {
               <h2 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-bold">
                 <Link
                   href={`/write-like/${cat.id}`}
-                  className="hover:text-[var(--color-accent)] transition-colors"
+                  className="hover:text-[var(--color-brand)] transition-colors"
                 >
                   {cat.label}
                 </Link>
               </h2>
-              <span className="text-[var(--color-ink-mute)] text-sm">({cat.writers.length})</span>
+              <span className="text-[var(--color-fg-muted)] text-sm">({cat.writers.length})</span>
             </div>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {cat.writers.map((writer) => (
                 <Link
                   key={writer.name}
                   href={`/write-like/${writerSlug(writer.name)}`}
-                  className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-ink)] group"
+                  className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-fg)] group"
                 >
-                  <p className="font-medium group-hover:text-[var(--color-accent)] transition-colors mb-1">
+                  <p className="font-medium group-hover:text-[var(--color-brand)] transition-colors mb-1">
                     {writer.name}
                   </p>
-                  <p className="text-[var(--color-ink-mute)] text-sm leading-relaxed line-clamp-2">
+                  <p className="text-[var(--color-fg-muted)] text-sm leading-relaxed line-clamp-2">
                     {writer.bio}
                   </p>
                 </Link>
@@ -150,36 +150,36 @@ export default function WriteLikeIndexPage() {
         ))}
 
         {/* CTA */}
-        <section className="py-16 text-center border-t border-[var(--color-rule)]">
+        <section className="py-16 text-center border-t border-[var(--color-border)]">
           <h2 className="font-[family-name:var(--font-display)] text-3xl font-bold mb-4">
             Write like anyone. Sound like yourself.
           </h2>
-          <p className="text-[var(--color-ink-soft)] mb-8 max-w-xl mx-auto">
+          <p className="text-[var(--color-fg-muted)] mb-8 max-w-xl mx-auto">
             Pick a famous voice to learn from, or upload your own writing and let
             DoppelWriter clone your personal style. 5 free uses per month.
           </p>
           <Link
             href="/signup"
-            className="inline-block px-8 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium text-lg transition-colors"
+            className="inline-block px-8 py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium text-lg transition-colors"
           >
             Start Writing Free
           </Link>
-          <p className="text-[var(--color-ink-mute)] text-xs mt-3">No credit card required</p>
+          <p className="text-[var(--color-fg-muted)] text-xs mt-3">No credit card required</p>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--color-rule)] py-8">
+      <footer className="border-t border-[var(--color-border)] py-8">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-[var(--color-ink-mute)]">&copy; {new Date().getFullYear()} DoppelWriter</span>
+          <span className="text-xs text-[var(--color-fg-muted)]">&copy; {new Date().getFullYear()} DoppelWriter</span>
           <div className="flex gap-6">
-            <Link href="/pricing" className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">Pricing</Link>
-            <Link href="/privacy" className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">Privacy</Link>
-            <Link href="/terms" className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">Terms</Link>
+            <Link href="/pricing" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Pricing</Link>
+            <Link href="/privacy" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Privacy</Link>
+            <Link href="/terms" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Terms</Link>
           </div>
           <a
             href="mailto:enterprise@doppelwriter.com?subject=Enterprise%20Inquiry"
-            className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-accent)] transition-colors"
+            className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-brand)] transition-colors"
           >
             Enterprise &rarr;
           </a>

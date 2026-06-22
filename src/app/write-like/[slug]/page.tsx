@@ -130,28 +130,28 @@ function CategoryHubPage({ categoryId }: { categoryId: string }) {
         }}
       />
 
-      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/90 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-border)] sticky top-0 bg-[var(--color-surface)]/90 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-6 flex items-center h-14 justify-between">
           <Link href="/" className="font-[family-name:var(--font-display)] font-bold text-lg">DoppelWriter</Link>
-          <Link href="/signup" className="text-sm px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] transition-colors">
+          <Link href="/signup" className="text-sm px-4 py-1.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] transition-colors">
             Try Free
           </Link>
         </div>
       </nav>
 
       <main className="max-w-5xl mx-auto px-6 py-16">
-        <nav aria-label="Breadcrumb" className="text-sm text-[var(--color-ink-soft)] mb-6 flex items-center gap-1.5 flex-wrap">
-          <Link href="/" className="hover:text-[var(--color-ink)] transition-colors">Home</Link>
+        <nav aria-label="Breadcrumb" className="text-sm text-[var(--color-fg-muted)] mb-6 flex items-center gap-1.5 flex-wrap">
+          <Link href="/" className="hover:text-[var(--color-fg)] transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/write-like" className="hover:text-[var(--color-ink)] transition-colors">Write Like</Link>
+          <Link href="/write-like" className="hover:text-[var(--color-fg)] transition-colors">Write Like</Link>
           <span>/</span>
-          <span className="text-[var(--color-ink)]">{category.label}</span>
+          <span className="text-[var(--color-fg)]">{category.label}</span>
         </nav>
 
         <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold mb-4">
           Write Like {category.label}
         </h1>
-        <p className="text-xl text-[var(--color-ink-soft)] mb-12 leading-relaxed max-w-3xl">
+        <p className="text-xl text-[var(--color-fg-muted)] mb-12 leading-relaxed max-w-3xl">
           {CATEGORY_INTROS[categoryId] ?? `Explore AI writing voices for ${category.label}.`}
         </p>
 
@@ -160,10 +160,10 @@ function CategoryHubPage({ categoryId }: { categoryId: string }) {
             <Link
               key={w.name}
               href={`/write-like/${writerSlug(w.name)}`}
-              className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-ink)]"
+              className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-fg)]"
             >
               <p className="font-medium mb-1">{w.name}</p>
-              <p className="text-sm text-[var(--color-ink-soft)] line-clamp-2">{w.bio}</p>
+              <p className="text-sm text-[var(--color-fg-muted)] line-clamp-2">{w.bio}</p>
             </Link>
           ))}
         </div>
@@ -175,7 +175,7 @@ function CategoryHubPage({ categoryId }: { categoryId: string }) {
               <Link
                 key={c.id}
                 href={`/write-like/${c.id}`}
-                className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)] text-center"
+                className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-fg)] text-center"
               >
                 <p className="font-medium text-sm">{c.label}</p>
               </Link>
@@ -184,7 +184,7 @@ function CategoryHubPage({ categoryId }: { categoryId: string }) {
         </section>
       </main>
 
-      <footer className="border-t border-[var(--color-rule)] py-8 text-center text-xs text-[var(--color-ink-mute)]">
+      <footer className="border-t border-[var(--color-border)] py-8 text-center text-xs text-[var(--color-fg-muted)]">
         DoppelWriter
       </footer>
     </div>
@@ -245,30 +245,30 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
         }}
       />
 
-      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/90 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-border)] sticky top-0 bg-[var(--color-surface)]/90 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-6 flex items-center h-14 justify-between">
           <Link href="/" className="font-[family-name:var(--font-display)] font-bold text-lg">DoppelWriter</Link>
-          <Link href="/signup" className="text-sm px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] transition-colors">
+          <Link href="/signup" className="text-sm px-4 py-1.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] transition-colors">
             Try Free
           </Link>
         </div>
       </nav>
 
       <main className="max-w-3xl mx-auto px-6 py-16">
-        <nav aria-label="Breadcrumb" className="text-sm text-[var(--color-ink-soft)] mb-6 flex items-center gap-1.5 flex-wrap">
-          <Link href="/" className="hover:text-[var(--color-ink)] transition-colors">Home</Link>
+        <nav aria-label="Breadcrumb" className="text-sm text-[var(--color-fg-muted)] mb-6 flex items-center gap-1.5 flex-wrap">
+          <Link href="/" className="hover:text-[var(--color-fg)] transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/write-like" className="hover:text-[var(--color-ink)] transition-colors">Write Like</Link>
+          <Link href="/write-like" className="hover:text-[var(--color-fg)] transition-colors">Write Like</Link>
           <span>/</span>
-          <Link href={`/write-like/${writer.category}`} className="hover:text-[var(--color-ink)] transition-colors">{categoryLabel}</Link>
+          <Link href={`/write-like/${writer.category}`} className="hover:text-[var(--color-fg)] transition-colors">{categoryLabel}</Link>
           <span>/</span>
-          <span className="text-[var(--color-ink)]">Write Like {writer.name}</span>
+          <span className="text-[var(--color-fg)]">Write Like {writer.name}</span>
         </nav>
 
         {/* Hero — portrait + writer info, with curtain reveal on first paint */}
         <div className="writer-hero grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-6 sm:gap-10 mb-10">
           {WRITER_PHOTOS[writer.name] ? (
-            <div className="writer-hero-portrait relative aspect-[4/5] overflow-hidden bg-[var(--color-paper-deep)] border border-[var(--color-rule)]">
+            <div className="writer-hero-portrait relative aspect-[4/5] overflow-hidden bg-[var(--color-surface-raised)] border border-[var(--color-border)]">
               <Image
                 src={WRITER_PHOTOS[writer.name]}
                 alt={`Portrait of ${writer.name}`}
@@ -280,7 +280,7 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
               <span aria-hidden className="writer-hero-curtain" />
             </div>
           ) : (
-            <div className="writer-hero-portrait relative aspect-[4/5] overflow-hidden bg-[var(--color-paper-deep)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-ink-mute)]">
+            <div className="writer-hero-portrait relative aspect-[4/5] overflow-hidden bg-[var(--color-surface-raised)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-fg-muted)]">
               <svg viewBox="0 0 32 32" width="80" height="80" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <circle cx="16" cy="16" r="11" />
                 <circle cx="12" cy="17" r="0.9" fill="currentColor" stroke="none" />
@@ -293,11 +293,11 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
             </div>
           )}
           <div>
-            <p className="writer-hero-tag text-[var(--color-accent)] text-sm font-medium mb-3 uppercase tracking-wider">{writer.tag}</p>
+            <p className="writer-hero-tag text-[var(--color-brand)] text-sm font-medium mb-3 uppercase tracking-wider">{writer.tag}</p>
             <h1 className="writer-hero-name font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold mb-4">
               Write Like {writer.name}
             </h1>
-            <p className="writer-hero-bio text-xl text-[var(--color-ink-soft)] leading-relaxed">{writer.bio}</p>
+            <p className="writer-hero-bio text-xl text-[var(--color-fg-muted)] leading-relaxed">{writer.bio}</p>
           </div>
         </div>
 
@@ -309,7 +309,7 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
             <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold mb-3">
               What Makes {writer.name}&apos;s Writing Distinctive
             </h2>
-            <p className="text-[var(--color-ink-soft)] leading-relaxed">
+            <p className="text-[var(--color-fg-muted)] leading-relaxed">
               DoppelWriter analyzes {writer.name}&apos;s published work at two levels: the micro layer
               (sentence rhythm, word choice, punctuation habits, function word patterns) and the macro
               layer (paragraph structure, argument flow, transitions, pacing). The result is a forensic
@@ -319,17 +319,17 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
 
           <div>
             <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold mb-3">How It Works</h2>
-            <ol className="space-y-3 text-[var(--color-ink-soft)]">
+            <ol className="space-y-3 text-[var(--color-fg-muted)]">
               <li className="flex gap-3">
-                <span className="text-[var(--color-accent)] font-bold shrink-0">1.</span>
+                <span className="text-[var(--color-brand)] font-bold shrink-0">1.</span>
                 Select {writer.name} as your writing voice from the Writers page
               </li>
               <li className="flex gap-3">
-                <span className="text-[var(--color-accent)] font-bold shrink-0">2.</span>
+                <span className="text-[var(--color-brand)] font-bold shrink-0">2.</span>
                 Paste a draft to edit, or describe what you want to write
               </li>
               <li className="flex gap-3">
-                <span className="text-[var(--color-accent)] font-bold shrink-0">3.</span>
+                <span className="text-[var(--color-brand)] font-bold shrink-0">3.</span>
                 DoppelWriter generates or edits in {writer.name}&apos;s voice with streaming output
               </li>
             </ol>
@@ -337,7 +337,7 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
 
           <div>
             <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold mb-3">Use Cases</h2>
-            <ul className="space-y-2 text-[var(--color-ink-soft)]">
+            <ul className="space-y-2 text-[var(--color-fg-muted)]">
               <li>Draft essays and blog posts in {writer.name}&apos;s voice</li>
               <li>Rewrite existing content with {writer.name}&apos;s style and rhythm</li>
               <li>Learn {writer.name}&apos;s writing techniques by seeing them applied to your ideas</li>
@@ -349,11 +349,11 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
         <div className="flex gap-4 mb-16">
           <Link
             href="/signup"
-            className="px-8 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors"
+            className="px-8 py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium transition-colors"
           >
             Start Writing Like {writer.name}
           </Link>
-          <Link href="/write" className="px-8 py-3 border border-[var(--color-rule)] hover:border-[var(--color-ink)] rounded-[2px] text-[var(--color-ink-soft)] transition-colors">
+          <Link href="/write" className="px-8 py-3 border border-[var(--color-border)] hover:border-[var(--color-fg)] rounded-[2px] text-[var(--color-fg-muted)] transition-colors">
             Browse All Voices
           </Link>
         </div>
@@ -370,10 +370,10 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
                 <Link
                   key={w.name}
                   href={`/write-like/${writerSlug(w.name)}`}
-                  className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)]"
+                  className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-fg)]"
                 >
                   <p className="font-medium text-sm">{w.name}</p>
-                  <p className="text-xs text-[var(--color-ink-mute)] mt-1 line-clamp-1">{w.bio}</p>
+                  <p className="text-xs text-[var(--color-fg-muted)] mt-1 line-clamp-1">{w.bio}</p>
                 </Link>
               ))}
           </div>
@@ -387,7 +387,7 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {relevantUseCases.map((uc) => (
-                <Link key={uc.slug} href={`/write/${uc.slug}`} className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)]">
+                <Link key={uc.slug} href={`/write/${uc.slug}`} className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-fg)]">
                   <p className="font-medium text-sm">Write My {uc.title}</p>
                 </Link>
               ))}
@@ -397,7 +397,7 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
         </div>
       </main>
 
-      <footer className="border-t border-[var(--color-rule)] py-8 text-center text-xs text-[var(--color-ink-mute)]">
+      <footer className="border-t border-[var(--color-border)] py-8 text-center text-xs text-[var(--color-fg-muted)]">
         DoppelWriter
       </footer>
     </div>
@@ -451,28 +451,28 @@ function AllAuthorsPage() {
         }}
       />
 
-      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/90 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-border)] sticky top-0 bg-[var(--color-surface)]/90 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-6 flex items-center h-14 justify-between">
           <Link href="/" className="font-[family-name:var(--font-display)] font-bold text-lg">DoppelWriter</Link>
-          <Link href="/signup" className="text-sm px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] transition-colors">
+          <Link href="/signup" className="text-sm px-4 py-1.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] transition-colors">
             Try Free
           </Link>
         </div>
       </nav>
 
       <main className="max-w-6xl mx-auto px-6 py-16">
-        <nav aria-label="Breadcrumb" className="text-sm text-[var(--color-ink-soft)] mb-6 flex items-center gap-1.5 flex-wrap">
-          <Link href="/" className="hover:text-[var(--color-ink)] transition-colors">Home</Link>
+        <nav aria-label="Breadcrumb" className="text-sm text-[var(--color-fg-muted)] mb-6 flex items-center gap-1.5 flex-wrap">
+          <Link href="/" className="hover:text-[var(--color-fg)] transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/write-like" className="hover:text-[var(--color-ink)] transition-colors">Write Like</Link>
+          <Link href="/write-like" className="hover:text-[var(--color-fg)] transition-colors">Write Like</Link>
           <span>/</span>
-          <span className="text-[var(--color-ink)]">All Authors</span>
+          <span className="text-[var(--color-fg)]">All Authors</span>
         </nav>
 
         <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold mb-4">
           All {CURATED_WRITERS.length}+ Writer Voice Profiles
         </h1>
-        <p className="text-xl text-[var(--color-ink-soft)] mb-12 leading-relaxed max-w-3xl">
+        <p className="text-xl text-[var(--color-fg-muted)] mb-12 leading-relaxed max-w-3xl">
           Every voice in DoppelWriter&apos;s library. Pick any writer below and start generating content in their distinctive style.
         </p>
 
@@ -482,7 +482,7 @@ function AllAuthorsPage() {
             <a
               key={cat.id}
               href={`#cat-${cat.id}`}
-              className="text-xs px-3 py-1.5 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] transition-colors hover:border-[var(--color-ink)]"
+              className="text-xs px-3 py-1.5 bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] transition-colors hover:border-[var(--color-fg)]"
             >
               {cat.label}
             </a>
@@ -496,24 +496,24 @@ function AllAuthorsPage() {
               <h2 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-bold">
                 <Link
                   href={`/write-like/${cat.id}`}
-                  className="hover:text-[var(--color-accent)] transition-colors"
+                  className="hover:text-[var(--color-brand)] transition-colors"
                 >
                   {cat.label}
                 </Link>
               </h2>
-              <span className="text-[var(--color-ink-mute)] text-sm">({cat.writers.length})</span>
+              <span className="text-[var(--color-fg-muted)] text-sm">({cat.writers.length})</span>
             </div>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {cat.writers.map((writer) => (
                 <Link
                   key={writer.name}
                   href={`/write-like/${writerSlug(writer.name)}`}
-                  className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-ink)] group"
+                  className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-fg)] group"
                 >
-                  <p className="font-medium group-hover:text-[var(--color-accent)] transition-colors mb-1">
+                  <p className="font-medium group-hover:text-[var(--color-brand)] transition-colors mb-1">
                     {writer.name}
                   </p>
-                  <p className="text-[var(--color-ink-mute)] text-sm leading-relaxed line-clamp-2">
+                  <p className="text-[var(--color-fg-muted)] text-sm leading-relaxed line-clamp-2">
                     {writer.bio}
                   </p>
                 </Link>
@@ -523,25 +523,25 @@ function AllAuthorsPage() {
         ))}
 
         {/* CTA */}
-        <section className="py-16 text-center border-t border-[var(--color-rule)]">
+        <section className="py-16 text-center border-t border-[var(--color-border)]">
           <h2 className="font-[family-name:var(--font-display)] text-3xl font-bold mb-4">
             Write like anyone. Sound like yourself.
           </h2>
-          <p className="text-[var(--color-ink-soft)] mb-8 max-w-xl mx-auto">
+          <p className="text-[var(--color-fg-muted)] mb-8 max-w-xl mx-auto">
             Pick a famous voice to learn from, or upload your own writing and let
             DoppelWriter clone your personal style. 5 free uses per month.
           </p>
           <Link
             href="/signup"
-            className="inline-block px-8 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium text-lg transition-colors"
+            className="inline-block px-8 py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium text-lg transition-colors"
           >
             Start Writing Free
           </Link>
-          <p className="text-[var(--color-ink-mute)] text-xs mt-3">No credit card required</p>
+          <p className="text-[var(--color-fg-muted)] text-xs mt-3">No credit card required</p>
         </section>
       </main>
 
-      <footer className="border-t border-[var(--color-rule)] py-8 text-center text-xs text-[var(--color-ink-mute)]">
+      <footer className="border-t border-[var(--color-border)] py-8 text-center text-xs text-[var(--color-fg-muted)]">
         DoppelWriter
       </footer>
     </div>

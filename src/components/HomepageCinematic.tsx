@@ -102,9 +102,9 @@ function HomepageCinematic({ mode = "auto" }: Props) {
       className="cinematic-stage relative w-full"
       aria-label="Three writers responding to the same brief"
     >
-      <p className="cinematic-brief text-[11px] uppercase tracking-[0.3em] text-[var(--color-ink-mute)] mb-6 text-center">
+      <p className="cinematic-brief text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-6 text-center">
         Same brief — three voices.{" "}
-        <span className="italic font-[family-name:var(--font-display)] tracking-normal text-[var(--color-ink-soft)]">
+        <span className="italic font-[family-name:var(--font-display)] tracking-normal text-[var(--color-fg-muted)]">
           &ldquo;{VOICE_SAMPLE_BRIEF}&rdquo;
         </span>
       </p>
@@ -126,12 +126,12 @@ function HomepageCinematic({ mode = "auto" }: Props) {
           return (
             <article
               key={s.slug}
-              className="cinematic-card relative bg-[var(--color-paper)] border border-[var(--color-rule)] flex flex-col"
+              className="cinematic-card relative bg-[var(--color-surface)] border border-[var(--color-border)] flex flex-col"
               data-active={portraitOpacity > 0.5 ? "true" : undefined}
             >
               {/* Portrait — fades in from opacity 0 over 800ms */}
               <div
-                className="cinematic-portrait relative bg-[var(--color-paper-deep)] aspect-[4/5] overflow-hidden border-b border-[var(--color-rule)]"
+                className="cinematic-portrait relative bg-[var(--color-surface-raised)] aspect-[4/5] overflow-hidden border-b border-[var(--color-border)]"
                 style={{ opacity: portraitOpacity }}
               >
                 <Image
@@ -142,7 +142,7 @@ function HomepageCinematic({ mode = "auto" }: Props) {
                   className="object-cover duotone"
                   priority={i === 0}
                 />
-                <span className="absolute top-3 left-3 text-[9px] uppercase tracking-[0.25em] text-[var(--color-paper)] bg-[var(--color-ink)]/80 px-2 py-1 z-10">
+                <span className="absolute top-3 left-3 text-[9px] uppercase tracking-[0.25em] text-[var(--color-surface)] bg-[var(--color-fg)]/80 px-2 py-1 z-10">
                   {s.cadenceLabel}
                 </span>
               </div>
@@ -155,12 +155,12 @@ function HomepageCinematic({ mode = "auto" }: Props) {
                 <h3 className="font-[family-name:var(--font-display)] text-2xl leading-tight">
                   {s.writer}
                 </h3>
-                <div className="w-10 h-[1px] bg-[var(--color-accent)] mt-2 mb-4" />
+                <div className="w-10 h-[1px] bg-[var(--color-brand)] mt-2 mb-4" />
               </div>
 
               {/* Prose — left-to-right reveal via clip-path */}
               <div
-                className="cinematic-prose px-5 pb-5 font-[family-name:var(--font-display)] text-[15px] leading-[1.55] text-[var(--color-ink)] flex-1"
+                className="cinematic-prose px-5 pb-5 font-[family-name:var(--font-display)] text-[15px] leading-[1.55] text-[var(--color-fg)] flex-1"
                 style={{
                   clipPath: `inset(0 ${clipRight}% 0 0)`,
                 }}

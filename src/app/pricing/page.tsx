@@ -100,14 +100,14 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen">
-      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/80 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-border)] sticky top-0 bg-[var(--color-surface)]/80 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center h-14 justify-between">
           <Link href="/" className="font-bold text-lg">DoppelWriter</Link>
           <div className="flex gap-4 items-center">
             {session ? (
-              <Link href="/home" className="text-sm text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]">Home</Link>
+              <Link href="/home" className="text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]">Home</Link>
             ) : (
-              <Link href="/login" className="text-sm text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]">Log in</Link>
+              <Link href="/login" className="text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]">Log in</Link>
             )}
           </div>
         </div>
@@ -115,14 +115,14 @@ export default function PricingPage() {
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
         <h1 className="text-3xl sm:text-4xl font-bold text-center mb-3 font-[family-name:var(--font-display)]">Simple Pricing</h1>
-        <p className="text-[var(--color-ink-soft)] text-center mb-8">Try it free. Upgrade when you&apos;re hooked.</p>
+        <p className="text-[var(--color-fg-muted)] text-center mb-8">Try it free. Upgrade when you&apos;re hooked.</p>
 
         <div className="flex justify-center mb-10">
-          <div className="relative inline-flex items-center bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-1 text-sm">
+          <div className="relative inline-flex items-center bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-1 text-sm">
             {/* Sliding ink indicator — measured from the active button */}
             <span
               aria-hidden
-              className="cycle-indicator absolute top-1 bottom-1 bg-[var(--color-ink)] rounded-[2px]"
+              className="cycle-indicator absolute top-1 bottom-1 bg-[var(--color-fg)] rounded-[2px]"
               style={{
                 left: indicator.left,
                 width: indicator.width || 0,
@@ -132,14 +132,14 @@ export default function PricingPage() {
             <button
               ref={monthlyRef}
               onClick={() => setCycle("monthly")}
-              className={`relative z-10 px-4 py-1.5 rounded-[2px] transition-colors ${cycle === "monthly" ? "text-[var(--color-paper)]" : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"}`}
+              className={`relative z-10 px-4 py-1.5 rounded-[2px] transition-colors ${cycle === "monthly" ? "text-[var(--color-surface)]" : "text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"}`}
             >
               Monthly
             </button>
             <button
               ref={annualRef}
               onClick={() => setCycle("annual")}
-              className={`relative z-10 px-4 py-1.5 rounded-[2px] transition-colors ${cycle === "annual" ? "text-[var(--color-paper)]" : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"}`}
+              className={`relative z-10 px-4 py-1.5 rounded-[2px] transition-colors ${cycle === "annual" ? "text-[var(--color-surface)]" : "text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"}`}
             >
               Annual <span className="text-xs opacity-80">— save $48</span>
             </button>
@@ -148,70 +148,70 @@ export default function PricingPage() {
 
         <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
           {/* Free */}
-          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5 sm:p-8">
+          <div className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-5 sm:p-8">
             <h2 className="text-xl font-semibold mb-2 font-[family-name:var(--font-display)]">Free</h2>
-            <p className="text-4xl font-bold mb-6">$0<span className="text-base font-normal text-[var(--color-ink-mute)]">/mo</span></p>
-            <ul className="space-y-3 text-sm text-[var(--color-ink-soft)] mb-8">
-              <li className="flex gap-2"><span className="text-[var(--color-ink)]">&#10003;</span> 5 edits or generations per month</li>
-              <li className="flex gap-2"><span className="text-[var(--color-ink)]">&#10003;</span> 1 personal voice profile</li>
-              <li className="flex gap-2"><span className="text-[var(--color-ink)]">&#10003;</span> 3 curated writer profiles</li>
-              <li className="flex gap-2"><span className="text-[var(--color-ink)]">&#10003;</span> Upload docs, paste text</li>
-              <li className="flex gap-2"><span className="text-[var(--color-ink)]">&#10003;</span> Streaming editor & generator</li>
+            <p className="text-4xl font-bold mb-6">$0<span className="text-base font-normal text-[var(--color-fg-muted)]">/mo</span></p>
+            <ul className="space-y-3 text-sm text-[var(--color-fg-muted)] mb-8">
+              <li className="flex gap-2"><span className="text-[var(--color-fg)]">&#10003;</span> 5 edits or generations per month</li>
+              <li className="flex gap-2"><span className="text-[var(--color-fg)]">&#10003;</span> 1 personal voice profile</li>
+              <li className="flex gap-2"><span className="text-[var(--color-fg)]">&#10003;</span> 3 curated writer profiles</li>
+              <li className="flex gap-2"><span className="text-[var(--color-fg)]">&#10003;</span> Upload docs, paste text</li>
+              <li className="flex gap-2"><span className="text-[var(--color-fg)]">&#10003;</span> Streaming editor & generator</li>
             </ul>
             <Link
               href="/signup"
-              className="block text-center py-2.5 border border-[var(--color-rule)] hover:border-[var(--color-ink)] rounded-[2px] transition-colors"
+              className="block text-center py-2.5 border border-[var(--color-border)] hover:border-[var(--color-fg)] rounded-[2px] transition-colors"
             >
               Get Started
             </Link>
           </div>
 
           {/* Pro */}
-          <div className="bg-[var(--color-paper-deep)] border border-[var(--color-ink)] rounded-[2px] p-5 sm:p-8 relative">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-[var(--color-ink)] text-[var(--color-paper)] rounded-[2px] text-xs font-medium">
+          <div className="bg-[var(--color-surface-raised)] border border-[var(--color-fg)] rounded-[2px] p-5 sm:p-8 relative">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-[var(--color-fg)] text-[var(--color-surface)] rounded-[2px] text-xs font-medium">
               Most Popular
             </div>
-            <h2 className="text-xl font-semibold text-[var(--color-accent)] mb-2 font-[family-name:var(--font-display)]">Pro</h2>
+            <h2 className="text-xl font-semibold text-[var(--color-brand)] mb-2 font-[family-name:var(--font-display)]">Pro</h2>
             <p className="text-4xl font-bold mb-1 tabular-nums">
               {proPriceDisplay}
-              <span className="text-base font-normal text-[var(--color-ink-mute)]">{proPriceSuffix}</span>
+              <span className="text-base font-normal text-[var(--color-fg-muted)]">{proPriceSuffix}</span>
             </p>
             <div className="mb-6 h-5 relative">
               {cycle === "annual" ? (
                 <span
                   key="annual-savings"
-                  className="savings-badge inline-block text-[11px] uppercase tracking-[0.18em] text-[var(--color-accent)] border border-[var(--color-accent)] px-2 py-[2px]"
+                  className="savings-badge inline-block text-[11px] uppercase tracking-[0.18em] text-[var(--color-brand)] border border-[var(--color-brand)] px-2 py-[2px]"
                 >
                   Save $48 / year
                 </span>
               ) : (
-                <span className="text-xs text-[var(--color-ink-mute)]">$19/mo</span>
+                <span className="text-xs text-[var(--color-fg-muted)]">$19/mo</span>
               )}
             </div>
-            <ul className="space-y-3 text-sm text-[var(--color-ink-soft)] mb-8">
-              <li className="flex gap-2"><span className="text-[var(--color-accent)]">&#10003;</span> 200 edits & generations per month</li>
-              <li className="flex gap-2"><span className="text-[var(--color-accent)]">&#10003;</span> Unlimited personal profiles</li>
-              <li className="flex gap-2"><span className="text-[var(--color-accent)]">&#10003;</span> All 100+ curated writers</li>
-              <li className="flex gap-2"><span className="text-[var(--color-accent)]">&#10003;</span> Request any custom writer</li>
-              <li className="flex gap-2"><span className="text-[var(--color-accent)]">&#10003;</span> Email ingestion</li>
-              <li className="flex gap-2"><span className="text-[var(--color-accent)]">&#10003;</span> Never blocked — just slows past 200</li>
+            <ul className="space-y-3 text-sm text-[var(--color-fg-muted)] mb-8">
+              <li className="flex gap-2"><span className="text-[var(--color-brand)]">&#10003;</span> 200 edits & generations per month</li>
+              <li className="flex gap-2"><span className="text-[var(--color-brand)]">&#10003;</span> Unlimited personal profiles</li>
+              <li className="flex gap-2"><span className="text-[var(--color-brand)]">&#10003;</span> All 100+ curated writers</li>
+              <li className="flex gap-2"><span className="text-[var(--color-brand)]">&#10003;</span> Request any custom writer</li>
+              <li className="flex gap-2"><span className="text-[var(--color-brand)]">&#10003;</span> Email ingestion</li>
+              <li className="flex gap-2"><span className="text-[var(--color-brand)]">&#10003;</span> Never blocked — just slows past 200</li>
             </ul>
             {session ? (
               <>
                 <button
                   onClick={handleUpgrade}
-                  className="w-full py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors"
+                  className="w-full py-2.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium transition-colors"
                 >
                   {cycle === "annual" ? "Upgrade — $180/yr" : "Upgrade — $19/mo"}
                 </button>
                 {upgradeError && (
-                  <p className="text-[var(--color-accent)] text-xs mt-2 text-center">{upgradeError}</p>
+                  <p className="text-[var(--color-brand)] text-xs mt-2 text-center">{upgradeError}</p>
                 )}
               </>
             ) : (
               <Link
                 href={`/signup?cycle=${cycle}`}
-                className="block text-center py-2.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium transition-colors"
+                className="block text-center py-2.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium transition-colors"
               >
                 Start Free, Upgrade Later
               </Link>
@@ -219,20 +219,20 @@ export default function PricingPage() {
           </div>
         </div>
 
-        <p className="text-center text-[var(--color-ink-mute)] text-sm mt-8 max-w-[60ch] mx-auto">
+        <p className="text-center text-[var(--color-fg-muted)] text-sm mt-8 max-w-[60ch] mx-auto">
           Pro users are never cut off — heavy usage past 200/month is gently throttled, never blocked.
         </p>
       </main>
 
-      <footer className="border-t border-[var(--color-rule)] py-8 mt-16">
+      <footer className="border-t border-[var(--color-border)] py-8 mt-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-[var(--color-ink-mute)]">&copy; {new Date().getFullYear()} DoppelWriter</span>
+          <span className="text-xs text-[var(--color-fg-muted)]">&copy; {new Date().getFullYear()} DoppelWriter</span>
           <div className="flex gap-6">
-            <Link href="/pricing" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">Pricing</Link>
-            <Link href="/privacy" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">Privacy</Link>
-            <Link href="/terms" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-ink)] transition-colors">Terms</Link>
+            <Link href="/pricing" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Pricing</Link>
+            <Link href="/privacy" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Privacy</Link>
+            <Link href="/terms" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Terms</Link>
           </div>
-          <a href="mailto:enterprise@doppelwriter.com?subject=Enterprise%20Inquiry" className="text-xs text-[var(--color-ink-mute)] hover:text-[var(--color-accent)] transition-colors">
+          <a href="mailto:enterprise@doppelwriter.com?subject=Enterprise%20Inquiry" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-brand)] transition-colors">
             Enterprise &rarr;
           </a>
         </div>

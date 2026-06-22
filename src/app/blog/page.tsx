@@ -66,7 +66,7 @@ export default function BlogPage() {
         }}
       />
 
-      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/90 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-border)] sticky top-0 bg-[var(--color-surface)]/90 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-6 flex items-center h-14 justify-between">
           <Link
             href="/"
@@ -76,7 +76,7 @@ export default function BlogPage() {
           </Link>
           <Link
             href="/signup"
-            className="text-sm px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] transition-colors"
+            className="text-sm px-4 py-1.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] transition-colors"
           >
             Try Free
           </Link>
@@ -88,7 +88,7 @@ export default function BlogPage() {
           <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-bold mb-4">
             Blog
           </h1>
-          <p className="text-xl text-[var(--color-ink-soft)] leading-relaxed">
+          <p className="text-xl text-[var(--color-fg-muted)] leading-relaxed">
             Writing tips, AI insights, and the craft of sounding like yourself.
           </p>
         </div>
@@ -98,26 +98,26 @@ export default function BlogPage() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="block bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-6 transition-colors hover:border-[var(--color-ink)] group"
+              className="block bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-6 transition-colors hover:border-[var(--color-fg)] group"
             >
-              <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--color-ink-mute)] mb-3">
+              <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--color-fg-muted)] mb-3">
                 <time dateTime={post.publishedAt}>
                   {formatDate(post.publishedAt)}
                 </time>
                 <span>&middot;</span>
                 <span>{post.readingTime}</span>
               </div>
-              <h2 className="font-[family-name:var(--font-display)] text-xl sm:text-2xl font-semibold mb-2 group-hover:text-[var(--color-accent)] transition-colors">
+              <h2 className="font-[family-name:var(--font-display)] text-xl sm:text-2xl font-semibold mb-2 group-hover:text-[var(--color-brand)] transition-colors">
                 {post.title}
               </h2>
-              <p className="text-[var(--color-ink-soft)] leading-relaxed mb-4 max-w-[65ch]">
+              <p className="text-[var(--color-fg-muted)] leading-relaxed mb-4 max-w-[65ch]">
                 {post.description}
               </p>
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-xs px-2 py-0.5 bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink-soft)] rounded-[2px]"
+                    className="text-xs px-2 py-0.5 bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-fg-muted)] rounded-[2px]"
                   >
                     {tag}
                   </span>
@@ -128,44 +128,44 @@ export default function BlogPage() {
         </div>
 
         {/* Internal Links — Tools & Resources */}
-        <div className="mt-16 pt-12 border-t border-[var(--color-rule)]">
+        <div className="mt-16 pt-12 border-t border-[var(--color-border)]">
           <h2 className="font-[family-name:var(--font-display)] text-2xl font-bold mb-6">
             Explore DoppelWriter
           </h2>
           <div className="grid sm:grid-cols-3 gap-4">
             <Link
               href="/analyze"
-              className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-ink)] block"
+              className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-fg)] block"
             >
               <h3 className="font-semibold text-sm mb-1">Free Writing Voice Analyzer</h3>
-              <p className="text-xs text-[var(--color-ink-soft)]">Paste any text and instantly see its writing style broken down — sentence rhythm, vocabulary, tone, and personality.</p>
+              <p className="text-xs text-[var(--color-fg-muted)]">Paste any text and instantly see its writing style broken down — sentence rhythm, vocabulary, tone, and personality.</p>
             </Link>
             <Link
               href="/for"
-              className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-ink)] block"
+              className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-fg)] block"
             >
               <h3 className="font-semibold text-sm mb-1">DoppelWriter For Your Niche</h3>
-              <p className="text-xs text-[var(--color-ink-soft)]">Newsletter writers, ghostwriters, fiction authors, marketers, students — see how DoppelWriter fits what you do.</p>
+              <p className="text-xs text-[var(--color-fg-muted)]">Newsletter writers, ghostwriters, fiction authors, marketers, students — see how DoppelWriter fits what you do.</p>
             </Link>
             <Link
               href="/vs/chatgpt"
-              className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-ink)] block"
+              className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-fg)] block"
             >
               <h3 className="font-semibold text-sm mb-1">DoppelWriter vs ChatGPT</h3>
-              <p className="text-xs text-[var(--color-ink-soft)]">See why voice-matched writing beats generic AI output for anything that needs to sound like you.</p>
+              <p className="text-xs text-[var(--color-fg-muted)]">See why voice-matched writing beats generic AI output for anything that needs to sound like you.</p>
             </Link>
           </div>
         </div>
       </main>
 
-      <footer className="border-t border-[var(--color-rule)] py-8">
+      <footer className="border-t border-[var(--color-border)] py-8">
         <div className="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-[var(--color-ink-mute)]">&copy; {new Date().getFullYear()} DoppelWriter</span>
+          <span className="text-xs text-[var(--color-fg-muted)]">&copy; {new Date().getFullYear()} DoppelWriter</span>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <Link href="/" className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">Home</Link>
-            <Link href="/analyze" className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">Voice Analyzer</Link>
-            <Link href="/for" className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">Use Cases</Link>
-            <Link href="/pricing" className="text-xs text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">Pricing</Link>
+            <Link href="/" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Home</Link>
+            <Link href="/analyze" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Voice Analyzer</Link>
+            <Link href="/for" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Use Cases</Link>
+            <Link href="/pricing" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Pricing</Link>
           </div>
         </div>
       </footer>

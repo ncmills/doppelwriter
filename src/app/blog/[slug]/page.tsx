@@ -266,7 +266,7 @@ export default async function BlogPostPage({
         }}
       />
 
-      <nav className="border-b border-[var(--color-rule)] sticky top-0 bg-[var(--color-paper)]/90 backdrop-blur-sm z-50">
+      <nav className="border-b border-[var(--color-border)] sticky top-0 bg-[var(--color-surface)]/90 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-6 flex items-center h-14 justify-between">
           <Link
             href="/"
@@ -276,7 +276,7 @@ export default async function BlogPostPage({
           </Link>
           <Link
             href="/signup"
-            className="text-sm px-4 py-1.5 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] transition-colors"
+            className="text-sm px-4 py-1.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] transition-colors"
           >
             Try Free
           </Link>
@@ -286,25 +286,25 @@ export default async function BlogPostPage({
       <main className="max-w-3xl mx-auto px-6 py-16">
         <nav
           aria-label="Breadcrumb"
-          className="text-sm text-[var(--color-ink-soft)] mb-6 flex items-center gap-1.5 flex-wrap"
+          className="text-sm text-[var(--color-fg-muted)] mb-6 flex items-center gap-1.5 flex-wrap"
         >
-          <Link href="/" className="hover:text-[var(--color-ink)] transition-colors">
+          <Link href="/" className="hover:text-[var(--color-fg)] transition-colors">
             Home
           </Link>
           <span>/</span>
-          <Link href="/blog" className="hover:text-[var(--color-ink)] transition-colors">
+          <Link href="/blog" className="hover:text-[var(--color-fg)] transition-colors">
             Blog
           </Link>
           <span>/</span>
-          <span className="text-[var(--color-ink)] line-clamp-1">{post.title}</span>
+          <span className="text-[var(--color-fg)] line-clamp-1">{post.title}</span>
         </nav>
 
         <article>
-          <header className="mb-10 pb-8 border-b border-[var(--color-rule)]">
+          <header className="mb-10 pb-8 border-b border-[var(--color-border)]">
             <h1 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
               {post.title}
             </h1>
-            <div className="flex flex-wrap items-center gap-3 text-sm text-[var(--color-ink-mute)]">
+            <div className="flex flex-wrap items-center gap-3 text-sm text-[var(--color-fg-muted)]">
               <span>{post.author}</span>
               <span>&middot;</span>
               <time dateTime={post.publishedAt}>
@@ -316,23 +316,23 @@ export default async function BlogPostPage({
           </header>
 
           <div
-            className="prose prose-stone max-w-none text-[var(--color-ink)] prose-headings:font-[family-name:var(--font-display)] prose-headings:text-[var(--color-ink)] prose-p:text-[var(--color-ink)] prose-li:text-[var(--color-ink)] prose-a:text-[var(--color-accent)] prose-a:no-underline hover:prose-a:underline prose-strong:text-[var(--color-ink)] prose-th:text-left prose-table:text-sm prose-blockquote:border-l-2 prose-blockquote:border-[var(--color-accent)] prose-blockquote:italic prose-blockquote:font-[family-name:var(--font-display)] prose-blockquote:text-[var(--color-ink-soft)] prose-hr:border-[var(--color-rule)]"
+            className="prose prose-stone max-w-none text-[var(--color-fg)] prose-headings:font-[family-name:var(--font-display)] prose-headings:text-[var(--color-fg)] prose-p:text-[var(--color-fg)] prose-li:text-[var(--color-fg)] prose-a:text-[var(--color-brand)] prose-a:no-underline hover:prose-a:underline prose-strong:text-[var(--color-fg)] prose-th:text-left prose-table:text-sm prose-blockquote:border-l-2 prose-blockquote:border-[var(--color-brand)] prose-blockquote:italic prose-blockquote:font-[family-name:var(--font-display)] prose-blockquote:text-[var(--color-fg-muted)] prose-hr:border-[var(--color-border)]"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </article>
 
         {/* CTA Banner */}
-        <section className="mt-16 mb-12 text-center py-10 bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px]">
+        <section className="mt-16 mb-12 text-center py-10 bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px]">
           <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold mb-3">
             Ready to write in your own voice?
           </h2>
-          <p className="text-[var(--color-ink-soft)] mb-6 max-w-md mx-auto">
+          <p className="text-[var(--color-fg-muted)] mb-6 max-w-md mx-auto">
             DoppelWriter learns how you write, then helps you write more — in
             your voice, not the AI default.
           </p>
           <Link
             href="/signup"
-            className="inline-block px-8 py-3 bg-[var(--color-ink)] text-[var(--color-paper)] hover:bg-[var(--color-accent)] rounded-[2px] font-medium text-lg transition-colors"
+            className="inline-block px-8 py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium text-lg transition-colors"
           >
             Try DoppelWriter Free
           </Link>
@@ -349,28 +349,28 @@ export default async function BlogPostPage({
                 <Link
                   key={uc.slug}
                   href={`/write/${uc.slug}`}
-                  className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)] group"
+                  className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-fg)] group"
                 >
-                  <p className="font-medium text-sm group-hover:text-[var(--color-accent)] transition-colors">{uc.label}</p>
-                  <p className="text-xs text-[var(--color-ink-mute)] mt-1">AI writing tool</p>
+                  <p className="font-medium text-sm group-hover:text-[var(--color-brand)] transition-colors">{uc.label}</p>
+                  <p className="text-xs text-[var(--color-fg-muted)] mt-1">AI writing tool</p>
                 </Link>
               ))}
               {BLOG_RELATED_RESOURCES[slug].writers.map((w) => (
                 <Link
                   key={w.slug}
                   href={`/write-like/${w.slug}`}
-                  className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)] group"
+                  className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-fg)] group"
                 >
-                  <p className="font-medium text-sm group-hover:text-[var(--color-accent)] transition-colors">{w.label}</p>
-                  <p className="text-xs text-[var(--color-ink-mute)] mt-1">Famous voice</p>
+                  <p className="font-medium text-sm group-hover:text-[var(--color-brand)] transition-colors">{w.label}</p>
+                  <p className="text-xs text-[var(--color-fg-muted)] mt-1">Famous voice</p>
                 </Link>
               ))}
               <Link
                 href="/analyze"
-                className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-ink)] group"
+                className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-4 transition-colors hover:border-[var(--color-fg)] group"
               >
-                <p className="font-medium text-sm group-hover:text-[var(--color-accent)] transition-colors">Voice Analyzer</p>
-                <p className="text-xs text-[var(--color-ink-mute)] mt-1">Analyze your writing style</p>
+                <p className="font-medium text-sm group-hover:text-[var(--color-brand)] transition-colors">Voice Analyzer</p>
+                <p className="text-xs text-[var(--color-fg-muted)] mt-1">Analyze your writing style</p>
               </Link>
             </div>
           </section>
@@ -387,12 +387,12 @@ export default async function BlogPostPage({
                 <Link
                   key={p.slug}
                   href={`/blog/${p.slug}`}
-                  className="bg-[var(--color-paper-deep)] border border-[var(--color-rule)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-ink)] group"
+                  className="bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[2px] p-5 transition-colors hover:border-[var(--color-fg)] group"
                 >
-                  <p className="font-[family-name:var(--font-display)] font-semibold mb-1 group-hover:text-[var(--color-accent)] transition-colors">
+                  <p className="font-[family-name:var(--font-display)] font-semibold mb-1 group-hover:text-[var(--color-brand)] transition-colors">
                     {p.title}
                   </p>
-                  <p className="text-sm text-[var(--color-ink-mute)] line-clamp-2">
+                  <p className="text-sm text-[var(--color-fg-muted)] line-clamp-2">
                     {p.description}
                   </p>
                 </Link>
@@ -404,7 +404,7 @@ export default async function BlogPostPage({
         <NetworkFooter currentDomain="doppelwriter.com" />
       </main>
 
-      <footer className="border-t border-[var(--color-rule)] py-8 text-center text-xs text-[var(--color-ink-mute)]">
+      <footer className="border-t border-[var(--color-border)] py-8 text-center text-xs text-[var(--color-fg-muted)]">
         DoppelWriter
       </footer>
     </div>

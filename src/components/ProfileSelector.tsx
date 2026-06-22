@@ -25,7 +25,7 @@ export default function ProfileSelector({
 
   if (profiles.length === 0) {
     return (
-      <p className="text-[var(--color-ink-mute)] text-sm">
+      <p className="text-[var(--color-fg-muted)] text-sm">
         No profiles yet. Go to Admin to analyze your writing samples.
       </p>
     );
@@ -35,7 +35,7 @@ export default function ProfileSelector({
     <select
       value={value ?? ""}
       onChange={(e) => onChange(Number(e.target.value))}
-      className="bg-[var(--color-paper)] border border-[var(--color-rule)] px-4 py-2 text-[var(--color-ink)] focus:outline-none"
+      className="bg-[var(--color-surface)] border border-[var(--color-border)] px-4 py-2 text-[var(--color-fg)] focus:outline-none"
     >
       <option value="" disabled>
         Select a style profile...

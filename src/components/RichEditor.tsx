@@ -58,27 +58,27 @@ export default function RichEditor({ value, onChange, placeholder, className }: 
   return (
     <div className="flex flex-col h-full">
       {/* Toolbar */}
-      <div className="flex items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-1.5 sm:py-2 border-b border-[var(--color-rule)] bg-[var(--color-paper-deep)] overflow-x-auto">
-        <button onClick={() => exec("bold")} className="p-2 sm:p-1.5 hover:bg-[var(--color-paper)] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors shrink-0" title="Bold">
+      <div className="flex items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-1.5 sm:py-2 border-b border-[var(--color-border)] bg-[var(--color-surface-raised)] overflow-x-auto">
+        <button onClick={() => exec("bold")} className="p-2 sm:p-1.5 hover:bg-[var(--color-surface)] text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors shrink-0" title="Bold">
           <span className="font-bold text-xs">B</span>
         </button>
-        <button onClick={() => exec("italic")} className="p-2 sm:p-1.5 hover:bg-[var(--color-paper)] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors shrink-0" title="Italic">
+        <button onClick={() => exec("italic")} className="p-2 sm:p-1.5 hover:bg-[var(--color-surface)] text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors shrink-0" title="Italic">
           <span className="italic text-xs font-[family-name:var(--font-display)]">I</span>
         </button>
-        <button onClick={() => exec("underline")} className="p-2 sm:p-1.5 hover:bg-[var(--color-paper)] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors shrink-0" title="Underline">
+        <button onClick={() => exec("underline")} className="p-2 sm:p-1.5 hover:bg-[var(--color-surface)] text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors shrink-0" title="Underline">
           <span className="underline text-xs">U</span>
         </button>
-        <div className="w-px h-4 bg-[var(--color-rule)] mx-0.5 sm:mx-1 shrink-0" />
-        <button onClick={() => exec("insertUnorderedList")} className="p-2 sm:p-1.5 hover:bg-[var(--color-paper)] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors text-xs shrink-0" title="Bullet list">
+        <div className="w-px h-4 bg-[var(--color-border)] mx-0.5 sm:mx-1 shrink-0" />
+        <button onClick={() => exec("insertUnorderedList")} className="p-2 sm:p-1.5 hover:bg-[var(--color-surface)] text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors text-xs shrink-0" title="Bullet list">
           &#8226;
         </button>
-        <button onClick={() => exec("insertOrderedList")} className="p-2 sm:p-1.5 hover:bg-[var(--color-paper)] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors text-xs shrink-0" title="Numbered list">
+        <button onClick={() => exec("insertOrderedList")} className="p-2 sm:p-1.5 hover:bg-[var(--color-surface)] text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors text-xs shrink-0" title="Numbered list">
           1.
         </button>
-        <div className="w-px h-4 bg-[var(--color-rule)] mx-0.5 sm:mx-1 shrink-0" />
+        <div className="w-px h-4 bg-[var(--color-border)] mx-0.5 sm:mx-1 shrink-0" />
         <select
           onChange={(e) => { if (e.target.value) exec("formatBlock", e.target.value); e.target.value = ""; }}
-          className="bg-[var(--color-paper)] border border-[var(--color-rule)] text-[var(--color-ink-soft)] text-xs px-2 py-2 sm:py-1 focus:outline-none shrink-0"
+          className="bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-fg-muted)] text-xs px-2 py-2 sm:py-1 focus:outline-none shrink-0"
           defaultValue=""
         >
           <option value="" disabled>Heading</option>
@@ -96,7 +96,7 @@ export default function RichEditor({ value, onChange, placeholder, className }: 
         onInput={handleInput}
         onPaste={handlePaste}
         suppressContentEditableWarning
-        className={`flex-1 p-4 overflow-auto focus:outline-none leading-relaxed text-[var(--color-ink)] ${className || ""}`}
+        className={`flex-1 p-4 overflow-auto focus:outline-none leading-relaxed text-[var(--color-fg)] ${className || ""}`}
         data-placeholder={placeholder}
         role="textbox"
         aria-label="Rich text editor"
