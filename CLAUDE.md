@@ -38,7 +38,7 @@ Look for impressions, clicks, indexed pages, errors. Use Playwright if browser a
 Next.js 16 + App Router, Neon Postgres, NextAuth v5, Stripe, Anthropic Claude, Resend, PostHog, Vercel.
 
 ## Style
-Dark theme (#0C0A09 bg, #FAFAF9 text, amber-600 accents), Literata serif for headings, stone neutrals. Voice: assured, precise, slightly irreverent.
+The design system is **Modern AI-product, warm** (rebranded 2026-06). Single source of truth: `DESIGN-SYSTEM.md` + the `@theme` tokens in `src/app/globals.css`. Components MUST read semantic tokens (`bg-[var(--color-surface)]`, `text-[var(--color-fg)]`, `border-[var(--color-border)]`, `bg-[var(--color-brand)]`) — never raw palette values or arbitrary hexes. Live reference: `/style-guide` (noindex). Browsable cards: claude.ai/design.
 
 ## Constraints
 - Nick does ZERO manual work — all growth is code-only
