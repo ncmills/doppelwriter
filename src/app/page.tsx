@@ -135,9 +135,9 @@ export default function LandingPage() {
             <h1 className="font-[family-name:var(--font-display)] font-bold text-[44px] sm:text-[64px] md:text-[72px] leading-[1.02] tracking-[-0.02em] mb-6 sm:mb-8">
               Write in anyone&apos;s voice.
               <br />
-              <em className="font-normal text-[var(--color-fg-muted)]">
+              <span className="font-normal text-[var(--color-fg-muted)]">
                 Starting with yours.
-              </em>
+              </span>
             </h1>
             <p className="text-lg sm:text-2xl text-[var(--color-fg-muted)] max-w-2xl mx-auto leading-snug">
               The AI that sounds like you. Or Hemingway. Or your mom.
@@ -189,7 +189,7 @@ export default function LandingPage() {
             The Voice Analyzer — Free, No Signup
           </p>
           <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em] mb-4">
-            Curious how <em className="font-normal">you</em> sound?
+            Curious how <span className="font-normal">you</span> sound?
           </h2>
           <p className="text-lg text-[var(--color-fg-muted)] max-w-xl mx-auto mb-8">
             Paste anything you&apos;ve written — we&apos;ll break down your style in seconds.
@@ -214,7 +214,7 @@ export default function LandingPage() {
                 The Writers
               </p>
               <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em]">
-                Or borrow <em className="font-normal">someone else&apos;s.</em>
+                Or borrow <span className="font-normal">someone else&apos;s.</span>
               </h2>
             </div>
             <Link
@@ -362,7 +362,7 @@ export default function LandingPage() {
             Fin.
           </p>
           <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[64px] leading-[1.03] tracking-[-0.02em] mb-6">
-            Now — <em className="font-normal">your turn.</em>
+            Now — <span className="font-normal">your turn.</span>
           </h2>
           <p className="text-lg sm:text-xl text-[var(--color-fg-muted)] max-w-md mx-auto mb-10">
             Free to use. No credit card. Voice cloned in under a minute.
