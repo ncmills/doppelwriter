@@ -50,7 +50,6 @@ export const metadata: Metadata = {
     siteName: "DoppelWriter",
     title: "DoppelWriter — AI Writing That Sounds Like You",
     description: "Clone your writing voice or write like any famous author.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DoppelWriter" }],
   },
   twitter: {
     card: "summary_large_image",

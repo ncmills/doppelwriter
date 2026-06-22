@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { sql } from "@/lib/db";
 
 export const runtime = "edge";
-export const alt = "Writing Voice Analysis — DoppelWriter";
+export const alt = "Writing Voice Analysis — Sand & Ember";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -16,6 +16,14 @@ interface AnalysisResult {
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+
+  const fontData = await fetch(
+    "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj4PVksj.ttf"
+  ).then((res) => res.arrayBuffer());
+
+  const fontConfig = {
+    fonts: [{ name: "Space Grotesk", data: fontData, weight: 700 as const, style: "normal" as const }],
+  };
 
   let result: AnalysisResult | null = null;
   try {
@@ -42,16 +50,16 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#faf7f0",
-            color: "#1a1a1a",
+            backgroundColor: "#faf8f4",
+            color: "#1c1a17",
             fontSize: 48,
-            fontFamily: "Georgia, 'Times New Roman', serif",
+            fontFamily: "'Space Grotesk', sans-serif",
           }}
         >
-          Writing Voice Analysis — DoppelWriter
+          Writing Voice Analysis — Sand &amp; Ember
         </div>
       ),
-      { ...size }
+      { ...size, ...fontConfig }
     );
   }
 
@@ -66,10 +74,10 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          backgroundColor: "#faf7f0",
-          color: "#1a1a1a",
+          backgroundColor: "#faf8f4",
+          color: "#1c1a17",
           padding: "56px 64px",
-          fontFamily: "Georgia, 'Times New Roman', serif",
+          fontFamily: "'Space Grotesk', sans-serif",
         }}
       >
         {/* Top bar — masthead */}
@@ -79,7 +87,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             alignItems: "center",
             justifyContent: "space-between",
             paddingBottom: "20px",
-            borderBottom: "1px solid #d9d2c2",
+            borderBottom: "1px solid #e4ded2",
             marginBottom: "32px",
           }}
         >
@@ -87,21 +95,21 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             style={{
               fontSize: 24,
               fontWeight: 700,
-              color: "#1a1a1a",
+              color: "#1c1a17",
               letterSpacing: "-0.02em",
             }}
           >
-            DoppelWriter
+            Sand &amp; Ember
           </div>
           <div
             style={{
               fontSize: 14,
-              color: "#8a8378",
+              color: "#6b6358",
               textTransform: "uppercase" as const,
               letterSpacing: "0.25em",
             }}
           >
-            <span style={{ color: "#8b2e2e" }}>●</span>{"  "}Writing Voice Analysis
+            <span style={{ color: "#c2410c" }}>●</span>{"  "}Writing Voice Analysis
           </div>
         </div>
 
@@ -125,7 +133,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
                 letterSpacing: "-0.03em",
                 textTransform: "capitalize" as const,
                 marginBottom: "8px",
-                color: "#1a1a1a",
+                color: "#1c1a17",
               }}
             >
               {result.tone.primary}
@@ -133,10 +141,9 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             <div
               style={{
                 fontSize: 28,
-                color: "#4a4a4a",
+                color: "#6b6358",
                 marginBottom: "32px",
                 textTransform: "capitalize" as const,
-                fontStyle: "italic",
               }}
             >
               with a {result.tone.secondary} edge
@@ -155,7 +162,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
                 <div
                   style={{
                     fontSize: 14,
-                    color: "#8a8378",
+                    color: "#6b6358",
                     textTransform: "uppercase" as const,
                     letterSpacing: "0.2em",
                   }}
@@ -166,7 +173,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
                   style={{
                     fontSize: 24,
                     fontWeight: 700,
-                    color: "#8b2e2e",
+                    color: "#c2410c",
                   }}
                 >
                   {primaryWriter}
@@ -184,9 +191,9 @@ export default async function Image({ params }: { params: Promise<{ slug: string
                       fontSize: 14,
                       padding: "6px 16px",
                       borderRadius: "2px",
-                      backgroundColor: "#f0ebe0",
-                      border: "1px solid #d9d2c2",
-                      color: "#1a1a1a",
+                      backgroundColor: "#f1ece3",
+                      border: "1px solid #e4ded2",
+                      color: "#1c1a17",
                     }}
                   >
                     {word}
@@ -211,8 +218,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               style={{
                 display: "flex",
                 flexDirection: "column",
-                backgroundColor: "#f0ebe0",
-                border: "1px solid #d9d2c2",
+                backgroundColor: "#f1ece3",
+                border: "1px solid #e4ded2",
                 borderRadius: "2px",
                 padding: "20px",
               }}
@@ -220,7 +227,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               <div
                 style={{
                   fontSize: 12,
-                  color: "#8a8378",
+                  color: "#6b6358",
                   textTransform: "uppercase" as const,
                   letterSpacing: "0.2em",
                   marginBottom: "4px",
@@ -233,7 +240,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
                   fontSize: 28,
                   fontWeight: 700,
                   textTransform: "capitalize" as const,
-                  color: "#1a1a1a",
+                  color: "#1c1a17",
                 }}
               >
                 {result.vocabulary.level}
@@ -245,8 +252,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               style={{
                 display: "flex",
                 flexDirection: "column",
-                backgroundColor: "#f0ebe0",
-                border: "1px solid #d9d2c2",
+                backgroundColor: "#f1ece3",
+                border: "1px solid #e4ded2",
                 borderRadius: "2px",
                 padding: "20px",
               }}
@@ -254,7 +261,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               <div
                 style={{
                   fontSize: 12,
-                  color: "#8a8378",
+                  color: "#6b6358",
                   textTransform: "uppercase" as const,
                   letterSpacing: "0.2em",
                   marginBottom: "8px",
@@ -267,7 +274,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
                   display: "flex",
                   justifyContent: "space-between",
                   fontSize: 11,
-                  color: "#8a8378",
+                  color: "#6b6358",
                   marginBottom: "6px",
                 }}
               >
@@ -279,7 +286,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
                   display: "flex",
                   width: "100%",
                   height: "10px",
-                  backgroundColor: "#d9d2c2",
+                  backgroundColor: "#e4ded2",
                   borderRadius: "2px",
                   overflow: "hidden",
                 }}
@@ -288,7 +295,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
                   style={{
                     width: `${formalityPct}%`,
                     height: "100%",
-                    background: "#1a1a1a",
+                    background: "#1c1a17",
                     borderRadius: "2px",
                   }}
                 />
@@ -296,7 +303,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               <div
                 style={{
                   fontSize: 14,
-                  color: "#4a4a4a",
+                  color: "#6b6358",
                   textAlign: "center" as const,
                   marginTop: "6px",
                 }}
@@ -310,8 +317,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               style={{
                 display: "flex",
                 flexDirection: "column",
-                backgroundColor: "#f0ebe0",
-                border: "1px solid #d9d2c2",
+                backgroundColor: "#f1ece3",
+                border: "1px solid #e4ded2",
                 borderRadius: "2px",
                 padding: "20px",
               }}
@@ -319,7 +326,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               <div
                 style={{
                   fontSize: 12,
-                  color: "#8a8378",
+                  color: "#6b6358",
                   textTransform: "uppercase" as const,
                   letterSpacing: "0.2em",
                   marginBottom: "4px",
@@ -328,10 +335,10 @@ export default async function Image({ params }: { params: Promise<{ slug: string
                 Avg Sentence
               </div>
               <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
-                <div style={{ fontSize: 28, fontWeight: 700, color: "#1a1a1a" }}>
+                <div style={{ fontSize: 28, fontWeight: 700, color: "#1c1a17" }}>
                   {result.sentenceLength.average}
                 </div>
-                <div style={{ fontSize: 14, color: "#8a8378" }}>words</div>
+                <div style={{ fontSize: 14, color: "#6b6358" }}>words</div>
               </div>
             </div>
           </div>
@@ -345,17 +352,17 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             justifyContent: "space-between",
             marginTop: "24px",
             paddingTop: "20px",
-            borderTop: "1px solid #d9d2c2",
+            borderTop: "1px solid #e4ded2",
           }}
         >
-          <div style={{ fontSize: 18, color: "#4a4a4a", fontStyle: "italic" }}>
+          <div style={{ fontSize: 18, color: "#6b6358" }}>
             Analyze your writing voice for free
           </div>
           <div
             style={{
               fontSize: 16,
               fontWeight: 600,
-              color: "#8b2e2e",
+              color: "#c2410c",
               letterSpacing: "0.05em",
             }}
           >
@@ -364,6 +371,6 @@ export default async function Image({ params }: { params: Promise<{ slug: string
         </div>
       </div>
     ),
-    { ...size }
+    { ...size, ...fontConfig }
   );
 }
