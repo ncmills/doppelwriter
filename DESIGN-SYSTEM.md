@@ -39,20 +39,9 @@ These are the locked primitive values. **Components must never reference these d
 | `--color-background` | `--color-bg` | Next.js / Tailwind default background |
 | `--color-foreground` | `--color-fg-strong` | Next.js / Tailwind default foreground |
 
-### Legacy Back-Compat Aliases (6 total)
+### Legacy Back-Compat Aliases — REMOVED
 
-These exist **only** so un-migrated components automatically reskin without a find-replace sweep. Do not use them in new code.
-
-| Legacy alias | Value | Original meaning |
-|---|---|---|
-| `--color-ink` | `var(--color-fg-strong)` (#1c1a17) | dark ink — was primary text |
-| `--color-ink-soft` | `#4a443b` | warm mid — AA on surface (9.08:1) |
-| `--color-ink-mute` | `var(--color-fg-muted-raw)` (#6b6358) | muted ink |
-| `--color-paper` | `var(--color-bg)` (#faf8f4) | base surface |
-| `--color-paper-deep` | `var(--color-bg-raised)` (#f1ece3) | elevated surface |
-| `--color-rule` | `var(--color-line)` (#e4ded2) | hairline / divider |
-
-These will be removed in a future Plan B migration once all components are on semantic tokens.
+The old `--color-ink` / `--color-ink-soft` / `--color-ink-mute` / `--color-paper` / `--color-paper-deep` / `--color-rule` aliases existed transiently during the rebrand so un-migrated components reskinned automatically. **All ~70 components were migrated to semantic tokens and the aliases were removed (Plan B, 2026-06-22).** Do not reintroduce them — new code uses the semantic aliases above only.
 
 ### Typography
 
@@ -96,7 +85,7 @@ Headings (`h1`, `h2`, `h3`) use `--font-display` with `letter-spacing: -0.02em` 
 
 | Token | Value | Notes |
 |---|---|---|
-| `--radius` | `10px` | All rounded corners — "soft" from Option A |
+| `--radius` | `2px` | All rounded corners — the sharp editorial corner the live site ships (reconciled from the initial 10px guess) |
 | `--motion-fast` | `140ms` | Micro-interactions, color transitions |
 | `--motion-base` | `220ms` | Default component transitions |
 | `--motion-cinematic` | `600ms` | Page-level reveals, hero choreography |
@@ -110,17 +99,19 @@ Headings (`h1`, `h2`, `h3`) use `--font-display` with `letter-spacing: -0.02em` 
 #### `Button`
 
 ```tsx
-<Button variant="primary" | "ghost" | "accent" size="sm" | "md" />
+<Button variant="primary" | "ghost" | "accent" size="sm" | "md" | "lg" block href="/x" />
 ```
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `variant` | `"primary" \| "ghost" \| "accent"` | `"primary"` | primary = ink bg / surface text; ghost = transparent + border; accent = brand bg / surface text |
-| `size` | `"sm" \| "md"` | `"md"` | sm: caption text / tight padding; md: body text / standard padding |
+| `variant` | `"primary" \| "ghost" \| "accent"` | `"primary"` | primary = ink bg / surface text, **hover → ember** (the signature CTA); ghost = border, hover fills ink; accent = brand bg / surface text |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | sm: caption / `px-4 py-1.5`; md: body / `px-6 py-2.5`; lg: `text-lg px-8 py-3` |
+| `block` | `boolean` | `false` | full width (`w-full`) |
+| `href` | `string` | — | when set, renders a Next `<Link>` instead of `<button>` (for link-CTAs) |
 | `className` | `string` | — | merged via `cn()` |
-| `...props` | `ButtonHTMLAttributes` | — | all native button props |
+| `...props` | `ButtonHTMLAttributes` \| `LinkProps` | — | native button or link props |
 
-Focus ring: 1px outline at `--color-fg`, offset 2px. Disabled: 50% opacity, no pointer events.
+Focus ring: 1px outline at `--color-fg`, offset 2px. Disabled: 50% opacity, no pointer events. **Font-size note:** size classes use `text-[length:var(--fs-*)]` — the `length:` hint is REQUIRED, or Tailwind reads the CSS var as a color and breaks both size and text color.
 
 #### `Card`
 
@@ -275,7 +266,7 @@ This is the enforced pattern throughout the codebase. Tailwind's `@theme inline`
 - Use Tailwind arbitrary syntax: `bg-[var(--color-surface)]`, `text-[var(--color-fg)]`
 - Wrap any page using motion primitives in `<MotionProvider>`
 - Honor reduced-motion automatically — `MotionProvider` + `reducedMotion="user"` handles it; do not re-implement
-- Use `--radius` (10px) consistently for all rounded corners
+- Use `--radius` (2px) consistently for all rounded corners
 
 **Don't:**
 - Reference raw hexes directly in component classNames or styles (e.g. `bg-[#faf8f4]`)
