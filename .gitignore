@@ -51,3 +51,6 @@ dw-prod-env
 
 # Marketing film working artifacts — canonical deliverables live in /public/film/
 /_assets/scenes/exports/
+
+# agent worktrees / local scratch
+.claude/
