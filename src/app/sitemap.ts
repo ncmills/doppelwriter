@@ -3,6 +3,7 @@ import { CURATED_WRITERS } from "@/lib/writer-builder";
 import { CATEGORIES } from "@/lib/writer-data";
 import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
 import { BLOG_POSTS } from "@/lib/blog-posts";
+import { getAllPosts as getMdxPosts } from "@/lib/blog";
 import { NICHES } from "@/lib/niches";
 import { ALTERNATIVES } from "@/lib/alternatives";
 
@@ -68,6 +69,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  // Engine-generated MDX posts (content/blog/*.mdx)
+  const mdxBlogPages: MetadataRoute.Sitemap = getMdxPosts().map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.dateModified ?? post.datePublished),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
   const nicheIndexPage: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/for`,
@@ -91,5 +100,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  return [...staticPages, ...writerCategoryPages, ...writerPages, ...useCaseCategoryPages, ...useCasePages, ...blogPages, ...nicheIndexPage, ...nichePages, ...alternativePages];
+  return [...staticPages, ...writerCategoryPages, ...writerPages, ...useCaseCategoryPages, ...useCasePages, ...blogPages, ...mdxBlogPages, ...nicheIndexPage, ...nichePages, ...alternativePages];
 }
