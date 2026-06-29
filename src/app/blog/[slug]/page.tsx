@@ -4,6 +4,10 @@ import { BLOG_POSTS } from "@/lib/blog-posts";
 import { JsonLd } from "@/components/JsonLd";
 import { NetworkFooter } from "@/components/NetworkFooter";
 import type { Metadata } from "next";
+// Engine-generated MDX posts (content/blog/*.mdx) render via this fallback;
+// hand-authored BLOG_POSTS are unaffected.
+import { getPost as getMdxPost, getAllSlugs as getMdxSlugs } from "@/lib/blog";
+import MdxPost from "./MdxPost";
 
 const BLOG_RELATED_RESOURCES: Record<string, { useCases: { slug: string; label: string }[]; writers: { slug: string; label: string }[] }> = {
   "ai-cover-letter-generator": {
@@ -164,7 +168,10 @@ function getPost(slug: string) {
 }
 
 export function generateStaticParams() {
-  return BLOG_POSTS.map((p) => ({ slug: p.slug }));
+  return [
+    ...BLOG_POSTS.map((p) => ({ slug: p.slug })),
+    ...getMdxSlugs().map((slug) => ({ slug })),
+  ];
 }
 
 export async function generateMetadata({
@@ -174,7 +181,23 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post) return {};
+  if (!post) {
+    const mdx = getMdxPost(slug);
+    if (!mdx) return {};
+    return {
+      title: mdx.title,
+      description: mdx.description,
+      openGraph: {
+        title: mdx.title,
+        description: mdx.description,
+        url: `https://doppelwriter.com/blog/${slug}`,
+        type: "article",
+        publishedTime: mdx.datePublished,
+      },
+      twitter: { card: "summary_large_image", title: mdx.title, description: mdx.description },
+      alternates: { canonical: `https://doppelwriter.com/blog/${slug}` },
+    };
+  }
 
   return {
     title: post.title,
@@ -212,7 +235,10 @@ export default async function BlogPostPage({
 }) {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post) notFound();
+  if (!post) {
+    if (getMdxPost(slug)) return <MdxPost slug={slug} />;
+    notFound();
+  }
 
   const relatedPosts = BLOG_POSTS.filter((p) => p.slug !== slug);
 

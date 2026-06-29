@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BLOG_POSTS } from "@/lib/blog-posts";
+import { getAllPosts as getMdxPosts } from "@/lib/blog";
 import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
 
@@ -31,7 +32,22 @@ function formatDate(iso: string) {
 }
 
 export default function BlogPage() {
-  const posts = [...BLOG_POSTS].sort(
+  type Card = {
+    slug: string; title: string; description: string; publishedAt: string;
+    updatedAt?: string; author: string; tags: string[]; readingTime: string;
+  };
+  const posts: Card[] = [
+    ...BLOG_POSTS.map((p) => ({
+      slug: p.slug, title: p.title, description: p.description,
+      publishedAt: p.publishedAt, updatedAt: p.updatedAt, author: p.author,
+      tags: p.tags, readingTime: p.readingTime,
+    })),
+    ...getMdxPosts().map((p) => ({
+      slug: p.slug, title: p.title, description: p.description,
+      publishedAt: p.datePublished, updatedAt: p.dateModified, author: "DoppelWriter",
+      tags: (p.secondaryKeywords ?? []).slice(0, 3), readingTime: `${p.readingMinutes} min read`,
+    })),
+  ].sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
