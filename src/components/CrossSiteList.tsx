@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 
+// Legal/self-help cluster, upstream only (funnel toward aissdi). dofollow —
+// these pass link equity to higher-priority cluster sites. See src/lib/network-sites.ts.
 const CROSS_SITES: { label: string; href: string; note: string }[] = [
-  { label: "Tour de Fore", href: "https://tourdefore.com", note: "Golf trip planner" },
-  { label: "Peptide Stack", href: "https://whatpeptidesdo.com", note: "Research journal" },
-  { label: "I Don't Have a Will", href: "https://idonthaveawill.com", note: "Estate tool" },
-  { label: "Imfrustrated", href: "https://imfrustrated.org", note: "Venting, done well" },
+  { label: "AISSDI", href: "https://aissdi.com", note: "Free SSDI tools" },
+  { label: "I Don't Have a Will", href: "https://idonthaveawill.com", note: "Free will tool" },
 ];
 
 export default function CrossSiteList() {
@@ -51,7 +51,7 @@ export default function CrossSiteList() {
         >
           <a
             href={s.href}
-            rel="nofollow"
+            rel="noopener"
             className="cross-site-link text-[13px] text-[var(--color-fg)]"
           >
             {s.label}
