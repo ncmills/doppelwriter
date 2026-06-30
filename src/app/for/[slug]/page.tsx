@@ -369,7 +369,7 @@ export default async function NichePage({
             <p className="text-[var(--color-fg-muted)] mb-8 text-lg">
               {isSensitive
                 ? "Take your time. DoppelWriter is here whenever you need it."
-                : "5 free uses per month. No credit card. See the difference voice-matched AI makes."}
+                : "20 free uses per month. No credit card. See the difference voice-matched AI makes."}
             </p>
             <Link
               href="/signup"

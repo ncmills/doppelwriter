@@ -529,7 +529,7 @@ function AllAuthorsPage() {
           </h2>
           <p className="text-[var(--color-fg-muted)] mb-8 max-w-xl mx-auto">
             Pick a famous voice to learn from, or upload your own writing and let
-            DoppelWriter clone your personal style. 5 free uses per month.
+            DoppelWriter clone your personal style. 20 free uses per month.
           </p>
           <Link
             href="/signup"

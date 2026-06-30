@@ -32,7 +32,7 @@ const faqs = [
   },
   {
     q: "How much does it cost?",
-    a: "The free plan gives you 5 uses per month, forever. No credit card required, no trial period, no bait-and-switch. If you need more, Pro is $19/month for 200 uses, unlimited voice profiles, and custom writer builds. Most people start free and upgrade when they realize how much time it saves.",
+    a: "The free plan gives you 20 uses per month, forever. No credit card required, no trial period, no bait-and-switch. If you need more, Pro is $19/month for 200 uses, unlimited voice profiles, and custom writer builds. Most people start free and upgrade when they realize how much time it saves.",
   },
   {
     q: "Is my writing data safe?",
@@ -192,7 +192,7 @@ export default function HowItWorksPage() {
         <h2 className="font-[family-name:var(--font-display)] text-3xl font-bold mb-4">
           Ready to hear your own voice?
         </h2>
-        <p className="text-[var(--color-fg-muted)] mb-8">Try it free — 5 uses, no credit card.</p>
+        <p className="text-[var(--color-fg-muted)] mb-8">Try it free — 20 uses, no credit card.</p>
         <Link
           href="/signup"
           className="inline-block px-8 py-3 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] font-medium text-lg transition-colors"

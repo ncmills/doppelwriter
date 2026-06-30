@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "DoppelWriter pricing — start free with 5 edits/month. Upgrade to Pro for $19/mo with 200 edits, unlimited voices, and email ingestion.",
+    "DoppelWriter pricing — start free with 20 edits/month. Upgrade to Pro for $19/mo with 200 edits, unlimited voices, and email ingestion.",
   alternates: {
     canonical: "https://doppelwriter.com/pricing",
   },

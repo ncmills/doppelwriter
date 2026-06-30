@@ -52,7 +52,7 @@ export const SEQUENCES: SequenceEmail[] = [
     html: (name, email) => wrap(`
       <h1 style="font-size: 22px; color: #1a1a1a;">You're almost out</h1>
       <p style="color: #444; line-height: 1.6;">
-        ${name ? `${name}, y` : "Y"}ou've used 3 of your 5 free monthly uses. Upgrade to Pro for 200/month and never get blocked.
+        ${name ? `${name}, y` : "Y"}ou've used 18 of your 20 free monthly uses. Upgrade to Pro for 200/month and never get blocked.
       </p>
       <a href="${BASE_URL}/pricing" style="display: inline-block; background: #d97706; color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 20px 0;">
         See Pro Plans

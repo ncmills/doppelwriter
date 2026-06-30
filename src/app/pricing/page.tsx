@@ -152,7 +152,7 @@ export default function PricingPage() {
             <h2 className="text-xl font-semibold mb-2 font-[family-name:var(--font-display)]">Free</h2>
             <p className="text-4xl font-bold mb-6">$0<span className="text-base font-normal text-[var(--color-fg-muted)]">/mo</span></p>
             <ul className="space-y-3 text-sm text-[var(--color-fg-muted)] mb-8">
-              <li className="flex gap-2"><span className="text-[var(--color-fg)]">&#10003;</span> 5 edits or generations per month</li>
+              <li className="flex gap-2"><span className="text-[var(--color-fg)]">&#10003;</span> 20 edits or generations per month</li>
               <li className="flex gap-2"><span className="text-[var(--color-fg)]">&#10003;</span> 1 personal voice profile</li>
               <li className="flex gap-2"><span className="text-[var(--color-fg)]">&#10003;</span> 3 curated writer profiles</li>
               <li className="flex gap-2"><span className="text-[var(--color-fg)]">&#10003;</span> Upload docs, paste text</li>

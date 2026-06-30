@@ -18,7 +18,7 @@ export function getStripe(): Stripe {
 export const PLANS = {
   free: {
     name: "Free",
-    monthlyLimit: 5, // hard cap
+    monthlyLimit: 20, // hard cap
     personalProfiles: 1,
     allWriters: false,
     customWriterBuilds: false,

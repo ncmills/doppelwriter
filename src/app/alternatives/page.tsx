@@ -153,7 +153,7 @@ export default function AlternativesIndexPage() {
             Try DoppelWriter free
           </h2>
           <p className="text-[var(--color-fg-muted)] mb-8">
-            5 uses per month. No credit card. See how your writing sounds when AI actually
+            20 uses per month. No credit card. See how your writing sounds when AI actually
             matches your voice.
           </p>
           <Link

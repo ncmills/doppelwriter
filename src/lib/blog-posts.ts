@@ -1305,7 +1305,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p><strong>Step 3: Pick a task and draft.</strong> Choose something you actually need to write — an email, a blog post, a speech, whatever. Give DoppelWriter the brief and let it generate a draft in your voice. Then edit it. The first draft won't be perfect, but it'll sound like you, which is the hard part. Editing for accuracy is easy. Editing for voice is almost impossible.</p>
 
-<p>The free plan gives you 5 uses per month, which is enough to see whether voice cloning actually works for you. Most people know within the first generation.</p>
+<p>The free plan gives you 20 uses per month, which is enough to see whether voice cloning actually works for you. Most people know within the first generation.</p>
 
 <p><strong><a href="/signup">Try it free</a></strong> — or start with a <strong><a href="/analyze">free voice analysis</a></strong> to see what your writing actually sounds like. It takes 30 seconds and you might learn something about yourself you never knew.</p>
 `,
@@ -1447,7 +1447,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p>If you've never used an AI writing tool before, here's the simplest path to something that actually works:</p>
 
-<p><strong>Step 1: <a href="/signup">Create a free account</a>.</strong> No credit card. Takes 30 seconds. The free plan gives you 5 uses per month, which is enough to see if it works for you.</p>
+<p><strong>Step 1: <a href="/signup">Create a free account</a>.</strong> No credit card. Takes 30 seconds. The free plan gives you 20 uses per month, which is enough to see if it works for you.</p>
 
 <p><strong>Step 2: Upload writing samples.</strong> Grab 3-5 emails you've sent, social media posts, or anything you've written naturally. Don't use polished, edited work — use the stuff that's most authentically you. Emails are usually best because you weren't trying to impress anyone.</p>
 
@@ -1471,7 +1471,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <p>With other tools, read the terms of service carefully. Many AI tools do use your input to improve their models, which means your writing becomes part of the training data. If that matters to you, check before you upload.</p>
 
-<p><strong><a href="/signup">Start free with DoppelWriter</a></strong> — 5 uses per month, no credit card, no commitment. Or try the <strong><a href="/tools/email-tone-checker">free email tone checker</a></strong> to see AI writing analysis in action before you create an account.</p>
+<p><strong><a href="/signup">Start free with DoppelWriter</a></strong> — 20 uses per month, no credit card, no commitment. Or try the <strong><a href="/tools/email-tone-checker">free email tone checker</a></strong> to see AI writing analysis in action before you create an account.</p>
 `,
   },
   {
