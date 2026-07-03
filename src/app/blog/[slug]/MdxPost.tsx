@@ -32,6 +32,19 @@ export default async function MdxPost({ slug }: { slug: string }) {
           mainEntityOfPage: url,
         }}
       />
+      {post.faqs && post.faqs.length > 0 && (
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: post.faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          }}
+        />
+      )}
       <article className="mx-auto max-w-2xl px-4 py-12">
         <Link href="/blog" className="text-sm text-[var(--color-fg-muted)] no-underline hover:text-[var(--color-fg)]">
           ← All posts

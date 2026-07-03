@@ -28,6 +28,8 @@ export interface PostFrontmatter {
   related?: string[];
   /** Reading time override; otherwise estimated from body length (words/220). */
   readingMinutes?: number;
+  /** Optional FAQ pairs from frontmatter; when present, the post emits FAQPage JSON-LD. */
+  faqs?: { q: string; a: string }[];
   draft?: boolean;
 }
 

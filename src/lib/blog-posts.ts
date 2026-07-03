@@ -8,6 +8,8 @@ export interface BlogPost {
   tags: string[];
   readingTime: string;
   content: string;
+  /** Optional FAQ pairs; when present, the post emits FAQPage JSON-LD. */
+  faqs?: { q: string; a: string }[];
 }
 
 export const BLOG_POSTS: BlogPost[] = [

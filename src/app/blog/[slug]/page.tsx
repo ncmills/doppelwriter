@@ -291,6 +291,22 @@ export default async function BlogPostPage({
           ],
         }}
       />
+      {post.faqs && post.faqs.length > 0 && (
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: post.faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: f.a,
+              },
+            })),
+          }}
+        />
+      )}
 
       <nav className="border-b border-[var(--color-border)] sticky top-0 bg-[var(--color-surface)]/90 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-6 flex items-center h-14 justify-between">
