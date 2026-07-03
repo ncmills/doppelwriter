@@ -15,6 +15,13 @@ export interface BlogPost {
 export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "ai-cover-letter-generator",
+    faqs: [
+      { q: "Can hiring managers tell if a cover letter was written by AI?", a: "Yes — hiring managers can spot AI cover letters in seconds, not because AI writes badly but because every applicant is using the same AI to write the same cover letter, so they all share an identical cadence and vocabulary." },
+      { q: "Why do generic AI cover letters get rejected?", a: "They get rejected because they all sound the same: the same rhythm, the same red-flag buzzwords like 'leverage' and 'proven track record', and no personality that tells the hiring manager who you are." },
+      { q: "How long should a cover letter be?", a: "Three to four paragraphs, maximum. Nobody reads long cover letters, and the person reviewing yours has 50 more to get through today." },
+      { q: "How do you make an AI cover letter sound like you?", a: "Instead of asking AI to 'write a professional cover letter', give it samples of your actual writing first so it builds a voice profile and generates a letter that sounds like your best writing day rather than everyone else's AI prompt." },
+      { q: "What makes a cover letter stand out?", a: "One specific detail that proves you actually researched the company, plus an actual point of view — these do more than three paragraphs of generic enthusiasm." },
+    ],
     title: "AI Cover Letter Generator That Doesn't Sound Like Every Other Applicant",
     description: "Why most AI-generated cover letters get instantly rejected, and how to use AI that actually preserves your voice. Stop sounding like ChatGPT applying for a job.",
     publishedAt: "2026-03-20T10:00:00Z",
@@ -89,6 +96,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "how-to-write-eulogy-for-mom",
+    faqs: [
+      { q: "How do you start a eulogy for your mom?", a: "Start with a specific memory — a scene you can picture when you close your eyes — instead of 'My mother was...'. A concrete moment gives the audience your mother in three sentences." },
+      { q: "What should a eulogy for a mother include?", a: "A structure that works is: open with a specific memory, share two or three stories that capture different sides of her, include a phrase she always said, and end with what she taught you or passed down." },
+      { q: "Do you have to be a good writer to write a eulogy?", a: "No — most people writing eulogies aren't writers. The best eulogies aren't polished or poetic; they're specific, and specific details matter more than a thousand paragraphs of generic praise." },
+      { q: "What should you avoid in a eulogy?", a: "Avoid trying to summarize her entire life (that's an obituary), forcing jokes if humor wasn't her thing, and using generic phrases you don't back up with a concrete example." },
+      { q: "Can AI help write a eulogy?", a: "AI can help, but generic AI produces generic eulogies full of phrases like 'she touched so many lives'. What you need is AI that captures your voice, so the eulogy sounds like something you'd actually say about your mom." },
+    ],
     title: "How to Write a Eulogy for Your Mom (Without Falling Apart)",
     description: "A practical, compassionate guide to writing a eulogy for your mother. Includes structure tips, example themes, what to avoid, and how AI can help you find the right words when grief makes writing impossible.",
     publishedAt: "2026-03-20T09:00:00Z",
@@ -184,6 +198,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "best-ai-writing-tools-2026",
+    faqs: [
+      { q: "What is the best AI writing tool for matching your own voice?", a: "DoppelWriter is the only tool on this list built specifically around voice cloning — it learns your style from samples and improves over time, where the others rely on tone presets or brand-voice settings." },
+      { q: "Why does most AI writing sound generic?", a: "Most AI writing tools are optimized for fluency — grammatically correct text that reads like a competent stranger wrote it — because large language models are trained on the blended average of billions of documents." },
+      { q: "What should you look for in an AI writing tool?", a: "Voice matching (can it learn how you specifically write), whether it edits existing text or only generates from scratch, whether it learns from your feedback, and baseline content quality." },
+      { q: "Is ChatGPT good for voice matching?", a: "ChatGPT is a versatile Swiss Army knife but limited for voice — you can nudge it with custom instructions, but it resets each session and writes everything in the same helpful, slightly formal, relentlessly structured register." },
+      { q: "Which AI writing tool should you use?", a: "It depends on what you're optimizing for: ChatGPT for flexibility, Jasper for marketing at scale, Copy.ai for quick social content, Grammarly for error-free writing, and DoppelWriter for sounding like yourself." },
+    ],
     title: "Best AI Writing Tools That Sound Like You: 5 Tested for Voice (2026)",
     description: "5 AI writing tools tested for voice matching — ChatGPT, Jasper, Copy.ai, Grammarly, DoppelWriter. Which ones keep your style intact and which flatten it.",
     publishedAt: "2026-03-18T09:00:00Z",
@@ -341,6 +362,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "why-ai-writing-sounds-robotic",
+    faqs: [
+      { q: "Why does AI writing sound robotic?", a: "AI sounds robotic because models are trained on the average of the entire internet and then tuned through RLHF to be polite and helpful, which sands down every edge into a fluent but personality-free 'default AI voice'." },
+      { q: "What are the telltale signs of AI writing?", a: "Five reliable giveaways: overused words like 'delve' and 'crucial', perfectly uniform paragraph structure, no sentence-length variation, synonym cycling to avoid repetition, and a complete absence of personality." },
+      { q: "How do you make AI writing sound less robotic?", a: "You have three options: write more specific prompts about voice, manually edit the output to add fragments and personality, or use a voice-matching tool that learns your style from samples." },
+      { q: "Does better prompting fix robotic AI writing?", a: "Better prompting helps and beats a default prompt, but it still produces a generic 'casual smart person' voice rather than yours, because you're describing your voice instead of showing it in samples." },
+      { q: "Why does AI overuse certain words?", a: "AI models overuse words like 'delve' at rates that are statistically impossible for humans, because those words appeared constantly in the training data; seeing three or more in one piece is a strong AI signal." },
+    ],
     title: "Why AI Writing Sounds Robotic (And How to Fix It)",
     description: "AI writing often sounds stiff, generic, and robotic. Learn why it happens, how to spot it, and three methods to make AI-generated text sound like a real human.",
     publishedAt: "2026-03-12T09:00:00Z",
@@ -460,6 +488,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "how-to-write-a-wedding-speech",
+    faqs: [
+      { q: "What is the best structure for a wedding speech?", a: "Three stories and a toast: who they are, who they are together, a wildcard story, then a two-or-three-sentence toast. The whole thing should take 3 to 5 minutes." },
+      { q: "How long should a wedding speech be?", a: "Three to five minutes. If it's over five minutes, cut the weakest story — you have about 3 minutes of great material and the rest just feels long." },
+      { q: "How do you pick which stories to tell in a wedding speech?", a: "Use the text message test: if you'd tell the story over text to a mutual friend, it works for a wedding speech, because those stories are naturally interesting, funny, and revealing." },
+      { q: "How do you make a wedding speech sound like you?", a: "Read your speech out loud, and if you'd never say a sentence in real life, cut it. Write the way you talk, then edit for clarity — that one rule eliminates most bad wedding-speech writing." },
+      { q: "What are the biggest wedding speech mistakes?", a: "Going too long, packing in too many inside jokes, roasting too hard, mentioning exes, and getting drunk before your speech." },
+    ],
     title: "How to Write a Wedding Speech That Actually Sounds Like You",
     description: "Skip the generic wedding speech templates. Learn a simple structure for writing a best man speech, maid of honor speech, or any wedding toast that sounds like you — not a greeting card.",
     publishedAt: "2026-03-20T09:00:00Z",
@@ -588,6 +623,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "chatgpt-vs-doppelwriter",
+    faqs: [
+      { q: "How do you make ChatGPT sound like you?", a: "There are four methods, ranked from manual to automated: a detailed style-guide prompt, an example-first prompt with your writing samples, a Custom GPT with uploaded samples, or a dedicated voice-matching tool built for the job." },
+      { q: "Why does ChatGPT sound the same for everyone?", a: "ChatGPT is trained on the entire internet and fine-tuned to be helpful and harmless, which produces a voice that's the statistical average of all writing everywhere — nobody's voice and everybody's voice at once." },
+      { q: "Does adding writing samples to a ChatGPT prompt work?", a: "It helps meaningfully — ChatGPT can extract some real patterns like sentence length and vocabulary — but it doesn't build a persistent model and degrades over longer outputs, drifting back toward its default voice." },
+      { q: "Can a Custom GPT match your writing voice?", a: "A Custom GPT with 5-10 uploaded writing samples is the best you can do inside ChatGPT, but it uses retrieval rather than building a statistical voice model, and it doesn't learn from your edits." },
+      { q: "When should you use ChatGPT versus a voice-matching tool?", a: "Use ChatGPT for general tasks like Q&A, research, code, and brainstorming where voice doesn't matter; use a voice-matching tool for anything that carries your name, like client emails, blog posts, and social content." },
+    ],
     title: "How to Make ChatGPT Sound Like You (Or Use a Tool That Does It Automatically)",
     description: "Four methods to make ChatGPT output match your writing voice — from prompt engineering to custom GPTs to tools built specifically for voice matching. Honest comparison included.",
     publishedAt: "2026-03-20T09:00:00Z",
@@ -769,6 +811,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "famous-writers-style-analysis",
+    faqs: [
+      { q: "What makes a writer's style recognizable?", a: "Measurable patterns — sentence length and its distribution, pronoun usage, paragraph length, vocabulary, and punctuation — combine into a fingerprint as distinctive as handwriting." },
+      { q: "What is the most revealing metric of a writer's style?", a: "Sentence length — specifically the distribution, not just the average. How often a writer uses very short sentences versus letting one sprawl past 40 words is as distinctive as a fingerprint." },
+      { q: "Does using simple vocabulary make writing weak?", a: "No — Hemingway, Carver, and Paul Graham all use deliberately simple vocabulary. Complexity comes from what you say, not the words you use to say it." },
+      { q: "Is repetition bad writing?", a: "No — the best writers repeat words and structures on purpose to create rhythm and emphasis. It's synonym cycling — calling something 'the product', then 'the offering', then 'the solution' — that reads as poor style." },
+      { q: "How can you analyze your own writing style?", a: "A free style analysis takes a sample of at least 1,000 words and generates a voice profile: sentence-length distribution, vocabulary fingerprint, punctuation patterns, paragraph rhythm, and pronoun usage." },
+    ],
     title: "We Analyzed 50 Famous Writers' Styles With AI — Here's What Makes Each One Unique",
     description: "We ran 50 famous writers through our AI style analysis engine and found surprising data on what makes Hemingway, Faulkner, Toni Morrison, Paul Graham, and others instantly recognizable.",
     publishedAt: "2026-03-20T09:00:00Z",
@@ -952,6 +1001,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "personal-statement-ai-writer",
+    faqs: [
+      { q: "What do admissions committees look for in a personal statement?", a: "Specificity over generality, honest self-awareness, clear thinking, and a real voice — readers are skimming hundreds of statements looking for a reason to move yours to the 'yes' pile." },
+      { q: "How do you make a personal statement stand out?", a: "Open with a specific moment instead of a mission statement, write the way you'd explain it to a friend, stick to one clear theme, and cut the weak final paragraph." },
+      { q: "Why do so many personal statements sound the same?", a: "Because a huge share are now AI-generated with the same vocabulary and cadence, and even before AI everyone followed the same admissions-consultant template: vivid anecdote, the lesson learned, why this program, forward-looking close." },
+      { q: "Should you use AI to write a personal statement?", a: "You can — AI helps with structure, pacing, and getting past the blank page — but use AI that learns your voice first, since admissions readers are specifically looking for authenticity." },
+      { q: "How long should a personal statement be?", a: "Most run 500 to 1,000 words, so every word counts: the word count is low and the stakes are high." },
+    ],
     title: "How to Write a Personal Statement That Actually Sounds Like You",
     description: "Most personal statements sound identical because everyone uses the same AI and the same advice. Here's how to write one that admissions committees actually remember — whether it's for law school, med school, or an MBA.",
     publishedAt: "2026-03-20T10:00:00Z",
@@ -1044,6 +1100,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "best-man-speech-guide",
+    faqs: [
+      { q: "How long should a best man speech be?", a: "Three to five minutes — roughly 400 to 650 words. Nobody ever thinks their speech is too long, but it always is, and respecting the clock is the single biggest differentiator." },
+      { q: "What is the structure of a good best man speech?", a: "A funny story about the groom (60-90 seconds), a sincere moment (60-90 seconds), and a short toast (about 30 seconds)." },
+      { q: "How do you make a best man speech funny?", a: "Use the formula of specific detail plus unexpected turn plus affection. The humor comes from real, specific stories about the groom — not jokes from a joke book or observational bits about marriage." },
+      { q: "What should you not do in a best man speech?", a: "Don't mention exes, don't roast the bride, don't do bits like slideshows or songs, and don't get drunk before your speech." },
+      { q: "Do you have to be funny to give a good best man speech?", a: "No — the bar is on the floor. If you tell one real story, say one sincere thing, and keep it under five minutes, you're already in the top 10%." },
+    ],
     title: "Best Man Speech Guide: How to Be Funny Without Being Embarrassing",
     description: "A practical guide to writing a best man speech that's actually funny, appropriately personal, and mercifully short. Includes structure, timing, what not to do, and how to use AI without sounding like a robot.",
     publishedAt: "2026-03-20T10:00:00Z",
@@ -1150,6 +1213,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "linkedin-post-tips",
+    faqs: [
+      { q: "Why are most LinkedIn posts bad?", a: "Because they follow the same engagement-bait formula — provocative hook, line breaks for artificial suspense, a pivot to an obvious lesson, and 'agree?' at the end — turning the feed into manufactured vulnerability and fake humility." },
+      { q: "What makes a LinkedIn post actually work?", a: "Three traits: a specific point someone could actually disagree with, writing that sounds like a person wrote it, and not trying too hard or performing." },
+      { q: "How long should a LinkedIn post be?", a: "The best ones are 100 to 200 words — closer to a solid email than a blog post. If you're over 300 words, you're probably making two points and should split it into two posts." },
+      { q: "How do you make a LinkedIn post sound like a real person?", a: "Read it out loud — if it sounds like a press release, rewrite it; if it sounds like something you'd say to a colleague over coffee, publish it. Use contractions, sentence fragments, and opinions stated as opinions." },
+      { q: "Should you end a LinkedIn post with a call to action?", a: "Not with 'What do you think?' or 'Drop a comment if you agree' — it's transparent engagement farming and everyone knows it. Just make your point and stop; if the post is interesting, people will engage." },
+    ],
     title: "LinkedIn Posts That Don't Make People Cringe",
     description: "Most LinkedIn posts are performative, formulaic, and immediately forgettable. Here's how to write posts that actually connect — by sounding like yourself instead of a thought leader.",
     publishedAt: "2026-03-20T10:00:00Z",
@@ -1240,6 +1310,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "how-to-make-ai-write-like-you",
+    faqs: [
+      { q: "How do you make AI write like you?", a: "Instead of describing your voice in a prompt, use a voice-cloning tool that analyzes your writing samples and builds a voice profile across 30+ dimensions, then generates content in your voice." },
+      { q: "What does 'writing in your voice' actually mean?", a: "It's not just your tone — it's dozens of small patterns: your sentence rhythm, the words you actually reach for, what you never say, how you structure an argument, and your punctuation and formatting habits." },
+      { q: "Why doesn't prompt engineering capture your voice?", a: "Because you can't describe your own writing style in a prompt — you have conscious access to maybe 5% of what makes it yours. Prompt engineering gives only surface-level control, like a sketch of a sketch." },
+      { q: "How do you get started making AI write in your voice?", a: "Three steps: gather 3-5 samples of your natural writing (emails work well because they're unselfconscious), upload and analyze them, then pick a real task and generate a draft in your voice." },
+      { q: "What kind of writing samples work best for voice cloning?", a: "Natural, unselfconscious writing like emails and Slack messages — anything where you were writing as yourself rather than performing or writing in someone else's voice." },
+    ],
     title: "How to Make AI Write Like You (Not Like a Robot)",
     description: "Tired of AI writing that sounds generic? Learn why 'write in a casual tone' doesn't work — and how voice cloning tools like DoppelWriter capture your real writing style.",
     publishedAt: "2026-03-20T08:00:00Z",
@@ -1314,6 +1391,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "can-ai-write-for-me",
+    faqs: [
+      { q: "Can AI write my essay, speech, or email?", a: "Yes — AI can write any of them. The catch is it won't sound like you: it produces something grammatically correct, reasonably structured, and completely generic." },
+      { q: "What is AI good and bad at when writing?", a: "AI is great at structure, first drafts, expanding ideas, and editing for clarity; it's bad at authenticity without your samples, emotional nuance, knowing what to leave out, and original insight." },
+      { q: "When does it matter that AI writing sounds like you?", a: "For anything where your voice matters — a wedding speech, a college essay, a cover letter, or a high-stakes email — generic AI output is worse than useless because it sounds fake." },
+      { q: "What's the difference between ChatGPT, Jasper, and voice-cloning tools?", a: "ChatGPT and Claude are general-purpose chatbots with a generic voice; Jasper and Copy.ai are built for marketing copy; voice-cloning tools analyze your actual writing to generate in your specific voice." },
+      { q: "What should you use voice-matched AI for?", a: "Anything where it matters who wrote it — wedding speeches, cover letters, important emails, essays and blog posts, and eulogies." },
+    ],
     title: "Can AI Write My Essay / Speech / Email? Here's What Actually Works",
     description: "Yes, AI can write your essay, speech, or email — but there's a catch. Here's the spectrum from generic ChatGPT to voice-matched AI, and what actually produces good results.",
     publishedAt: "2026-03-20T07:00:00Z",
@@ -1392,6 +1476,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "ai-writing-tools-for-beginners",
+    faqs: [
+      { q: "What do AI writing tools actually do?", a: "They're sophisticated pattern machines that predict what words should come next based on the billions of words they've read — they aren't sentient, don't understand your ideas, and don't have opinions." },
+      { q: "What are the main types of AI writing tools?", a: "Three types: chatbots like ChatGPT and Claude (versatile but generic voice), content generators like Jasper and Copy.ai (marketing-focused), and voice cloners like DoppelWriter (match your personal style)." },
+      { q: "How do you choose an AI writing tool?", a: "Ask whether it needs to sound like you. If no, ChatGPT or Jasper are fast, cheap, and good enough; if yes, you need a voice-cloning tool, because prompt engineering and templates won't get you there." },
+      { q: "Is using an AI writing tool cheating?", a: "It depends on context — using AI for a school exam is cheating, but using it to draft a work email or help write a wedding speech is writing with assistance, which humans have always done." },
+      { q: "Can people tell if AI wrote something?", a: "With generic AI tools, yes — people can tell. With voice-matched AI it's much harder to detect, because the output matches your actual writing patterns and reduces the statistical signatures detectors look for." },
+    ],
     title: "AI Writing Tools for Beginners: What They Are and How to Use Them",
     description: "New to AI writing tools? Here's a no-jargon guide to what they actually do, the different types, and how to pick one that sounds like you — not like a robot.",
     publishedAt: "2026-03-20T06:00:00Z",
@@ -1478,6 +1569,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "how-to-write-wedding-speech-not-a-writer",
+    faqs: [
+      { q: "Do you need to be a good writer to give a wedding speech?", a: "No — the best speeches aren't well-written, they're well-felt. The job is to be someone who knows and loves the couple and is willing to say so out loud." },
+      { q: "What's the simplest wedding speech structure?", a: "One story (a specific memory that shows who they are), one feeling (what you honestly feel about them getting married), and one toast (a specific wish, with your glass raised)." },
+      { q: "What should you avoid in a wedding speech?", a: "Don't google templates, don't try to be funny if you're not funny, don't make it about you, don't go over four minutes, and don't mention exes or inside jokes nobody else will understand." },
+      { q: "How can you write a wedding speech fast?", a: "Use the 10-minute method: record yourself talking about the couple for three minutes, upload it plus a few writing samples, then have AI draft it in your voice and spend five minutes editing." },
+      { q: "Can AI help if you're not a writer?", a: "Yes — AI is good at organizing a messy brain dump into something that flows, but it's not good at sounding like you, which is why voice-matched AI matters most for something this personal." },
+    ],
     title: "How to Write a Wedding Speech When You're Not a Writer",
     description: "You don't need to be a good writer to give a great wedding speech. Here's a simple structure, what to avoid, and a 10-minute method using AI that keeps your real voice.",
     publishedAt: "2026-03-20T05:00:00Z",
@@ -1546,6 +1644,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "linkedin-post-that-doesnt-sound-like-linkedin",
+    faqs: [
+      { q: "Why does every LinkedIn post sound the same?", a: "Because everyone is using the same few AI tools trained on the same viral content, producing the identical 'hook, bullets, soft question' template until readers tune it out on sight." },
+      { q: "What are the tells that a LinkedIn post was AI-generated?", a: "Three tells: an opening line trying too hard to provoke curiosity, a bulleted list with exactly three or five parallel items, and a 'What did I miss?' or 'Thoughts?' soft close." },
+      { q: "What does a human-voice LinkedIn post look like?", a: "It has a real point of view, reads like you actually talk, doesn't resolve into a neat lesson, and mentions something specific — a company, a product, a number, or a person's name." },
+      { q: "Why do template LinkedIn posts no longer work?", a: "They performed in 2022-23 when the algorithm rewarded scannable, comment-baiting posts, but now everyone produces them, so the template signals 'this person is running a prompt' and human readers scroll past." },
+      { q: "How do you check if a LinkedIn post sounds human?", a: "Read the draft out loud — if it sounds like a real thing you'd say to a colleague at lunch, post it; if it sounds like a TED talk or a product pitch, rewrite it or don't post it at all." },
+    ],
     title: "How to Write a LinkedIn Post That Doesn't Sound Like LinkedIn",
     description: "Why every LinkedIn post now sounds the same, why that kills your reach, and how to write posts that feel like a real person wrote them.",
     publishedAt: "2026-04-10T10:00:00Z",
@@ -1620,6 +1725,13 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "ghostwriters-vs-ai-what-youre-paying-for",
+    faqs: [
+      { q: "What are you actually paying for with a ghostwriter?", a: "Mostly judgment, not typing — the writing itself is maybe 30% of the value; the other 70% is deciding what to say, preserving your voice over time, and operational reliability." },
+      { q: "What does generic AI deliver compared to a ghostwriter?", a: "Generic AI delivers one thing: fluent, syntactically correct text on almost any topic, instantly. Its three blind spots are that it doesn't know you, it has no opinions and hedges, and it has no memory across pieces." },
+      { q: "What is the real gap between AI and ghostwriters?", a: "Voice capture. AI's fluency already exceeds most ghostwriters' raw output; the limitation is that the model doesn't know what you sound like, so it defaults to its training-average voice." },
+      { q: "Should you hire a ghostwriter or use AI?", a: "Hire a ghostwriter if you need content run as a function with strategy and reliability; use generic AI for high-volume content where voice doesn't matter; use voice-matched AI to sound like you without a full-time strategist." },
+      { q: "Why are some people replacing ghostwriters with AI?", a: "The ones who are tend to be paying $10k a month for work that was mailed in, founders who were never going to scale content via ghostwriting anyway, or people who hated writing and needed words produced rather than strategy." },
+    ],
     title: "Ghostwriters vs AI: What You're Actually Paying For",
     description: "A real breakdown of what ghostwriters deliver for $2-10k/month, what generic AI delivers for $20, and where the gap actually is.",
     publishedAt: "2026-04-10T10:30:00Z",
