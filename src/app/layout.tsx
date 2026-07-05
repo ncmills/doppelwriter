@@ -30,11 +30,11 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://doppelwriter.com"),
   title: {
-    default: "DoppelWriter — AI Writing That Sounds Like You",
+    default: "DoppelWriter — Write in Anyone's Voice",
     template: "%s | DoppelWriter",
   },
   description:
-    "AI-powered writing tool that clones your voice or lets you write like Paul Graham, Hemingway, or any author. Edit drafts and generate content in any style.",
+    "The AI that sounds like you — or Hemingway, or Didion, or your mom. No account needed. Try the live voice demo free, 3 runs per hour.",
   keywords: [
     "AI writing tool",
     "write in my voice",
@@ -48,13 +48,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://doppelwriter.com",
     siteName: "DoppelWriter",
-    title: "DoppelWriter — AI Writing That Sounds Like You",
-    description: "Clone your writing voice or write like any famous author.",
+    title: "DoppelWriter — Write in Anyone's Voice",
+    description: "Clone your voice or write like Hemingway, Didion, or anyone. Live demo — no account needed.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "DoppelWriter — AI Writing That Sounds Like You",
-    description: "Clone your writing voice or write like any famous author.",
+    title: "DoppelWriter — Write in Anyone's Voice",
+    description: "Clone your voice or write like Hemingway, Didion, or anyone. Live demo — no account needed.",
   },
   robots: { index: true, follow: true },
   alternates: {
