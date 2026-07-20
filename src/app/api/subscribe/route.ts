@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@/lib/db";
 import { sendOrThrow } from "@/lib/email";
+import { isReservedTestEmail } from "@/lib/signup-protection";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -17,6 +18,12 @@ export async function POST(req: NextRequest) {
     }
 
     const cleanEmail = email.toLowerCase().trim();
+
+    // Keep RFC-2606/6761 reserved test domains and disposables out of the
+    // marketing lead-capture table. Report success so probes learn nothing.
+    if (isReservedTestEmail(cleanEmail)) {
+      return NextResponse.json({ success: true, isNew: false });
+    }
 
     const db = sql();
     const result = await db`

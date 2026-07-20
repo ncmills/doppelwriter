@@ -9,6 +9,40 @@ const DISPOSABLE_DOMAINS = new Set([
 
 const GMAIL_DOMAINS = new Set(["gmail.com", "googlemail.com"]);
 
+// RFC 2606 / RFC 6761 reserved second-level domains — never route to a real inbox.
+const RESERVED_SLDS = new Set([
+  "example.com", "example.net", "example.org", "example.edu",
+]);
+
+// RFC 2606 / RFC 6761 reserved top-level domains.
+const RESERVED_TLDS = new Set([
+  "test", "example", "invalid", "localhost", "local",
+]);
+
+/**
+ * True when an email uses a reserved test/documentation domain (RFC 2606 / 6761)
+ * or a known disposable domain. Use to keep placeholder addresses like
+ * `you@example.com` and throwaways out of MARKETING lead-capture tables.
+ * Do NOT use to block real auth signups.
+ */
+export function isReservedTestEmail(email: string): boolean {
+  if (typeof email !== "string") return true;
+  const normalized = email.trim().toLowerCase();
+  const atIdx = normalized.lastIndexOf("@");
+  if (atIdx < 1) return true;
+
+  const domain = normalized.slice(atIdx + 1);
+  if (!domain) return true;
+
+  if (RESERVED_SLDS.has(domain)) return true;
+  if (DISPOSABLE_DOMAINS.has(domain)) return true;
+
+  const tld = domain.slice(domain.lastIndexOf(".") + 1);
+  if (RESERVED_TLDS.has(tld)) return true;
+
+  return false;
+}
+
 export function isSuspiciousEmail(email: string): boolean {
   const normalized = email.trim().toLowerCase();
   const atIdx = normalized.lastIndexOf("@");
