@@ -477,6 +477,15 @@ input:focus, textarea:focus, select:focus, [contenteditable]:focus {
     animation-delay: calc(var(--reveal-delay, 0ms) + 200ms);
   }
 }
+/* No-JS / print fallback: the reveal above depends on JS (IntersectionObserver)
+   adding .is-visible. When scripting is unavailable that class never lands, so
+   force the cross-site links visible instead of leaving them stuck at opacity:0. */
+@media (scripting: none) {
+  .cross-site-li,
+  .cross-site-note {
+    opacity: 1;
+  }
+}
 @keyframes crossSiteFade {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
