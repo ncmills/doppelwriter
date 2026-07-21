@@ -1,11 +1,50 @@
 import Link from "next/link";
 import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
+import { CURATED_WRITERS } from "@/lib/writer-data";
 import LandingDemo from "@/components/LandingDemo";
 import LandingNav from "@/components/LandingNav";
 import { Button } from "@/components/ui/Button";
 import WriterCarousel from "@/components/WriterCarouselGallery";
 import CrossSiteList from "@/components/CrossSiteList";
 import HomepageCinematic from "@/components/HomepageCinematic";
+
+// Live counts — the true numbers, never a rounded-up claim.
+const WRITER_COUNT = CURATED_WRITERS.length;
+const TEMPLATE_COUNT = USE_CASES.length;
+
+// One scannable map of everything DoppelWriter offers.
+const offerings: { title: string; body: string; href: string; cta: string }[] = [
+  {
+    title: "The Editor",
+    body: "Paste a rough draft or start from a brief — refined and streamed in any voice, with word-level tracked changes.",
+    href: "/write",
+    cta: "Open editor",
+  },
+  {
+    title: "Voice Analyzer",
+    body: "Free, no signup. Paste anything you've written and see your rhythm, vocabulary, signature words, and closest-matched writers.",
+    href: "/analyze",
+    cta: "Analyze free",
+  },
+  {
+    title: `${WRITER_COUNT} Writer Profiles`,
+    body: "Prebuilt forensic style profiles — Hemingway to Buffett. Or name anyone and we build one from their published work.",
+    href: "/write-like/authors",
+    cta: "Browse writers",
+  },
+  {
+    title: `${TEMPLATE_COUNT} Templates`,
+    body: "Wedding speech, cover letter, newsletter, LinkedIn post — every writing task, in your voice.",
+    href: "/write",
+    cta: "See templates",
+  },
+  {
+    title: "Free & Pro",
+    body: "Start free, no card required. Upgrade to Pro at $19/mo when you need more drafts and capacity.",
+    href: "/pricing",
+    cta: "See pricing",
+  },
+];
 
 const CATEGORY_SUBHEADS: Record<string, string> = {
   personal: "The ones that matter most.",
@@ -24,7 +63,7 @@ const features = [
   {
     eyebrow: "02 — Hire the greats",
     title: "Or borrow from the canon",
-    body: "Pick from 140+ prebuilt voice profiles: Hemingway, Didion, Graham, Morrison, Buffett. Or name anyone — we build a forensic style profile from their published work.",
+    body: `Pick from ${WRITER_COUNT} prebuilt voice profiles: Hemingway, Didion, Graham, Morrison, Buffett. Or name anyone — we build a forensic style profile from their published work.`,
   },
   {
     eyebrow: "03 — Draft & revise",
@@ -90,7 +129,7 @@ const footerCols: { title: string; links: { label: string; href: string }[] }[] 
       { label: "The Editor", href: "/write" },
       { label: "For Writers", href: "/for" },
       { label: "Pricing", href: "/pricing" },
-      { label: "Journal", href: "/blog" },
+      { label: "Guides", href: "/blog" },
       { label: "How it works", href: "/how-it-works" },
     ],
   },
@@ -184,6 +223,41 @@ export default function LandingPage() {
 
         <hr className="rule max-w-6xl mx-auto" />
 
+        {/* ━━━━━━━━━━ THE OFFERING — one scannable map of everything ━━━━━━━━━━ */}
+        <section className="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
+          <div className="mb-12 max-w-2xl">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-3">
+              The Masthead
+            </p>
+            <h2 className="font-[family-name:var(--font-display)] font-bold text-[40px] sm:text-[56px] leading-[1.03] tracking-[-0.02em] mb-4">
+              Everything on the desk.
+            </h2>
+            <p className="text-lg text-[var(--color-fg-muted)]">
+              Five tools, one voice — yours or anyone else&apos;s.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-10">
+            {offerings.map((o) => (
+              <div key={o.title} className="border-t border-[var(--color-fg)] pt-4">
+                <h3 className="font-[family-name:var(--font-display)] text-[22px] leading-tight mb-2">
+                  {o.title}
+                </h3>
+                <p className="text-[13px] text-[var(--color-fg-muted)] mb-5 leading-snug">
+                  {o.body}
+                </p>
+                <Link
+                  href={o.href}
+                  className="ed-link ed-link-accent text-[13px] uppercase tracking-[0.15em]"
+                >
+                  {o.cta} →
+                </Link>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="rule max-w-6xl mx-auto" />
+
         {/* ━━━━━━━━━━ VOICE ANALYZER — free on-ramp to a personal profile ━━━━━━━━━━ */}
         <section className="max-w-4xl mx-auto px-5 sm:px-8 py-16 sm:py-24 text-center">
           <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-4">
@@ -218,11 +292,11 @@ export default function LandingPage() {
               href="/write-like/authors"
               className="ed-link text-sm text-[var(--color-fg)]"
             >
-              Browse all 140+ →
+              Browse all {WRITER_COUNT} →
             </Link>
           </div>
           <p className="max-w-xl text-[var(--color-fg-muted)] mb-10 text-lg">
-            Prebuilt profiles for 140 iconic voices. Name anyone else — we&apos;ll
+            Prebuilt profiles for {WRITER_COUNT} iconic voices. Name anyone else — we&apos;ll
             build a forensic style profile from their published work.
           </p>
           <WriterCarousel />
@@ -277,43 +351,6 @@ export default function LandingPage() {
                 </div>
               );
             })}
-          </div>
-        </section>
-
-        <hr className="rule max-w-6xl mx-auto" />
-
-        {/* ━━━━━━━━━━ FIELD NOTES — testimonials as marginalia ━━━━━━━━━━ */}
-        <section className="max-w-6xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-10 text-center">
-            Field Notes — From 50+ Writers In Practice
-          </p>
-          <div className="grid md:grid-cols-3 gap-10">
-            {[
-              {
-                quote:
-                  "I used DoppelWriter for my wedding speech. People thought I hired a professional. It nailed my voice.",
-                attribution: "Sarah K. — marketing director",
-              },
-              {
-                quote:
-                  "I write a weekly newsletter. DoppelWriter cut my drafting time in half. The Hemingway voice is scary good.",
-                attribution: "James M. — founder",
-              },
-              {
-                quote:
-                  "Finally an AI tool that doesn't sound like an AI. I cloned my own voice. I use it for every client email now.",
-                attribution: "Priya R. — consultant",
-              },
-            ].map((t, i) => (
-              <figure key={i} className="border-l-2 border-[var(--color-brand)] pl-5">
-                <blockquote className="font-[family-name:var(--font-display)] text-[19px] leading-[1.5] text-[var(--color-fg)] mb-4">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-                <figcaption className="text-[12px] uppercase tracking-[0.18em] text-[var(--color-fg-muted)]">
-                  {t.attribution}
-                </figcaption>
-              </figure>
-            ))}
           </div>
         </section>
 
