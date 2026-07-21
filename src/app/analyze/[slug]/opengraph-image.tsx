@@ -17,6 +17,9 @@ interface AnalysisResult {
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
+  // Edge/dynamic route (runs per-request, never at build) — a transient fetch
+  // failure here fails only one OG image, not the build, so the network fetch
+  // is fine. The build-time prerendered OG routes use the bundled local font.
   const fontData = await fetch(
     "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj4PVksj.ttf"
   ).then((res) => res.arrayBuffer());

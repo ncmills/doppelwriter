@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { getOgFont } from "@/lib/og/font";
 import { USE_CASES } from "@/lib/use-cases";
 
 export const size = { width: 1200, height: 630 };
@@ -15,9 +16,7 @@ export default async function OGImage({ params }: { params: Promise<{ slug: stri
     return new ImageResponse(<div>Not found</div>, { ...size });
   }
 
-  const fontData = await fetch(
-    "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj4PVksj.ttf"
-  ).then((res) => res.arrayBuffer());
+  const fontData = await getOgFont();
 
   return new ImageResponse(
     (

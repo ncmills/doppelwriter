@@ -1,12 +1,11 @@
 import { ImageResponse } from "next/og";
+import { getOgFont } from "@/lib/og/font";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function OGImage() {
-  const fontData = await fetch(
-    "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj4PVksj.ttf"
-  ).then((res) => res.arrayBuffer());
+  const fontData = await getOgFont();
 
   return new ImageResponse(
     (

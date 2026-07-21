@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { getOgFont } from "@/lib/og/font";
 import { CURATED_WRITERS, CATEGORIES } from "@/lib/writer-data";
 
 export const size = { width: 1200, height: 630 };
@@ -113,9 +114,7 @@ function OGShell({ title, subtitle, fontData }: { title: string; subtitle: strin
 export default async function OGImage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  const fontData = await fetch(
-    "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj4PVksj.ttf"
-  ).then((res) => res.arrayBuffer());
+  const fontData = await getOgFont();
 
   const fontConfig = {
     fonts: [{ name: "Space Grotesk", data: fontData, weight: 700 as const, style: "normal" as const }],
