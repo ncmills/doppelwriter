@@ -295,9 +295,13 @@ export default function LandingPage() {
               Browse all {WRITER_COUNT} →
             </Link>
           </div>
-          <p className="max-w-xl text-[var(--color-fg-muted)] mb-10 text-lg">
+          <p className="max-w-xl text-[var(--color-fg-muted)] mb-4 text-lg">
             Prebuilt profiles for {WRITER_COUNT} iconic voices. Name anyone else — we&apos;ll
             build a forensic style profile from their published work.
+          </p>
+          <p className="max-w-xl text-[13px] leading-relaxed text-[var(--color-fg-muted)] mb-10 italic">
+            The lines on each card are illustrative samples of how DoppelWriter renders
+            that voice — written by AI, not real quotes.
           </p>
           <WriterCarousel />
         </section>

@@ -160,6 +160,9 @@ export default function WriterCarouselGallery() {
                     <span className="ed-display-link">{w.name}</span>
                   </h3>
                   <div className="w-10 h-[1px] bg-[var(--color-brand)] mb-4" />
+                  <p className="text-[9px] uppercase tracking-[0.22em] text-[var(--color-fg-muted)] mb-2">
+                    Illustrative sample · AI-written
+                  </p>
                   <p className="font-[family-name:var(--font-display)] text-[15px] leading-snug text-[var(--color-fg-muted)] mb-6 flex-1">
                     &ldquo;{w.pullQuote}&rdquo;
                   </p>

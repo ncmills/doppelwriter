@@ -103,7 +103,7 @@ function HomepageCinematic({ mode = "auto" }: Props) {
       aria-label="Three writers responding to the same brief"
     >
       <p className="cinematic-brief text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-6 text-center">
-        Same brief — three voices.{" "}
+        Same brief — three voices, each written by DoppelWriter.{" "}
         <span className="font-[family-name:var(--font-display)] tracking-normal text-[var(--color-fg-muted)]">
           &ldquo;{VOICE_SAMPLE_BRIEF}&rdquo;
         </span>
