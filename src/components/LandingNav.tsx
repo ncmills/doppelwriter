@@ -32,10 +32,22 @@ export default function LandingNav() {
             Analyzer
           </Link>
           <Link
-            href="/blog"
+            href="/write-like/authors"
+            className="hidden md:inline ed-link text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
+          >
+            Writers
+          </Link>
+          <Link
+            href="/pricing"
             className="hidden sm:inline ed-link text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
           >
-            Journal
+            Pricing
+          </Link>
+          <Link
+            href="/blog"
+            className="hidden md:inline ed-link text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
+          >
+            Guides
           </Link>
           {session?.user ? (
             <Button href="/write" size="sm" className="uppercase tracking-wide">
