@@ -166,7 +166,7 @@ export default function LandingPage() {
 
       <main id="main-content">
         {/* ━━━━━━━━━━ HERO ━━━━━━━━━━ */}
-        <section className="max-w-5xl mx-auto px-5 sm:px-8 pt-14 sm:pt-24 pb-10 sm:pb-16">
+        <section className="max-w-6xl mx-auto px-5 sm:px-8 pt-14 sm:pt-24 pb-10 sm:pb-16">
           <div className="text-center mb-10 sm:mb-14">
             <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-6">
               <span className="text-[var(--color-brand)]">●</span>{" "}

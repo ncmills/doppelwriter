@@ -31,7 +31,7 @@ const SPACE = [1, 2, 3, 4, 6, 8, 12, 16, 24, 32] as const;
 
 export default function StyleGuide() {
   return (
-    <main className="max-w-5xl mx-auto px-6 py-16 space-y-16">
+    <main className="max-w-6xl mx-auto px-6 py-16 space-y-16">
       {/* ── Header ── */}
       <header>
         <Eyebrow>DoppelWriter</Eyebrow>

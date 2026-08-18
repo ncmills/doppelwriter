@@ -139,7 +139,7 @@ function CategoryHubPage({ categoryId }: { categoryId: string }) {
         </div>
       </nav>
 
-      <main className="max-w-5xl mx-auto px-6 py-16">
+      <main className="max-w-6xl mx-auto px-6 py-16">
         <nav aria-label="Breadcrumb" className="text-sm text-[var(--color-fg-muted)] mb-6 flex items-center gap-1.5 flex-wrap">
           <Link href="/" className="hover:text-[var(--color-fg)] transition-colors">Home</Link>
           <span>/</span>
