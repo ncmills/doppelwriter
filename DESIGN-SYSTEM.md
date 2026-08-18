@@ -286,3 +286,36 @@ This is the enforced pattern throughout the codebase. Tailwind's `@theme inline`
 | **Browsable cards** | `claude.ai/design` | Design sync; browsable component cards for AI-assisted work |
 
 When token values or component APIs change, update `DESIGN-SYSTEM.md` first, then `src/app/globals.css`, then the component file. The `/style-guide` route reflects the live code automatically.
+
+
+## Logo & mark (2026-08-18)
+
+The mark is a **double-struck "D"**: one geometric letterform printed twice and
+out of register, the ember copy sitting behind and offset — a letterpress
+double-strike. Your voice, and its double.
+
+It replaced two tapered slabs. Those read as a media *pause* button at any size,
+and the first slab was ink on transparent with no dark variant, so on a dark
+browser tab it vanished and the mark became a single orange tally — losing the
+one idea it existed to carry.
+
+Repo-wide there were **five** different DoppelWriter marks before this pass: the
+two slabs (header), the two slabs again (favicon), a "DW" ligature
+(`public/logo/dw-mark.svg`), that ligature again inline in the OG masthead
+beside the words "Sand & Ember" — the palette's internal name, not the product's
+— and `public/og-image.png`, a pre-rebrand black-and-amber card with no mark at
+all, still serving every `/vs/*`, `/for/*` and `/write-like` page.
+
+**One geometry (`D_PATH`), five files. Change them in the same commit:**
+
+| Surface | File |
+|---|---|
+| Header / inline, `currentColor` + `LogoPlate` | `src/components/Logo.tsx` (source of truth) |
+| Browser tab (vector) | `src/app/icon.svg` |
+| Browser tab (raster) + iOS | `src/app/favicon.ico`, `src/app/apple-icon.png` |
+| Generated share card masthead | `src/app/opengraph-image.tsx` (`D_PATH`) |
+| Static share card + standalone assets | `public/og-image.png`, `public/logo/dw-mark.svg`, `public/logo/dw-wordmark.svg` |
+
+The plate variant is **ivory on ember**, never on ink: the accent plate makes the
+tab icon the same object on a light and a dark tab bar
+(`feedback_favicon_is_the_logo_mark_not_a_black_tile`).

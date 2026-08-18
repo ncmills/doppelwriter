@@ -4,6 +4,10 @@ import { getOgFont } from "@/lib/og/font";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Geometry shared with src/components/Logo.tsx and src/app/icon.svg.
+const D_PATH =
+  "M8 8 H16.2 A8.4 8.4 0 0 1 16.2 24.8 H8 Z M12.6 12.2 H15.8 A4.2 4.2 0 0 1 15.8 20.8 H12.6 Z";
+
 export default async function OGImage() {
   const fontData = await getOgFont();
 
@@ -37,19 +41,25 @@ export default async function OGImage() {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            <svg width="36" height="36" viewBox="0 0 64 64" fill="#1c1a17">
+            {/* The double-struck D on its ember plate — the same mark as
+                src/app/icon.svg and src/components/Logo.tsx. The masthead used
+                to carry a third, different "DW" ligature beside the words
+                "Sand & Ember", which is the internal name of the palette, not
+                the name of the product: the share card was signed with a label
+                no reader could resolve. */}
+            <svg width="36" height="36" viewBox="0 0 32 32">
+              <rect width="32" height="32" rx="7.5" fill="#c2410c" />
               <path
+                d={D_PATH}
+                fill="#1c1a17"
+                fillOpacity="0.55"
                 fillRule="evenodd"
-                d="M 4 12 L 18 12 C 28 12 30 20 30 32 C 30 44 28 52 18 52 L 4 52 Z M 10 16 L 17 16 C 22 16 24 22 24 32 C 24 42 22 48 17 48 L 10 48 Z"
+                transform="translate(4.6,-1.4)"
               />
-              <rect x="30" y="12" width="2" height="40" />
-              <path d="M 32 12 L 36 12 L 42 52 L 38 52 Z" />
-              <path d="M 39 52 L 41 52 L 48 12 L 46 12 Z" />
-              <path d="M 45 12 L 49 12 L 55 52 L 51 52 Z" />
-              <path d="M 52 52 L 54 52 L 61 12 L 59 12 Z" />
+              <path d={D_PATH} fill="#faf8f4" fillRule="evenodd" />
             </svg>
             <span style={{ fontSize: "20px", fontWeight: 700, letterSpacing: "-0.02em", textTransform: "none" }}>
-              Sand &amp; Ember
+              DoppelWriter
             </span>
           </div>
           <span style={{ color: "#6b6358" }}>
