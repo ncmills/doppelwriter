@@ -1,16 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" fill="currentColor" role="img" aria-label="DoppelWriter">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 32" width="240" height="32" fill="none" role="img" aria-label="DoppelWriter">
   <title>DoppelWriter</title>
-  <!-- Mark -->
-  <g>
-    <path fill-rule="evenodd" d="M 4 12 L 18 12 C 28 12 30 20 30 32 C 30 44 28 52 18 52 L 4 52 Z M 10 16 L 17 16 C 22 16 24 22 24 32 C 24 42 22 48 17 48 L 10 48 Z"/>
-    <rect x="30" y="12" width="2" height="40"/>
-    <path d="M 32 12 L 36 12 L 42 52 L 38 52 Z"/>
-    <path d="M 39 52 L 41 52 L 48 12 L 46 12 Z"/>
-    <path d="M 45 12 L 49 12 L 55 52 L 51 52 Z"/>
-    <path d="M 52 52 L 54 52 L 61 12 L 59 12 Z"/>
-  </g>
-  <!-- Hairline divider -->
-  <rect x="76" y="14" width="1" height="36" opacity="0.35"/>
-  <!-- Wordmark. Font-family falls back to Georgia if Playfair unavailable. -->
-  <text x="88" y="45" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="700" font-size="36" letter-spacing="-0.72">DoppelWriter</text>
+  <path d="M8 8 H16.2 A8.4 8.4 0 0 1 16.2 24.8 H8 Z M12.6 12.2 H15.8 A4.2 4.2 0 0 1 15.8 20.8 H12.6 Z" fill="#c2410c" fill-rule="evenodd" transform="translate(4.6,-1.4)"/>
+  <path d="M8 8 H16.2 A8.4 8.4 0 0 1 16.2 24.8 H8 Z M12.6 12.2 H15.8 A4.2 4.2 0 0 1 15.8 20.8 H12.6 Z" fill="currentColor" fill-rule="evenodd"/>
+  <text x="40" y="22.5" font-family="'Space Grotesk','Helvetica Neue',Arial,sans-serif" font-size="20" font-weight="700" letter-spacing="-0.4" fill="currentColor">DoppelWriter</text>
 </svg>

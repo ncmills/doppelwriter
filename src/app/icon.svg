@@ -1,4 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="#1c1a17">
-  <path d="M8 6 L14 6 L13 22 L7 22 Z"/>
-  <path d="M19 6 L25 6 L24 22 L18 22 Z" fill="#c2410c"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="DoppelWriter">
+  <!--
+    The double-struck D (src/components/Logo.tsx is the source of truth): one
+    letterform printed twice, out of register — your voice and its double.
+    Ivory on the ember plate. It replaces two tapered slabs whose first slab was
+    ink on transparent, so on a dark browser tab half the mark vanished and the
+    "double" idea died. Hexes are literal: a favicon is served standalone with
+    no stylesheet and cannot read the palette's custom properties.
+  -->
+  <rect width="32" height="32" rx="7.5" fill="#c2410c"/>
+  <path d="M8 8 H16.2 A8.4 8.4 0 0 1 16.2 24.8 H8 Z M12.6 12.2 H15.8 A4.2 4.2 0 0 1 15.8 20.8 H12.6 Z" fill="#1c1a17" fill-opacity="0.55" fill-rule="evenodd" transform="translate(4.6,-1.4)"/>
+  <path d="M8 8 H16.2 A8.4 8.4 0 0 1 16.2 24.8 H8 Z M12.6 12.2 H15.8 A4.2 4.2 0 0 1 15.8 20.8 H12.6 Z" fill="#faf8f4" fill-rule="evenodd"/>
 </svg>
