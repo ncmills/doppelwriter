@@ -1,0 +1,37 @@
+# Build gate — typecheck on every PR and push to main, so a non-compiling file
+# surfaces BEFORE merge/deploy instead of only in Vercel after. Mirrors the
+# handicap-hq build-gate (added 2026-07-22) at the scope this repo can support.
+#
+# Deliberately typecheck-ONLY:
+#   - `npm run lint` is NOT gated: it is red on arrival in most of these repos
+#     (tour-de-fore alone has 268 eslint errors) and museletter's `next lint` is
+#     deprecated and prompts interactively, which hangs CI. A gate that fails
+#     correct code on day one gets ignored, and an ignored gate is worse than none.
+#   - `next build` is NOT gated: env vars here are Production-scoped, and an
+#     unguarded module-load read of a missing var fails the build for reasons that
+#     have nothing to do with the diff (see idonthaveawill PR #10, 2026-07-29).
+# Both are worth adding later, each behind its own cleanup.
+name: build-gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install deps
+        run: npm ci
+
+      - name: typecheck
+        run: npx tsc --noEmit
