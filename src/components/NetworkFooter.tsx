@@ -25,10 +25,15 @@ export function NetworkFooter({ currentDomain }: { currentDomain: string }) {
             <a
               href={`https://${s.domain}`}
               rel="noopener"
-              className="inline-flex min-h-[44px] items-baseline gap-2 text-[11px] text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
+              className="inline-flex min-h-[44px] items-baseline text-[11px] text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
             >
               <span className="ed-link text-[13px] text-[var(--color-fg)]">{s.label}</span>
-              <span>{s.tagline}</span>
+              {/* An em-dash and a real space, NOT a flex `gap`. A gap separates
+                  the boxes and leaves the TEXT joined: the anchor shipped as
+                  "AISSDIfree SSDI approval-odds and judge lookup", verified on
+                  production. The gap is invisible to the one reader this
+                  descriptor was moved inside the <a> for. */}
+              <span>&nbsp;— {s.tagline}</span>
             </a>
           </li>
         ))}
