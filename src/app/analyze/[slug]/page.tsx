@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { SiteFooter } from "@/components/SiteFooter";
 import { sql } from "@/lib/db";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -355,14 +356,7 @@ export default async function SharedAnalysisPage({ params }: PageProps) {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--color-border)] py-8 text-center">
-        <p className="text-xs text-[var(--color-fg-muted)]">
-          <Link href="/" className="hover:text-[var(--color-fg)] transition-colors">
-            DoppelWriter
-          </Link>{" "}
-          — AI writing that sounds like you
-        </p>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

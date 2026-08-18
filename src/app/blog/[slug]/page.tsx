@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { SiteFooter } from "@/components/SiteFooter";
 import Link from "next/link";
 import { BLOG_POSTS } from "@/lib/blog-posts";
 import { JsonLd } from "@/components/JsonLd";
@@ -446,9 +447,7 @@ export default async function BlogPostPage({
         <NetworkFooter currentDomain="doppelwriter.com" />
       </main>
 
-      <footer className="border-t border-[var(--color-border)] py-8 text-center text-xs text-[var(--color-fg-muted)]">
-        DoppelWriter
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

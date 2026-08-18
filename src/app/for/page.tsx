@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiteFooter } from "@/components/SiteFooter";
 import { NICHES } from "@/lib/niches";
 import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
@@ -107,24 +108,7 @@ export default function ForIndexPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--color-border)] py-8">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-[var(--color-fg-muted)]">
-            &copy; {new Date().getFullYear()} DoppelWriter
-          </span>
-          <div className="flex gap-6">
-            <Link href="/pricing" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">
-              Pricing
-            </Link>
-            <Link href="/privacy" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">
-              Privacy
-            </Link>
-            <Link href="/terms" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">
-              Terms
-            </Link>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

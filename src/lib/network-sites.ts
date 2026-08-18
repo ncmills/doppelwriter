@@ -6,16 +6,25 @@
  * funnels UPSTREAM toward higher-priority sites only.
  * Cluster priority: aissdi > idonthaveawill > doppelwriter > imfrustrated.
  * This site (doppelwriter, priority 3) links ONLY to sites above it → aissdi, idonthaveawill.
+ * Nick reconfirmed the one-way funnel on 2026-08-18: it is deliberate, and it stays.
+ * Never add a Planning-cluster or Peptide-cluster site here, and never a personal site.
+ *
+ * This is now the ONLY list. `src/components/CrossSiteList.tsx` held a second,
+ * hardcoded copy of the same two sites and was rendered on the homepage while
+ * this module was rendered on blog posts — two lists that had to agree, with
+ * nothing making them agree. CrossSiteList is deleted.
  */
 export interface NetworkSite {
   domain: string; // bare domain, no protocol
   label: string; // display label
-  tagline: string; // short description (4-8 words)
+  /** What the site IS. Rendered INSIDE the <a> — this is anchor text, not a tooltip.
+   *  It used to live only in a title= attribute, where it carried no anchor value. */
+  tagline: string;
 }
 
 export const NETWORK_SITES: NetworkSite[] = [
-  { domain: "aissdi.com", label: "AISSDI", tagline: "Free SSDI approval-odds & judge lookup tools" },
-  { domain: "idonthaveawill.com", label: "I Don't Have a Will", tagline: "Free will drafting tool" },
+  { domain: "aissdi.com", label: "AISSDI", tagline: "free SSDI approval-odds and judge lookup" },
+  { domain: "idonthaveawill.com", label: "I Don't Have a Will", tagline: "free will builder" },
 ];
 
 /** Returns sites excluding the current domain (prevents self-linking). */

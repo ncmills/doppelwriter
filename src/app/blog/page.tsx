@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiteFooter } from "@/components/SiteFooter";
 import { BLOG_POSTS } from "@/lib/blog-posts";
 import { getAllPosts as getMdxPosts } from "@/lib/blog";
 import { JsonLd } from "@/components/JsonLd";
@@ -174,17 +175,7 @@ export default function BlogPage() {
         </div>
       </main>
 
-      <footer className="border-t border-[var(--color-border)] py-8">
-        <div className="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-[var(--color-fg-muted)]">&copy; {new Date().getFullYear()} DoppelWriter</span>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <Link href="/" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Home</Link>
-            <Link href="/analyze" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Voice Analyzer</Link>
-            <Link href="/for" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Use Cases</Link>
-            <Link href="/pricing" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Pricing</Link>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

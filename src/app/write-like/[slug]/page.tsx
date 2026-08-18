@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { SiteFooter } from "@/components/SiteFooter";
 import Link from "next/link";
 import Image from "next/image";
 import { CURATED_WRITERS, CATEGORIES } from "@/lib/writer-builder";
@@ -184,9 +185,7 @@ function CategoryHubPage({ categoryId }: { categoryId: string }) {
         </section>
       </main>
 
-      <footer className="border-t border-[var(--color-border)] py-8 text-center text-xs text-[var(--color-fg-muted)]">
-        DoppelWriter
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
@@ -397,9 +396,7 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
         </div>
       </main>
 
-      <footer className="border-t border-[var(--color-border)] py-8 text-center text-xs text-[var(--color-fg-muted)]">
-        DoppelWriter
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
@@ -541,9 +538,7 @@ function AllAuthorsPage() {
         </section>
       </main>
 
-      <footer className="border-t border-[var(--color-border)] py-8 text-center text-xs text-[var(--color-fg-muted)]">
-        DoppelWriter
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
