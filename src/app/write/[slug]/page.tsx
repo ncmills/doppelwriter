@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { SiteFooter } from "@/components/SiteFooter";
 import Link from "next/link";
 import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
 import { JsonLd } from "@/components/JsonLd";
@@ -367,9 +368,7 @@ export default async function WritePage({
         )}
       </main>
 
-      <footer className="border-t border-[var(--color-border)] py-8 text-center text-xs text-[var(--color-fg-muted)]">
-        DoppelWriter
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

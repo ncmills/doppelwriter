@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SiteFooter } from "@/components/SiteFooter";
 import Link from "next/link";
 import LandingNav from "@/components/LandingNav";
 
@@ -328,22 +329,7 @@ export default function VsCopyAIPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--color-border)] py-8">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-[var(--color-fg-muted)]">&copy; {new Date().getFullYear()} DoppelWriter</span>
-          <div className="flex gap-6">
-            <Link href="/pricing" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Pricing</Link>
-            <Link href="/privacy" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Privacy</Link>
-            <Link href="/terms" className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] transition-colors">Terms</Link>
-          </div>
-          <a
-            href="mailto:enterprise@doppelwriter.com?subject=Enterprise%20Inquiry"
-            className="text-xs text-[var(--color-fg-muted)] hover:text-[var(--color-brand)] transition-colors"
-          >
-            Enterprise &rarr;
-          </a>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

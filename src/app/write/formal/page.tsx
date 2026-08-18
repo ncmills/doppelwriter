@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiteFooter } from "@/components/SiteFooter";
 import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
 import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
@@ -101,9 +102,7 @@ export default function CategoryPage() {
         </section>
       </main>
 
-      <footer className="border-t border-[var(--color-border)] py-8 text-center text-xs text-[var(--color-fg-muted)]">
-        DoppelWriter
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
