@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/SiteFooter";
+import { buildOpenGraph } from "@/lib/og/metadata";
 import Link from "next/link";
 import { CURATED_WRITERS } from "@/lib/writer-builder";
 import { CATEGORIES } from "@/lib/writer-data";
@@ -18,16 +19,13 @@ export const metadata: Metadata = {
     "famous writer AI",
     "voice cloning writers",
   ],
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://doppelwriter.com/write-like",
-    siteName: "DoppelWriter",
+  openGraph: buildOpenGraph({
+    url: "/write-like",
     title: "Write Like Famous Authors — 140+ AI Voice Profiles",
     description:
       "Browse 140+ famous writer voice profiles and generate content in any iconic voice.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Write Like Famous Authors" }],
-  },
+  }),
   twitter: {
     card: "summary_large_image",
     title: "Write Like Famous Authors — 140+ AI Voice Profiles",

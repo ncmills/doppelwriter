@@ -8,6 +8,7 @@ import { USE_CASES } from "@/lib/use-cases";
 import { JsonLd } from "@/components/JsonLd";
 import EmailCapture from "@/components/EmailCapture";
 import type { Metadata } from "next";
+import { buildOpenGraph } from "@/lib/og/metadata";
 
 function writerSlug(name: string) {
   return name.toLowerCase().replace(/['']/g, "").replace(/\s+/g, "-");
@@ -45,7 +46,14 @@ export async function generateMetadata({
     return {
       title,
       description,
-      openGraph: { title, description, url: "https://doppelwriter.com/write-like/authors" },
+      // hasRouteImage: write-like/[slug]/opengraph-image.tsx covers every
+      // branch of this route, "authors" included.
+      openGraph: buildOpenGraph({
+        title,
+        description,
+        url: "/write-like/authors",
+        hasRouteImage: true,
+      }),
       twitter: { card: "summary_large_image", title, description },
       alternates: { canonical: "https://doppelwriter.com/write-like/authors" },
     };
@@ -59,7 +67,12 @@ export async function generateMetadata({
     return {
       title,
       description,
-      openGraph: { title, description, url: `https://doppelwriter.com/write-like/${slug}` },
+      openGraph: buildOpenGraph({
+        title,
+        description,
+        url: `/write-like/${slug}`,
+        hasRouteImage: true,
+      }),
       twitter: { card: "summary_large_image", title, description },
       alternates: { canonical: `https://doppelwriter.com/write-like/${slug}` },
     };
@@ -75,11 +88,12 @@ export async function generateMetadata({
   return {
     title,
     description,
-    openGraph: {
+    openGraph: buildOpenGraph({
       title,
       description,
-      url: `https://doppelwriter.com/write-like/${slug}`,
-    },
+      url: `/write-like/${slug}`,
+      hasRouteImage: true,
+    }),
     twitter: { card: "summary_large_image", title, description },
     alternates: { canonical: `https://doppelwriter.com/write-like/${slug}` },
   };

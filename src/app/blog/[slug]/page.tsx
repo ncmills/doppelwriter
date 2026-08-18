@@ -5,6 +5,7 @@ import { BLOG_POSTS } from "@/lib/blog-posts";
 import { JsonLd } from "@/components/JsonLd";
 import { NetworkFooter } from "@/components/NetworkFooter";
 import type { Metadata } from "next";
+import { buildOpenGraph } from "@/lib/og/metadata";
 // Engine-generated MDX posts (content/blog/*.mdx) render via this fallback;
 // hand-authored BLOG_POSTS are unaffected.
 import { getPost as getMdxPost, getAllSlugs as getMdxSlugs } from "@/lib/blog";
@@ -188,13 +189,13 @@ export async function generateMetadata({
     return {
       title: mdx.title,
       description: mdx.description,
-      openGraph: {
+      openGraph: buildOpenGraph({
         title: mdx.title,
         description: mdx.description,
-        url: `https://doppelwriter.com/blog/${slug}`,
+        url: `/blog/${slug}`,
         type: "article",
         publishedTime: mdx.datePublished,
-      },
+      }),
       twitter: { card: "summary_large_image", title: mdx.title, description: mdx.description },
       alternates: { canonical: `https://doppelwriter.com/blog/${slug}` },
     };
@@ -203,15 +204,15 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.description,
-    openGraph: {
+    openGraph: buildOpenGraph({
       title: post.title,
       description: post.description,
-      url: `https://doppelwriter.com/blog/${slug}`,
+      url: `/blog/${slug}`,
       type: "article",
       publishedTime: post.publishedAt,
-      ...(post.updatedAt && { modifiedTime: post.updatedAt }),
+      modifiedTime: post.updatedAt,
       authors: [post.author],
-    },
+    }),
     twitter: {
       card: "summary_large_image",
       title: post.title,
