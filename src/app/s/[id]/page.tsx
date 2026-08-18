@@ -2,6 +2,7 @@ import { sql } from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { buildOpenGraph } from "@/lib/og/metadata";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -33,13 +34,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description: plainText,
-    openGraph: {
+    openGraph: buildOpenGraph({
       title,
       description: plainText,
       type: "article",
-      siteName: "DoppelWriter",
-      url: `https://doppelwriter.com/s/${id}`,
-    },
+      url: `/s/${id}`,
+    }),
     twitter: {
       card: "summary_large_image",
       title,

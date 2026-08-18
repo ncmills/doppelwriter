@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { sql } from "@/lib/db";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { buildOpenGraph } from "@/lib/og/metadata";
 
 interface AnalyzerResult {
   slug: string;
@@ -69,13 +70,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `Writing Voice Analysis — ${descSnippet}`,
     description,
-    openGraph: {
+    // hasRouteImage: this segment ships analyze/[slug]/opengraph-image.tsx,
+    // which renders the reader's own voice-analysis card.
+    openGraph: buildOpenGraph({
       title: `${result.tone.primary} voice similar to ${similarWriter} — Writing Voice Analysis`,
       description,
-      url: `https://doppelwriter.com/analyze/${slug}`,
-      type: "website",
-      siteName: "DoppelWriter",
-    },
+      url: `/analyze/${slug}`,
+      hasRouteImage: true,
+    }),
     twitter: {
       card: "summary_large_image",
       title: `My writing voice: ${result.tone.primary}, similar to ${similarWriter}`,

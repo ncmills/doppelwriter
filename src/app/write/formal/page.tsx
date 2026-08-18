@@ -2,6 +2,7 @@ import Link from "next/link";
 import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
 import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
+import { buildOpenGraph } from "@/lib/og/metadata";
 
 const CATEGORY_ID = "formal";
 const CATEGORY_LABEL = "Formal Letters";
@@ -13,11 +14,11 @@ const otherCategories = USE_CASE_CATEGORIES.filter((c) => c.id !== CATEGORY_ID);
 export const metadata: Metadata = {
   title: `${CATEGORY_LABEL} Writing Tools — AI Writer`,
   description: `AI-powered ${CATEGORY_LABEL.toLowerCase()} writing tools that sound like you, not ChatGPT. DoppelWriter learns your voice and helps you write ${CATEGORY_LABEL.toLowerCase()} content in your natural style.`,
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: `${CATEGORY_LABEL} Writing Tools — AI Writer`,
     description: `AI-powered ${CATEGORY_LABEL.toLowerCase()} writing tools that sound like you, not ChatGPT.`,
-    url: `https://doppelwriter.com/write/${CATEGORY_ID}`,
-  },
+    url: `/write/${CATEGORY_ID}`,
+  }),
   twitter: { card: "summary_large_image" },
   alternates: { canonical: `https://doppelwriter.com/write/${CATEGORY_ID}` },
 };

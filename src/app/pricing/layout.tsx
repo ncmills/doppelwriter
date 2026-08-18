@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildOpenGraph } from "@/lib/og/metadata";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -7,11 +8,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://doppelwriter.com/pricing",
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Pricing | DoppelWriter",
     description: "Start free. Upgrade to Pro for $19/mo when you're hooked.",
-    url: "https://doppelwriter.com/pricing",
-  },
+    url: "/pricing",
+  }),
 };
 
 export default function PricingLayout({ children }: { children: React.ReactNode }) {

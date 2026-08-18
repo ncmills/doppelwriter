@@ -3,6 +3,7 @@ import Link from "next/link";
 import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
 import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
+import { buildOpenGraph } from "@/lib/og/metadata";
 
 const USE_CASE_WRITERS: Record<string, { slug: string; name: string }[]> = {
   // Personal & Life Events
@@ -167,11 +168,14 @@ export async function generateMetadata({
   return {
     title,
     description,
-    openGraph: {
+    // hasRouteImage: this segment ships write/[slug]/opengraph-image.tsx.
+    // Omitting `images` is what lets Next merge that per-route card in.
+    openGraph: buildOpenGraph({
       title,
       description,
-      url: `https://doppelwriter.com/write/${slug}`,
-    },
+      url: `/write/${slug}`,
+      hasRouteImage: true,
+    }),
     twitter: { card: "summary_large_image", title, description },
     alternates: { canonical: `https://doppelwriter.com/write/${slug}` },
   };

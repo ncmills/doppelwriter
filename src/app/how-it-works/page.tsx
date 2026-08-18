@@ -1,15 +1,16 @@
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
+import { buildOpenGraph } from "@/lib/og/metadata";
 
 export const metadata: Metadata = {
   title: "How AI Voice Cloning Writing Works",
   description: "Learn how DoppelWriter's AI analyzes your writing style and creates content that sounds like you. No templates, no generic AI voice — just your words, your way.",
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "How AI Voice Cloning Writing Works",
     description: "AI that writes like you, not like a robot. Here's how it works.",
-    url: "https://doppelwriter.com/how-it-works",
-  },
+    url: "/how-it-works",
+  }),
   alternates: { canonical: "https://doppelwriter.com/how-it-works" },
 };
 

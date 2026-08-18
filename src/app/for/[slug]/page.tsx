@@ -3,6 +3,7 @@ import Link from "next/link";
 import { NICHES } from "@/lib/niches";
 import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
+import { buildOpenGraph } from "@/lib/og/metadata";
 
 const RELATED_NICHES: Record<string, string[]> = {
   "newsletter-writers": ["content-marketers", "ghostwriters", "fiction-writers"],
@@ -77,15 +78,12 @@ export async function generateMetadata({
     title: niche.metaTitle,
     description: niche.metaDescription,
     keywords: niche.keywords,
-    openGraph: {
-      type: "website",
-      locale: "en_US",
-      url: `https://doppelwriter.com/for/${niche.slug}`,
-      siteName: "DoppelWriter",
+    openGraph: buildOpenGraph({
+      url: `/for/${niche.slug}`,
       title: niche.metaTitle,
       description: niche.metaDescription,
       images: [{ url: "/og-image.png", width: 1200, height: 630, alt: niche.title }],
-    },
+    }),
     twitter: {
       card: "summary_large_image",
       title: niche.metaTitle,
