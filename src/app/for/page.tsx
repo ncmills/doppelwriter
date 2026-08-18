@@ -67,7 +67,7 @@ export default function ForIndexPage() {
         </div>
       </nav>
 
-      <main className="max-w-5xl mx-auto px-6 py-16 md:py-24">
+      <main className="max-w-6xl mx-auto px-6 py-16 md:py-24">
         <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl font-bold mb-4">
           DoppelWriter For...
         </h1>

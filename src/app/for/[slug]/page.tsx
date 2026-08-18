@@ -177,7 +177,7 @@ export default async function NichePage({
 
         {/* The Problem */}
         <section className="py-16 md:py-20 px-6 bg-[var(--color-surface-raised)]">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <p className="text-[var(--color-brand)] text-sm font-medium uppercase tracking-wider mb-3">
               The problem
             </p>
@@ -202,7 +202,7 @@ export default async function NichePage({
 
         {/* How DoppelWriter Helps */}
         <section className="py-16 md:py-20 px-6">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <p className="text-[var(--color-brand)] text-sm font-medium uppercase tracking-wider mb-3">
               The solution
             </p>
@@ -229,7 +229,7 @@ export default async function NichePage({
 
         {/* What You Can Write */}
         <section className="py-16 md:py-20 px-6 bg-[var(--color-surface-raised)]">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <p className="text-[var(--color-brand)] text-sm font-medium uppercase tracking-wider mb-3">
               Use cases
             </p>
@@ -296,7 +296,7 @@ export default async function NichePage({
 
         {/* Related — cross-links to other niches, writers, and tools */}
         <section className="py-16 md:py-20 px-6">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <p className="text-[var(--color-brand)] text-sm font-medium uppercase tracking-wider mb-3">
               Explore more
             </p>
