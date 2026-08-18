@@ -13,5 +13,8 @@
       "path": "/api/cron/emails",
       "schedule": "0 9 * * *"
     }
-  ]
+  ],
+  "github": {
+    "silent": true
+  }
 }
