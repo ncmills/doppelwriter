@@ -13,7 +13,7 @@ export default function LandingNav() {
       aria-label="Main navigation"
       className="border-b border-[var(--color-border)] sticky top-0 bg-[var(--color-surface)]/95 backdrop-blur-sm z-50"
     >
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center h-16 justify-between">
+      <div className="px-5 sm:px-8 lg:px-20 flex items-center h-16 justify-between">
         <Link
           href="/"
           aria-label="DoppelWriter — home"
