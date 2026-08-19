@@ -166,26 +166,31 @@ export default function LandingPage() {
 
       <main id="main-content">
         {/* ━━━━━━━━━━ HERO ━━━━━━━━━━ */}
-        <section className="max-w-6xl mx-auto px-5 sm:px-8 pt-14 sm:pt-24 pb-10 sm:pb-16">
-          <div className="text-center mb-10 sm:mb-14">
-            <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-6">
-              <span className="text-[var(--color-brand)]">●</span>{" "}
-              Vol. I — AI Writing, Voice-Matched
-            </p>
-            <h1 className="font-[family-name:var(--font-display)] font-bold text-[44px] sm:text-[64px] md:text-[72px] leading-[1.02] tracking-[-0.02em] mb-6 sm:mb-8">
-              Write in anyone&apos;s voice.
-              <br />
-              <span className="font-normal text-[var(--color-fg-muted)]">
-                Starting with yours.
-              </span>
-            </h1>
-            <p className="text-lg sm:text-2xl text-[var(--color-fg-muted)] max-w-2xl mx-auto leading-snug">
-              The AI that sounds like you. Or Hemingway. Or your mom.
-            </p>
-          </div>
+        <section className="px-5 sm:px-8 lg:px-20 pt-14 sm:pt-24 pb-10 sm:pb-16">
+          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
+            {/* Headline block — left */}
+            <div className="text-center lg:text-left">
+              <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--color-fg-muted)] mb-6">
+                <span className="text-[var(--color-brand)]">●</span>{" "}
+                Vol. I — AI Writing, Voice-Matched
+              </p>
+              <h1 className="font-[family-name:var(--font-display)] font-bold text-[44px] sm:text-[64px] md:text-[72px] leading-[1.02] tracking-[-0.02em] mb-6 sm:mb-8">
+                Write in anyone&apos;s voice.
+                <br />
+                <span className="font-normal text-[var(--color-fg-muted)]">
+                  Starting with yours.
+                </span>
+              </h1>
+              <p className="text-lg sm:text-2xl text-[var(--color-fg-muted)] max-w-2xl mx-auto lg:mx-0 leading-snug">
+                The AI that sounds like you. Or Hemingway. Or your mom.
+              </p>
+            </div>
 
-          {/* The demo IS the hero */}
-          <LandingDemo />
+            {/* The demo IS the hero — visual/card, right */}
+            <div className="mt-10 lg:mt-0">
+              <LandingDemo />
+            </div>
+          </div>
         </section>
 
         <hr className="rule max-w-6xl mx-auto" />
