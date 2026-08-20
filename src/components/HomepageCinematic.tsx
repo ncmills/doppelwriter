@@ -87,11 +87,8 @@ function HomepageCinematic({ mode = "auto" }: Props) {
       return;
     }
 
-    const onScroll = () => {
-      // Arm the scrub only once the reader actually scrolls: at load, the
-      // track is below the fold, so hiding the content before any scroll
-      // only blanks it for headless/static renders — never for a person.
-      setAnimated(true);
+    let armed = false;
+    const compute = () => {
       const rect = track.getBoundingClientRect();
       const vh = window.innerHeight;
       const range = track.offsetHeight - vh; // distance scrolled while sticky engages
@@ -103,13 +100,29 @@ function HomepageCinematic({ mode = "auto" }: Props) {
       const p = Math.max(0, Math.min(1, scrolled / range));
       setProgress(p);
     };
+    const onScroll = () => {
+      // Arm the scrub only once the reader actually scrolls: at load, the
+      // track is below the fold, so hiding the content before any scroll
+      // only blanks it for headless/static renders — never for a person.
+      if (!armed) {
+        armed = true;
+        setAnimated(true);
+      }
+      compute();
+    };
+    const onResize = () => {
+      // A resize never ARMS the scrub (viewport emulation during headless
+      // full-page capture fires resize, and mobile URL bars do too) — it
+      // only recomputes progress once a real scroll has armed it.
+      if (armed) compute();
+    };
     // If the page loads already scrolled (restoration, anchor), arm now.
     if (window.scrollY > 0) onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
     };
   }, [mode]);
 
