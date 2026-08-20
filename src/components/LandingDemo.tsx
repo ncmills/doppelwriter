@@ -74,7 +74,9 @@ export default function LandingDemo() {
   const charsLeft = MAX_BRIEF_CHARS - brief.length;
 
   return (
-    <div className="mx-auto max-w-3xl">
+    // lg:mr-0 — right ink lands on the same px-20 gutter as the header CTA
+    // (centered in the hero grid column it fell ~19px short at 1920)
+    <div className="mx-auto max-w-3xl lg:mr-0">
       <div className="bg-[var(--color-surface)] border border-[var(--color-border)]">
         {/* Slug line — the editorial masthead */}
         <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--color-border)]">
