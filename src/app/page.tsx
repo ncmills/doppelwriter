@@ -197,7 +197,12 @@ export default function LandingPage() {
 
         {/* ━━━━━━━━━━ CINEMATIC — three voices, one brief, scrubbed by scroll ━━━━━━━━━━ */}
         <section className="cinematic-scroll-track relative" style={{ minHeight: "180vh" }}>
-          <div className="sticky top-0 h-screen flex flex-col justify-center px-5 sm:px-8">
+          {/* min-h-screen (not h-screen): at narrow widths the three stacked
+              cards are taller than the viewport, and a fixed-height flexbox
+              with justify-center overflows the excess out the TOP — drawing
+              the panel over the hero headline. Letting the panel grow keeps
+              it in flow; the scroll scrub still runs off the track height. */}
+          <div className="sticky top-0 min-h-screen py-10 sm:py-0 flex flex-col justify-center px-5 sm:px-8">
             <div className="max-w-6xl mx-auto w-full">
               <HomepageCinematic mode="scrub" />
             </div>

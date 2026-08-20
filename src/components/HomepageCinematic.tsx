@@ -19,6 +19,13 @@ function HomepageCinematic({ mode = "auto" }: Props) {
   // progress is 0..1 across the cinematic. In auto mode, ticks via rAF.
   // In scrub mode, set externally via scroll IO.
   const [progress, setProgress] = useState(0);
+  // The SSR/no-JS/print/reduced-motion base state is FULLY REVEALED.
+  // `animated` only flips true once JS is running and motion is allowed
+  // (auto: on mount; scrub: on the first real scroll), so a no-JS reader,
+  // a print render, or an unscrolled headless screenshot always sees the
+  // complete cards — the animation is a progressive enhancement, never a
+  // gate on the content. (See feedback_scroll_reveal_invisible_no_js_print.)
+  const [animated, setAnimated] = useState(false);
   const rafRef = useRef<number>(0);
   const startRef = useRef<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -33,11 +40,16 @@ function HomepageCinematic({ mode = "auto" }: Props) {
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
-      setProgress(1);
+      // Stay in the fully-revealed base state — no animation.
       return;
     }
     const tick = (now: number) => {
-      if (!startRef.current) startRef.current = now;
+      if (!startRef.current) {
+        startRef.current = now;
+        // Arm the animation on the first frame (not in the effect body,
+        // which would cascade a render before paint).
+        setAnimated(true);
+      }
       const elapsed = now - startRef.current;
       const p = elapsed / totalMs;
       if (p >= 1) {
@@ -71,11 +83,15 @@ function HomepageCinematic({ mode = "auto" }: Props) {
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
-      setProgress(1);
+      // Stay in the fully-revealed base state — no animation.
       return;
     }
 
     const onScroll = () => {
+      // Arm the scrub only once the reader actually scrolls: at load, the
+      // track is below the fold, so hiding the content before any scroll
+      // only blanks it for headless/static renders — never for a person.
+      setAnimated(true);
       const rect = track.getBoundingClientRect();
       const vh = window.innerHeight;
       const range = track.offsetHeight - vh; // distance scrolled while sticky engages
@@ -87,7 +103,8 @@ function HomepageCinematic({ mode = "auto" }: Props) {
       const p = Math.max(0, Math.min(1, scrolled / range));
       setProgress(p);
     };
-    onScroll();
+    // If the page loads already scrolled (restoration, anchor), arm now.
+    if (window.scrollY > 0) onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
@@ -111,7 +128,8 @@ function HomepageCinematic({ mode = "auto" }: Props) {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {HERO_VOICE_SAMPLES.map((s, i) => {
-          const ms = progress * totalMs;
+          // Base (unanimated) state = end of the timeline: everything shown.
+          const ms = animated ? progress * totalMs : totalMs;
           const portraitStart = i * PORTRAIT_STAGGER_MS;
           const portraitOpacity = clamp01((ms - portraitStart) / PORTRAIT_FADE_MS);
           const nameStart = portraitStart + PORTRAIT_FADE_MS - NAME_DELAY_AFTER_PORTRAIT_MS;
