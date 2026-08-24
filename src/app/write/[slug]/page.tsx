@@ -2,8 +2,42 @@ import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/SiteFooter";
 import Link from "next/link";
 import { USE_CASES, USE_CASE_CATEGORIES } from "@/lib/use-cases";
+import { CURATED_WRITERS } from "@/lib/writer-builder";
 import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
+
+/**
+ * The `/write-like/[slug]` pages are generated from CURATED_WRITERS, and their
+ * slug is derived from the writer's NAME — so "Martin Luther King Jr." becomes
+ * `martin-luther-king-jr.` (trailing period and all). The hand-written
+ * USE_CASE_WRITERS table below drifted from that: it linked to
+ * `/write-like/martin-luther-king-jr` (no period) and to `pablo-neruda`, a
+ * writer who isn't in the catalog at all. Both 404'd, and Google reported them
+ * (GSC "Not found (404)", doppelwriter.com, 2026-07-03).
+ *
+ * Rather than hand-patch two slugs, resolve every link through the catalog:
+ * a suggestion is rendered only if its writer page actually exists.
+ */
+function writerSlug(name: string) {
+  return name.toLowerCase().replace(/['\u2019]/g, "").replace(/\s+/g, "-");
+}
+
+const WRITER_SLUGS_BY_NAME = new Map(
+  CURATED_WRITERS.map((w) => [w.name, writerSlug(w.name)])
+);
+const CATALOG_SLUGS = new Set(WRITER_SLUGS_BY_NAME.values());
+
+/** Drop suggestions with no live page; repair slugs that drifted from the name. */
+function resolveWriterLinks(
+  entries: { slug: string; name: string }[] | undefined
+): { slug: string; name: string }[] {
+  if (!entries) return [];
+  return entries.flatMap((w) => {
+    if (CATALOG_SLUGS.has(w.slug)) return [w];
+    const byName = WRITER_SLUGS_BY_NAME.get(w.name);
+    return byName ? [{ slug: byName, name: w.name }] : [];
+  });
+}
 
 const USE_CASE_WRITERS: Record<string, { slug: string; name: string }[]> = {
   // Personal & Life Events
@@ -328,13 +362,13 @@ export default async function WritePage({
         </section>
 
         {/* Write This With a Famous Voice */}
-        {USE_CASE_WRITERS[slug] && USE_CASE_WRITERS[slug].length > 0 && (
+        {resolveWriterLinks(USE_CASE_WRITERS[slug]).length > 0 && (
           <section className="mb-12">
             <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold mb-6">
               Write This With a Famous Voice
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {USE_CASE_WRITERS[slug].map((w) => (
+              {resolveWriterLinks(USE_CASE_WRITERS[slug]).map((w) => (
                 <Link
                   key={w.slug}
                   href={`/write-like/${w.slug}`}
