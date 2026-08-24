@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { heartbeat } from "@/lib/heartbeat";
 import { sql } from "@/lib/db";
 import { SEQUENCES, sendSequenceEmail } from "@/lib/email-sequences";
 
@@ -27,6 +28,7 @@ export async function GET(request: NextRequest) {
   `;
 
   let sent = 0;
+  let failed = 0;
 
   // Batch-fetch all sent sequences to avoid N+1 queries
   const userIds = users.map((u) => u.id);
@@ -66,9 +68,15 @@ export async function GET(request: NextRequest) {
         sent++;
       } catch {
         // Individual email failure shouldn't stop the cron
+        failed++;
       }
     }
   }
 
-  return NextResponse.json({ sent, checked: users.length });
+  await heartbeat("doppelwriter", "/api/cron/emails", {
+    ok: failed === 0,
+    error: failed ? `${failed} sequence email send(s) failed` : undefined,
+  });
+
+  return NextResponse.json({ sent, checked: users.length, failed });
 }
