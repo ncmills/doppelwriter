@@ -41,42 +41,56 @@ export async function GET(request: NextRequest) {
     sentMap.get(row.user_id)!.add(row.sequence_key);
   }
 
-  for (const user of users) {
-    const signupDate = new Date(user.created_at);
-    const daysSinceSignup = Math.floor((now.getTime() - signupDate.getTime()) / (1000 * 60 * 60 * 24));
+  // A6b -- the beat below only reports failures this handler SURVIVED. Everything above it
+  // ran unguarded: the db handle and the scheduled-email query, and any module-level throw. When one of those failed, the handler threw, `heartbeat()` was never reached, and
+  // ops_heartbeats gained no row -- which `check_cron_heartbeats` reads as NEVER-SEEN or stale,
+  // i.e. "this cron did not run". A cron that ran and exploded and one that never fired looked
+  // identical, and the louder failure was the quieter signal.
+  //
+  // Same shape as D41 one repo over: the alarm watched a state the real failure does not
+  // produce. So a hard throw now beats, and is re-thrown -- Vercel must still see the 500, and
+  // a monitoring write must never turn a failed cron into a successful-looking one.
+  try {
+    for (const user of users) {
+      const signupDate = new Date(user.created_at);
+      const daysSinceSignup = Math.floor((now.getTime() - signupDate.getTime()) / (1000 * 60 * 60 * 24));
 
-    const sentKeys = sentMap.get(user.id) ?? new Set<string>();
+      const sentKeys = sentMap.get(user.id) ?? new Set<string>();
 
-    for (const seq of SEQUENCES) {
-      // Skip if already sent or not yet time
-      if (sentKeys.has(seq.key)) continue;
-      if (daysSinceSignup < seq.dayOffset) continue;
+      for (const seq of SEQUENCES) {
+        // Skip if already sent or not yet time
+        if (sentKeys.has(seq.key)) continue;
+        if (daysSinceSignup < seq.dayOffset) continue;
 
-      // Check condition if any
-      if (seq.condition) {
-        const shouldSend = seq.condition({ used: user.used, hasProfile: user.profiles > 0 });
-        if (!shouldSend) continue;
-      }
+        // Check condition if any
+        if (seq.condition) {
+          const shouldSend = seq.condition({ used: user.used, hasProfile: user.profiles > 0 });
+          if (!shouldSend) continue;
+        }
 
-      try {
-        await sendSequenceEmail(user.email, seq, user.name || undefined);
-        await db`
-          INSERT INTO email_sequence_sends (user_id, sequence_key)
-          VALUES (${user.id}, ${seq.key})
-          ON CONFLICT DO NOTHING
-        `;
-        sent++;
-      } catch {
-        // Individual email failure shouldn't stop the cron
-        failed++;
+        try {
+          await sendSequenceEmail(user.email, seq, user.name || undefined);
+          await db`
+            INSERT INTO email_sequence_sends (user_id, sequence_key)
+            VALUES (${user.id}, ${seq.key})
+            ON CONFLICT DO NOTHING
+          `;
+          sent++;
+        } catch {
+          // Individual email failure shouldn't stop the cron
+          failed++;
+        }
       }
     }
+
+    await heartbeat("doppelwriter", "/api/cron/emails", {
+      ok: failed === 0,
+      error: failed ? `${failed} sequence email send(s) failed` : undefined,
+    });
+
+    return NextResponse.json({ sent, checked: users.length, failed });
+  } catch (err) {
+    await heartbeat("doppelwriter", "/api/cron/emails", { ok: false, error: err });
+    throw err;
   }
-
-  await heartbeat("doppelwriter", "/api/cron/emails", {
-    ok: failed === 0,
-    error: failed ? `${failed} sequence email send(s) failed` : undefined,
-  });
-
-  return NextResponse.json({ sent, checked: users.length, failed });
 }
