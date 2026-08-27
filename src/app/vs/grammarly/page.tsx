@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/SiteFooter";
+import { buildOpenGraph } from "@/lib/og/metadata";
 import Link from "next/link";
 import LandingNav from "@/components/LandingNav";
 
@@ -14,16 +15,13 @@ export const metadata: Metadata = {
     "grammarly voice matching",
     "writing tool that preserves your voice",
   ],
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://doppelwriter.com/vs/grammarly",
-    siteName: "DoppelWriter",
+  openGraph: buildOpenGraph({
+    url: "/vs/grammarly",
     title: "DoppelWriter vs Grammarly — Voice Matching vs Grammar Checking",
     description:
       "An honest comparison of DoppelWriter and Grammarly. One fixes your grammar. The other makes AI sound like you.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DoppelWriter vs Grammarly" }],
-  },
+  }),
   twitter: {
     card: "summary_large_image",
     title: "DoppelWriter vs Grammarly — Voice Matching vs Grammar Checking",

@@ -3,21 +3,19 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { NICHES } from "@/lib/niches";
 import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
+import { buildOpenGraph } from "@/lib/og/metadata";
 
 export const metadata: Metadata = {
   title: "DoppelWriter For... — AI Writing for Every Niche",
   description:
     "See who DoppelWriter is built for — newsletter writers, ghostwriters, fiction authors, content marketers, students, and more. AI writing that matches your voice, whatever you write.",
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://doppelwriter.com/for",
-    siteName: "DoppelWriter",
+  openGraph: buildOpenGraph({
+    url: "/for",
     title: "DoppelWriter For... — AI Writing for Every Niche",
     description:
       "See who DoppelWriter is built for. AI writing that matches your voice, whatever you write.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DoppelWriter For..." }],
-  },
+  }),
   twitter: {
     card: "summary_large_image",
     title: "DoppelWriter For... — AI Writing for Every Niche",

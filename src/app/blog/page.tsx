@@ -4,17 +4,18 @@ import { BLOG_POSTS } from "@/lib/blog-posts";
 import { getAllPosts as getMdxPosts } from "@/lib/blog";
 import { JsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
+import { buildOpenGraph } from "@/lib/og/metadata";
 
 export const metadata: Metadata = {
   title: "Blog",
   description:
     "Tips, guides, and insights on AI writing, voice matching, and making AI-generated text sound like you.",
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: "Blog | DoppelWriter",
     description:
       "Tips, guides, and insights on AI writing, voice matching, and making AI-generated text sound like you.",
-    url: "https://doppelwriter.com/blog",
-  },
+    url: "/blog",
+  }),
   twitter: {
     card: "summary_large_image",
     title: "Blog | DoppelWriter",

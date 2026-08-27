@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/SiteFooter";
+import { buildOpenGraph } from "@/lib/og/metadata";
 import Link from "next/link";
 import LandingNav from "@/components/LandingNav";
 
@@ -15,16 +16,13 @@ export const metadata: Metadata = {
     "writesonic alternative personal voice",
     "AI voice cloning writing tool",
   ],
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://doppelwriter.com/vs/writesonic",
-    siteName: "DoppelWriter",
+  openGraph: buildOpenGraph({
+    url: "/vs/writesonic",
     title: "DoppelWriter vs Writesonic — Voice Cloning vs Content Generation",
     description:
       "An honest comparison of DoppelWriter and Writesonic. One generates SEO content at scale. The other writes like you.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DoppelWriter vs Writesonic" }],
-  },
+  }),
   twitter: {
     card: "summary_large_image",
     title: "DoppelWriter vs Writesonic — Voice Cloning vs Content Generation",

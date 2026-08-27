@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/SiteFooter";
+import { buildOpenGraph } from "@/lib/og/metadata";
 import Link from "next/link";
 import { ALTERNATIVES } from "@/lib/alternatives";
 import { JsonLd } from "@/components/JsonLd";
@@ -18,16 +19,13 @@ export const metadata: Metadata = {
     "grammarly alternative",
     "AI voice matching tools",
   ],
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://doppelwriter.com/alternatives",
-    siteName: "DoppelWriter",
+  openGraph: buildOpenGraph({
+    url: "/alternatives",
     title: "DoppelWriter Alternatives & Competitors",
     description:
       "Compare DoppelWriter to every major AI writing tool. See the differences that matter.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DoppelWriter Alternatives" }],
-  },
+  }),
   twitter: {
     card: "summary_large_image",
     title: "DoppelWriter Alternatives & Competitors",

@@ -43,6 +43,11 @@ export const metadata: Metadata = {
     "AI writing style",
     "voice cloning writing",
   ],
+  // Canonical source for siteName / locale / url / type. Page-level openGraph
+  // blocks REPLACE this object rather than merging with it, so every page must
+  // build its own through `buildOpenGraph` in @/lib/og/metadata.
+  // No `images` key here on purpose: that is what lets src/app/opengraph-image.tsx
+  // merge in as the site-wide card.
   openGraph: {
     type: "website",
     locale: "en_US",
