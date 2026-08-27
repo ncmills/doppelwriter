@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { heartbeat } from "@/lib/heartbeat";
 import { sql } from "@/lib/db";
 import { generateProfile } from "@/lib/style-analyzer";
 
@@ -35,14 +36,21 @@ export async function GET(request: NextRequest) {
   `;
 
   let refreshed = 0;
+  let failed = 0;
   for (const profile of profilesNeedingRefresh) {
     try {
       await generateProfile(profile.id);
       refreshed++;
     } catch (err) {
+      failed++;
       console.error(`Auto-improve failed for profile ${profile.id} (${profile.name}):`, err);
     }
   }
+
+  await heartbeat("doppelwriter", "/api/profiles/auto-improve", {
+    ok: failed === 0,
+    error: failed ? `${failed} of ${profilesNeedingRefresh.length} profile refresh(es) failed` : undefined,
+  });
 
   return NextResponse.json({
     checked: profilesNeedingRefresh.length,

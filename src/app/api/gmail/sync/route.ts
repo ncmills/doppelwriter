@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { heartbeat } from "@/lib/heartbeat";
 import { auth } from "@/lib/auth";
 import { syncGmail } from "@/lib/gmail-sync";
 
@@ -34,14 +35,21 @@ export async function GET(request: NextRequest) {
   `;
 
   let total = 0;
+  let failed = 0;
   for (const user of users) {
     try {
       const result = await syncGmail(user.id);
       total += result.synced;
     } catch (err) {
+      failed++;
       console.error(`Gmail sync failed for user ${user.id}:`, err);
     }
   }
 
-  return NextResponse.json({ usersProcessed: users.length, totalSynced: total });
+  await heartbeat("doppelwriter", "/api/gmail/sync", {
+    ok: failed === 0,
+    error: failed ? `${failed} of ${users.length} user sync(s) failed` : undefined,
+  });
+
+  return NextResponse.json({ usersProcessed: users.length, totalSynced: total, failed });
 }
