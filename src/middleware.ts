@@ -1,39 +1,6 @@
 import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
-
-const publicPaths = [
-  "/",
-  "/pricing",
-  "/login",
-  "/signup",
-  "/write-like",
-  "/write",
-  "/privacy",
-  "/terms",
-  "/forgot-password",
-  "/reset-password",
-  "/api/auth",
-  "/api/auth/verify",
-  "/api/stripe/webhook",
-  "/api/gmail/callback",
-  "/api/init", // protected by CRON_SECRET or session check internally
-  "/api/demo",
-  "/s",
-  "/vs",
-  "/api/cron",
-  "/api/subscribe",
-  "/blog",
-  "/analyze",
-  "/api/analyze",
-  "/for",
-  "/how-it-works",
-  "/alternatives",
-  "/tools",
-  "/sitemap-html",
-  "/embed",
-  "/preview",
-  "/style-guide", // noindex design-system reference — public so it's viewable without login
-];
+import { isPublicPath } from "@/lib/public-paths";
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
@@ -53,9 +20,7 @@ export default auth((req) => {
     return NextResponse.redirect(new URL("/write-like/conan-obrien", req.url), 301);
   }
 
-  const isPublic = publicPaths.some(
-    (p) => pathname === p || pathname.startsWith(p + "/")
-  );
+  const isPublic = isPublicPath(pathname);
   const isStatic =
     pathname.startsWith("/_next") || pathname.includes("favicon") ||
     pathname === "/robots.txt" || pathname === "/sitemap.xml" ||
