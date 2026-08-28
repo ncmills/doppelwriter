@@ -35,3 +35,8 @@ jobs:
 
       - name: typecheck
         run: npx tsc --noEmit
+
+      # Pure unit tests (no env vars, no network). Includes the D95 guard:
+      # every vercel.json cron must pass the middleware public-path rule.
+      - name: test
+        run: npx vitest run

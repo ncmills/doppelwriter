@@ -9,6 +9,7 @@
     "postbuild": "npx tsx scripts/submit-indexnow.ts || true",
     "start": "next start",
     "lint": "eslint",
+    "test": "vitest run",
     "indexnow": "npx tsx scripts/submit-indexnow.ts",
     "deploy": "npx vercel --prod --yes && npx tsx scripts/submit-indexnow.ts"
   },
@@ -50,6 +51,7 @@
     "eslint-config-next": "16.1.7",
     "playwright": "^1.59.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.11"
   }
 }

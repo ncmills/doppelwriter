@@ -12,35 +12,6 @@ export async function GET(request: NextRequest) {
   if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const db = sql();
-  const now = new Date();
-
-  // Get all free users who signed up in the last 8 days (covers the full sequence)
-  const users = await db`
-    SELECT u.id, u.email, u.name, u.plan, u.created_at,
-      (SELECT COUNT(*)::int FROM usage_log WHERE user_id = u.id AND created_at > date_trunc('month', NOW())) as used,
-      (SELECT COUNT(*)::int FROM style_profiles WHERE user_id = u.id AND is_curated = FALSE) as profiles
-    FROM users u
-    WHERE u.plan = 'free'
-    AND u.email_verified = TRUE
-    AND u.created_at > NOW() - INTERVAL '9 days'
-    AND u.created_at < NOW() - INTERVAL '20 hours'
-  `;
-
-  let sent = 0;
-  let failed = 0;
-
-  // Batch-fetch all sent sequences to avoid N+1 queries
-  const userIds = users.map((u) => u.id);
-  const allSent = userIds.length > 0
-    ? await db`SELECT user_id, sequence_key FROM email_sequence_sends WHERE user_id = ANY(${userIds})`
-    : [];
-  const sentMap = new Map<string, Set<string>>();
-  for (const row of allSent) {
-    if (!sentMap.has(row.user_id)) sentMap.set(row.user_id, new Set());
-    sentMap.get(row.user_id)!.add(row.sequence_key);
-  }
-
   // A6b -- the beat below only reports failures this handler SURVIVED. Everything above it
   // ran unguarded: the db handle and the scheduled-email query, and any module-level throw. When one of those failed, the handler threw, `heartbeat()` was never reached, and
   // ops_heartbeats gained no row -- which `check_cron_heartbeats` reads as NEVER-SEEN or stale,
@@ -51,6 +22,35 @@ export async function GET(request: NextRequest) {
   // produce. So a hard throw now beats, and is re-thrown -- Vercel must still see the 500, and
   // a monitoring write must never turn a failed cron into a successful-looking one.
   try {
+    const db = sql();
+    const now = new Date();
+
+    // Get all free users who signed up in the last 8 days (covers the full sequence)
+    const users = await db`
+      SELECT u.id, u.email, u.name, u.plan, u.created_at,
+        (SELECT COUNT(*)::int FROM usage_log WHERE user_id = u.id AND created_at > date_trunc('month', NOW())) as used,
+        (SELECT COUNT(*)::int FROM style_profiles WHERE user_id = u.id AND is_curated = FALSE) as profiles
+      FROM users u
+      WHERE u.plan = 'free'
+      AND u.email_verified = TRUE
+      AND u.created_at > NOW() - INTERVAL '9 days'
+      AND u.created_at < NOW() - INTERVAL '20 hours'
+    `;
+
+    let sent = 0;
+    let failed = 0;
+
+    // Batch-fetch all sent sequences to avoid N+1 queries
+    const userIds = users.map((u) => u.id);
+    const allSent = userIds.length > 0
+      ? await db`SELECT user_id, sequence_key FROM email_sequence_sends WHERE user_id = ANY(${userIds})`
+      : [];
+    const sentMap = new Map<string, Set<string>>();
+    for (const row of allSent) {
+      if (!sentMap.has(row.user_id)) sentMap.set(row.user_id, new Set());
+      sentMap.get(row.user_id)!.add(row.sequence_key);
+    }
+
     for (const user of users) {
       const signupDate = new Date(user.created_at);
       const daysSinceSignup = Math.floor((now.getTime() - signupDate.getTime()) / (1000 * 60 * 60 * 24));
