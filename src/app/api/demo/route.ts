@@ -1,12 +1,11 @@
 import { NextRequest } from "next/server";
+import { allowAnon, RateLimitUnavailable } from "@/lib/anon-rate-limit";
 import { sql } from "@/lib/db";
 import Anthropic from "@anthropic-ai/sdk";
 import { CLAUDE_MODEL } from "@/lib/models";
 
 const client = new Anthropic();
 
-// In-memory rate limit: 3 requests per IP per hour
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
 const DEFAULT_BRIEF =
   "Write a paragraph about why the best ideas come when you're not trying";
@@ -22,30 +21,28 @@ function sanitizeBrief(raw: unknown): string {
 }
 
 export async function POST(request: NextRequest) {
-  // Rate limit by IP
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
-    || request.headers.get("x-real-ip")
-    || "unknown";
-
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-  if (entry && now < entry.resetAt) {
-    if (entry.count >= 3) {
+  // DURABLE RATE LIMIT (2026-08-29). This was a module-scope `Map`, i.e. a
+  // counter per lambda instance that reset on every cold start — a limit in
+  // name only, in front of an unauthenticated Anthropic call. It now counts in
+  // Postgres, keyed on an address the caller cannot forge, and FAILS CLOSED:
+  // if we cannot tell whether this caller has already spent, the answer is no.
+  try {
+    const verdict = await allowAnon(request.headers, "demo");
+    if (!verdict.allowed) {
       return new Response(
         JSON.stringify({ error: "Demo limit reached. Sign up for more!" }),
-        { status: 429 }
+        { status: 429, headers: { "Content-Type": "application/json" } }
       );
     }
-    entry.count++;
-  } else {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + 60 * 60 * 1000 });
-  }
-
-  // Clean up old entries periodically
-  if (rateLimitMap.size > 10000) {
-    for (const [key, val] of rateLimitMap) {
-      if (now > val.resetAt) rateLimitMap.delete(key);
+  } catch (e) {
+    if (e instanceof RateLimitUnavailable) {
+      console.error("[demo] rate-limit store unreachable — refusing", e);
+      return new Response(
+        JSON.stringify({ error: "Temporarily unavailable. Please try again shortly." }),
+        { status: 503, headers: { "Content-Type": "application/json" } }
+      );
     }
+    throw e;
   }
 
   // Parse optional brief from body
