@@ -1,40 +1,36 @@
 import { NextRequest } from "next/server";
+import { allowAnon, RateLimitUnavailable } from "@/lib/anon-rate-limit";
 import crypto from "crypto";
 import { sql } from "@/lib/db";
 import { CLAUDE_MODEL, getAnthropicClient } from "@/lib/models";
 import { trackServerEvent } from "@/lib/track";
 
-// In-memory rate limit: 5 requests per IP per hour
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
 export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
-  // Rate limit by IP
-  const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    request.headers.get("x-real-ip") ||
-    "unknown";
-
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-  if (entry && now < entry.resetAt) {
-    if (entry.count >= 5) {
+  // DURABLE RATE LIMIT (2026-08-29). This was a module-scope `Map`, i.e. a
+  // counter per lambda instance that reset on every cold start — a limit in
+  // name only, in front of an unauthenticated Anthropic call. It now counts in
+  // Postgres, keyed on an address the caller cannot forge, and FAILS CLOSED:
+  // if we cannot tell whether this caller has already spent, the answer is no.
+  try {
+    const verdict = await allowAnon(request.headers, "analyze");
+    if (!verdict.allowed) {
       return new Response(
         JSON.stringify({ error: "Rate limit exceeded. Try again in an hour." }),
         { status: 429, headers: { "Content-Type": "application/json" } }
       );
     }
-    entry.count++;
-  } else {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + 60 * 60 * 1000 });
-  }
-
-  // Clean up old entries periodically
-  if (rateLimitMap.size > 10000) {
-    for (const [key, val] of rateLimitMap) {
-      if (now > val.resetAt) rateLimitMap.delete(key);
+  } catch (e) {
+    if (e instanceof RateLimitUnavailable) {
+      console.error("[analyze] rate-limit store unreachable — refusing", e);
+      return new Response(
+        JSON.stringify({ error: "Temporarily unavailable. Please try again shortly." }),
+        { status: 503, headers: { "Content-Type": "application/json" } }
+      );
     }
+    throw e;
   }
 
   // Parse and validate body
