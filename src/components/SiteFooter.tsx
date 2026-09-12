@@ -47,7 +47,9 @@ const footerCols: { title: string; links: { label: string; href: string }[] }[] 
       { label: "Newsletter", href: "/write/newsletter" },
       { label: "Blog post", href: "/write/blog-post" },
       { label: "LinkedIn post", href: "/write/linkedin-post" },
-      { label: "All templates", href: "/write" },
+      // /write is the signed-in editor -- a logged-out visitor following this
+      // link landed on /login, not on a list of templates. /templates is that list.
+      { label: "All templates", href: "/templates" },
     ],
   },
   {

@@ -35,7 +35,7 @@ const offerings: { title: string; body: string; href: string; cta: string }[] = 
   {
     title: `${TEMPLATE_COUNT} Templates`,
     body: "Wedding speech, cover letter, newsletter, LinkedIn post — every writing task, in your voice.",
-    href: "/write",
+    href: "/templates",
     cta: "See templates",
   },
   {

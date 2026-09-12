@@ -21,6 +21,7 @@ const MAIN_PAGES = [
   { href: "/signup", label: "Sign Up" },
   { href: "/login", label: "Log In" },
   { href: "/blog", label: "Blog" },
+  { href: "/templates", label: "Writing Templates" },
   { href: "/for", label: "DoppelWriter For..." },
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/terms", label: "Terms of Service" },

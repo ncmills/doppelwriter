@@ -17,6 +17,7 @@ export const publicPaths = [
   "/signup",
   "/write-like",
   "/write",
+  "/templates", // public index of every /write/[slug] template
   "/privacy",
   "/terms",
   "/forgot-password",

@@ -31,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/sitemap-html`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.3 },
     { url: `${baseUrl}/embed`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.5 },
     { url: `${baseUrl}/write-like`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${baseUrl}/templates`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.85 },
     { url: `${baseUrl}/alternatives`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.85 },
   ];
 
