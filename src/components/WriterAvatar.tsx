@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { WRITER_PHOTOS } from "@/lib/writer-photos";
+import WriterObjectIcon from "./WriterObjectIcon";
 
 export default function WriterAvatar({
   name,
@@ -19,7 +20,7 @@ export default function WriterAvatar({
         style={{ width: size, height: size }}
         aria-label={`No portrait available for ${name}`}
       >
-        <FaceQuestionGlyph size={size} />
+        <WriterObjectIcon name={name} size={size * 0.65} />
       </div>
     );
   }
@@ -33,29 +34,5 @@ export default function WriterAvatar({
       className="object-cover shrink-0 bg-[var(--color-surface-raised)] duotone"
       loading="lazy"
     />
-  );
-}
-
-function FaceQuestionGlyph({ size }: { size: number }) {
-  // Single-stroke, ink-on-paper face with a question mark on the forehead.
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      width={size * 0.65}
-      height={size * 0.65}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="16" cy="16" r="11" />
-      <circle cx="12" cy="17" r="0.9" fill="currentColor" stroke="none" />
-      <circle cx="20" cy="17" r="0.9" fill="currentColor" stroke="none" />
-      <path d="M13 21 Q16 23 19 21" />
-      <path d="M14 11 Q14 9 16 9 Q18 9 18 11 Q18 12 16.5 12.5 Q16 13 16 14" />
-      <circle cx="16" cy="15.4" r="0.6" fill="currentColor" stroke="none" />
-    </svg>
   );
 }

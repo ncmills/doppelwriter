@@ -6,10 +6,14 @@ import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import UsageBar from "./UsageBar";
 import Logo from "./Logo";
+import { navHomeHref } from "@/lib/nav-home";
 
 export default function Nav() {
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  // Signed-out visitors reach /write from the homepage "try it" links; /home
+  // needs a session and bounces them to /login, so their way back is "/".
+  const homeHref = navHomeHref(status);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
@@ -33,7 +37,7 @@ export default function Nav() {
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center h-16 gap-4 sm:gap-8">
         <Link
-          href="/home"
+          href={homeHref}
           aria-label="DoppelWriter — home"
           className="flex items-center gap-3 shrink-0 text-[var(--color-fg)]"
         >
@@ -59,6 +63,23 @@ export default function Nav() {
         </div>
         <div className="ml-auto flex items-center gap-3 sm:gap-6">
           <div className="hidden sm:block"><UsageBar /></div>
+          {/* Way back to the marketing site (how it works, pricing) from the app. */}
+          {status !== "loading" && (
+            <div className="flex items-center gap-4 sm:gap-5">
+              <Link
+                href="/"
+                className="ed-link text-xs uppercase tracking-[0.15em] py-2 text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
+              >
+                <span aria-hidden="true">&larr; </span>Homepage
+              </Link>
+              <Link
+                href="/how-it-works"
+                className="hidden sm:inline ed-link text-xs uppercase tracking-[0.15em] py-2 text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
+              >
+                How it works
+              </Link>
+            </div>
+          )}
           {session?.user && (
             <>
               {/* Desktop nav links */}
