@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CURATED_WRITERS, CATEGORIES } from "@/lib/writer-builder";
 import { WRITER_PHOTOS } from "@/lib/writer-photos";
+import WriterObjectIcon from "@/components/WriterObjectIcon";
 import { USE_CASES } from "@/lib/use-cases";
 import { JsonLd } from "@/components/JsonLd";
 import EmailCapture from "@/components/EmailCapture";
@@ -294,14 +295,7 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
             </div>
           ) : (
             <div className="writer-hero-portrait relative aspect-[4/5] overflow-hidden bg-[var(--color-surface-raised)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-fg-muted)]">
-              <svg viewBox="0 0 32 32" width="80" height="80" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <circle cx="16" cy="16" r="11" />
-                <circle cx="12" cy="17" r="0.9" fill="currentColor" stroke="none" />
-                <circle cx="20" cy="17" r="0.9" fill="currentColor" stroke="none" />
-                <path d="M13 21 Q16 23 19 21" />
-                <path d="M14 11 Q14 9 16 9 Q18 9 18 11 Q18 12 16.5 12.5 Q16 13 16 14" />
-                <circle cx="16" cy="15.4" r="0.6" fill="currentColor" stroke="none" />
-              </svg>
+              <WriterObjectIcon name={writer.name} size={80} />
               <span aria-hidden className="writer-hero-curtain" />
             </div>
           )}
