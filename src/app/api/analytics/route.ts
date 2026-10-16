@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { sql } from "@/lib/db";
+import { metricOrUnavailable } from "./logic";
 
 // Only accessible by admin (nick@doppelwriter.com)
 export async function GET(req: Request) {
@@ -30,7 +31,7 @@ export async function GET(req: Request) {
     // Pro users
     db`SELECT COUNT(*) as count FROM users WHERE plan = 'pro'`,
     // Tone checker uses (from analytics_events)
-    db`SELECT COUNT(*) as count FROM analytics_events WHERE event = 'tone_check' AND created_at > NOW() - ${days + ' days'}::interval`.catch(() => [{ count: 0 }]),
+    db`SELECT COUNT(*) as count FROM analytics_events WHERE event = 'tone_check' AND created_at > NOW() - ${days + ' days'}::interval`.catch(() => null),
     // Analyzer uses
     db`SELECT COUNT(*) as count FROM analyzer_results WHERE created_at > NOW() - ${days + ' days'}::interval`,
     // Top writer profiles used (by generation/edit activity tracked in analytics_events)
@@ -41,12 +42,12 @@ export async function GET(req: Request) {
        AND ae.created_at > NOW() - ${days + ' days'}::interval
        AND ae.properties->>'profileId' IS NOT NULL
        GROUP BY properties->>'profileId', sp.writer_name, sp.name
-       ORDER BY uses DESC LIMIT 10`.catch(() => []),
+       ORDER BY uses DESC LIMIT 10`.catch(() => null),
     // Top pages from analytics events
     db`SELECT page, COUNT(*) as views
        FROM analytics_events
        WHERE page IS NOT NULL AND created_at > NOW() - ${days + ' days'}::interval
-       GROUP BY page ORDER BY views DESC LIMIT 10`.catch(() => []),
+       GROUP BY page ORDER BY views DESC LIMIT 10`.catch(() => null),
     // Daily activity (signups + generations)
     db`SELECT DATE(created_at) as day, COUNT(*) as count
        FROM usage_log WHERE created_at > NOW() - ${days + ' days'}::interval
@@ -57,7 +58,7 @@ export async function GET(req: Request) {
        JOIN users u ON u.id = ul.user_id
        WHERE u.created_at < NOW() - INTERVAL '1 day'
        AND ul.created_at > u.created_at + INTERVAL '1 day'
-       AND ul.created_at > NOW() - ${days + ' days'}::interval`.catch(() => [{ retained: 0 }]),
+       AND ul.created_at > NOW() - ${days + ' days'}::interval`.catch(() => null),
   ]);
 
   return NextResponse.json({
@@ -72,11 +73,11 @@ export async function GET(req: Request) {
       edits: Number(edits[0].count),
       profilesCreated: Number(profiles[0].count),
       shares: Number(shares[0].count),
-      toneChecks: Number(toneChecks[0]?.count || 0),
+      toneChecks: metricOrUnavailable(toneChecks, 'count'),
       analyzerUses: Number(analyzerUses[0].count),
     },
     retention: {
-      usersReturnedAfterDay1: Number(retentionData[0]?.retained || 0),
+      usersReturnedAfterDay1: metricOrUnavailable(retentionData, 'retained'),
     },
     dailyActivity,
     topWriters,
