@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { heartbeat } from "@/lib/heartbeat";
 import { auth } from "@/lib/auth";
 import { syncGmail } from "@/lib/gmail-sync";
+import { withCronLog } from "@/lib/cron-log";
 
 export const maxDuration = 120;
 
@@ -19,7 +20,7 @@ export async function POST(request: NextRequest) {
 }
 
 // Vercel cron calls this — syncs all users with connected Gmail
-export async function GET(request: NextRequest) {
+export const GET = withCronLog("gmail/sync", async (request: NextRequest) => {
   // Verify cron secret — reject if CRON_SECRET is not configured
   const cronSecret = process.env.CRON_SECRET;
   const authHeader = request.headers.get("authorization");
@@ -66,4 +67,4 @@ export async function GET(request: NextRequest) {
     await heartbeat("doppelwriter", "/api/gmail/sync", { ok: false, error: err });
     throw err;
   }
-}
+});

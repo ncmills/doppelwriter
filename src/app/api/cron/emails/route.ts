@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { heartbeat } from "@/lib/heartbeat";
 import { sql } from "@/lib/db";
 import { SEQUENCES, sendSequenceEmail } from "@/lib/email-sequences";
+import { withCronLog } from "@/lib/cron-log";
 
 export const maxDuration = 60;
 
-export async function GET(request: NextRequest) {
+export const GET = withCronLog("cron/emails", async (request: NextRequest) => {
   // Verify cron secret
   const cronSecret = process.env.CRON_SECRET;
   const authHeader = request.headers.get("authorization");
@@ -93,4 +94,4 @@ export async function GET(request: NextRequest) {
     await heartbeat("doppelwriter", "/api/cron/emails", { ok: false, error: err });
     throw err;
   }
-}
+});

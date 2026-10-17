@@ -2,13 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { heartbeat } from "@/lib/heartbeat";
 import { sql } from "@/lib/db";
 import { generateProfile } from "@/lib/style-analyzer";
+import { withCronLog } from "@/lib/cron-log";
 
 // Vercel cron or manual trigger — re-generates profiles that have accumulated
 // enough new corrections to warrant a refresh. This is the auto-improvement loop.
 
 export const maxDuration = 120;
 
-export async function GET(request: NextRequest) {
+export const GET = withCronLog("profiles/auto-improve", async (request: NextRequest) => {
   // Verify cron secret or admin auth — reject if CRON_SECRET is not configured
   const cronSecret = process.env.CRON_SECRET;
   const authHeader = request.headers.get("authorization");
@@ -75,4 +76,4 @@ export async function GET(request: NextRequest) {
     await heartbeat("doppelwriter", "/api/profiles/auto-improve", { ok: false, error: err });
     throw err;
   }
-}
+});
