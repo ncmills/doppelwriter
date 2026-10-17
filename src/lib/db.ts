@@ -30,16 +30,20 @@ export async function initSchema() {
       email_verified BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMPTZ DEFAULT NOW(),
       updated_at TIMESTAMPTZ DEFAULT NOW()
-    );
+    )
+  `;
 
+  await db`
     CREATE TABLE IF NOT EXISTS email_verifications (
       user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
       email TEXT NOT NULL,
       token TEXT NOT NULL UNIQUE,
       expires_at TIMESTAMPTZ NOT NULL,
       created_at TIMESTAMPTZ DEFAULT NOW()
-    );
+    )
+  `;
 
+  await db`
     CREATE TABLE IF NOT EXISTS writing_samples (
       id SERIAL PRIMARY KEY,
       user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
@@ -49,8 +53,10 @@ export async function initSchema() {
       content TEXT NOT NULL,
       word_count INTEGER NOT NULL,
       created_at TIMESTAMPTZ DEFAULT NOW()
-    );
+    )
+  `;
 
+  await db`
     CREATE TABLE IF NOT EXISTS style_profiles (
       id SERIAL PRIMARY KEY,
       user_id TEXT REFERENCES users(id) ON DELETE SET NULL,
@@ -65,8 +71,10 @@ export async function initSchema() {
       exemplar_passages JSONB DEFAULT '[]',
       created_at TIMESTAMPTZ DEFAULT NOW(),
       updated_at TIMESTAMPTZ DEFAULT NOW()
-    );
+    )
+  `;
 
+  await db`
     CREATE TABLE IF NOT EXISTS voice_corrections (
       id SERIAL PRIMARY KEY,
       user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
@@ -76,14 +84,18 @@ export async function initSchema() {
       correction_type TEXT DEFAULT 'manual_edit',
       lesson TEXT,
       created_at TIMESTAMPTZ DEFAULT NOW()
-    );
+    )
+  `;
 
+  await db`
     CREATE TABLE IF NOT EXISTS sample_profiles (
       sample_id INTEGER REFERENCES writing_samples(id) ON DELETE CASCADE,
       profile_id INTEGER REFERENCES style_profiles(id) ON DELETE CASCADE,
       PRIMARY KEY (sample_id, profile_id)
-    );
+    )
+  `;
 
+  await db`
     CREATE TABLE IF NOT EXISTS drafts (
       id SERIAL PRIMARY KEY,
       user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
@@ -95,36 +107,42 @@ export async function initSchema() {
       revisions JSONB DEFAULT '[]',
       created_at TIMESTAMPTZ DEFAULT NOW(),
       updated_at TIMESTAMPTZ DEFAULT NOW()
-    );
+    )
+  `;
 
+  await db`
     CREATE TABLE IF NOT EXISTS usage_log (
       id SERIAL PRIMARY KEY,
       user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
       action TEXT NOT NULL,
       tokens_used INTEGER DEFAULT 0,
       created_at TIMESTAMPTZ DEFAULT NOW()
-    );
+    )
+  `;
 
+  await db`
     CREATE TABLE IF NOT EXISTS favorites (
       user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
       profile_id INTEGER REFERENCES style_profiles(id) ON DELETE CASCADE,
       created_at TIMESTAMPTZ DEFAULT NOW(),
       PRIMARY KEY (user_id, profile_id)
-    );
+    )
+  `;
 
-    ALTER TABLE style_profiles ADD COLUMN IF NOT EXISTS voice_overrides JSONB DEFAULT '{}';
+  await db`ALTER TABLE style_profiles ADD COLUMN IF NOT EXISTS voice_overrides JSONB DEFAULT '{}'`;
 
-    CREATE INDEX IF NOT EXISTS idx_samples_user ON writing_samples(user_id);
-    CREATE INDEX IF NOT EXISTS idx_samples_user_date ON writing_samples(user_id, created_at);
-    CREATE INDEX IF NOT EXISTS idx_profiles_user ON style_profiles(user_id);
-    CREATE INDEX IF NOT EXISTS idx_profiles_curated ON style_profiles(is_curated);
-    CREATE INDEX IF NOT EXISTS idx_profiles_user_curated ON style_profiles(user_id, is_curated);
-    CREATE INDEX IF NOT EXISTS idx_profiles_writer ON style_profiles(writer_name);
-    CREATE INDEX IF NOT EXISTS idx_drafts_user ON drafts(user_id);
-    CREATE INDEX IF NOT EXISTS idx_drafts_user_date ON drafts(user_id, updated_at);
-    CREATE INDEX IF NOT EXISTS idx_usage_user_date ON usage_log(user_id, created_at);
-    CREATE INDEX IF NOT EXISTS idx_verifications_token ON email_verifications(token);
+  await db`CREATE INDEX IF NOT EXISTS idx_samples_user ON writing_samples(user_id)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_samples_user_date ON writing_samples(user_id, created_at)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_profiles_user ON style_profiles(user_id)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_profiles_curated ON style_profiles(is_curated)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_profiles_user_curated ON style_profiles(user_id, is_curated)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_profiles_writer ON style_profiles(writer_name)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_drafts_user ON drafts(user_id)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_drafts_user_date ON drafts(user_id, updated_at)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_usage_user_date ON usage_log(user_id, created_at)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_verifications_token ON email_verifications(token)`;
 
+  await db`
     CREATE TABLE IF NOT EXISTS shared_drafts (
       id SERIAL PRIMARY KEY,
       user_id TEXT REFERENCES users(id) ON DELETE SET NULL,
@@ -132,32 +150,36 @@ export async function initSchema() {
       content TEXT NOT NULL,
       voice_name TEXT,
       created_at TIMESTAMPTZ DEFAULT NOW()
-    );
+    )
+  `;
 
+  await db`
     CREATE TABLE IF NOT EXISTS referrals (
       id SERIAL PRIMARY KEY,
       referrer_id TEXT REFERENCES users(id) ON DELETE CASCADE,
       referred_id TEXT REFERENCES users(id) ON DELETE CASCADE,
       bonus_applied BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMPTZ DEFAULT NOW()
-    );
+    )
+  `;
 
+  await db`
     CREATE TABLE IF NOT EXISTS email_sequence_sends (
       id SERIAL PRIMARY KEY,
       user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
       sequence_key TEXT NOT NULL,
       sent_at TIMESTAMPTZ DEFAULT NOW(),
       UNIQUE(user_id, sequence_key)
-    );
-
-    ALTER TABLE users ADD COLUMN IF NOT EXISTS referral_code TEXT UNIQUE;
-    ALTER TABLE users ADD COLUMN IF NOT EXISTS referred_by TEXT;
-    ALTER TABLE users ADD COLUMN IF NOT EXISTS primary_task TEXT;
-
-    CREATE INDEX IF NOT EXISTS idx_shared_drafts_slug ON shared_drafts(slug);
-    CREATE INDEX IF NOT EXISTS idx_referrals_referrer ON referrals(referrer_id);
-    CREATE INDEX IF NOT EXISTS idx_email_sends_user ON email_sequence_sends(user_id);
+    )
   `;
+
+  await db`ALTER TABLE users ADD COLUMN IF NOT EXISTS referral_code TEXT UNIQUE`;
+  await db`ALTER TABLE users ADD COLUMN IF NOT EXISTS referred_by TEXT`;
+  await db`ALTER TABLE users ADD COLUMN IF NOT EXISTS primary_task TEXT`;
+
+  await db`CREATE INDEX IF NOT EXISTS idx_shared_drafts_slug ON shared_drafts(slug)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_referrals_referrer ON referrals(referrer_id)`;
+  await db`CREATE INDEX IF NOT EXISTS idx_email_sends_user ON email_sequence_sends(user_id)`;
 
   await db`
     CREATE TABLE IF NOT EXISTS email_captures (
