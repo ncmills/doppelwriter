@@ -12,6 +12,28 @@ export function sql() {
   return _sql;
 }
 
+// DOCKET-1017 DW-SCHEMA-DURABLE: initSchema() runs only on a manual POST
+// /api/init, so the primary_task column never reached prod (NeonDbError 42703).
+// Routes that read or write it call this first: it runs the idempotent ALTER
+// once per process and retries on the next call if it failed.
+let _primaryTaskColumn: Promise<void> | null = null;
+
+export function ensurePrimaryTaskColumn(): Promise<void> {
+  if (!_primaryTaskColumn) {
+    const db = sql();
+    _primaryTaskColumn = Promise.resolve(
+      db`ALTER TABLE users ADD COLUMN IF NOT EXISTS primary_task TEXT`
+    ).then(
+      () => undefined,
+      (err) => {
+        _primaryTaskColumn = null;
+        throw err;
+      }
+    );
+  }
+  return _primaryTaskColumn;
+}
+
 export async function initSchema() {
   const db = sql();
   await db`
