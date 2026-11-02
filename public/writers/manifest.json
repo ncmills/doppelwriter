@@ -1,0 +1,870 @@
+{
+  "ernest-hemingway": {
+    "file": "/writers/ernest-hemingway.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/2/28/ErnestHemingway.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Ernest Hemingway",
+    "width": 800,
+    "height": 999
+  },
+  "george-orwell": {
+    "file": "/writers/george-orwell.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/7/7e/George_Orwell_press_photo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "George Orwell",
+    "width": 800,
+    "height": 1084
+  },
+  "joan-didion": {
+    "file": "/writers/joan-didion.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/8/86/Didion1970_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Joan Didion",
+    "width": 800,
+    "height": 1013
+  },
+  "hunter-s-thompson": {
+    "file": "/writers/hunter-s-thompson.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Hunter_S._Thompson%2C_Las_Vegas_1971.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Hunter S. Thompson",
+    "width": 800,
+    "height": 1046
+  },
+  "toni-morrison": {
+    "file": "/writers/toni-morrison.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Toni_Morrison.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Toni Morrison",
+    "width": 800,
+    "height": 1140
+  },
+  "kurt-vonnegut": {
+    "file": "/writers/kurt-vonnegut.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/8/89/Kurt_Vonnegut_by_Bernard_Gotfryd_%281965%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Kurt Vonnegut",
+    "width": 800,
+    "height": 1188
+  },
+  "david-foster-wallace": {
+    "file": "/writers/david-foster-wallace.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/f/ff/David_Foster_Wallace_in_2006.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "David Foster Wallace",
+    "width": 800,
+    "height": 638
+  },
+  "cormac-mccarthy": {
+    "file": "/writers/cormac-mccarthy.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/7/7f/Cormac_McCarthy_%28Child_of_God_author_portrait_-_high-res%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Cormac McCarthy",
+    "width": 800,
+    "height": 1200
+  },
+  "zadie-smith": {
+    "file": "/writers/zadie-smith.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/c/c2/Zadie_Smith_NBCC_2011_Shankbone_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Zadie Smith",
+    "width": 800,
+    "height": 1000
+  },
+  "stephen-king": {
+    "file": "/writers/stephen-king.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/2/24/Stephen_King_at_the_2024_Toronto_International_Film_Festival_2_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Stephen King",
+    "width": 800,
+    "height": 991
+  },
+  "taylor-swift": {
+    "file": "/writers/taylor-swift.png",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Taylor_Swift_at_the_2023_MTV_Video_Music_Awards_%283%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Taylor Swift",
+    "width": 800,
+    "height": 1137
+  },
+  "james-baldwin": {
+    "file": "/writers/james-baldwin.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/f/f3/James_Baldwin_37_Allan_Warren_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "James Baldwin",
+    "width": 800,
+    "height": 1070
+  },
+  "colleen-hoover": {
+    "file": "/writers/colleen-hoover.png",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Colleen_Hoover_Video_Call.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Colleen Hoover",
+    "width": 289,
+    "height": 287
+  },
+  "mary-oliver": {
+    "file": "/writers/mary-oliver.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/en/4/4d/Mary_Oliver.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Mary Oliver",
+    "width": 249,
+    "height": 400
+  },
+  "haruki-murakami": {
+    "file": "/writers/haruki-murakami.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/5/51/Conversatorio_Haruki_Murakami_%2812_de_12%29_%2845747009452%29_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Haruki Murakami",
+    "width": 456,
+    "height": 608
+  },
+  "isabel-allende": {
+    "file": "/writers/isabel-allende.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Isabel_Allende_Frankfurter_Buchmesse_2015_%28cropped%29.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Isabel Allende",
+    "width": 800,
+    "height": 1066
+  },
+  "seth-godin": {
+    "file": "/writers/seth-godin.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/8/87/Seth_Godin_in_2009.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Seth Godin",
+    "width": 800,
+    "height": 1202
+  },
+  "warren-buffett": {
+    "file": "/writers/warren-buffett.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Warren_Buffett_at_the_2015_SelectUSA_Investment_Summit_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Warren Buffett",
+    "width": 800,
+    "height": 1066
+  },
+  "jeff-bezos": {
+    "file": "/writers/jeff-bezos.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/f/fc/260202-D-PM193-2205_SECWAR_Arsenal_of_Freedom_Tour_-_Florida_%283x4_cropped_on_Bezos_and_rotated%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Jeff Bezos",
+    "width": 800,
+    "height": 1067
+  },
+  "naval-ravikant": {
+    "file": "/writers/naval-ravikant.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/5/55/Naval_Ravikant_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Naval Ravikant",
+    "width": 231,
+    "height": 308
+  },
+  "james-clear": {
+    "file": "/writers/james-clear.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/1/17/James_Clear_in_2010.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "James Clear",
+    "width": 381,
+    "height": 517
+  },
+  "marc-andreessen": {
+    "file": "/writers/marc-andreessen.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/5/57/Marc_Andreessen-9_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Marc Andreessen",
+    "width": 800,
+    "height": 1019
+  },
+  "ryan-holiday": {
+    "file": "/writers/ryan-holiday.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/e/e3/RyanHoliday_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Ryan Holiday",
+    "width": 800,
+    "height": 979
+  },
+  "ray-dalio": {
+    "file": "/writers/ray-dalio.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Web_Summit_2018_-_Forum_-_Day_2%2C_November_7_HM1_7481_%2844858045925%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Ray Dalio",
+    "width": 800,
+    "height": 813
+  },
+  "howard-marks": {
+    "file": "/writers/howard-marks.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Howard_Marks_2.17.12_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Howard Marks",
+    "width": 644,
+    "height": 921
+  },
+  "reid-hoffman": {
+    "file": "/writers/reid-hoffman.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/8/8e/2022_Reid_Hoffman_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Reid Hoffman",
+    "width": 800,
+    "height": 1064
+  },
+  "patrick-collison": {
+    "file": "/writers/patrick-collison.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/7/74/Patrick_Collison_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Patrick Collison",
+    "width": 800,
+    "height": 1068
+  },
+  "joe-rogan": {
+    "file": "/writers/joe-rogan.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/7/74/2026_Joe_Rogan_at_the_White_House_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Joe Rogan",
+    "width": 423,
+    "height": 558
+  },
+  "tim-ferriss": {
+    "file": "/writers/tim-ferriss.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/7/78/Tim_Ferriss.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Tim Ferriss",
+    "width": 800,
+    "height": 1199
+  },
+  "lex-fridman": {
+    "file": "/writers/lex-fridman.png",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/5/50/Lex_Fridman_teaching_at_MIT_in_2018.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Lex Fridman",
+    "width": 574,
+    "height": 699
+  },
+  "brene-brown": {
+    "file": "/writers/brene-brown.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Bren%C3%A9_Brown_and_Malcolm_Gladwell_at_SXSW_2025_06_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Brene Brown",
+    "width": 800,
+    "height": 800
+  },
+  "malcolm-gladwell": {
+    "file": "/writers/malcolm-gladwell.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Malcolm_Gladwell%2C_author%2C_at_SXSW_2025_02_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Malcolm Gladwell",
+    "width": 800,
+    "height": 1047
+  },
+  "sam-harris": {
+    "file": "/writers/sam-harris.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/1/16/Sam_Harris_2016_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Sam Harris",
+    "width": 800,
+    "height": 1045
+  },
+  "conan-obrien": {
+    "file": "/writers/conan-obrien.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Conan_O%27Brien_2025.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Conan O'Brien",
+    "width": 800,
+    "height": 1200
+  },
+  "ezra-klein": {
+    "file": "/writers/ezra-klein.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/0/00/Ezra_Klein_2026-01-28.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Ezra Klein",
+    "width": 800,
+    "height": 1202
+  },
+  "guy-raz": {
+    "file": "/writers/guy-raz.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/4/46/Guy_Raz_2015-09-29_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Guy Raz",
+    "width": 800,
+    "height": 736
+  },
+  "dax-shepard": {
+    "file": "/writers/dax-shepard.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Dax_Shepard_2014.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Dax Shepard",
+    "width": 359,
+    "height": 492
+  },
+  "shane-parrish": {
+    "file": "/writers/shane-parrish.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/en/0/0d/Shane_Parrish.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Shane Parrish",
+    "width": 304,
+    "height": 318
+  },
+  "kara-swisher": {
+    "file": "/writers/kara-swisher.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/1/11/Kara_Swisher_crop.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Kara Swisher",
+    "width": 800,
+    "height": 1023
+  },
+  "barack-obama": {
+    "file": "/writers/barack-obama.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/8/8d/President_Barack_Obama.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Barack Obama",
+    "width": 800,
+    "height": 1000
+  },
+  "winston-churchill": {
+    "file": "/writers/winston-churchill.jpg",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Sir_Winston_Churchill_-_19086236948_%28restored%29.jpg/3840px-Sir_Winston_Churchill_-_19086236948_%28restored%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "subject": "Winston Churchill",
+    "width": 800,
+    "height": 995
+  },
+  "abraham-lincoln": {
+    "file": "/writers/abraham-lincoln.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Abraham Lincoln",
+    "width": 800,
+    "height": 1031
+  },
+  "john-f-kennedy": {
+    "file": "/writers/john-f-kennedy.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/c/c3/John_F._Kennedy%2C_White_House_color_photo_portrait.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "John F. Kennedy",
+    "width": 800,
+    "height": 1037
+  },
+  "martin-luther-king-jr": {
+    "file": "/writers/martin-luther-king-jr.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Martin_Luther_King%2C_Jr._and_Lyndon_Johnson_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Martin Luther King Jr.",
+    "width": 800,
+    "height": 1066
+  },
+  "alexandria-ocasio-cortez": {
+    "file": "/writers/alexandria-ocasio-cortez.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Alexandria_Ocasio-Cortez_Official_Portrait.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Alexandria Ocasio-Cortez",
+    "width": 800,
+    "height": 1000
+  },
+  "ronald-reagan": {
+    "file": "/writers/ronald-reagan.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/1/16/Official_Portrait_of_President_Reagan_1981.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Ronald Reagan",
+    "width": 800,
+    "height": 1000
+  },
+  "theodore-roosevelt": {
+    "file": "/writers/theodore-roosevelt.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Theodore_Roosevelt_by_the_Pach_Bros_%284x5_cropped%29_%283%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Theodore Roosevelt",
+    "width": 800,
+    "height": 993
+  },
+  "margaret-thatcher": {
+    "file": "/writers/margaret-thatcher.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Margaret_Thatcher_stock_portrait_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Margaret Thatcher",
+    "width": 790,
+    "height": 1099
+  },
+  "bernie-sanders": {
+    "file": "/writers/bernie-sanders.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/c/c2/Bernie_Sanders_February_2026_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Bernie Sanders",
+    "width": 800,
+    "height": 1066
+  },
+  "nelson-mandela": {
+    "file": "/writers/nelson-mandela.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/0/02/Nelson_Mandela_1994.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Nelson Mandela",
+    "width": 800,
+    "height": 1035
+  },
+  "volodymyr-zelenskyy": {
+    "file": "/writers/volodymyr-zelenskyy.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/4/41/New_Year%27s_Eve_from_President_of_Ukraine_Volodymyr_Zelensky_%2831-12-2025%29_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Volodymyr Zelenskyy",
+    "width": 800,
+    "height": 1091
+  },
+  "marcus-aurelius": {
+    "file": "/writers/marcus-aurelius.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/e/ec/MSR-ra-61-b-1-DM.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Marcus Aurelius",
+    "width": 800,
+    "height": 1067
+  },
+  "benjamin-franklin": {
+    "file": "/writers/benjamin-franklin.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/8/87/Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Benjamin Franklin",
+    "width": 800,
+    "height": 985
+  },
+  "frederick-douglass": {
+    "file": "/writers/frederick-douglass.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Frederick_Douglass_%28circa_1879%29_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Frederick Douglass",
+    "width": 800,
+    "height": 1066
+  },
+  "mark-twain": {
+    "file": "/writers/mark-twain.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Mark_Twain_by_AF_Bradley_%28cropped_2%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Mark Twain",
+    "width": 683,
+    "height": 910
+  },
+  "virginia-woolf": {
+    "file": "/writers/virginia-woolf.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/0/0b/George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Virginia Woolf",
+    "width": 800,
+    "height": 1093
+  },
+  "oscar-wilde": {
+    "file": "/writers/oscar-wilde.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Oscar_Wilde_by_Napoleon_Sarony._Three-quarter-length_photograph%2C_seated_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Oscar Wilde",
+    "width": 800,
+    "height": 1185
+  },
+  "ralph-waldo-emerson": {
+    "file": "/writers/ralph-waldo-emerson.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Ralph_Waldo_Emerson_by_Josiah_Johnson_Hawes_1857.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Ralph Waldo Emerson",
+    "width": 800,
+    "height": 1084
+  },
+  "jane-austen": {
+    "file": "/writers/jane-austen.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/c/cc/CassandraAusten-JaneAusten%28c.1810%29_hires.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Jane Austen",
+    "width": 800,
+    "height": 1032
+  },
+  "charles-dickens": {
+    "file": "/writers/charles-dickens.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Dickens_Gurney_head.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Charles Dickens",
+    "width": 800,
+    "height": 1170
+  },
+  "h-l-mencken": {
+    "file": "/writers/h-l-mencken.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/5/54/H-L-Mencken-1928.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "H.L. Mencken",
+    "width": 800,
+    "height": 1155
+  },
+  "walt-whitman": {
+    "file": "/writers/walt-whitman.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Walt_Whitman_-_George_Collins_Cox.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Walt Whitman",
+    "width": 800,
+    "height": 991
+  },
+  "mary-shelley": {
+    "file": "/writers/mary-shelley.jpg",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Mary_Wollstonecraft_Shelley_Rothwell.tif/lossy-page1-1280px-Mary_Wollstonecraft_Shelley_Rothwell.tif.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "subject": "Mary Shelley",
+    "width": 800,
+    "height": 974
+  },
+  "carl-sagan": {
+    "file": "/writers/carl-sagan.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/b/be/Carl_Sagan_Planetary_Society.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Carl Sagan",
+    "width": 328,
+    "height": 448
+  },
+  "richard-feynman": {
+    "file": "/writers/richard-feynman.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/en/4/42/Richard_Feynman_Nobel.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Richard Feynman",
+    "width": 713,
+    "height": 1008
+  },
+  "oliver-sacks": {
+    "file": "/writers/oliver-sacks.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Dr._Oliver_Sacks%2C_Physician%2C_Author.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Oliver Sacks",
+    "width": 800,
+    "height": 1213
+  },
+  "stephen-jay-gould": {
+    "file": "/writers/stephen-jay-gould.png",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/3/38/SJ_Gould_1985_Flamingos_Smile_Jacket_Photo_by_Eric_Taylor.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Stephen Jay Gould",
+    "width": 800,
+    "height": 971
+  },
+  "rachel-carson": {
+    "file": "/writers/rachel-carson.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Rachel-Carson.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Rachel Carson",
+    "width": 800,
+    "height": 1013
+  },
+  "neil-degrasse-tyson": {
+    "file": "/writers/neil-degrasse-tyson.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/0/03/Neil_DeGrasse_Tyson_%282023%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Neil deGrasse Tyson",
+    "width": 800,
+    "height": 1067
+  },
+  "steven-pinker": {
+    "file": "/writers/steven-pinker.jpg",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/Steven_Pinker_in_2023.jpg/3840px-Steven_Pinker_in_2023.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "subject": "Steven Pinker",
+    "width": 800,
+    "height": 1199
+  },
+  "mary-roach": {
+    "file": "/writers/mary-roach.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/0/01/2025_Mary_Roach_at_the_Library_of_Congress_on_25_September_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Mary Roach",
+    "width": 800,
+    "height": 1068
+  },
+  "atul-gawande": {
+    "file": "/writers/atul-gawande.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Atul_Gawande%2C_USAID_Assistant_Administrator.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Atul Gawande",
+    "width": 800,
+    "height": 1067
+  },
+  "ed-yong": {
+    "file": "/writers/ed-yong.jpg",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Ed_Yong_%28cropped%29.JPG/330px-Ed_Yong_%28cropped%29.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "subject": "Ed Yong",
+    "width": 330,
+    "height": 440
+  },
+  "robert-sapolsky": {
+    "file": "/writers/robert-sapolsky.jpg",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/Robert_Sapolsky_in_2023.jpg/3840px-Robert_Sapolsky_in_2023.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "subject": "Robert Sapolsky",
+    "width": 800,
+    "height": 1120
+  },
+  "siddhartha-mukherjee": {
+    "file": "/writers/siddhartha-mukherjee.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Siddhartha_Mukherjee.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Siddhartha Mukherjee",
+    "width": 800,
+    "height": 1196
+  },
+  "dr-seuss": {
+    "file": "/writers/dr-seuss.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/1/18/Theodor_Seuss_Geisel_%2801037v%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Dr. Seuss",
+    "width": 800,
+    "height": 1041
+  },
+  "roald-dahl": {
+    "file": "/writers/roald-dahl.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/0/01/Roald_Dahl_%281982%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Roald Dahl",
+    "width": 800,
+    "height": 1067
+  },
+  "j-k-rowling": {
+    "file": "/writers/j-k-rowling.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/5/5d/J._K._Rowling_2010.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "J.K. Rowling",
+    "width": 800,
+    "height": 986
+  },
+  "shel-silverstein": {
+    "file": "/writers/shel-silverstein.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Portrait_of_Shel_Silverstein_in_c._1974.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Shel Silverstein",
+    "width": 364,
+    "height": 816
+  },
+  "maurice-sendak": {
+    "file": "/writers/maurice-sendak.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/en/1/11/Maurice-Sendak_portrait2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Maurice Sendak",
+    "width": 231,
+    "height": 269
+  },
+  "beverly-cleary": {
+    "file": "/writers/beverly-cleary.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Beverly_Cleary_ca._1955.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Beverly Cleary",
+    "width": 644,
+    "height": 724
+  },
+  "c-s-lewis": {
+    "file": "/writers/c-s-lewis.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/2/27/CS_Lewis_photo_on_dust_jacket.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "C.S. Lewis",
+    "width": 800,
+    "height": 981
+  },
+  "eric-carle": {
+    "file": "/writers/eric-carle.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/0/04/Eric_Carle_kinderboekenschrijver%2C_1988_-_28_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Eric Carle",
+    "width": 800,
+    "height": 1056
+  },
+  "r-l-stine": {
+    "file": "/writers/r-l-stine.jpg",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/RLStine.jpg/3840px-RLStine.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "subject": "R.L. Stine",
+    "width": 800,
+    "height": 1200
+  },
+  "judy-blume": {
+    "file": "/writers/judy-blume.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/1/18/JudyBlume2009%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Judy Blume",
+    "width": 799,
+    "height": 893
+  },
+  "lemony-snicket": {
+    "file": "/writers/lemony-snicket.png",
+    "source": "https://upload.wikimedia.org/wikipedia/en/1/1a/Patrick_Warburton_as_Lemony_Snicket.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Lemony Snicket",
+    "width": 201,
+    "height": 275
+  },
+  "philip-pullman": {
+    "file": "/writers/philip-pullman.png",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/6/66/Philip_Pullman_2005-04-16.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Philip Pullman",
+    "width": 800,
+    "height": 1122
+  },
+  "ta-nehisi-coates": {
+    "file": "/writers/ta-nehisi-coates.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/6/61/Ta-Nehisi_Coates_at_the_2025_Edinburgh_International_Book_Festival-21_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Ta-Nehisi Coates",
+    "width": 800,
+    "height": 1066
+  },
+  "matt-taibbi": {
+    "file": "/writers/matt-taibbi.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/0/07/Matt_Taibbi_on_ReasonTV.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Matt Taibbi",
+    "width": 800,
+    "height": 902
+  },
+  "nora-ephron": {
+    "file": "/writers/nora-ephron.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Nora_Ephron.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Nora Ephron",
+    "width": 800,
+    "height": 1089
+  },
+  "gay-talese": {
+    "file": "/writers/gay-talese.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/6/66/Gay_Talese_by_David_Shankbone.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Gay Talese",
+    "width": 800,
+    "height": 780
+  },
+  "tom-wolfe": {
+    "file": "/writers/tom-wolfe.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/7/73/TomWolfe02_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Tom Wolfe",
+    "width": 800,
+    "height": 944
+  },
+  "matt-levine": {
+    "file": "/writers/matt-levine.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Matt_levine.jpg/250px-Matt_levine.jpg",
+    "subject": "Matt Levine",
+    "width": 250,
+    "height": 347
+  },
+  "tim-urban": {
+    "file": "/writers/tim-urban.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Tim_Urban.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Tim Urban",
+    "width": 800,
+    "height": 1036
+  },
+  "maureen-dowd": {
+    "file": "/writers/maureen-dowd.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/7/77/Maureen_dowd_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Maureen Dowd",
+    "width": 292,
+    "height": 395
+  },
+  "bob-woodward": {
+    "file": "/writers/bob-woodward.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/2/22/Bob_Woodward_Oct23_%2853297480588%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Bob Woodward",
+    "width": 800,
+    "height": 1066
+  },
+  "annie-dillard": {
+    "file": "/writers/annie-dillard.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Annie-dillard.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Annie Dillard",
+    "width": 175,
+    "height": 263
+  },
+  "anthony-bourdain": {
+    "file": "/writers/anthony-bourdain.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Anthony_Bourdain_Peabody_2014b.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Anthony Bourdain",
+    "width": 800,
+    "height": 1116
+  },
+  "chimamanda-ngozi-adichie": {
+    "file": "/writers/chimamanda-ngozi-adichie.png",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Chimamanda_Ngozi_Adichie_%282015%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Chimamanda Ngozi Adichie",
+    "width": 696,
+    "height": 897
+  },
+  "rebecca-solnit": {
+    "file": "/writers/rebecca-solnit.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/3/3d/2026-03-02_Rebecca_Solnit_at_the_Internet_Archive.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Rebecca Solnit",
+    "width": 800,
+    "height": 746
+  },
+  "george-packer": {
+    "file": "/writers/george-packer.jpg",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/P1102426georgepacker.jpg/1920px-P1102426georgepacker.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "subject": "George Packer",
+    "width": 800,
+    "height": 1200
+  },
+  "jerry-seinfeld": {
+    "file": "/writers/jerry-seinfeld.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Jerry_Seinfeld_2023.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Jerry Seinfeld",
+    "width": 800,
+    "height": 1007
+  },
+  "tina-fey": {
+    "file": "/writers/tina-fey.jpg",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/TinaFey-byPhilipRomano2.jpg/3840px-TinaFey-byPhilipRomano2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "subject": "Tina Fey",
+    "width": 800,
+    "height": 1202
+  },
+  "dave-chappelle": {
+    "file": "/writers/dave-chappelle.jpg",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Dave_Chappelle_at_Preamiere_of_%22Dave_Chappelle_In_Real_Life%22_%282%29_%28cropped_2%29.jpg/1280px-Dave_Chappelle_at_Preamiere_of_%22Dave_Chappelle_In_Real_Life%22_%282%29_%28cropped_2%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "subject": "Dave Chappelle",
+    "width": 800,
+    "height": 1066
+  },
+  "john-mulaney": {
+    "file": "/writers/john-mulaney.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/e/ec/John_Mulaney_visits_Tinker_Air_Force_Base_%288%29_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "John Mulaney",
+    "width": 800,
+    "height": 1067
+  },
+  "fran-lebowitz": {
+    "file": "/writers/fran-lebowitz.jpg",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Christopher_Macsurak_Fran_Lebowitz.jpg/3840px-Christopher_Macsurak_Fran_Lebowitz.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "subject": "Fran Lebowitz",
+    "width": 800,
+    "height": 530
+  },
+  "david-sedaris": {
+    "file": "/writers/david-sedaris.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/f/f4/David_Sedaris-4724.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "David Sedaris",
+    "width": 800,
+    "height": 800
+  },
+  "bo-burnham": {
+    "file": "/writers/bo-burnham.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Bo_Burnham_Montaclair_Film_Festival_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Bo Burnham",
+    "width": 800,
+    "height": 1113
+  },
+  "mindy-kaling": {
+    "file": "/writers/mindy-kaling.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Mindy_Kaling_at_WWD_Style_Awards_2026.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Mindy Kaling",
+    "width": 800,
+    "height": 1000
+  },
+  "trevor-noah": {
+    "file": "/writers/trevor-noah.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/2/28/Trevor_Noah_%2853554114243%29_%28portrait_crop%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Trevor Noah",
+    "width": 800,
+    "height": 1068
+  },
+  "george-carlin": {
+    "file": "/writers/george-carlin.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/4/4c/George_Carlin_1975_%28Little_David_Records%29_Publicity_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "George Carlin",
+    "width": 800,
+    "height": 1066
+  },
+  "mike-birbiglia": {
+    "file": "/writers/mike-birbiglia.jpg",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/MikeBirbiglia_2020_Photo_by_JesseAustin.jpg/3840px-MikeBirbiglia_2020_Photo_by_JesseAustin.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "subject": "Mike Birbiglia",
+    "width": 800,
+    "height": 1045
+  },
+  "jenny-slate": {
+    "file": "/writers/jenny-slate.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Jenny_Slate_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Jenny Slate",
+    "width": 800,
+    "height": 1000
+  },
+  "nassim-taleb": {
+    "file": "/writers/nassim-taleb.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Taleb_mug.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Nassim Taleb",
+    "width": 793,
+    "height": 776
+  },
+  "jordan-peterson": {
+    "file": "/writers/jordan-peterson.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Jordan_Peterson_in_2018_%283x4_cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Jordan Peterson",
+    "width": 800,
+    "height": 1067
+  },
+  "alan-watts": {
+    "file": "/writers/alan-watts.png",
+    "source": "https://upload.wikimedia.org/wikipedia/en/9/97/Alan_Watts.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Alan Watts",
+    "width": 312,
+    "height": 312
+  },
+  "simone-de-beauvoir": {
+    "file": "/writers/simone-de-beauvoir.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/5/55/Simone_De_Beauvoir_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Simone de Beauvoir",
+    "width": 516,
+    "height": 689
+  },
+  "friedrich-nietzsche": {
+    "file": "/writers/friedrich-nietzsche.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Nietzsche187a.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Friedrich Nietzsche",
+    "width": 800,
+    "height": 1085
+  },
+  "ayn-rand": {
+    "file": "/writers/ayn-rand.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Ayn_Rand_%281943_Talbot_portrait%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Ayn Rand",
+    "width": 800,
+    "height": 970
+  },
+  "hannah-arendt": {
+    "file": "/writers/hannah-arendt.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Hannah_Arendt_auf_dem_1._Kulturkritikerkongress%2C_Barbara_Niggl_Radloff%2C_FM-2019-1-5-9-16_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Hannah Arendt",
+    "width": 800,
+    "height": 1052
+  },
+  "yuval-noah-harari": {
+    "file": "/writers/yuval-noah-harari.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/5/58/MKr364751_Yuval_Noah_Harari_%28Frankfurter_Buchmesse_2024%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Yuval Noah Harari",
+    "width": 800,
+    "height": 1199
+  },
+  "maria-popova": {
+    "file": "/writers/maria-popova.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/5/51/Maria_Popova_%282%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Maria Popova",
+    "width": 800,
+    "height": 533
+  },
+  "alain-de-botton": {
+    "file": "/writers/alain-de-botton.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/9/96/Alain_de_Botton.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Alain de Botton",
+    "width": 800,
+    "height": 1200
+  },
+  "byung-chul-han": {
+    "file": "/writers/byung-chul-han.jpg",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/4/4d/2015_Byung-Chul_Han_%283x4_cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "subject": "Byung-Chul Han",
+    "width": 800,
+    "height": 1050
+  }
+}

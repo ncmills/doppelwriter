@@ -8,22 +8,40 @@
 //
 // Strategy:
 //   1. Diff CURATED_WRITERS vs WRITER_PHOTOS.
-//   2. For missing writers, hit Wikipedia REST summary, take thumbnail.source.
-//   3. Download every portrait to /public/writers/{slug}.{ext} with a real UA.
-//   4. Write WRITER_PHOTOS entries pointing at the local path.
+//   2. For missing/stale writers, hit Wikipedia REST summary, prefer
+//      originalimage.source over thumbnail.source (thumb.wikimedia.org
+//      rejects on-demand sizes it hasn't pre-cached for this UA with
+//      HTTP 400, so we can't just rewrite the /NNpx-/ segment — we fetch
+//      the full original and downsize locally instead).
+//   3. Download every portrait to /public/writers/{slug}.{ext} with a real
+//      UA, then resize locally (sharp) to TARGET_WIDTH if wider — never
+//      upscale past the source.
+//   4. Write WRITER_PHOTOS entries pointing at the local path, and a
+//      manifest.json of {slug: {file, source, subject, width, height}}.
 //
 // Wired as `prebuild` — Vercel re-downloads any missing files on each deploy
 // (no-op if /public/writers/ is committed; one-time fetch if gitignored).
 
 import { readFileSync, writeFileSync, existsSync, statSync, mkdirSync } from "fs";
 import { join } from "path";
+import sharp from "sharp";
 
 const ROOT = join(__dirname, "..");
 const WRITER_DATA_PATH = join(ROOT, "src", "lib", "writer-data.ts");
 const PHOTOS_PATH = join(ROOT, "src", "lib", "writer-photos.ts");
 const PUBLIC_WRITERS_DIR = join(ROOT, "public", "writers");
+const MANIFEST_PATH = join(PUBLIC_WRITERS_DIR, "manifest.json");
 
 const UA = "DoppelWriter/1.0 (https://doppelwriter.com; nicholauscmills@gmail.com)";
+
+// Our largest rendered slot (WriterCarouselGallery / HomepageCinematic) is
+// ~330-366px CSS width; resize to 800px wide so retina (2x+) displays get a
+// sharp image. We never upscale past the source's own width.
+const TARGET_WIDTH = 800;
+
+// Below this, an on-disk photo is treated as stale (pre-dates the
+// TARGET_WIDTH bump) and is re-fetched even though a file already exists.
+const MIN_ACCEPTABLE_WIDTH = 600;
 
 // Wikipedia article titles for writers whose display name disambiguates wrong.
 const NAME_OVERRIDES: Record<string, string> = {
@@ -83,14 +101,17 @@ async function fetchPortraitUrl(name: string): Promise<string | null> {
     }
     const data = (await res.json()) as {
       type?: string;
-      thumbnail?: { source?: string };
-      originalimage?: { source?: string };
+      thumbnail?: { source?: string; width?: number };
+      originalimage?: { source?: string; width?: number };
     };
     if (data.type === "disambiguation") {
       console.warn(`[sync-photos] ${name}: disambiguation`);
       return null;
     }
-    return data.thumbnail?.source ?? data.originalimage?.source ?? null;
+    // Prefer the full original (hosted at upload.wikimedia.org, no dynamic
+    // thumbnailing) so we control the downsize ourselves; fall back to
+    // whatever thumbnail size the summary already gives us.
+    return data.originalimage?.source ?? data.thumbnail?.source ?? null;
   } catch (err) {
     console.warn(`[sync-photos] ${name}: summary error — ${err}`);
     return null;
@@ -122,6 +143,20 @@ async function downloadTo(url: string, fullPath: string): Promise<boolean> {
   }
 }
 
+// Downsize an on-disk image to targetWidth if it's wider. Never upscales.
+// Re-encodes in the same format sharp detected (no explicit .jpeg()/.png()
+// call, so output format tracks input format).
+async function downsizeTo(fullPath: string, targetWidth: number): Promise<void> {
+  try {
+    const meta = await sharp(fullPath).metadata();
+    if (!meta.width || meta.width <= targetWidth) return;
+    const buf = await sharp(fullPath).resize({ width: targetWidth }).toBuffer();
+    writeFileSync(fullPath, buf);
+  } catch (err) {
+    console.warn(`[sync-photos] downsize error on ${fullPath} — ${err}`);
+  }
+}
+
 function writePhotos(photos: Record<string, string>) {
   const sorted = Object.keys(photos).sort((a, b) => a.localeCompare(b));
   const body = sorted
@@ -131,18 +166,37 @@ function writePhotos(photos: Record<string, string>) {
   writeFileSync(PHOTOS_PATH, file, "utf-8");
 }
 
+async function widthOf(fullPath: string): Promise<number | null> {
+  try {
+    const meta = await sharp(fullPath).metadata();
+    return meta.width ?? null;
+  } catch {
+    return null;
+  }
+}
+
+type EnsureResult = { localPath: string; source: string; width: number | null; height: number | null };
+
 async function ensureLocal(
   name: string,
   existing: Record<string, string>,
-): Promise<string | null> {
+): Promise<EnsureResult | null> {
   const slug = slugify(name);
   const existingValue = existing[name];
 
-  // Already a local path that exists on disk → keep.
+  // Already a local path that exists on disk → keep, UNLESS it's a
+  // pre-TARGET_WIDTH-bump low-res file, in which case fall through and
+  // re-fetch at the larger size.
   if (existingValue?.startsWith("/writers/")) {
     const filename = existingValue.slice("/writers/".length);
     const fullPath = join(PUBLIC_WRITERS_DIR, filename);
-    if (existsSync(fullPath) && statSync(fullPath).size > 500) return existingValue;
+    if (existsSync(fullPath) && statSync(fullPath).size > 500) {
+      const width = await widthOf(fullPath);
+      if (width !== null && width >= MIN_ACCEPTABLE_WIDTH) {
+        const meta = await sharp(fullPath).metadata();
+        return { localPath: existingValue, source: "cached", width, height: meta.height ?? null };
+      }
+    }
   }
 
   // Otherwise, find a source URL: existing remote, manual, or Wikipedia lookup.
@@ -157,10 +211,20 @@ async function ensureLocal(
   const fullPath = join(PUBLIC_WRITERS_DIR, filename);
   const localPath = `/writers/${filename}`;
 
-  if (existsSync(fullPath) && statSync(fullPath).size > 500) return localPath;
+  // Skip re-download only if the file on disk is already large enough.
+  if (existsSync(fullPath) && statSync(fullPath).size > 500) {
+    const width = await widthOf(fullPath);
+    if (width !== null && width >= MIN_ACCEPTABLE_WIDTH) {
+      const meta = await sharp(fullPath).metadata();
+      return { localPath, source: sourceUrl, width, height: meta.height ?? null };
+    }
+  }
 
   const ok = await downloadTo(sourceUrl, fullPath);
-  return ok ? localPath : null;
+  if (!ok) return null;
+  await downsizeTo(fullPath, TARGET_WIDTH);
+  const meta = await sharp(fullPath).metadata();
+  return { localPath, source: sourceUrl, width: meta.width ?? null, height: meta.height ?? null };
 }
 
 async function main() {
@@ -175,23 +239,37 @@ async function main() {
   }
 
   const photos: Record<string, string> = {};
+  const manifest: Record<
+    string,
+    { file: string; source: string; subject: string; width: number | null; height: number | null }
+  > = {};
   let resolved = 0;
   let failed = 0;
   const failures: string[] = [];
 
   for (const name of curated) {
-    const localPath = await ensureLocal(name, existing);
-    if (localPath) {
-      photos[name] = localPath;
+    const result = await ensureLocal(name, existing);
+    if (result) {
+      photos[name] = result.localPath;
+      const slug = slugify(name);
+      manifest[slug] = {
+        file: result.localPath,
+        source: result.source,
+        subject: name,
+        width: result.width,
+        height: result.height,
+      };
       resolved++;
     } else {
       failed++;
       failures.push(name);
     }
-    await new Promise((r) => setTimeout(r, 80));
+    // Gentle rate limit against Wikipedia (<=2 req/s between full lookups).
+    await new Promise((r) => setTimeout(r, 500));
   }
 
   writePhotos(photos);
+  writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + "\n", "utf-8");
   console.log(
     `[sync-photos] done. curated=${curated.length} resolved=${resolved} failed=${failed}`,
   );
