@@ -1,0 +1,140 @@
+---
+title: "Writing Style Analysis: What It Measures, How It Works, and Where It Fails"
+description: "Writing style analysis compares word choice, sentence length, punctuation and more. Here's how stylometry, Burrows' Delta and readability scores work, where they break down, and how to use the results."
+datePublished: "2026-11-10"
+dateModified: "2026-11-10"
+primaryKeyword: "writing style analysis"
+secondaryKeywords:
+  - "stylometric analysis"
+  - "writing style analyzer"
+  - "Burrows' Delta"
+  - "how to analyze your writing style"
+  - "Flesch Reading Ease"
+citations:
+  - label: "NHIMG glossary — Stylometric analysis"
+    url: "https://nhimg.org/glossary/stylometric-analysis/"
+  - label: "PMC — N-grams style change study"
+    url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9299308/"
+  - label: "arXiv 2609.08459 — Burrows' Delta"
+    url: "https://arxiv.org/pdf/2609.08459"
+  - label: "arXiv 1208.3001 — Delta"
+    url: "https://arxiv.org/pdf/1208.3001"
+  - label: "ResearchGate — 'Delta': a Measure of Stylistic Difference"
+    url: "https://www.researchgate.net/publication/240956478_'Delta'_a_Measure_of_Stylistic_Difference_and_a_Guide_to_Likely_Authorship"
+  - label: "ReadabilityFormulas.com — Flesch Reading Ease"
+    url: "https://readabilityformulas.com/learn-about-the-flesch-reading-ease-formula/"
+  - label: "Nature (Humanities & Social Sciences Communications) — LLM writing style"
+    url: "https://www.nature.com/articles/s41599-025-05986-3"
+  - label: "arXiv 2608.26710 — AI text detector study"
+    url: "https://arxiv.org/abs/2608.26710"
+  - label: "DoppelWriter — Writing style analyzer"
+    url: "https://doppelwriter.com/blog/writing-style-analyzer"
+related: []
+faqs:
+  - q: "What is writing style analysis?"
+    a: "It is the study of how someone writes rather than what they write about. It measures features such as word choice, sentence length, punctuation and character patterns, then compares those features across texts to describe a style or compare authorship."
+  - q: "How many words do I need for a reliable style analysis?"
+    a: "There is no settled number. Stylometry is generally weaker on very short texts and gives probabilities rather than certainties. One source says Burrows' Delta was developed for texts of roughly 1,500+ words, so more text is safer than less."
+  - q: "Is a readability score the same as a style analysis?"
+    a: "No. Flesch Reading Ease uses only average sentence length and average syllables per word. Style analysis covers many more traits, such as punctuation habits, vocabulary and function-word use."
+  - q: "Can writing style analysis prove who wrote something?"
+    a: "Not definitively. Results are usually probabilistic, and they get weaker when text is heavily edited, translated, template-generated or written under a strict style guide."
+  - q: "Do my writing habits change over time?"
+    a: "Yes. A study of style change using n-grams found that all the authors it examined showed significant changes in writing style over time, so a sample from years ago may not match how you write now."
+---
+
+If you've ever wondered what makes your writing sound like *you*, writing style analysis is the discipline that tries to answer it with numbers. It started in literary scholarship and forensic authorship work, and it now sits behind everything from readability checkers to AI voice tools. Here's what it measures, how the main methods work, and where you shouldn't trust it.
+
+## What is writing style analysis?
+
+**Writing style analysis is the measurement of *how* a text is written, such as word choice, sentence length, punctuation and character patterns, so that styles or authorship can be compared.** The formal name for the authorship-focused version is stylometric analysis, defined as the study of writing style to identify or compare authorship ([NHIMG](https://nhimg.org/glossary/stylometric-analysis/)).
+
+In computational linguistics, style is treated as the relative frequency of "style markers," and the analysis focuses on how an author uses language features rather than on the content ([PMC](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9299308/)). Two people can write about the same topic and produce very different marker profiles. That difference is the signal.
+
+## What does a style analysis actually measure?
+
+**It measures countable habits: how long your sentences run, which words you lean on, how you punctuate, and how those frequencies compare to a baseline.** Typical features include:
+
+- Sentence length and its variation (rhythm)
+- Vocabulary range and favorite words
+- Punctuation habits (commas, dashes, semicolons)
+- Character-level patterns
+- Function-word usage (articles, prepositions, pronouns, conjunctions)
+
+Tools differ in how many dimensions they track. DoppelWriter, for example, says it analyzes style across 30+ dimensions (sentence length, vocabulary, punctuation habits, tone, rhythm) from 3-5 uploaded samples ([DoppelWriter](https://doppelwriter.com/)). In its analysis of 50 famous writers, sentence length turned out to be the most revealing single metric ([DoppelWriter blog](https://doppelwriter.com/blog/writing-style-analyzer)).
+
+## How does Burrows' Delta work?
+
+**Burrows' Delta compares texts by how often they use the most common words, especially function words like articles, prepositions, pronouns and conjunctions** ([arXiv 2609.08459](https://arxiv.org/pdf/2609.08459)). The idea is that content words change with topic, but tiny words like "the," "of" and "and" are used habitually and unconsciously, which makes them a stable fingerprint.
+
+In its original form, Delta took the 150 most frequent words, computed z-scores, and used the mean absolute difference between an unknown text and an author's training texts as the distance ([arXiv 1208.3001](https://arxiv.org/pdf/1208.3001)). The smaller the distance, the more likely the same author wrote both.
+
+<DataHook>
+Style analysis often works best on the words you never notice. Function words (the, of, and, but) are used so automatically that they carry a more consistent signal than the topical vocabulary you consciously choose.
+</DataHook>
+
+## How is style analysis different from a readability score?
+
+**A readability score reduces your text to one number about difficulty; style analysis describes many separate traits about how you write.** The classic example is Flesch Reading Ease, developed by Rudolf Flesch in 1948: 206.835 − (1.015 × average sentence length) − (84.6 × average syllables per word) ([ReadabilityFormulas.com](https://readabilityformulas.com/learn-about-the-flesch-reading-ease-formula/)).
+
+That formula looks at two inputs only. Its known drawbacks are that it focuses mostly on word and sentence length and examines just one aspect of readability ([ReadabilityFormulas.com](https://readabilityformulas.com/learn-about-the-flesch-reading-ease-formula/)). Useful for checking whether a memo is dense, but it can't tell you that you overuse semicolons or open every paragraph with a question.
+
+| | Readability score | Style analysis |
+|---|---|---|
+| Inputs | Sentence length, syllables per word | Many features: vocabulary, punctuation, rhythm, function words |
+| Output | One number | A profile of habits |
+| Answers | "How hard is this to read?" | "How does this person write?" |
+
+## How reliable is writing style analysis?
+
+**It is probabilistic, not definitive, and it gets weaker on short, edited or constrained text.** Stylometry struggles when texts are very short, heavily edited, translated, template-generated or written under strict style guidance ([NHIMG](https://nhimg.org/glossary/stylometric-analysis/)).
+
+Sample size matters too. One source states Burrows' Delta was developed for texts of roughly 1,500+ words and that reliability degrades sharply in small samples ([ResearchGate](https://www.researchgate.net/publication/240956478_'Delta'_a_Measure_of_Stylistic_Difference_and_a_Guide_to_Likely_Authorship)). Treat that as a rule of thumb from one source rather than a universal threshold; different tools set different minimums.
+
+Your style also drifts. A study of style change found that all the authors it examined showed significant changes in writing style over time ([PMC](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9299308/)). If you're building a profile of your voice, use recent samples.
+
+## Can style analysis tell human writing from AI writing?
+
+**Partly. Research shows LLM output is stylistically identifiable, but commercial AI detectors are inconsistent.** A study in *Humanities & Social Sciences Communications* found GPT-4 shows more predictability and uniformity in writing style than GPT-3.5, and that LLM outputs remain stylistically identifiable as machine-generated ([Nature](https://www.nature.com/articles/s41599-025-05986-3)).
+
+Detectors are a different story. In a study of 13 AI text detectors, false-positive rates on human-written text ranged from 0.0% to 100.0% ([arXiv 2608.26710](https://arxiv.org/abs/2608.26710)). The spread is the point: the tool you pick changes the answer enormously, so a single detector's verdict about your writing isn't proof of anything.
+
+## How can I use style analysis on my own writing?
+
+**Run your own samples through an analyzer, look for your strongest habits, and use them as a brief for editing or for steering AI.** A practical routine:
+
+1. Gather 3-5 samples of writing you're happy with, ideally recent and in a similar register.
+2. Check sentence length first. Both its average and how much it varies tell you about your rhythm.
+3. Note recurring openers, favorite connectors and punctuation quirks.
+4. Write those down as plain-language rules ("short sentences mixed with the occasional long one; rarely uses exclamation marks").
+5. Hand those rules, plus a sample, to whatever you draft with.
+
+DoppelWriter's free Voice Analyzer needs no signup and accepts up to 10,000 characters of pasted text ([DoppelWriter blog](https://doppelwriter.com/blog/writing-style-analyzer)). If you'd rather skip the manual step and have a draft written in the voice it finds, you can do that directly:
+
+<WriteCTA label="Analyze my style and write in my voice" />
+
+<Callout>
+Don't over-read a single number. A style profile is a description of tendencies, not a verdict, and it's only as good as the samples behind it.
+</Callout>
+
+## FAQ
+
+### What is writing style analysis?
+
+It is the study of how someone writes rather than what they write about. It measures features such as word choice, sentence length, punctuation and character patterns, then compares those features across texts to describe a style or compare authorship.
+
+### How many words do I need for a reliable style analysis?
+
+There is no settled number. Stylometry is generally weaker on very short texts and gives probabilities rather than certainties. One source says Burrows' Delta was developed for texts of roughly 1,500+ words, so more text is safer than less.
+
+### Is a readability score the same as a style analysis?
+
+No. Flesch Reading Ease uses only average sentence length and average syllables per word. Style analysis covers many more traits, such as punctuation habits, vocabulary and function-word use.
+
+### Can writing style analysis prove who wrote something?
+
+Not definitively. Results are usually probabilistic, and they get weaker when text is heavily edited, translated, template-generated or written under a strict style guide.
+
+### Do my writing habits change over time?
+
+Yes. A study of style change using n-grams found that all the authors it examined showed significant changes in writing style over time, so a sample from years ago may not match how you write now.
