@@ -1,0 +1,125 @@
+---
+title: "How to Match Your Writing Style With AI (Without It Sounding Like Everyone Else)"
+description: "How to get AI to match your writing style: how many samples to use, the exact steps in ChatGPT and Claude, what the research says about imitation, and where a dedicated voice profile fits."
+datePublished: "2026-11-17"
+dateModified: "2026-11-17"
+primaryKeyword: "match my writing style ai"
+secondaryKeywords:
+  - "make ai write like me"
+  - "ai writing style matching"
+  - "how many writing samples for ai"
+  - "chatgpt custom instructions writing style"
+  - "claude custom styles"
+citations:
+  - label: "TechRadar — How to get ChatGPT to match your style and tone"
+    url: "https://www.techradar.com/computing/artificial-intelligence/chatgpt-can-write-like-you-heres-how-you-can-get-ai-to-match-your-style-and-tone"
+  - label: "Prompt Optimizer — How to use Claude styles"
+    url: "https://promptoptimizer.tools/blog/how-to-use-claude-styles"
+  - label: "arXiv — Catch Me If You Can? Not Yet: LLMs Still Struggle to Imitate the Implicit Writing Styles of Everyday Authors"
+    url: "https://arxiv.org/html/2509.14543v1"
+  - label: "Noren — How to make ChatGPT write like you"
+    url: "https://usenoren.ai/blog/how-to-make-chatgpt-write-like-you"
+  - label: "Rephrase — Imiter mon style d'écriture avec l'IA"
+    url: "https://rephrase.fr/en/ressources/imiter-mon-style-ecriture-ia"
+  - label: "DoppelWriter homepage"
+    url: "https://doppelwriter.com/"
+related: []
+faqs:
+  - q: "How many writing samples do I need to match my style with AI?"
+    a: "Three to five is a solid starting point, and DoppelWriter's homepage recommends that range. Third-party guides range from 3-5 up to 5-10 samples, and one guide says gains become marginal beyond about 10 texts. Quality and variety matter more than raw count."
+  - q: "Can ChatGPT match my writing style?"
+    a: "Yes, reasonably. Paste samples of your writing, ask ChatGPT to describe your style, then save that description in Settings > Personalization > Custom Instructions. Expect it to capture surface traits better than deeper habits."
+  - q: "Does Claude have a built-in way to copy my writing style?"
+    a: "Yes. Claude.ai offers custom styles, where you upload sample content or give instructions and can edit the style later. Sources disagree on exactly which plans include it, so check your own account."
+  - q: "Will AI ever sound exactly like me?"
+    a: "Not perfectly. The arXiv study 'Catch Me If You Can? Not Yet' gave models 5 writing examples per test sample and found that even a few examples significantly improve imitation of everyday authors, yet the paper's title says LLMs still struggle with it. Plan to edit the output."
+  - q: "What's the difference between a prompt and a saved voice profile?"
+    a: "A prompt only lasts as long as the conversation unless you paste it again. A saved profile, such as ChatGPT Custom Instructions, a Claude custom style, or a DoppelWriter voice profile, persists so you don't re-explain your voice every time."
+---
+
+You've probably tried it: paste an email into an AI, say "write like this," and get back something that's vaguely in the neighborhood of you. Close enough to be uncanny, wrong enough that you rewrite half of it anyway. Matching your writing style with AI is doable, but the method matters more than the magic words. Here's what actually works.
+
+## How do I get AI to match my writing style?
+
+**Give it three to five real samples of your own writing, have it describe your patterns first, and then save that description somewhere reusable.** The describe-first step is the one most people skip. Instead of asking the model to imitate you directly, you ask it to analyze you, then you write from the analysis.
+
+A prompt that works well as a first pass:
+
+```
+Here are four pieces of my writing. Don't write anything yet.
+Analyze my style: average sentence length, how I open and close,
+punctuation habits (dashes, semicolons, parentheses), vocabulary
+level, how formal or casual I am, and any phrases I repeat.
+Then list three things I never do.
+
+[paste samples]
+```
+
+That last line, "things I never do," is underrated. It gives the model guardrails, which is where generic AI most often drifts.
+
+## How many writing samples do I need?
+
+**Three to five is enough to start; more helps only up to a point.** DoppelWriter's [homepage](https://doppelwriter.com/) says to upload 3-5 samples. Third-party guides are less settled: [Noren](https://usenoren.ai/blog/how-to-make-chatgpt-write-like-you) suggests 3-5 in one place and 5-10 in its training guide, and [Rephrase](https://rephrase.fr/en/ressources/imiter-mon-style-ecriture-ia) says gains become marginal beyond 10 texts.
+
+Length is a separate question, and tools disagree. DoppelWriter's own materials point to 500+ words in one place and at least 1,000 words for its free style analysis in another. Treat roughly 1,000 words of total material as a safe floor.
+
+What matters more than count:
+
+- **Same register.** Samples should match what you want to produce. Cover-letter style from your Slack messages won't transfer cleanly.
+- **Variety.** One email, one longer piece, one casual message beats five near-identical emails.
+- **Your words, not edited ones.** Text a colleague or an AI already polished teaches the model someone else's voice.
+
+## How do I do it in ChatGPT?
+
+**Open Settings > Personalization > Custom Instructions, paste a description of your style, and keep your samples handy for new chats.** [TechRadar](https://www.techradar.com/computing/artificial-intelligence/chatgpt-can-write-like-you-heres-how-you-can-get-ai-to-match-your-style-and-tone) recommends pasting sample writing and asking ChatGPT to describe your style first, which matches the approach above.
+
+A reasonable workflow:
+
+1. Run the analysis prompt on your samples.
+2. Edit the result down to a short, concrete description (a paragraph, not an essay).
+3. Paste it into Custom Instructions.
+4. For important pieces, paste one fresh sample into the chat as well.
+
+Short and specific beats long and flowery. "Sentences under 20 words, no exclamation points, dry humor, starts with the point" will outperform "warm, professional, and engaging."
+
+## How do I do it in Claude?
+
+**Use Claude's custom styles: choose a style, create a custom one, and add a writing example.** Claude.ai lets you upload sample content that reflects your preferred way of communicating, or specify instructions, and edit the style as your preferences evolve. One walkthrough describes the flow as "Use style" → "Create & edit styles" → "Create custom style" → "Add Writing Example," accepting a pdf, doc or txt file, or pasted text ([Prompt Optimizer](https://promptoptimizer.tools/blog/how-to-use-claude-styles)).
+
+<Callout>
+Plan availability is unclear. One guide says custom styles work on the free tier; another says paid plans only. Sources disagree and I couldn't find a current Anthropic page that states it, so check your own Claude account's settings.
+</Callout>
+
+## Why does AI still not sound exactly like me?
+
+**Because imitating an everyday writer is hard, even with examples.** An arXiv study tested LLMs on everyday authors' implicit styles, giving 5 writing examples per test sample. It found that even a few examples significantly improve imitation, yet the paper's title, ["Catch Me If You Can? Not Yet"](https://arxiv.org/html/2509.14543v1), says LLMs still struggle.
+
+In practice, models nail the obvious layer (formality, vocabulary, sentence length) and miss the subtle one: where you hedge, how you transition, what you leave unsaid. Plan for a final edit pass, and feed your corrections back into the instructions. If the AI keeps writing "I hope this finds you well" and you never would, add that to your "never do" list.
+
+## When is a dedicated tool better than a prompt?
+
+**When you write often and don't want to re-paste samples every time.** Prompts and custom instructions work, but they live in settings you maintain by hand. A dedicated tool like DoppelWriter analyzes your samples across 30+ dimensions (sentence length, vocabulary, punctuation habits, tone and rhythm), saves a permanent voice profile, and says it tracks your edits to improve over time ([homepage](https://doppelwriter.com/), [vs ChatGPT page](https://doppelwriter.com/vs/chatgpt)). Note that these are the vendor's own claims, and I haven't seen an independent accuracy test comparing it to ChatGPT or Claude.
+
+If you'd like to see what a saved profile feels like against the prompt approach, <WriteCTA label="Try your own samples in DoppelWriter" /> and compare the output to what you got from your best manual prompt. Judge it on whether you'd send the result with light edits.
+
+## FAQ
+
+### How many writing samples do I need to match my style with AI?
+
+Three to five is a solid starting point, and DoppelWriter's homepage recommends that range. Third-party guides range from 3-5 up to 5-10, and one says gains become marginal beyond about 10 texts. Quality and variety matter more than raw count.
+
+### Can ChatGPT match my writing style?
+
+Yes, reasonably. Paste samples, ask ChatGPT to describe your style, then save the description in Settings > Personalization > Custom Instructions. Expect it to capture surface traits better than deeper habits.
+
+### Does Claude have a built-in way to copy my writing style?
+
+Yes. Claude.ai offers custom styles, where you upload sample content or give instructions and can edit the style later. Sources disagree on which plans include it, so check your own account.
+
+### Will AI ever sound exactly like me?
+
+Not perfectly. The arXiv study "Catch Me If You Can? Not Yet" gave models 5 writing examples per test sample and found that even a few examples significantly improve imitation of everyday authors, yet its title says LLMs still struggle with it. Plan to edit the output.
+
+### What's the difference between a prompt and a saved voice profile?
+
+A prompt lasts only as long as the conversation unless you paste it again. A saved profile, such as ChatGPT Custom Instructions, a Claude custom style, or a DoppelWriter voice profile, persists so you don't re-explain your voice each time.
