@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import SessionProvider from "@/components/SessionProvider";
 import PostHogProvider from "@/components/PostHogProvider";
 import { MotionProvider } from "@/components/ui/motion/MotionProvider";
@@ -7,23 +7,27 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
-const inter = Inter({
+const inter = localFont({
+  src: [
+    { path: "../fonts/inter/inter-variable-normal.woff2", weight: "400 600", style: "normal" },
+  ],
   variable: "--font-sans-face",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const spaceGrotesk = localFont({
+  src: [
+    { path: "../fonts/space-grotesk/space-grotesk-variable-normal.woff2", weight: "500 700", style: "normal" },
+  ],
   variable: "--font-display-face",
-  subsets: ["latin"],
-  weight: ["500", "700"],
   display: "swap",
 });
 
-const jetbrains = JetBrains_Mono({
+const jetbrains = localFont({
+  src: [
+    { path: "../fonts/jetbrains-mono/jetbrains-mono-variable-normal.woff2", weight: "100 800", style: "normal" },
+  ],
   variable: "--font-mono-face",
-  subsets: ["latin"],
   display: "swap",
 });
 
