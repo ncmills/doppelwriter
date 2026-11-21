@@ -5,7 +5,7 @@ import { PostHogProvider as PHProvider, usePostHog } from "posthog-js/react";
 import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { sanitizePageviewUrl } from "@/lib/pageview-url";
+import { sanitizePageviewUrl, sanitizeEventProps } from "@/lib/pageview-url";
 
 function PostHogPageView() {
   const pathname = usePathname();
@@ -43,12 +43,7 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
         disable_session_recording: true,
         person_profiles: "identified_only",
         before_send: (event) => {
-          if (event && event.properties) {
-            for (const k of ["$current_url", "$referrer"]) {
-              const v = event.properties[k];
-              if (typeof v === "string") event.properties[k] = sanitizePageviewUrl(v);
-            }
-          }
+          if (event && event.properties) sanitizeEventProps(event.properties);
           return event;
         },
       });

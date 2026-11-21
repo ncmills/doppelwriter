@@ -32,3 +32,45 @@ export function sanitizePageviewUrl(url: string): string {
   const kept = filterQuery(search);
   return base + (kept ? "?" + kept : "") + hash;
 }
+
+// Opaque share/record ids never reach the vendor (SWEEP-1121-1725): the id segment becomes :id,
+// anything after it, the query and the hash are kept. The full path stays first-party.
+export function redactPath(path: string): string {
+  return path
+    .replace(/^\/profile\/[^/?#]+/, "/profile/:id")
+    .replace(/^\/s\/[^/?#]+/, "/s/:id");
+}
+
+/** Redact the path of an absolute URL or a bare path; query and hash are kept. */
+export function redactUrlPath(url: string): string {
+  if (typeof url !== "string" || !url) return url;
+  const m = url.match(/^([a-z][a-z0-9+.-]*:\/\/[^/?#]*)(.*)$/i);
+  return m ? m[1] + redactPath(m[2]) : redactPath(url);
+}
+
+export const POSTHOG_URL_PROPS = [
+  "$current_url",
+  "$referrer",
+  "$initial_referrer",
+  "$prev_pageview_url",
+  "$session_entry_url",
+] as const;
+export const POSTHOG_PATH_PROPS = [
+  "$pathname",
+  "$prev_pageview_pathname",
+  "$session_entry_pathname",
+  "$initial_pathname",
+] as const;
+
+/** Query allowlist + path redaction on every event's url/path props, in place. */
+export function sanitizeEventProps(props: Record<string, unknown> | undefined): void {
+  if (!props) return;
+  for (const k of POSTHOG_URL_PROPS) {
+    const v = props[k];
+    if (typeof v === "string") props[k] = redactUrlPath(sanitizePageviewUrl(v));
+  }
+  for (const k of POSTHOG_PATH_PROPS) {
+    const v = props[k];
+    if (typeof v === "string") props[k] = redactPath(v);
+  }
+}
