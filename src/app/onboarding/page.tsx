@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { trackOnboardingStep, trackFormError } from "@/lib/analytics";
 
 type Task = {
   key: string;
@@ -76,6 +77,7 @@ export default function OnboardingPage() {
   // If user already answered this, bypass to /write (or pending-sample flow)
   useEffect(() => {
     if (status !== "authenticated") return;
+    trackOnboardingStep("viewed");
     fetch("/api/user/primary-task")
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
@@ -96,6 +98,7 @@ export default function OnboardingPage() {
 
   async function handleSelect(task: string) {
     setSelected(task);
+    trackOnboardingStep("task_selected", task);
     setSaving(true);
     setError("");
     try {
@@ -105,6 +108,7 @@ export default function OnboardingPage() {
         body: JSON.stringify({ task }),
       });
       if (!res.ok) {
+        trackFormError("onboarding", "api");
         setError("Couldn't save — please try again.");
         setSaving(false);
         return;
@@ -118,8 +122,10 @@ export default function OnboardingPage() {
       } catch {
         // ignore
       }
+      trackOnboardingStep("completed", task);
       router.push("/write");
     } catch {
+      trackFormError("onboarding", "network");
       setError("Network error. Please try again.");
       setSaving(false);
     }

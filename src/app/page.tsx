@@ -7,6 +7,7 @@ import LandingNav from "@/components/LandingNav";
 import { Button } from "@/components/ui/Button";
 import WriterCarousel from "@/components/WriterCarouselGallery";
 import HomepageCinematic from "@/components/HomepageCinematic";
+import TrackedClick from "@/components/TrackedClick";
 
 // Live counts — the true numbers, never a rounded-up claim.
 const WRITER_COUNT = CURATED_WRITERS.length;
@@ -280,9 +281,11 @@ export default function LandingPage() {
             Paste anything you&apos;ve written — we&apos;ll break down your style in seconds.
             Sentence rhythm, vocabulary, signature words, the writers you most resemble.
           </p>
-          <Button href="/analyze" className="uppercase tracking-wide">
-            Analyze your writing →
-          </Button>
+          <TrackedClick target="home_analyze">
+            <Button href="/analyze" className="uppercase tracking-wide">
+              Analyze your writing →
+            </Button>
+          </TrackedClick>
         </section>
 
         <hr className="rule max-w-6xl mx-auto" />
@@ -415,13 +418,15 @@ export default function LandingPage() {
           <p className="text-lg sm:text-xl text-[var(--color-fg-muted)] max-w-md mx-auto mb-10">
             Free to use. No credit card. Voice cloned in under a minute.
           </p>
-          <Link
-            href="/signup"
-            className="inline-block px-8 py-4 bg-[var(--color-fg)] text-[var(--color-surface)] text-sm font-medium tracking-[0.15em] uppercase hover:bg-[var(--color-brand)] transition-colors"
-            style={{ borderRadius: "2px" }}
-          >
-            Start Writing →
-          </Link>
+          <TrackedClick target="home_signup">
+            <Link
+              href="/signup"
+              className="inline-block px-8 py-4 bg-[var(--color-fg)] text-[var(--color-surface)] text-sm font-medium tracking-[0.15em] uppercase hover:bg-[var(--color-brand)] transition-colors"
+              style={{ borderRadius: "2px" }}
+            >
+              Start Writing →
+            </Link>
+          </TrackedClick>
         </section>
       </main>
 

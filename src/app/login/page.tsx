@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { trackLogin } from "@/lib/analytics";
+import { trackLogin, trackFormError } from "@/lib/analytics";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -33,6 +33,7 @@ export default function LoginPage() {
     });
 
     if (result?.error) {
+      trackFormError("login", "api");
       setError("Invalid email or password");
       setLoading(false);
     } else {
