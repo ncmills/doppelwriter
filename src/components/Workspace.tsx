@@ -7,7 +7,7 @@ import StreamingOutput from "./StreamingOutput";
 const DiffView = dynamic(() => import("./DiffView"), { ssr: false });
 const RichEditor = dynamic(() => import("./RichEditor"), { ssr: false });
 const UpgradeModal = dynamic(() => import("./UpgradeModal"), { ssr: false });
-import { trackEvent, trackFirstGeneration, trackShare, trackEdit, trackGenerate, trackAcceptEdit, trackRevisionRequested, trackCopyOutput, trackDownloadOutput, trackUpgradeModalShown } from "@/lib/analytics";
+import { trackEvent, trackFirstGeneration, trackShare, trackEdit, trackGenerate, trackAcceptEdit, trackRevisionRequested, trackCopyOutput, trackDownloadOutput, trackUpgradeModalShown, trackResultShown } from "@/lib/analytics";
 
 interface DiffChunk { value: string; added?: boolean; removed?: boolean; }
 
@@ -78,6 +78,7 @@ export default function Workspace({ profileId, profileName, defaultMode }: { pro
       }
     }
     setLoading(false);
+    if (full) trackResultShown(url.includes("generate") ? "generate" : "edit");
     // Notify UsageBar to refresh and check for nudges
     window.dispatchEvent(new Event("dw:usage-changed"));
     fetch("/api/usage").then((r) => r.json()).then((data) => {

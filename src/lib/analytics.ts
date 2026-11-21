@@ -103,3 +103,22 @@ export function trackVoiceAnalyzerUsed(): void {
 export function trackWriterSelected(writerName: string, category: string): void {
   trackEvent("writer_selected", { writerName, category });
 }
+
+// Capture-gap events (MAX-DATA-NO-COOKIES): fixed props only, never typed text.
+export type FormErrorKind = "validation" | "api" | "network";
+
+export function trackFormError(form: string, kind: FormErrorKind): void {
+  trackEvent("form_error", { form, kind });
+}
+
+export function trackCtaTarget(target: string): void {
+  trackEvent("cta_clicked", { target });
+}
+
+export function trackOnboardingStep(step: string, task?: string): void {
+  trackEvent("onboarding_step", task ? { step, task } : { step });
+}
+
+export function trackResultShown(mode: "edit" | "generate"): void {
+  trackEvent("result_shown", { mode });
+}

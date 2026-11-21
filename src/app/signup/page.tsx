@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { trackSignup } from "@/lib/analytics";
+import { trackSignup, trackFormError } from "@/lib/analytics";
 
 export default function SignupPage() {
   useEffect(() => { document.title = "Sign Up | DoppelWriter"; }, []);
@@ -28,6 +28,7 @@ export default function SignupPage() {
     });
 
     if (!res.ok) {
+      trackFormError("signup", res.status === 400 ? "validation" : "api");
       const data = await res.json();
       setError(data.error || "Something went wrong");
       setLoading(false);

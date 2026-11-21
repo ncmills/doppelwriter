@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import posthog from "posthog-js";
+import { trackFormError } from "@/lib/analytics";
 
 interface EmailCaptureProps {
   source: string;
@@ -28,12 +29,17 @@ export default function EmailCapture({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, source, sourceSlug }),
       });
-      if (!res.ok) throw new Error("Subscribe failed");
+      if (!res.ok) {
+        trackFormError("email_capture", "api");
+        setStatus("error");
+        return;
+      }
       try {
         posthog.capture("email_captured", { source, sourceSlug });
       } catch {}
       setStatus("success");
     } catch {
+      trackFormError("email_capture", "network");
       setStatus("error");
     }
   }

@@ -5,6 +5,7 @@ import { PostHogProvider as PHProvider, usePostHog } from "posthog-js/react";
 import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { sanitizePageviewUrl } from "@/lib/pageview-url";
 
 function PostHogPageView() {
   const pathname = usePathname();
@@ -18,7 +19,8 @@ function PostHogPageView() {
       if (search) {
         url += "?" + search;
       }
-      ph.capture("$pageview", { $current_url: url });
+      // Query allowlist: utm_* / gclid / fbclid only (MAX-DATA-NO-COOKIES).
+      ph.capture("$pageview", { $current_url: sanitizePageviewUrl(url) });
     }
   }, [pathname, searchParams, ph]);
 
@@ -40,6 +42,15 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
         autocapture: false,
         disable_session_recording: true,
         person_profiles: "identified_only",
+        before_send: (event) => {
+          if (event && event.properties) {
+            for (const k of ["$current_url", "$referrer"]) {
+              const v = event.properties[k];
+              if (typeof v === "string") event.properties[k] = sanitizePageviewUrl(v);
+            }
+          }
+          return event;
+        },
       });
     }
   }, [key]);
