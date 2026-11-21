@@ -36,9 +36,12 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
         api_host: (process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com").trim(),
         capture_pageview: false, // We capture manually via PostHogPageView
         capture_pageleave: true,
-        // Cookieless and anonymous (Nick 2026-11-18): nothing is stored in the browser,
-        // no clicks or typed input are auto-captured, no session is recorded.
-        persistence: "memory",
+        // First-party persistence (COOKIES-OPTION-2, Nick 2026-11-21): a PostHog cookie plus
+        // localStorage keep one anonymous id, so returning visitors and multi-visit journeys
+        // are measured. Still no autocapture, no session recording, no person profile unless
+        // identified, and every URL/property redaction in before_send still applies.
+        persistence: "localStorage+cookie",
+        secure_cookie: true,
         autocapture: false,
         disable_session_recording: true,
         person_profiles: "identified_only",
