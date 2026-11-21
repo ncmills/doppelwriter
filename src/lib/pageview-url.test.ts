@@ -32,12 +32,12 @@ describe("share id masking (SWEEP-1121-1725, IMF-PATH-REDACT-2)", () => {
   it("masks ids, keeps what follows the id", () => {
     expect(redactPath("/profile/abc123")).toBe("/profile/:id");
     expect(redactPath("/s/abc123")).toBe("/s/:id");
-    expect(redactPath("/profile/abc123/print")).toBe("/profile/:id/print");
+    expect(redactPath("/profile/abc123/print")).toBe("/other"); // superseded: not a known route
   });
   it("leaves lookalikes alone", () => {
-    expect(redactPath("/profile")).toBe("/profile");
-    expect(redactPath("/profiles/abc")).toBe("/profiles/abc");
-    expect(redactPath("/x/profile/abc")).toBe("/x/profile/abc");
+    expect(redactPath("/profile")).toBe("/other"); // superseded: only /profile/:id is a route
+    expect(redactPath("/profiles/abc")).toBe("/other"); // superseded: unknown -> /other
+    expect(redactPath("/x/profile/abc")).toBe("/other"); // superseded: unknown -> /other
   });
   it("normalises odd forms before masking", () => {
     expect(redactPath("/PROFILE/Abc")).toBe("/profile/:id");
@@ -57,7 +57,7 @@ describe("share id masking (SWEEP-1121-1725, IMF-PATH-REDACT-2)", () => {
     expect(p.title).toBe("/profile/:id");
     const q: Record<string, unknown> = { $current_url: "https://doppelwriter.com/pricing", title: "Pricing" };
     sanitizeEventProps(q);
-    expect(q.title).toBe("Pricing");
+    expect(q.title).toBe("/pricing"); // superseded: title is always the template
   });
   it("sanitises $set and $set_once and $initial_current_url", () => {
     const e = {
@@ -89,12 +89,12 @@ describe("share id masking (SWEEP-1121-1725, IMF-PATH-REDACT-2)", () => {
       $current_url: "https://doppelwriter.com/profile/:id?utm_source=a",
       $pathname: "/profile/:id",
       $referrer: "https://doppelwriter.com/profile/:id",
-      $initial_referrer: "https://www.google.com/",
+      $initial_referrer: "https://www.google.com", // superseded: cross-site referrer keeps origin only
       $prev_pageview_pathname: "/profile/:id",
       $prev_pageview_url: "https://doppelwriter.com/profile/:id",
       $session_entry_url: "https://doppelwriter.com/profile/:id",
       $session_entry_pathname: "/profile/:id",
-      $initial_pathname: "/profile/:id/print",
+      $initial_pathname: "/other", // superseded: /profile/:id/print is not a route
       step_index: 2,
     });
   });
