@@ -251,12 +251,15 @@ export function sanitizeEventProps(props: Record<string, unknown> | undefined): 
   }
 }
 
-/** before_send body: properties plus $set / $set_once, in place. */
+/** before_send body: properties plus $set / $set_once (event level and nested in properties), in place. */
 export function sanitizeEvent(event: { properties?: Record<string, unknown>; $set?: Record<string, unknown>; $set_once?: Record<string, unknown> } | null | undefined): void {
   if (!event) return;
   sanitizeEventProps(event.properties);
-  sanitizeEventProps(event.$set);
-  sanitizeEventProps(event.$set_once);
+  for (const k of ["$set", "$set_once"] as const) {
+    sanitizeEventProps(event[k]);
+    const nested = event.properties?.[k];
+    if (nested && typeof nested === "object" && !Array.isArray(nested)) sanitizeEventProps(nested as Record<string, unknown>);
+  }
 }
 
 // Thin wrappers kept for existing callers.

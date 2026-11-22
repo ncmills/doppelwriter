@@ -236,3 +236,29 @@ describe("ALLOWLIST-KEEP-DETAIL: published slugs", () => {
     }
   });
 });
+
+// SWEEP-1121-2115: person props nested inside properties ($set / $set_once) get the same per-key rules as top-level props.
+describe("REDACT-ALLOWLIST: invariant over the whole table, nested properties.$set / $set_once", () => {
+  it("every table input in properties.$set.$current_url / $set_once.$initial_* -> same as top level, no forbidden token", () => {
+    for (const [i] of [...PATH_TABLE, ...URL_TABLE]) {
+      const u = i.startsWith("/") ? O + i : i;
+      const set = { $current_url: u, $pathname: i, $referrer: u, title: i };
+      const once = { $initial_current_url: u, $initial_pathname: i, $initial_referrer: u };
+      const e = { properties: { $set: { ...set }, $set_once: { ...once }, keep: 1 } };
+      const topSet = { properties: { ...set } };
+      const topOnce = { properties: { ...once } };
+      sanitizeEvent(e);
+      sanitizeEvent(topSet);
+      sanitizeEvent(topOnce);
+      expect(e.properties.$set).toEqual(topSet.properties);
+      expect(e.properties.$set_once).toEqual(topOnce.properties);
+      expect(e.properties.keep).toBe(1);
+      for (const f of FORBIDDEN) expect(JSON.stringify(e)).not.toContain(f);
+    }
+  });
+  it("non-object nested $set / $set_once are left alone", () => {
+    const e = { properties: { $set: "x", $set_once: ["y"] } as Record<string, unknown> };
+    sanitizeEvent(e);
+    expect(e.properties).toEqual({ $set: "x", $set_once: ["y"] });
+  });
+});
