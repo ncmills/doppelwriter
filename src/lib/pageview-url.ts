@@ -34,6 +34,8 @@ export function sanitizePageviewUrl(url: string): string {
   return base + (kept ? "?" + kept : "") + hash;
 }
 
+import PUBLISHED_PATHS from "../generated/published-paths.json";
+
 // Per-site configuration (DoppelWriter). Templates come from src/app routes on origin/main (4caca79).
 // A param segment is written ":name"; it matches [a-z0-9-]{1,120} only. Matching is exact.
 export const SAME_SITE_HOSTS: ReadonlySet<string> = new Set(["doppelwriter.com", "www.doppelwriter.com", "localhost"]);
@@ -93,12 +95,16 @@ export const ROUTE_TEMPLATES: ReadonlyArray<{ pattern: string; template: string 
   { pattern: "/write/:slug", template: "/write/:slug" },
 ];
 
+// Build-time list of PUBLISHED public content slugs per template (ALLOWLIST-KEEP-DETAIL), written by
+// scripts/gen-published-paths.ts in prebuild. Share ids, plan results, account/auth pages are never in it.
+export const PUBLISHED: Readonly<Record<string, readonly string[]>> = PUBLISHED_PATHS;
+
 // ---------------------------------------------------------------------------
-// SHARED REDACT-ALLOWLIST helper: copy verbatim per repo; only ROUTE_TEMPLATES and SAME_SITE_HOSTS differ
-// (REDACT-ALLOWLIST-1121). The path sent to the vendor is CHOSEN from ROUTE_TEMPLATES, never made by
+// SHARED REDACT-ALLOWLIST helper: copy verbatim per repo; only ROUTE_TEMPLATES, SAME_SITE_HOSTS and the
+// PUBLISHED source differ (REDACT-ALLOWLIST-1121, ALLOWLIST-KEEP-DETAIL). The path sent to the vendor is CHOSEN from ROUTE_TEMPLATES, never made by
 // cutting pieces out of the raw string. Anything that does not normalise cleanly and match exactly
 // becomes the fixed string "/other". Hash is always dropped; query keeps POSTHOG_QUERY_ALLOWLIST keys
-// only; `title` becomes the template; cross-site referrers keep origin only. Full paths stay
+// only; `title` becomes the template (or concrete published path); cross-site referrers keep origin only. Full paths stay
 // first-party (Vercel request logs + Vercel Web Analytics).
 // ---------------------------------------------------------------------------
 
@@ -131,9 +137,15 @@ function normalisedSegments(path: string): string[] | null {
 const COMPILED_TEMPLATES = ROUTE_TEMPLATES.map((t) => ({
   segs: t.pattern.split("/").filter(Boolean),
   template: t.template,
+  // Published param values for this template (multi-param values joined by "/"); empty = always template.
+  // Opaque-id templates (":id") never come out concrete, whatever the list says.
+  published: new Set(t.template.includes(":id") ? [] : PUBLISHED[t.template] ?? []),
 }));
 
-/** Always a template string from ROUTE_TEMPLATES, or "/other". Input is a bare path (no query/hash). */
+/**
+ * A template string from ROUTE_TEMPLATES, "/other", or (ALLOWLIST-KEEP-DETAIL) the concrete normalised path
+ * when every param value is in the template's PUBLISHED list. Input is a bare path (no query/hash).
+ */
 export function templateForPath(path: string): string {
   if (typeof path !== "string") return OTHER_PATH;
   const segs = normalisedSegments(path);
@@ -144,7 +156,10 @@ export function templateForPath(path: string): string {
     for (let i = 0; i < segs.length && ok; i++) {
       ok = t.segs[i].startsWith(":") ? PARAM_SEGMENT.test(segs[i]) : t.segs[i] === segs[i];
     }
-    if (ok) return t.template;
+    if (!ok) continue;
+    const params = segs.filter((_, i) => t.segs[i].startsWith(":"));
+    if (params.length && t.published.has(params.join("/"))) return "/" + segs.join("/");
+    return t.template;
   }
   return OTHER_PATH;
 }
@@ -213,7 +228,7 @@ export const POSTHOG_PATH_PROPS = [
   "$initial_pathname",
 ] as const;
 
-/** Template of the page an event was captured on (used for `title`). */
+/** Template (or concrete published path) of the page an event was captured on (used for `title`). */
 function currentTemplate(props: Record<string, unknown>): string {
   const cur = [props.$current_url, props.$pathname].find((v) => typeof v === "string") as string | undefined;
   if (!cur) return OTHER_PATH;
