@@ -4,18 +4,34 @@ import crypto from "crypto";
 import { sql } from "@/lib/db";
 import { CLAUDE_MODEL, getAnthropicClient } from "@/lib/models";
 import { trackServerEvent } from "@/lib/track";
+import { isTestRequest } from "@/lib/test-request";
 
 
 export const maxDuration = 60;
 
+// Fixed stub for test-flagged requests (same shape as a real analysis).
+const TEST_STUB_ANALYSIS = {
+  stub: true,
+  sentenceLength: { average: 10, shortest: 4, longest: 18, variation: "medium" },
+  vocabulary: { level: "moderate", uniqueWordRatio: 0.5, signatureWords: ["stub", "canned", "test"] },
+  tone: { primary: "stub", secondary: "canned", formality: 5 },
+  structure: { avgParagraphLength: "stub", usesFragments: false, listHeavy: false, preferredTransitions: ["stub"] },
+  personality: { description: "STUB ANALYSIS: test-flagged request, Anthropic was not called.", strengths: ["stub"], quirks: ["stub"] },
+  similarTo: ["STUB (test-flagged request)"],
+  shareUrl: "/analyze/test-stub",
+};
+
 export async function POST(request: NextRequest) {
+  // Test-flagged (secret-gated x-sn-test-run): no rate-limit write, no Anthropic
+  // spend, no DB row, no analytics. Validation below still runs.
+  const isTest = isTestRequest(request);
   // DURABLE RATE LIMIT (2026-08-29). This was a module-scope `Map`, i.e. a
   // counter per lambda instance that reset on every cold start — a limit in
   // name only, in front of an unauthenticated Anthropic call. It now counts in
   // Postgres, keyed on an address the caller cannot forge, and FAILS CLOSED:
   // if we cannot tell whether this caller has already spent, the answer is no.
   try {
-    const verdict = await allowAnon(request.headers, "analyze");
+    const verdict = isTest ? { allowed: true } : await allowAnon(request.headers, "analyze");
     if (!verdict.allowed) {
       return new Response(
         JSON.stringify({ error: "Rate limit exceeded. Try again in an hour." }),
@@ -64,6 +80,13 @@ export async function POST(request: NextRequest) {
       JSON.stringify({ error: "Text must be at most 10,000 characters." }),
       { status: 400, headers: { "Content-Type": "application/json" } }
     );
+  }
+
+  if (isTest) {
+    return new Response(JSON.stringify(TEST_STUB_ANALYSIS), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   try {
