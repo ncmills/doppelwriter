@@ -79,3 +79,38 @@ describe("analyze test gate", () => {
     expect(create).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("analyze global daily cap (route)", () => {
+  it("under cap: Anthropic called once and a global row written", async () => {
+    const calls: unknown[][] = [];
+    vi.doMock("@/lib/analyze-daily-cap", () => ({
+      allowGlobalAnalyze: async (...a: unknown[]) => { calls.push(a); return true; },
+    }));
+    const { POST } = await import("./route");
+    const res = await POST(post() as never);
+    expect(res.status).toBe(200);
+    expect(create).toHaveBeenCalledTimes(1);
+    expect(calls).toHaveLength(1);
+    vi.doUnmock("@/lib/analyze-daily-cap");
+  });
+
+  it("at cap: 503 and Anthropic NOT called", async () => {
+    vi.doMock("@/lib/analyze-daily-cap", () => ({ allowGlobalAnalyze: async () => false }));
+    const { POST } = await import("./route");
+    const res = await POST(post() as never);
+    expect(res.status).toBe(503);
+    expect((await res.json()).error).toBe("Daily limit reached. Try again tomorrow.");
+    expect(create).not.toHaveBeenCalled();
+    vi.doUnmock("@/lib/analyze-daily-cap");
+  });
+
+  it("test-flagged: stub, global cap never consulted", async () => {
+    const cap = vi.fn(async () => true);
+    vi.doMock("@/lib/analyze-daily-cap", () => ({ allowGlobalAnalyze: cap }));
+    const { POST } = await import("./route");
+    const res = await POST(post({ "x-sn-test-run": SECRET }) as never);
+    expect((await res.json()).stub).toBe(true);
+    expect(cap).not.toHaveBeenCalled();
+    vi.doUnmock("@/lib/analyze-daily-cap");
+  });
+});
