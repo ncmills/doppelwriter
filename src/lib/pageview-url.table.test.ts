@@ -1,6 +1,6 @@
 // SHARED REDACT-ALLOWLIST test table (REDACT-ALLOWLIST-1121), DoppelWriter rows.
 import { describe, it, expect } from "vitest";
-import { templateForPath, sanitizeUrl, sanitizeEvent, redactPath, redactUrlPath, ROUTE_TEMPLATES } from "./pageview-url";
+import { templateForPath, sanitizeUrl, sanitizeEvent, redactPath, redactUrlPath, ROUTE_TEMPLATES, PUBLISHED } from "./pageview-url";
 
 const O = "https://doppelwriter.com";
 const SECRET = "SECRETid123";
@@ -40,7 +40,7 @@ const PATH_TABLE: Array<[string, string]> = [
   ["/s", "/other"],
   ["/write/mark-twain", "/write/:slug"],
   ["/write/business", "/write/business"],
-  ["/write-like/conan-obrien", "/write-like/:slug"],
+  ["/write-like/conan-obrien", "/write-like/conan-obrien"], // published (ALLOWLIST-KEEP-DETAIL)
   ["/blog/how-to-write", "/blog/:slug"],
   ["/blog/rss.xml", "/blog/rss.xml"],
   ["/alternatives/hemingway-app", "/alternatives/:slug"],
@@ -171,6 +171,68 @@ describe("REDACT-ALLOWLIST: invariant over the whole table", () => {
       for (const f of FORBIDDEN) expect(out).not.toContain(f);
       if (out === "$direct") continue;
       expect(pathPart(out)).toMatch(/^[a-z0-9/:_.-]*$/);
+    }
+  });
+});
+
+// ALLOWLIST-KEEP-DETAIL: published slugs (from the build-time list) come out concrete; nothing else does.
+const S = SECRET;
+const R = "/s/";
+const pub = (tpl: string): string => {
+  const v = (PUBLISHED[tpl] ?? []).find((x) => !/secret/.test(x));
+  if (!v) throw new Error("no published slug for " + tpl);
+  return v;
+};
+const WL = pub("/write-like/:slug");
+const POST = pub("/blog/:slug");
+const PUB_TABLE: Array<[string, string]> = [
+  ["/write-like/" + WL, "/write-like/" + WL],
+  ["/blog/" + POST, "/blog/" + POST],
+  ["/BLOG/" + POST.toUpperCase(), "/blog/" + POST],
+  ["/blog/" + POST + "/", "/blog/" + POST],
+  ["/blog%2F" + POST, "/blog/" + POST],
+  ["/x/../blog/" + POST, "/blog/" + POST],
+  ...Object.keys(PUBLISHED).map((tpl): [string, string] => [tpl.replace(":" + tpl.split(":").pop(), PUBLISHED[tpl][0] ?? "x"), PUBLISHED[tpl].length ? tpl.replace(":" + tpl.split(":").pop(), PUBLISHED[tpl][0]) : tpl]),
+  // Unpublished lookalikes -> template.
+  ["/blog/" + POST + "-zz", "/blog/:slug"],
+  ["/write-like/" + WL + "-zz", "/write-like/:slug"],
+  ["/analyze/" + POST, "/analyze/:slug"], // user-content template: never concrete
+  // Every encoding case on a published slug.
+  ["/blog/" + POST + "%3F" + S, "/other"],
+  ["/blog/" + POST + "%23" + S, "/other"],
+  ["/blog%09/" + POST, "/other"],
+  ["/blog%20/" + POST, "/other"],
+  ["/blog;x/" + POST, "/other"],
+  ["/%E0%A4%A/blog/" + POST, "/other"],
+  ["//host/blog/" + POST, "/other"],
+  ["/blog/%252e%252e/" + POST, "/other"], // normalises to /<post>: no such route
+  ["/blog/" + POST + "/..", "/blog"],
+  ["/blog/" + POST + "/" + S, "/other"],
+  ["/blog/" + POST + "%00", "/other"],
+  ["/blog/" + POST + "%25", "/other"],
+  ["/blog/" + POST + "?token=" + S, "/blog/" + POST],
+  // Share/profile ids stay masked even when the id equals a published slug.
+  [R + WL, R + ":id"],
+  [R + POST, R + ":id"],
+  ["/profile/" + POST, "/profile/:id"],
+];
+
+describe("ALLOWLIST-KEEP-DETAIL: published slugs", () => {
+  it.each(PUB_TABLE)("redactPath(%j) -> %j", (input, expected) => {
+    expect(redactPath(input).split("?")[0]).toBe(expected);
+  });
+  it("absolute URL, title and props carry the concrete published path", () => {
+    expect(sanitizeUrl(O + "/blog/" + POST + "?utm_source=g&token=" + S + "#" + S)).toBe(O + "/blog/" + POST + "?utm_source=g");
+    const p: Record<string, unknown> = { $current_url: O + "/write-like/" + WL, title: "Raw title " + S, $pathname: "/write-like/" + WL };
+    sanitizeEvent({ properties: p });
+    expect(p).toEqual({ $current_url: O + "/write-like/" + WL, title: "/write-like/" + WL, $pathname: "/write-like/" + WL });
+  });
+  it("no published list for share/account/user-content templates; outputs stay in [a-z0-9/:_.-] with no secret", () => {
+    for (const k of Object.keys(PUBLISHED)) expect(k).not.toMatch(/:id|analyze|my-trips|auth|login|admin|account|settings|embed|profile|share|\/s\//);
+    for (const [i] of PUB_TABLE) {
+      const out = redactPath(i).split("?")[0];
+      expect(out).not.toMatch(/secret/i);
+      expect(out).toMatch(/^[a-z0-9/:_.-]*$/);
     }
   });
 });
