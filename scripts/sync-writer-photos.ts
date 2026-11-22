@@ -177,6 +177,18 @@ async function widthOf(fullPath: string): Promise<number | null> {
 
 type EnsureResult = { localPath: string; source: string; width: number | null; height: number | null };
 
+// Photo standard: a correct small photo beats an icon. If a low-res local
+// photo cannot be upgraded (no source, or the download fails), keep the
+// existing local file instead of dropping the writer's photo.
+async function keepExistingLocal(existingValue: string | undefined): Promise<EnsureResult | null> {
+  if (!existingValue?.startsWith("/writers/")) return null;
+  const fullPath = join(PUBLIC_WRITERS_DIR, existingValue.slice("/writers/".length));
+  if (!existsSync(fullPath) || statSync(fullPath).size <= 500) return null;
+  const meta = await sharp(fullPath).metadata().catch(() => null);
+  if (!meta?.width) return null;
+  return { localPath: existingValue, source: "cached-lowres", width: meta.width, height: meta.height ?? null };
+}
+
 async function ensureLocal(
   name: string,
   existing: Record<string, string>,
@@ -204,7 +216,7 @@ async function ensureLocal(
     existingValue && existingValue.startsWith("http")
       ? existingValue
       : MANUAL_SOURCES[name] ?? (await fetchPortraitUrl(name));
-  if (!sourceUrl) return null;
+  if (!sourceUrl) return keepExistingLocal(existingValue);
 
   const ext = extFromUrl(sourceUrl);
   const filename = `${slug}.${ext}`;
@@ -221,7 +233,7 @@ async function ensureLocal(
   }
 
   const ok = await downloadTo(sourceUrl, fullPath);
-  if (!ok) return null;
+  if (!ok) return keepExistingLocal(existingValue);
   await downsizeTo(fullPath, TARGET_WIDTH);
   const meta = await sharp(fullPath).metadata();
   return { localPath, source: sourceUrl, width: meta.width ?? null, height: meta.height ?? null };

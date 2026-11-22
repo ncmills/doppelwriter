@@ -1,4 +1,18 @@
 {
+  "ben-thompson": {
+    "file": "/writers/ben-thompson.jpg",
+    "source": "cached-lowres",
+    "subject": "Ben Thompson",
+    "width": 200,
+    "height": 200
+  },
+  "david-ogilvy": {
+    "file": "/writers/david-ogilvy.jpg",
+    "source": "cached-lowres",
+    "subject": "David Ogilvy",
+    "width": 200,
+    "height": 252
+  },
   "ernest-hemingway": {
     "file": "/writers/ernest-hemingway.jpg",
     "source": "https://upload.wikimedia.org/wikipedia/commons/2/28/ErnestHemingway.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
@@ -26,6 +40,13 @@
     "subject": "Hunter S. Thompson",
     "width": 800,
     "height": 1046
+  },
+  "paul-graham": {
+    "file": "/writers/paul-graham.jpg",
+    "source": "cached-lowres",
+    "subject": "Paul Graham",
+    "width": 200,
+    "height": 267
   },
   "toni-morrison": {
     "file": "/writers/toni-morrison.jpg",
