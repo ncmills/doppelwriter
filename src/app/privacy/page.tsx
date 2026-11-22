@@ -65,7 +65,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-[var(--color-fg)] mb-3">Analytics</h2>
             <p>
-              We use Vercel Analytics to understand how people use the site. This collects anonymous, aggregated data — no personal identifiers, no tracking across other websites.
+              We use Vercel Analytics and PostHog to understand how people use the site. PostHog keeps one random anonymous ID in a first-party cookie and your browser&apos;s storage so we can tell when a visitor comes back. If you arrive through a referral link, a dw_ref cookie remembers that link for 30 days. None of these hold your name or email, and none track you across other websites.
             </p>
           </section>
 
