@@ -3,6 +3,7 @@ import { allowAnon, RateLimitUnavailable } from "@/lib/anon-rate-limit";
 import { sql } from "@/lib/db";
 import Anthropic from "@anthropic-ai/sdk";
 import { CLAUDE_MODEL } from "@/lib/models";
+import { logLlmStreamUsage } from "@/lib/llm-usage-log";
 
 const client = new Anthropic();
 
@@ -90,6 +91,7 @@ export async function POST(request: NextRequest) {
             controller.enqueue(encoder.encode(event.delta.text));
           }
         }
+        await logLlmStreamUsage("/api/demo", CLAUDE_MODEL, response);
         controller.close();
       } catch (err) {
         console.error("Demo stream error:", err);
