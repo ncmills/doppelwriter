@@ -3,6 +3,7 @@ import { allowAnon, RateLimitUnavailable } from "@/lib/anon-rate-limit";
 import crypto from "crypto";
 import { sql } from "@/lib/db";
 import { CLAUDE_MODEL, getAnthropicClient } from "@/lib/models";
+import { logLlmUsage } from "@/lib/llm-usage-log";
 import { trackServerEvent } from "@/lib/track";
 import { isTestRequest } from "@/lib/test-request";
 
@@ -111,6 +112,7 @@ ${text}`,
         },
       ],
     });
+    logLlmUsage("/api/analyze", CLAUDE_MODEL, response.usage);
 
     const content = response.content[0];
     if (content.type !== "text") {

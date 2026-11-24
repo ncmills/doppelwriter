@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { allowAnon, RateLimitUnavailable } from "@/lib/anon-rate-limit";
 import { CLAUDE_MODEL, getAnthropicClient } from "@/lib/models";
+import { logLlmUsage } from "@/lib/llm-usage-log";
 import { trackServerEvent } from "@/lib/track";
 
 
@@ -83,6 +84,7 @@ ${text}`,
         },
       ],
     });
+    logLlmUsage("/api/analyze-tone", CLAUDE_MODEL, response.usage);
 
     const content = response.content[0];
     if (content.type !== "text") {

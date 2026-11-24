@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { checkRateLimit } from "@/lib/usage";
 import { CLAUDE_MODEL, getAnthropicClient } from "@/lib/models";
+import { logLlmUsage } from "@/lib/llm-usage-log";
 
 export const maxDuration = 60;
 
@@ -77,6 +78,7 @@ Return ONLY the system prompt text. No commentary or preamble.`,
       },
     ],
   });
+  logLlmUsage("/api/profiles/merge", CLAUDE_MODEL, response.usage);
 
   const mergedPrompt = response.content[0].type === "text" ? response.content[0].text : "";
   const sourceNames = profiles.map((p) => p.writer_name || p.name).join(" + ");

@@ -1,5 +1,6 @@
 import { sql } from "./db";
 import { CLAUDE_MODEL, getAnthropicClient } from "./models";
+import { logLlmUsage } from "./llm-usage-log";
 
 const client = getAnthropicClient();
 
@@ -88,6 +89,7 @@ Respond JSON only:
       },
     ],
   });
+  logLlmUsage("lib:profile-quality.assess", CLAUDE_MODEL, response.usage);
 
   const text = response.content[0].type === "text" ? response.content[0].text : "";
   const jsonMatch = text.match(/\{[\s\S]*\}/);
