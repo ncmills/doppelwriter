@@ -6,6 +6,7 @@ import { CLAUDE_MODEL, getAnthropicClient } from "@/lib/models";
 import { logLlmUsage } from "@/lib/llm-usage-log";
 import { trackServerEvent } from "@/lib/track";
 import { isTestRequest } from "@/lib/test-request";
+import { allowGlobalAnalyze } from "@/lib/analyze-daily-cap";
 
 
 export const maxDuration = 60;
@@ -88,6 +89,26 @@ export async function POST(request: NextRequest) {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
+  }
+
+  // GLOBAL DAILY CAP (DRV DB-AND-SECRET-PATH): bounds the whole route across
+  // all visitors. After the test stub and per-visitor limiter, before Anthropic.
+  try {
+    if (!(await allowGlobalAnalyze())) {
+      return new Response(
+        JSON.stringify({ error: "Daily limit reached. Try again tomorrow." }),
+        { status: 503, headers: { "Content-Type": "application/json" } }
+      );
+    }
+  } catch (e) {
+    if (e instanceof RateLimitUnavailable) {
+      console.error("[analyze] global cap store unreachable — refusing", e);
+      return new Response(
+        JSON.stringify({ error: "Temporarily unavailable. Please try again shortly." }),
+        { status: 503, headers: { "Content-Type": "application/json" } }
+      );
+    }
+    throw e;
   }
 
   try {
