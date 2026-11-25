@@ -3,6 +3,7 @@
 
 import { sql } from "./db";
 import { CLAUDE_MODEL, getAnthropicClient } from "./models";
+import { logLlmUsage } from "./llm-usage-log";
 import { CURATED_WRITERS } from "./writer-data";
 import { buildMultiLayerPrompt } from "./style-analyzer";
 
@@ -73,6 +74,7 @@ Respond with JSON only:
       },
     ],
   });
+  logLlmUsage("lib:writer-builder.profile", CLAUDE_MODEL, profileResponse.usage);
 
   const profileText = profileResponse.content[0].type === "text" ? profileResponse.content[0].text : "";
   const jsonMatch = profileText.match(/\{[\s\S]*\}/);
@@ -136,6 +138,7 @@ async function synthesizeFromKnowledge(writerName: string): Promise<string> {
       },
     ],
   });
+  logLlmUsage("lib:writer-builder.synthesize", CLAUDE_MODEL, response.usage);
   return response.content[0].type === "text" ? response.content[0].text : "";
 }
 

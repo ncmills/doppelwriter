@@ -1,5 +1,8 @@
 // Post-deploy IndexNow bulk submit.
-//   npx tsx scripts/submit-indexnow.ts
+//   npx tsx scripts/submit-indexnow.ts [--force]
+// Runs only on a Vercel production build unless --force / INDEXNOW_FORCE=1 (see indexnow-gate.ts).
+
+import { shouldSubmit } from "./indexnow-gate";
 
 const INDEXNOW_KEY = "dw-9c5e2f8a4d1b7c3f6e9a2d8b5c4f1a7e";
 const INDEXNOW_HOST = "doppelwriter.com";
@@ -48,6 +51,12 @@ async function submit(urlList: string[]): Promise<void> {
 }
 
 async function main(): Promise<void> {
+  const gate = shouldSubmit(process.env, process.argv.slice(2));
+  if (!gate.run) {
+    console.log(`[indexnow] skipped — ${gate.reason}`);
+    return;
+  }
+  console.log(`[indexnow] submitting — ${gate.reason}`);
   console.log(`[indexnow] fetching ${SITEMAP_URL}`);
   const urls = await fetchUrls(SITEMAP_URL);
   console.log(`[indexnow] parsed ${urls.length} URLs`);

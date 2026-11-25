@@ -2,6 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { diffWords } from "diff";
 import { sql } from "./db";
 import { CLAUDE_MODEL } from "./models";
+import { logLlmUsage, logLlmStreamUsage } from "./llm-usage-log";
 import { getVoiceSystemPrompt } from "./voice-prompt";
 
 const client = new Anthropic();
@@ -64,6 +65,7 @@ ${cleanDraft}`;
       yield event.delta.text;
     }
   }
+  await logLlmStreamUsage("lib:editor.editDraft", CLAUDE_MODEL, stream);
 }
 
 export async function* reviseDraft(
@@ -93,6 +95,7 @@ export async function* reviseDraft(
       yield event.delta.text;
     }
   }
+  await logLlmStreamUsage("lib:editor.reviseDraft", CLAUDE_MODEL, stream);
 }
 
 // ── Edit Feedback Loop ──────────────────────────────────────────────────────
@@ -137,6 +140,7 @@ Respond with ONLY the lesson. No preamble.`,
         },
       ],
     });
+    logLlmUsage("lib:editor.recordCorrection", CLAUDE_MODEL, analysis.usage);
     lesson = analysis.content[0].type === "text" ? analysis.content[0].text : "";
   } catch (err) {
     console.error(`Lesson extraction failed for profile ${profileId}:`, err);

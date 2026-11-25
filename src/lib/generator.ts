@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { CLAUDE_MODEL } from "./models";
+import { logLlmUsage, logLlmStreamUsage } from "./llm-usage-log";
 import { getVoiceSystemPrompt } from "./voice-prompt";
 
 const client = new Anthropic();
@@ -54,6 +55,7 @@ BRIEF: ${brief}`;
       yield event.delta.text;
     }
   }
+  await logLlmStreamUsage("lib:generator.generateDraft", CLAUDE_MODEL, stream);
 }
 
 // Chunked generation for long-form content — prevents voice drift
@@ -81,6 +83,7 @@ ${options.researchContext ? `\nRESEARCH CONTEXT: ${options.researchContext.slice
       },
     ],
   });
+  logLlmUsage("lib:generator.outline", CLAUDE_MODEL, outlineResponse.usage);
 
   const outline = outlineResponse.content[0].type === "text" ? outlineResponse.content[0].text : "";
 
@@ -133,6 +136,7 @@ Write ~${wordsPerSection} words. Maintain the voice and flow. Write ONLY the con
         yield event.delta.text;
       }
     }
+    await logLlmStreamUsage("lib:generator.section", CLAUDE_MODEL, stream);
 
     // Only keep the tail — we use slice(-500) in prompts anyway, so no need
     // to accumulate the full text in memory for long pieces
@@ -159,5 +163,6 @@ export async function research(query: string): Promise<string> {
       },
     ],
   });
+  logLlmUsage("lib:generator.research", CLAUDE_MODEL, response.usage);
   return response.content[0].type === "text" ? response.content[0].text : "";
 }

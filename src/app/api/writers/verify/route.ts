@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { checkRateLimit } from "@/lib/usage";
 import { CLAUDE_MODEL, getAnthropicClient } from "@/lib/models";
+import { logLlmUsage } from "@/lib/llm-usage-log";
 
 export const maxDuration = 30;
 
@@ -60,6 +61,7 @@ Rules:
       },
     ],
   });
+  logLlmUsage("/api/writers/verify", CLAUDE_MODEL, response.usage);
 
   const text = response.content[0].type === "text" ? response.content[0].text : "";
   const jsonMatch = text.match(/\{[\s\S]*\}/);

@@ -56,7 +56,7 @@ export const WRITER_PHOTOS: Record<string, string> = {
   "Jenny Slate": "/writers/jenny-slate.jpg",
   "Jerry Seinfeld": "/writers/jerry-seinfeld.jpg",
   "Joan Didion": "/writers/joan-didion.jpg",
-  "Joe Rogan": "/writers/joe-rogan.png",
+  "Joe Rogan": "/writers/joe-rogan.jpg",
   "John F. Kennedy": "/writers/john-f-kennedy.jpg",
   "John Mulaney": "/writers/john-mulaney.jpg",
   "Jordan Peterson": "/writers/jordan-peterson.jpg",

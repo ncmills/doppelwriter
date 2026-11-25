@@ -14,22 +14,28 @@ type FeaturedWriter = {
 };
 
 // Invented pull-quotes in each writer's apparent voice. All fictional.
-const FEATURED_WRITERS: FeaturedWriter[] = [
-  { name: "Ernest Hemingway", category: "Authors", pullQuote: "A paragraph should hit like a good cocktail — three ingredients, no umbrella." },
-  { name: "Paul Graham", category: "Business", pullQuote: "If you have to explain the metaphor, pick a worse metaphor." },
+//
+// Order matters: the first PAGE_SIZE entries render on the homepage
+// alongside HomepageCinematic's HERO_VOICE_SAMPLES (voice-samples.ts).
+// Keep the first PAGE_SIZE writers disjoint from HERO_VOICE_SAMPLES so the
+// same photo never renders twice on the homepage. See the overlap test
+// below this file's sibling test for the guard.
+export const FEATURED_WRITERS: FeaturedWriter[] = [
+  { name: "Carl Sagan", category: "Science", pullQuote: "Write so the kid in the back row can't help looking up." },
+  { name: "Seth Godin", category: "Business", pullQuote: "If you can say it in a tweet, don't write the essay." },
   { name: "Tina Fey", category: "Comedy", pullQuote: "Write the joke you'd laugh at alone in the car. The rest is marketing." },
   { name: "Barack Obama", category: "Leaders", pullQuote: "Say what's true. Then say why it matters. Then stop." },
   { name: "Joan Didion", category: "Authors", pullQuote: "A good sentence is a small weather system — it knows exactly what it's doing." },
-  { name: "Carl Sagan", category: "Science", pullQuote: "Write so the kid in the back row can't help looking up." },
+  { name: "Ernest Hemingway", category: "Authors", pullQuote: "A paragraph should hit like a good cocktail — three ingredients, no umbrella." },
   { name: "Toni Morrison", category: "Authors", pullQuote: "If a sentence doesn't haunt you, it won't haunt anyone else." },
-  { name: "Seth Godin", category: "Business", pullQuote: "If you can say it in a tweet, don't write the essay." },
+  { name: "Paul Graham", category: "Business", pullQuote: "If you have to explain the metaphor, pick a worse metaphor." },
   { name: "Hunter S. Thompson", category: "Authors", pullQuote: "Polite prose is how bad centuries survive themselves." },
   { name: "Joe Rogan", category: "Podcasters", pullQuote: "Just say what you mean. Adjectives are for people who don't mean it yet." },
   { name: "Dr. Seuss", category: "Children's", pullQuote: "A good word is a small bright thing — bring two, just in case." },
   { name: "Warren Buffett", category: "Business", pullQuote: "If a sentence needs a footnote, it needs a rewrite." },
 ];
 
-const PAGE_SIZE = 4;
+export const PAGE_SIZE = 4;
 const FOCUS_INTERVAL = 6000;
 
 export default function WriterCarouselGallery() {
