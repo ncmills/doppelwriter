@@ -79,7 +79,7 @@ async function* generateLongForm(
 
 TOPIC: ${brief}
 ${options.instructions ? `\nINSTRUCTIONS: ${options.instructions}` : ""}
-${options.researchContext ? `\nRESEARCH CONTEXT: ${options.researchContext.slice(0, 2000)}` : ""}`,
+${options.researchContext ? `\nRESEARCH CONTEXT: ${options.researchContext}` : ""}`,
       },
     ],
   });
@@ -159,7 +159,7 @@ export async function research(query: string): Promise<string> {
     messages: [
       {
         role: "user",
-        content: `Research this topic. Provide key facts, data points, and context useful for writing about it. Be thorough and factual. Structure as bullet points grouped by subtopic.\n\nTopic: ${query}`,
+        content: `Research this topic. Provide key facts, data points, and context useful for writing about it. Be thorough and factual. You have no web access: this is from memory only, so mark any specific figure, date, or quote you are not certain of with "[verify]" and never invent sources or URLs. Structure as bullet points grouped by subtopic.\n\nTopic: ${query}`,
       },
     ],
   });

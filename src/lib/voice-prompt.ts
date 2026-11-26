@@ -33,34 +33,40 @@ Write in short, direct sentences when they serve the point. Use active voice.
 Choose concrete words over abstract ones. Let verbs do the work, not nouns.
 Vary sentence length for rhythm — short sentences for impact, longer ones for flow.`;
 
+// Slider 1-10, 5 = neutral. Distance from 5 picks the strength word so a 9 reads stronger than a 6.
+export function intensity(v: number): string {
+  const d = Math.abs(v - 5);
+  return d >= 4 ? "MUCH, MUCH " : d >= 2 ? "MUCH " : "";
+}
+
 export function applyVoiceOverrides(prompt: string, overrides: Record<string, number>): string {
   if (!overrides || Object.keys(overrides).length === 0) return prompt;
 
   const mods: string[] = [];
   if (overrides.formality !== undefined && overrides.formality !== 5) {
     mods.push(overrides.formality > 5
-      ? `Write MORE formally than the base profile. Formality level: ${overrides.formality}/10.`
-      : `Write MORE casually than the base profile. Formality level: ${overrides.formality}/10.`);
+      ? `Write ${intensity(overrides.formality)}MORE formally than the base profile. Formality level: ${overrides.formality}/10.`
+      : `Write ${intensity(overrides.formality)}MORE casually than the base profile. Formality level: ${overrides.formality}/10.`);
   }
   if (overrides.sentence_length !== undefined && overrides.sentence_length !== 5) {
     mods.push(overrides.sentence_length > 5
-      ? `Use LONGER, more complex sentences than the base profile suggests.`
-      : `Use SHORTER, punchier sentences than the base profile suggests.`);
+      ? `Use ${intensity(overrides.sentence_length)}LONGER, more complex sentences than the base profile suggests.`
+      : `Use ${intensity(overrides.sentence_length)}SHORTER, punchier sentences than the base profile suggests.`);
   }
   if (overrides.creativity !== undefined && overrides.creativity !== 5) {
     mods.push(overrides.creativity > 5
-      ? `Be MORE creative and metaphorical than the base profile. Use more vivid imagery.`
-      : `Be MORE literal and restrained than the base profile. Fewer metaphors, more direct.`);
+      ? `Be ${intensity(overrides.creativity)}MORE creative and metaphorical than the base profile. Use more vivid imagery.`
+      : `Be ${intensity(overrides.creativity)}MORE literal and restrained than the base profile. Fewer metaphors, more direct.`);
   }
   if (overrides.humor !== undefined && overrides.humor !== 5) {
     mods.push(overrides.humor > 5
-      ? `Inject MORE humor, wit, and levity than the base profile suggests.`
-      : `Be MORE serious and measured than the base profile. Minimize humor.`);
+      ? `Inject ${intensity(overrides.humor)}MORE humor, wit, and levity than the base profile suggests.`
+      : `Be ${intensity(overrides.humor)}MORE serious and measured than the base profile. Minimize humor.`);
   }
   if (overrides.emotion !== undefined && overrides.emotion !== 5) {
     mods.push(overrides.emotion > 5
-      ? `Be MORE emotionally expressive and personal than the base profile.`
-      : `Be MORE detached and analytical than the base profile. Less emotional expression.`);
+      ? `Be ${intensity(overrides.emotion)}MORE emotionally expressive and personal than the base profile.`
+      : `Be ${intensity(overrides.emotion)}MORE detached and analytical than the base profile. Less emotional expression.`);
   }
 
   return mods.length > 0 ? prompt + "\n\n═══ USER VOICE ADJUSTMENTS ═══\n" + mods.join("\n") : prompt;

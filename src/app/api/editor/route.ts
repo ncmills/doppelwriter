@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { editDraft } from "@/lib/editor";
 import { checkUsage, checkRateLimit, logUsage, verifyProfileAccess } from "@/lib/usage";
 import { trackServerEvent } from "@/lib/track";
+import { validateEditInput } from "@/lib/generate-input";
 
 export const maxDuration = 60;
 
@@ -48,6 +49,11 @@ export async function POST(request: NextRequest) {
   }
   if (draft.length > 50000) {
     return new Response(JSON.stringify({ error: "Input too long" }), { status: 400 });
+  }
+
+  const check = validateEditInput({ instructions });
+  if (!check.ok) {
+    return new Response(JSON.stringify({ error: check.error }), { status: 400 });
   }
 
   if (!(await verifyProfileAccess(session.user.id, profileId))) {

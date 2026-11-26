@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { generateDraft } from "@/lib/generator";
 import { checkUsage, checkRateLimit, logUsage, verifyProfileAccess } from "@/lib/usage";
 import { trackServerEvent } from "@/lib/track";
+import { validateGenerateOptions } from "@/lib/generate-input";
 
 export const maxDuration = 60;
 
@@ -50,6 +51,11 @@ export async function POST(request: NextRequest) {
   }
   if (brief.length > 50000) {
     return new Response(JSON.stringify({ error: "Input too long" }), { status: 400 });
+  }
+
+  const check = validateGenerateOptions({ wordCount, instructions, researchContext });
+  if (!check.ok) {
+    return new Response(JSON.stringify({ error: check.error }), { status: 400 });
   }
 
   if (!(await verifyProfileAccess(session.user.id, profileId))) {
