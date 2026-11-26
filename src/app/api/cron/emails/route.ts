@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { heartbeat } from "@/lib/heartbeat";
-import { sql } from "@/lib/db";
+import { sql, ensureUnsubscribeColumn } from "@/lib/db";
 import { SEQUENCES, sendSequenceEmail } from "@/lib/email-sequences";
 import { withCronLog } from "@/lib/cron-log";
 
@@ -23,6 +23,7 @@ export const GET = withCronLog("cron/emails", async (request: NextRequest) => {
   // produce. So a hard throw now beats, and is re-thrown -- Vercel must still see the 500, and
   // a monitoring write must never turn a failed cron into a successful-looking one.
   try {
+    await ensureUnsubscribeColumn();
     const db = sql();
     const now = new Date();
 
@@ -34,6 +35,7 @@ export const GET = withCronLog("cron/emails", async (request: NextRequest) => {
       FROM users u
       WHERE u.plan = 'free'
       AND u.email_verified = TRUE
+      AND u.email_unsubscribed = FALSE
       AND u.created_at > NOW() - INTERVAL '9 days'
       AND u.created_at < NOW() - INTERVAL '20 hours'
     `;
@@ -70,7 +72,7 @@ export const GET = withCronLog("cron/emails", async (request: NextRequest) => {
         }
 
         try {
-          await sendSequenceEmail(user.email, seq, user.name || undefined);
+          await sendSequenceEmail(user.email, seq, user.name || undefined, { used: user.used });
           await db`
             INSERT INTO email_sequence_sends (user_id, sequence_key)
             VALUES (${user.id}, ${seq.key})

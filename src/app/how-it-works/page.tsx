@@ -38,7 +38,7 @@ const faqs = [
   },
   {
     q: "Is my writing data safe?",
-    a: "Yes. Your writing samples and generated content are stored securely and never shared with other users. We don't use your content to train our models — your voice profile is yours alone. You can delete all your data at any time from your account settings. We don't sell data, we don't share data, and we don't mine your writing for anything other than building your personal voice profile.",
+    a: "Yes. Your writing samples and generated content are stored securely and never shared with other users. We don't use your content to train our models — your voice profile is yours alone. Email enterprise@doppelwriter.com and we'll delete all of it. We don't sell data, we don't share data, and we don't mine your writing for anything other than building your personal voice profile.",
   },
 ];
 

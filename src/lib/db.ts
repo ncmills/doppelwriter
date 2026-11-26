@@ -34,6 +34,26 @@ export function ensurePrimaryTaskColumn(): Promise<void> {
   return _primaryTaskColumn;
 }
 
+// Same pattern as ensurePrimaryTaskColumn: the email cron and /unsubscribe both
+// need email_unsubscribed, and initSchema only runs on a manual POST /api/init.
+let _unsubscribeColumn: Promise<void> | null = null;
+
+export function ensureUnsubscribeColumn(): Promise<void> {
+  if (!_unsubscribeColumn) {
+    const db = sql();
+    _unsubscribeColumn = Promise.resolve(
+      db`ALTER TABLE users ADD COLUMN IF NOT EXISTS email_unsubscribed BOOLEAN NOT NULL DEFAULT FALSE`
+    ).then(
+      () => undefined,
+      (err) => {
+        _unsubscribeColumn = null;
+        throw err;
+      }
+    );
+  }
+  return _unsubscribeColumn;
+}
+
 export async function initSchema() {
   const db = sql();
   await db`
@@ -198,6 +218,7 @@ export async function initSchema() {
   await db`ALTER TABLE users ADD COLUMN IF NOT EXISTS referral_code TEXT UNIQUE`;
   await db`ALTER TABLE users ADD COLUMN IF NOT EXISTS referred_by TEXT`;
   await db`ALTER TABLE users ADD COLUMN IF NOT EXISTS primary_task TEXT`;
+  await db`ALTER TABLE users ADD COLUMN IF NOT EXISTS email_unsubscribed BOOLEAN NOT NULL DEFAULT FALSE`;
 
   await db`CREATE INDEX IF NOT EXISTS idx_shared_drafts_slug ON shared_drafts(slug)`;
   await db`CREATE INDEX IF NOT EXISTS idx_referrals_referrer ON referrals(referrer_id)`;

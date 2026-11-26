@@ -18,6 +18,7 @@ export const publicPaths = [
   "/write-like",
   "/write",
   "/privacy",
+  "/unsubscribe",
   "/terms",
   "/forgot-password",
   "/reset-password",
