@@ -58,7 +58,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-[family-name:var(--font-display)] text-xl font-semibold text-[var(--color-fg)] mb-3">Email communications</h2>
             <p>
-              We send transactional emails (account verification, password resets, receipts) through <a href="https://resend.com/legal/privacy-policy" className="text-[var(--color-brand)] hover:underline" target="_blank" rel="noopener noreferrer">Resend</a>. We don&apos;t send marketing emails unless you opt in, and you can unsubscribe from anything at any time.
+              We send transactional emails (account verification, password resets, receipts) through <a href="https://resend.com/legal/privacy-policy" className="text-[var(--color-brand)] hover:underline" target="_blank" rel="noopener noreferrer">Resend</a>. When you sign up for a free account we also send a short onboarding series over your first week. It includes tips and a Pro upgrade suggestion. Every one of those emails has an unsubscribe link, and unsubscribing stops them.
             </p>
           </section>
 

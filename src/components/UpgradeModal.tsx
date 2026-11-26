@@ -3,7 +3,8 @@
 import { useState } from "react";
 
 interface UpgradeModalProps {
-  used: number;
+  /** Real monthly count; omit until it has loaded so no made-up number is shown. */
+  used?: number;
   onClose: () => void;
 }
 
@@ -34,11 +35,13 @@ export default function UpgradeModal({ used, onClose }: UpgradeModalProps) {
       <div className="bg-[var(--color-surface)] border border-[var(--color-border)] max-w-md w-full mx-4 p-8">
         {/* Header */}
         <div className="text-center mb-6">
-          <div className="w-12 h-12 border border-[var(--color-border)] bg-[var(--color-surface-raised)] text-[var(--color-brand)] flex items-center justify-center text-xl font-[family-name:var(--font-display)] font-bold mx-auto mb-4">
-            {used}
-          </div>
+          {used !== undefined && (
+            <div className="w-12 h-12 border border-[var(--color-border)] bg-[var(--color-surface-raised)] text-[var(--color-brand)] flex items-center justify-center text-xl font-[family-name:var(--font-display)] font-bold mx-auto mb-4">
+              {used}
+            </div>
+          )}
           <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold mb-2 text-[var(--color-fg)]">
-            You&apos;ve written {used} pieces this month
+            {used !== undefined ? <>You&apos;ve written {used} pieces this month</> : <>You&apos;ve reached your monthly limit</>}
           </h2>
           <p className="text-[var(--color-fg-muted)] text-sm">
             You&apos;ve hit your free limit. Upgrade to keep writing.

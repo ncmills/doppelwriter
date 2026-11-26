@@ -31,7 +31,7 @@ export default function Workspace({ profileId, profileName, defaultMode }: { pro
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
-  const [usageCount, setUsageCount] = useState(0);
+  const [usageCount, setUsageCount] = useState<number | null>(null);
   const [usageNudge, setUsageNudge] = useState("");
   const [shareUrl, setShareUrl] = useState("");
   const [sharing, setSharing] = useState(false);
@@ -338,7 +338,7 @@ h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } h3 { font-size: 1.1em; }
     <div>
       {/* Upgrade Modal */}
       {showUpgradeModal && (
-        <UpgradeModal used={usageCount || 5} onClose={() => setShowUpgradeModal(false)} />
+        <UpgradeModal used={usageCount ?? undefined} onClose={() => setShowUpgradeModal(false)} />
       )}
       {/* Share URL toast */}
       {shareUrl && (

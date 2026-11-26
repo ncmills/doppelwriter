@@ -292,6 +292,9 @@ export default async function WritePage({
           Write My {uc.title}
         </h1>
         <p className="text-xl text-[var(--color-fg-muted)] mb-8 leading-relaxed">{uc.description}</p>
+        {uc.notice && (
+          <p className="text-sm font-medium text-[var(--color-fg)] mb-8 -mt-4">{uc.notice}</p>
+        )}
 
         <Link
           href="/signup"
