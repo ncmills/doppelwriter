@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import { profileSourceNote } from "@/lib/profile-source";
 
 interface Profile {
   id: number;
@@ -180,6 +181,11 @@ function ProfileDetail() {
             <p className="text-[var(--color-fg-muted)] text-sm mt-1">
               {profile.is_curated ? "Curated profile" : "Personal voice profile"} · Updated {new Date(profile.updated_at).toLocaleDateString()}
             </p>
+            {profile.is_curated && profileSourceNote(profile.profile_json) && (
+              <p className="text-[var(--color-fg-muted)] text-sm mt-1" data-testid="profile-source-note">
+                {profileSourceNote(profile.profile_json)}
+              </p>
+            )}
           </div>
           <Link href={`/write?voice=${profile.id}`}
             className="px-5 py-2.5 bg-[var(--color-fg)] text-[var(--color-surface)] hover:bg-[var(--color-brand)] rounded-[2px] text-sm font-medium transition-colors shrink-0">

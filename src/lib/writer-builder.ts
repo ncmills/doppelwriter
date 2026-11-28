@@ -6,6 +6,7 @@ import { CLAUDE_MODEL, getAnthropicClient } from "./models";
 import { logLlmUsage } from "./llm-usage-log";
 import { CURATED_WRITERS } from "./writer-data";
 import { buildMultiLayerPrompt } from "./style-analyzer";
+import type { ProfileSource } from "./profile-source";
 
 // Re-export for server-side consumers that imported from here before
 export { CURATED_WRITERS, CATEGORIES } from "./writer-data";
@@ -24,7 +25,7 @@ export async function buildWriterProfile(
   `;
   if (existing.length > 0) return existing[0].id;
 
-  const { content: contentSamples } = await fetchRealContent(writerName);
+  const { content: contentSamples, fromWeb } = await fetchRealContent(writerName);
 
   // Step 1: Extract structured multi-layer profile (same format as personal voices)
   const profileResponse = await client.messages.create({
@@ -80,6 +81,8 @@ Respond with JSON only:
   const jsonMatch = profileText.match(/\{[\s\S]*\}/);
   if (!jsonMatch) throw new Error("Failed to parse writer profile");
   const profileJson = JSON.parse(jsonMatch[0]);
+  // Recorded so the profile page can disclose when no published work was read.
+  profileJson.source = (fromWeb ? "web" : "model_memory") satisfies ProfileSource;
 
   // Step 2: Build system prompt programmatically (same structure as personal voices)
   const systemPrompt = buildMultiLayerPrompt(writerName, profileJson, [], []);
