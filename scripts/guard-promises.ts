@@ -1,3 +1,4 @@
+// @ts-nocheck -- deliberately untyped so the file is portable across repos.
 // Promise guard. Fails the build when (a) a registered promise's test is missing
 // or is not picked up by the test runner, (b) a registered sentence is gone from
 // its page (stale), or (c) a public page makes a feature promise that is not in
