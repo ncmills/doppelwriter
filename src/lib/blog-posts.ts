@@ -1560,7 +1560,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h3>Is my data safe?</h3>
 
-<p>With DoppelWriter specifically: your writing samples and generated content are stored securely and never shared with other users. We don't use your content to train models. You can delete your data at any time. Your voice profile is yours — it's not mixed into some collective model.</p>
+<p>With DoppelWriter specifically: your writing samples and generated content are stored securely and never shared with other users. We don't use your content to train models. Once your voice profile is built, the raw writing samples are deleted. To have your whole account and everything in it deleted, email enterprise@doppelwriter.com. Your voice profile is yours — it's not mixed into some collective model.</p>
 
 <p>With other tools, read the terms of service carefully. Many AI tools do use your input to improve their models, which means your writing becomes part of the training data. If that matters to you, check before you upload.</p>
 

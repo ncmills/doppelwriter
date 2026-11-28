@@ -317,7 +317,7 @@ function WriterPage({ writer, slug }: { writer: (typeof CURATED_WRITERS)[number]
               What Makes {writer.name}&apos;s Writing Distinctive
             </h2>
             <p className="text-[var(--color-fg-muted)] leading-relaxed">
-              DoppelWriter analyzes {writer.name}&apos;s published work at two levels: the micro layer
+              DoppelWriter analyzes {writer.name}&apos;s writing at two levels: the micro layer
               (sentence rhythm, word choice, punctuation habits, function word patterns) and the macro
               layer (paragraph structure, argument flow, transitions, pacing). The result is a forensic
               style profile that captures not just what makes the writing distinctive, but also the patterns and habits that define it.
