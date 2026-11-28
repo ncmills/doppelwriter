@@ -44,6 +44,24 @@ describe("curated profile source disclosure", () => {
     expect(profileSourceNote(storedJson())).toBeNull();
     vi.unstubAllGlobals();
   });
+  it("key set but search returns results: [] -> model_memory + disclosure (no web text used)", async () => {
+    vi.stubEnv("TAVILY_API_KEY", "k");
+    vi.stubGlobal("fetch", async () => ({ json: async () => ({ results: [] }) }));
+    await buildWriterProfile("Test Writer", "bio");
+    expect(JSON.parse(storedJson()).source).toBe("model_memory");
+    expect(profileSourceNote(storedJson())).toBe(MODEL_MEMORY_NOTE);
+    vi.unstubAllGlobals();
+  });
+  it("key set but results have empty/missing raw_content -> model_memory + disclosure", async () => {
+    vi.stubEnv("TAVILY_API_KEY", "k");
+    vi.stubGlobal("fetch", async () => ({
+      json: async () => ({ results: [{ title: "A", raw_content: "" }, { title: "B" }, { title: "C", raw_content: null }] }),
+    }));
+    await buildWriterProfile("Test Writer", "bio");
+    expect(JSON.parse(storedJson()).source).toBe("model_memory");
+    expect(profileSourceNote(storedJson())).toBe(MODEL_MEMORY_NOTE);
+    vi.unstubAllGlobals();
+  });
   it("legacy profiles without a source stamp show nothing", () => {
     expect(profileSourceNote('{"tone":"x"}')).toBeNull();
     expect(profileSourceNote(null)).toBeNull();

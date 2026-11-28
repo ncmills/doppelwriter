@@ -6,6 +6,7 @@ export type ProfileSource = "web" | "model_memory";
 export const MODEL_MEMORY_NOTE =
   "This profile was built from the model's general knowledge of this writer, not from a fresh read of their published work.";
 
+// Profiles built before 2026-11-28 carry no source stamp and show no note.
 export function profileSourceNote(profileJson: unknown): string | null {
   let obj: unknown = profileJson;
   if (typeof obj === "string") {
