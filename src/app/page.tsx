@@ -29,7 +29,7 @@ const offerings: { title: string; body: string; href: string; cta: string }[] = 
   },
   {
     title: `${WRITER_COUNT} Writer Profiles`,
-    body: "Prebuilt forensic style profiles — Hemingway to Buffett. Or name anyone and we build one from their published work.",
+    body: "Prebuilt forensic style profiles — Hemingway to Buffett. Or name anyone and we build one from what is publicly known of their writing.",
     href: "/write-like/authors",
     cta: "Browse writers",
   },
@@ -64,7 +64,7 @@ const features = [
   {
     eyebrow: "02 — Hire the greats",
     title: "Or borrow from the canon",
-    body: `Pick from ${WRITER_COUNT} prebuilt voice profiles: Hemingway, Didion, Graham, Morrison, Buffett. Or name anyone — we build a forensic style profile from their published work.`,
+    body: `Pick from ${WRITER_COUNT} prebuilt voice profiles: Hemingway, Didion, Graham, Morrison, Buffett. Or name anyone — we build a forensic style profile from what is publicly known of their writing.`,
   },
   {
     eyebrow: "03 — Draft & revise",
@@ -84,7 +84,7 @@ const faqs = [
   },
   {
     q: "Is my writing data safe?",
-    a: "Your writing samples and generated content are stored securely and never shared with other users. We don't use your content to train models. You can delete your data at any time from your settings.",
+    a: "Your writing samples and generated content are stored securely and never shared with other users. We don't use your content to train models. Once your voice profile is built, the raw writing samples are deleted. To have your whole account and everything in it deleted, email enterprise@doppelwriter.com.",
   },
   {
     q: "What happens after the free trial?",
@@ -310,7 +310,7 @@ export default function LandingPage() {
           </div>
           <p className="max-w-xl text-[var(--color-fg-muted)] mb-4 text-lg">
             Prebuilt profiles for {WRITER_COUNT} iconic voices. Name anyone else — we&apos;ll
-            build a forensic style profile from their published work.
+            build a forensic style profile from what is publicly known of their writing.
           </p>
           <p className="max-w-xl text-[13px] leading-relaxed text-[var(--color-fg-muted)] mb-10 italic">
             The lines on each card are illustrative samples of how DoppelWriter renders

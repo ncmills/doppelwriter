@@ -1,0 +1,104 @@
+[
+ {
+  "page": "src/app/page.tsx",
+  "sentence": "no credit card",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "signup route takes no payment details"
+ },
+ {
+  "page": "src/app/analyze/page.tsx",
+  "sentence": "no signup",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "analyze route does not require a session"
+ },
+ {
+  "page": "src/app/page.tsx",
+  "sentence": "from what is publicly known of their writing",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "writer builder falls back to model knowledge and the copy says so"
+ },
+ {
+  "page": "src/app/privacy/page.tsx",
+  "sentence": "we do not retain your original writing samples",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "profile build purges raw writing samples"
+ },
+ {
+  "page": "src/app/page.tsx",
+  "sentence": "the raw writing samples are deleted",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "profile build purges raw writing samples"
+ },
+ {
+  "page": "src/app/terms/page.tsx",
+  "sentence": "you can cancel anytime",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "cancel goes through the Stripe billing portal"
+ },
+ {
+  "page": "src/app/terms/page.tsx",
+  "sentence": "you can delete your account at any time by emailing",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "account deletion contact address is the same everywhere"
+ },
+ {
+  "page": "src/app/page.tsx",
+  "sentence": "email enterprise@doppelwriter.com",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "account deletion contact address is the same everywhere"
+ },
+ {
+  "page": "src/app/page.tsx",
+  "sentence": "never shared with other users",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "drafts are scoped to the signed-in user"
+ },
+ {
+  "page": "src/app/how-it-works/page.tsx",
+  "sentence": "we don't use your content to train",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "UNPROVEN: we don't use your content to train models"
+ },
+ {
+  "page": "src/app/how-it-works/page.tsx",
+  "sentence": "we don't sell data",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "UNPROVEN: we don't sell or share data"
+ },
+ {
+  "page": "src/app/privacy/page.tsx",
+  "sentence": "we do not sell, rent",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "UNPROVEN: we don't sell or share data"
+ },
+ {
+  "page": "src/app/terms/page.tsx",
+  "sentence": "we don't claim any intellectual property",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "UNPROVEN: we don't claim IP over input or output"
+ },
+ {
+  "page": "src/app/terms/page.tsx",
+  "sentence": "we don't lock you into annual contracts",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "UNPROVEN: we don't lock you into annual contracts"
+ },
+ {
+  "page": "src/app/privacy/page.tsx",
+  "sentence": "we don't send marketing emails",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "UNPROVEN: marketing email is opt-in with unsubscribe"
+ },
+ {
+  "page": "src/app/privacy/page.tsx",
+  "sentence": "we never store the raw content of your messages",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "UNPROVEN: Gmail email content is never stored"
+ },
+ {
+  "page": "src/app/create/personal/page.tsx",
+  "sentence": "your emails are never stored",
+  "test_file": "src/lib/promises.test.ts",
+  "test_name": "UNPROVEN: Gmail email content is never stored"
+ }
+]
