@@ -48,8 +48,17 @@ export async function POST(request: NextRequest) {
   if (!brief || !profileId) {
     return new Response(JSON.stringify({ error: "Missing brief or profileId" }), { status: 400 });
   }
-  if (brief.length > 50000) {
+  if (typeof brief !== "string" || brief.length > 50000) {
     return new Response(JSON.stringify({ error: "Input too long" }), { status: 400 });
+  }
+  if (wordCount != null && (!Number.isInteger(wordCount) || wordCount < 50 || wordCount > 5000)) {
+    return new Response(JSON.stringify({ error: "Word count must be a whole number between 50 and 5000." }), { status: 400 });
+  }
+  if (instructions != null && (typeof instructions !== "string" || instructions.length > 2000)) {
+    return new Response(JSON.stringify({ error: "Instructions must be 2000 characters or fewer." }), { status: 400 });
+  }
+  if (researchContext != null && (typeof researchContext !== "string" || researchContext.length > 20000)) {
+    return new Response(JSON.stringify({ error: "Research context must be 20000 characters or fewer." }), { status: 400 });
   }
 
   if (!(await verifyProfileAccess(session.user.id, profileId))) {

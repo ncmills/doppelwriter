@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "npx tsx scripts/gen-published-paths.ts && npx tsx scripts/sync-writer-photos.ts",
+    "prebuild": "npx tsx scripts/gen-published-paths.ts && npx tsx scripts/sync-writer-photos.ts && vitest run src/app/api/generate/route.test.ts",
     "build": "next build",
     "postbuild": "npx tsx scripts/submit-indexnow.ts || true",
     "start": "next start",
